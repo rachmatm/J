@@ -10,8 +10,8 @@ window.JotView = AppView.extend({
 
   el: $('#main-content'),
 
-  initialize: function(options) {
-    this.options = options;
+  initialize: function(attrs) {
+    this.attrs = attrs;
     var _this = this;
     
     //this.input = this.$("#new-todo");
@@ -149,7 +149,7 @@ window.JotView = AppView.extend({
     var jot = data.toJSON();
     var _this = this;
 
-    var faved = in_array(jot._id, this.options.jot_favorite_ids);
+    var faved = in_array(jot._id, this.attrs.options[0]);
     
     this.appHolderView.setElement('#main-content-middle-jot-list');
     

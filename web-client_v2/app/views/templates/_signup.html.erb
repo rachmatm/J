@@ -1,0 +1,102 @@
+<script type="text/template" id="signup-template">
+
+  <div class="signUp_content main_content">
+    <div class="opening_text">
+      <div id="main-middle-signup-alert"></div>
+      <p class="line_one">Create your</p>
+      <p class="line_two">Jotky Account</p>
+    </div>
+    <%= form_tag registrations_path(:format => :json), :id => 'signup-form' do -%>
+
+      <table class="box_registration">
+        <tbody>
+          <tr class="reg_username">
+            <td class="label_registration">
+              <%= label_tag 'registration_username', 'Username' %>
+              <%= text_field_tag 'registration[username]', nil %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_username', 'we appreciate a catchy name' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+          <tr class="reg_realname">
+            <td class="label_registration">
+              <%= label_tag 'registration_realname', 'Real name' %>
+              <%= text_field_tag 'registration[realname]', nil %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_realname', ' phoneys will be arrested! nah, kidding :P' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+          <tr class="reg_email">
+            <td class="label_registration">
+              <%= label_tag 'registration_email', 'E-mail' %>
+              <%= text_field_tag 'registration[email]', nil %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_email', 'your email address, please' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+          <tr class="reg_password">
+            <td class="label_registration">
+              <%= label_tag 'registration_password', 'Password' %>
+              <%= password_field_tag 'registration[password]', nil %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_email', 'must be 6 characters or more please use a good one' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="bottom_registrationPath">
+        <div class="RegRemember_login">
+          <%= check_box_tag :remember_me%><p class="checkbox">Remember me on this computer</p>
+        </div>
+        <br class="clear"/>
+        <div class="RegRemember_login" id="signup-recaptcha-holder">
+
+        </div>
+
+        <!-- div class="RegRemember_login">
+          <script type="text/javascript">
+            var RecaptchaOptions = {theme: 'clean'};
+          </script>
+          <script type="text/javascript"
+                  src="http://www.google.com/recaptcha/api/challenge?k=<%= RECAPTCHA_PUBLIC_KEY %>">
+          </script>
+          <noscript>
+            <iframe src="http://www.google.com/recaptcha/api/noscript?k=<%= RECAPTCHA_PUBLIC_KEY %>"
+                    height="300" width="500" frameborder="0" theme="clean"></iframe><br>
+            <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+            </textarea>
+            <input type="hidden" name="recaptcha_response_field"
+                   value="manual_challenge">
+          </noscript>
+
+        </div -->
+        <br class="clear"/>
+
+        <div class="termsOf_service">
+          <p>before we proceed to the next phase please read our <a href="#">terms of service</a></p>
+        </div>
+        <div class="reg_agreedButton green_button" id="registration">
+          <%= submit_tag 'Yes, agreed, create my account' %>
+        </div>
+        <div class="clear"></div>
+      </div>
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</script>

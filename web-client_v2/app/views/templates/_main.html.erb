@@ -1,0 +1,58 @@
+<script type="text/template" id="main-template">
+  <div class="wraper container_16">
+    <div class="header clearfix">
+      <div class="left_header grid_6">
+        <a href="landing_page.html" class="main_logo">Jotky</a>
+      </div>
+      <div class="middle_header grid_7">
+        <a href="" class="home">
+          <span>&nbsp;</span>
+          Home
+        </a>
+        <a href="/hot_stuff" class="hot_stream">
+          <span></span>
+          Hot Stream
+        </a>
+
+        <a href="/help" class="help">
+          <span>&nbsp;</span>
+          Help
+        </a>
+
+        <div class="clear"></div>
+      </div>
+      <div class="right_header grid_3" id="top-navigation-login-holder">
+        <a href="#!/login" class="sign_in">
+          <span>&nbsp;</span>
+          Sign In
+        </a>
+      </div>
+
+      <div class="right_header grid_3 hidden" id="top-navigation-logout-holder">
+        <a href="#!/logout" class="sign_in">
+          <span>&nbsp;</span>
+          Sign Out
+        </a>
+      </div>
+    </div>
+    <div class="container">
+      <div>
+        <div class="left_menu grid_2">&nbsp;
+        </div>
+
+        <div class="main_content grid_11 cleafix" id="main-content">
+          <div class="alert-message-holder" id="alert-message-holder"></div>
+          <%= render 'templates/_main_content' %>
+        </div>
+
+        <div class="right_content grid_3">
+          <%= render 'templates/_sidebar' %>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+</script>

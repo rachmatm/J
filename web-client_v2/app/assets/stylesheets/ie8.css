@@ -1,0 +1,238 @@
+.search_icon {
+  behavior: url("PIE.htc");
+  border-radius: 5px 0 0 0;
+  position: relative;
+}
+
+.jot_icon {
+  behavior: url("PIE.htc");
+  border-radius: 0 5px 0 0;
+  position: relative;
+}
+
+.username input[type="text"], .password input[type="password"] {
+  behavior: url("PIE.htc");
+  border-radius: 5px;
+  position: relative;
+}
+
+.login_button input[type="submit"] {
+  behavior: url("PIE.htc");
+  border-radius: 5px;
+  position: relative;
+}
+
+.box_signinBottom {
+  behavior: url("PIE.htc");
+  border-radius: 0 0 0 8px;
+  position: relative;
+}
+
+.login_path {
+  behavior: url("PIE.htc");
+  border-radius: 0 0 5px 0;
+  position: relative;
+}
+
+.login {
+  behavior: url("PIE.htc");
+  border-radius: 5px 5px 0 0;
+  position: relative;
+}
+
+/* .signup_button {
+  behavior: url("PIE.htc");
+  border-radius: 5px;
+  position: relative;
+} */
+
+.sign_up {
+  border-radius: 5px 5px 0 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.search input[type="text"] {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_tosca {
+  border-radius: 5px 5px 0 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_darkBottom {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.tell_jotky {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_BlueSky {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_favorites {
+  border-radius: 5px 5px 0 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_favBottom {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.green_button {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.search {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.reg_username input[type="text"], 
+.reg_realname input[type="text"], 
+.reg_email input[type="text"], 
+.reg_password input[type="password"] {
+  -moz-border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.choice_text {
+  border-radius: 4px 0 0 4px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.not_active {
+  border-radius: 0 4px 4px 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.empty_field {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.side-menu-top-left {
+  border-radius: 5px 0 0 0;
+  behavior: url("PIE.htc");
+}
+
+.side-menu-bottom-left {
+  border-radius: 0 0 0 5px;
+  behavior: url("PIE.htc");
+}
+
+.header_result {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+}
+
+.button_tagText {
+  border-radius: 4px 0 0 4px;
+  behavior: url("PIE.htc");
+}
+
+.not_activeSearch {
+  border-radius: 0 4px 4px 0;
+  behavior: url("PIE.htc");
+}
+
+.more_ResultContent input[type="submit"] {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+}
+
+.people_postNonLogin {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+}
+
+.side-left {
+  top: 405px !important;
+}
+
+.new_update_path {
+  border-radius: 4px 4px 0 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.what_jotky {
+  float: left;
+  display: inline-block;
+}
+
+.compose_new_message {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.input_replay textarea {
+  border-radius: 10px 10px 10px 10px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.replay_button {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.compose_message_form input[type="text"] {
+  border-radius: 10px 10px 10px 10px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.hot_jot {
+  border-radius: 6px 6px 6px 6px;
+  box-shadow: 1px 2px 0 0 #E7E7E7;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.stuff_hover .hot_jot_hover{
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 1px 2px 0 0 #E7E7E7;
+  behavior: url("PIE.htc");
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+
+.hot_media ul li.other_media {
+  border-radius: 6px 6px 6px 6px;
+  box-shadow: 2px 2px 0 0 #E7E7E7;
+  behavior: url("PIE.htc");
+  position: relative;
+}    
+    
+.hot_people ul li {
+  border-radius: 6px 6px 6px 6px;
+  box-shadow: 2px 2px 0 0 #E7E7E7;
+  behavior: url("PIE.htc");
+  position: relative;
+}

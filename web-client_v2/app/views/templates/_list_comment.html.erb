@@ -1,0 +1,36 @@
+<script type="text/template" id="list-comment-template">
+
+  <div class="clearfix">
+    <div class="left">
+      <# if(user.avatar){ #>
+      <img alt="<#= user.username #>" src="<#= user.avatar.thumb_small.url #>">
+      <# } #>
+    </div>
+    <div class="content-text">
+      <span class="name"><#= user.username #></span>
+      <div class="right time">
+        <abbr class="timeago" title="<#= created_at #>"><#= created_at #></abbr>
+        <div style="display: none;" class="action_menu_hide">
+          <ul>
+            <li>
+              <a href="" class="comment_hide">
+                <label>hide</label>
+                <span class="hide_icon">&nbsp;</span>
+              </a>
+            </li>
+            <li>
+              <a href="" class="comment_flag">
+                <label>flag as</label>
+                <span class="flag_icon">&nbsp;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a style="display: none;" href="" class="comment_down_arrow">&nbsp;</a>
+      </div>
+      <div class="clear"></div>
+      <p><#= message #></p>
+    </div>
+  </div>
+
+</script>

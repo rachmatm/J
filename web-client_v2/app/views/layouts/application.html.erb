@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Jotky - Landing Page (Not Logged)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag 'application' %>
+    <!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="/assets/ie7.css" />
+	<![endif]-->
+    <!--[if IE 8]>
+	<link rel="stylesheet" type="text/css" href="/assets/ie8.css" />
+	<![endif]-->
+    <!--[if IE 9]>
+	<link rel="stylesheet" type="text/css" href="/assets/ie9.css" />
+  <![endif]-->
+    <script>
+      window.DOMAIN = "localhost";
+      window.RPK = '6LeUR80SAAAAAIIbp6Dt8D1jfZrF3gkn3DN3mVUP'
+    </script>
+  </head>
+  <body>
+    <div class="wraper container_16 clearfix">
+
+      <div class="header clearfix" id="header-holder"></div>
+
+      <div class="container">
+        <div class="clearfix">
+          <div class="left_menu grid_2">&nbsp;
+          </div>
+
+          <div class="main_content grid_11 cleafix" id="main-content">
+            <div class="alert-message-holder" id="alert-message-holder"></div>
+
+            <div id="magicbox-holder" class="magicbox-holder">
+
+            </div>
+
+            <div id="main-middle" class="main-middle"></div>
+          </div>
+
+          <div class="right_content grid_3" id="sidebar-holder"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer clearfix" id="footer-holder"></div>
+    <div id="process-stat" class="hidden">Loading ...</div>
+
+    <%= render 'templates/alert' %>
+    <%= render 'templates/header'  %>
+    <%= render 'templates/sidebar'  %>
+    <%= render 'templates/magicbox'  %>
+    <%= render 'templates/footer'  %>
+    <%= render 'templates/signup'  %>
+    <%= render 'templates/welcome'  %>
+    <%= render 'templates/jot' %>
+    <%= render 'templates/jot_list' %>
+    <%= render 'templates/login_completion' %>
+    <%= render 'templates/jot_detail' %>
+    <%= render 'templates/list_comment' %>
+    <%= render 'templates/user_bar' %>
+    <%= render 'templates/magicbox_profile' %>
+    <%= render 'templates/magicbox_setting' %>
+
+    <%= javascript_include_tag 'application' %>
+
+    <% if flash[:error].present? %>
+      <script type="text/javscript">alert("<%= flash[:error] %>");</script>
+    <% end %>
+  </body>
+</html>

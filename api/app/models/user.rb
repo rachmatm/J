@@ -14,7 +14,7 @@ class User
   has_many :nests
 
   accepts_nested_attributes_for :jots
-
+ 
   #has_many :favorites
   #has_many :kudos
   has_many :nests
@@ -341,7 +341,7 @@ class User
 
   # Relation: Jots
   def current_user_set_jot(parameters = {})
-    parameters.keep_if {|key, value| JOT_UPDATEABLE_FIELDS.include? key }
+    parameters.keep_if {|key, value| Jot::UPDATEABLE_FIELDS.include? key }
 
     jot = self.jots.new parameters
     
@@ -578,9 +578,8 @@ class User
   end
 
   # Relation: Tags
-  def _current_user_set_tags(tag_names = [])
-
-    raise 'Wrong Parameters' unless tag_names.is_a? Array
+  def _current_user_set_tags(text)
+    tag_arr = Twitter::Extractor.extract_hashtags(text)
 
     tag_objs = Array.new
 
