@@ -1,0 +1,60 @@
+source :rubygems
+
+gem 'cramp', '0.15.1'
+
+# Async webserver for running a cramp application
+gem 'thin'
+
+# Rack based routing
+gem 'http_router'
+
+# Collection of async-proof rack middlewares - https://github.com/rkh/async-rack.git
+gem 'async-rack'
+
+# Using Fibers + async callbacks to emulate synchronous programming
+# gem 'em-synchrony'
+
+group :development do
+  # Development gems
+  gem 'ruby-debug19'
+end
+
+# Phuser : http://pusher.com/ 
+gem "pusher"
+
+# Mongoid: http://mongoid.org/
+gem "mongoid", "2.2.5"
+gem "bson_ext"
+
+# File Handler
+gem "carrierwave"
+gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
+gem "rmagick", "2.13.1"
+
+# Auth
+gem 'bcrypt-ruby', :require => 'bcrypt'
+
+# Mime
+gem 'mime-types'
+
+# Typhoeus runs HTTP requests in parallel while cleanly encapsulating handling logic.
+gem 'typhoeus'
+
+# Generic interface to multiple Ruby template engines - https://github.com/rtomayko/tilt
+gem 'tilt'
+
+# Random Data
+gem 'random-word'
+
+# Internationalization (i18n) library
+gem 'i18n', '0.5.0'
+
+# A toolkit of support libraries and Ruby core extensions extracted from the Rails framework. Rich support for multibyte strings, internationalization, time zones, and testing.
+gem 'activesupport'
+
+
+# A gem that provides text processing routines for Twitter Tweets. The major reason for this is to unify the various auto-linking and extraction of usernames, lists, hashtags and URLs.
+gem 'twitter-text'
+
+# For mailing users
+gem 'pony'

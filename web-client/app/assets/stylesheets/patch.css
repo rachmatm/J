@@ -1,0 +1,28 @@
+.people_search_result{
+z-index:20;}
+
+.update_icon{
+background: url("/assets/update-icon-notactive.png") no-repeat 0 0 transparent;
+width:17px;
+height:20px;
+vertical-align: middle;}
+
+
+.r-notification-tab-active .update_icon{
+background-image: url("/assets/update-icon-active.png");}
+
+.r-notification-tab{
+color: #FFFFFF;
+font-family: "UniSansSemiBoldRegular","HelveticaCE55RomanRegular, Arial,sans serif";
+font-size: 16px;
+line-height: 30px;
+vertical-align: middle;
+ margin-right: -8px;}
+
+.update_text{
+display:none;
+vertical-align: middle;
+padding-right:8px;}
+
+.r-notification-tab-active .update_text{
+display: inline-block;}
