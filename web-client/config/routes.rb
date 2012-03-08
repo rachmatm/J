@@ -8,4 +8,8 @@ WebClient::Application.routes.draw do
   get 'member' => 'welcomes#member', :as => 'member'
   get 'profile' => 'welcomes#profile', :as => 'profile'
   get 'profile/other' => 'welcomes#profile_other', :as => 'profile_other'
+  
+  get 'inbox' => 'welcomes#inbox', :as => 'inbox'
+  
+  get 'terms'=> 'welcomes#terms', :as=> 'terms'
 end
