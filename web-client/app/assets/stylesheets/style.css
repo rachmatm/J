@@ -2148,7 +2148,7 @@ a.twitter{
   padding: 0 1px;
 }
 #scrollbar1 .thumb {
-  background: transparent url(../images/bg-scrollbar-thumb-y.png) no-repeat 50% 100%;
+  background: transparent url(/assets/bg-scrollbar-thumb-y.png) no-repeat 50% 100%;
   height: 20px;
   width: 25px;
   cursor: pointer;
@@ -2158,7 +2158,7 @@ a.twitter{
 }
 
 #scrollbar1 .thumb .end {
-  background: transparent url(../images/bg-scrollbar-thumb-y.png) no-repeat 50% 0;
+  background: transparent url(/assets/bg-scrollbar-thumb-y.png) no-repeat 50% 0;
   overflow: hidden;
   height: 5px;
   width: 25px;
@@ -4747,7 +4747,6 @@ a.connect_cross{
 
 /* END OF INBOX
 ----------------------------------------------------------------------------------------------------*/
-
 /* HOT STUFF
 ----------------------------------------------------------------------------------------------------*/
 
@@ -4864,7 +4863,6 @@ a.connect_cross{
 }
 
 .hot_jot_content_path {
-  float: left;
   position: relative;
 }
 
@@ -5244,7 +5242,7 @@ a.connect_cross{
 
 .first_badge {
   background: url("/assets/sprite.png") no-repeat scroll -648px -78px transparent;
- color: #FFFFFF;
+  color: #FFFFFF;
   border: medium none;
   cursor: pointer;
   float: left;
@@ -5252,10 +5250,9 @@ a.connect_cross{
   font-weight: bold;
   height: 38px;
   line-height: 30px;
-  left: 5px;
-  top: -10px;
+  margin-left: -90px;
+  margin-top: -20px;
   position: absolute;
-  text-align: center;
   width: 33px;
   z-index: 100;
 }
@@ -5291,17 +5288,16 @@ a.connect_cross{
   font-weight: bold;
   height: 38px;
   line-height: 30px;
-  left: 5px;
-  top: -10px;
+  margin-left: -90px;
+  margin-top: -20px;
   position: absolute;
-  text-align: center;
   width: 33px;
   z-index: 100;
 }
 
 .third_badge {
   background: url("/assets/sprite.png") no-repeat scroll -648px -158px transparent;
- color: #FFFFFF;
+  color: #FFFFFF;
   border: medium none;
   cursor: pointer;
   float: left;
@@ -5309,13 +5305,12 @@ a.connect_cross{
   font-weight: bold;
   height: 38px;
   line-height: 30px;
-  left: 5px;
-  top: -10px;
+  margin-left: -90px;
+  margin-top: -20px;
   position: absolute;
-  text-align: center;
   width: 33px;
   z-index: 100;
-  }
+}
 
 .stuff_hover .hot_jot_hover{
   -moz-border-radius: 5px;
@@ -5334,7 +5329,7 @@ a.connect_cross{
   line-height: 220px;
   position: absolute;
   text-align: center;
-  top: 0px;
+  top: 64px;
   width: 561px;
   z-index: 100;
 }
@@ -5393,7 +5388,7 @@ a.connect_cross{
 }
 
 .previous_people {
-  height: 150px;
+  height: 160px;
   width: 28px;
 }
 

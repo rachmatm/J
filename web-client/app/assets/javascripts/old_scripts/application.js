@@ -100,6 +100,17 @@ jQuery(function($){
     $(".welcome_content").show();
     return false
   });
+
+   $("#signUp").click(function(){
+    $(this).addClass('login');
+    $(".search").hide();
+    $(".side-left").hide();
+    $(".search_tab").hide();
+    $(".searchResult_content_logged").hide();
+    $(".login_content").show();
+    $(".welcome_content").show();
+    return false
+  });
   
   /* -- REPLACE MIDLE CONTENT LANDING PAGE CONTENT TO SIGN UP CONTENT -- */
   $(".signUp_content").hide();
@@ -432,11 +443,14 @@ jQuery(function($){
   });
   
   $('.jot_but').click(function(){
-    $('.jot_upload_media').toggle();
+    //$('.jot_upload_media').toggle();
     $('.jot_mode_hide').toggleClass('show_upload');
     return false;
   });
-  
+  $('.clip_but').click(function(){
+      $('.jot_upload_media').toggle();
+
+  });
   $('.loc_but').click(function(){
     $('.jot_add_location').toggle();
     $('.jot_mode_hide').toggleClass('show_add');
@@ -812,6 +826,12 @@ $('#r-jot-tab').bind('click', function(){
   $('.login_content').hide();
 
   $('#r-signup-content').hide();
+
+  $('.search_tab').hide();
+  $('.searchResult_content_logged').hide();
+  
+  //inbox
+  $('.inbox_message').hide();
 
 
   //notifikasi

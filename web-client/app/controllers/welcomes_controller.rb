@@ -9,6 +9,7 @@ class WelcomesController < ApplicationController
   end
 
   def hot_stuff
+    render :layout => 'private'
   end
 
   def profile
@@ -22,24 +23,7 @@ class WelcomesController < ApplicationController
   end  
 
 
-  #FOOTER
-  def terms
-  end
-
-  def contact
-  end
-
-  def goodies
-  end
-
-  def api
-  end
-
-  def help
-  end
-
-  def privacy
-  end
+ 
 
 
 
