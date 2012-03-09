@@ -3348,6 +3348,7 @@ a.connect_cross{
   position: absolute;
   top: 55px;
   width: 250px;
+  z-index:300;
 }
 
 .result_dropdwn_top {
@@ -5255,6 +5256,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
+  padding-left: 9px;
 }
 
 .win.chrome .first_badge,
@@ -5293,6 +5295,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
+  padding-left: 9px;
 }
 
 .third_badge {
@@ -5310,6 +5313,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
+  padding-left: 9px;
 }
 
 .stuff_hover .hot_jot_hover{
