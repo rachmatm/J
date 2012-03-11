@@ -26,3 +26,6 @@ padding-right:8px;}
 
 .r-notification-tab-active .update_text{
 display: inline-block;}
+
+
+.previous_icon a:hover, .next_icon a:hover { text-decoration: none}

@@ -13,10 +13,10 @@ class WelcomesController < ApplicationController
   end
 
   def profile
+     render :layout => 'private'
   end
 
-  def profile_other
-  end
+ 
   
   def inbox
     render :layout => 'private'

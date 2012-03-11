@@ -1,6 +1,548 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
+<div class="left_menu grid_2">&nbsp;
+  <div class="side-left">
+    <ul>
+      <li class="leftMenu_searchResult">
+        <a href="" onmouseout="heal()" class="side-menu-top-left">
+          <label>Jots&nbsp;</label>
+          <span class="jots-icon">&nbsp;</span>
+        </a>
+        <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+      </li>
+      <li class="leftMenu_searchResult">
+        <a href="" onmouseout="heal()" >
+          <label>People&nbsp;</label>
+          <span class="people-icon">&nbsp;</span>
+        </a>
+        <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+      </li>
+      <li class="leftMenu_searchResult">
+        <a href="" onmouseout="heal()" >
+          <label>Media&nbsp;</label>
+          <span class="media-icon">&nbsp;</span>
+        </a>
+        <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+      </li>
+      <li class="leftMenu_searchResult">
+        <a href="" onmouseout="heal()" class="side-menu-bottom-left">
+          <label>Places&nbsp;</label>
+          <span class="places-icon">&nbsp;</span>
+        </a>
+        <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+      </li>
+    </ul>
+  </div>
+</div>
 
-<%= "profile_other.html" %>
+
+<div class="main_content grid_11">
+<%= render 'shared/magicbox' %>
+  <div class="clear"></div>
+
+
+  <div class="pp_tags_path middle_content">
+            <div class="header_public_profile">
+              <div class="pp_header_top">
+                <div class="ava_public_profile">
+                  <img src="/assets/ava-other-public-profile.png" alt="" />
+                </div>
+                <div class="info_public_profile">
+                  <span class="pp_nickname">Phig</span>
+                  <span class="pp_realname">Jimmy Balia</span>
+                </div>
+                <div class="pp_right_badge">
+                  <span class="no_margin_right big_badge">0</span>
+                </div>
+              </div>
+              <div class="pp_header_middle">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliin culpa qui officia deserunt mollit anim id est laborum.</p>
+                <a href="">http://phig.com</a>
+              </div>
+              <div class="pp_send_message">
+                <a href="">
+                  <span class="pp_inbox_icon">&nbsp;</span>
+                  Send Message
+                </a>
+              </div>
+            </div>
+            <div class="pp_tab">
+              <div class="pp_choice_button">
+                <div class="pp_tabs">
+                  <a href="" class="pp_link_tags"><strong>15</strong> Tags</a>
+                  <div class="pp_down_arrow">
+                    <span>&nbsp;</span>
+                  </div>
+                </div>
+                <div class="pp_tabs">
+                  <a href="" class="pp_link_jots"><strong>50</strong> Jots</a>
+                  <div class="pp_down_arrow">
+                    <span>&nbsp;</span>
+                  </div>
+                </div>
+                <div class="pp_tabs">
+                  <a href="" class="pp_link_follows"><strong>20</strong> Follows</a>
+                  <div class="pp_down_arrow">
+                    <span>&nbsp;</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pp_people_tags">
+              <div class="pp_people_tags_head">
+                <span class="pp_people_name">MetroFx's tags</span>
+                <ul>
+                  <li>
+                    <span class="pp_tags_icon"></span>
+                    <span class="pp_tags_text">tags</span>
+                  </li>
+                  <li>
+                    <span class="pp_jots_icon"></span>
+                    <span class="pp_tags_text">jots</span>
+                  </li>
+                  <li>
+                    <span class="pp_follows_icon"></span>
+                    <span class="pp_tags_text">follows</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="pp_tags_scroll" id="scrollbar1">
+                <div class="scrollbar">
+                  <div class="track">
+                    <div class="thumb">
+                      <div class="end">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="viewport">
+                  <div class="overview">
+                    <ul>
+                      <li>
+                        <div class="unfollow_not_mute_not">
+                          <span>Incognito</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="">Unfollow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_act_mute_not">
+                          <span>Ewean</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_act_unmute_act">
+                          <span>Thai</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="" class="follow_mute_active">Unmute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="unfollow_not_unmute_act">
+                          <span>Random</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="">Unfollow</a>
+                          <span>.</span>
+                          <a href="" class="follow_mute_active">Unmute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_act_mute_act">
+                          <span>Mordor</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_not_mute_not">
+                          <span>Untagged</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="unfollow_not_mute_not">
+                          <span>Incognito</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="">Unfollow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_act_mute_not">
+                          <span>Ewean</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_act_unmute_act">
+                          <span>Thai</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="" class="follow_mute_active">Unmute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="unfollow_not_unmute_act">
+                          <span>Random</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="">Unfollow</a>
+                          <span>.</span>
+                          <a href="" class="follow_mute_active">Unmute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_act_mute_act">
+                          <span>Mordor</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="follow_not_mute_not">
+                          <span>Untagged</span>
+                        </div>
+                        <div class="pp_tag_counts">
+                          <span>450 jots</span>
+                        </div>
+                        <div class="pp_tag_followers">
+                          <span>237 people</span>
+                        </div>
+                        <div class="pp_follow_mute">
+                          <a href="" class="follow_mute_active">Follow</a>
+                          <span>.</span>
+                          <a href="">Mute</a>
+                        </div>
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="pp_people_tags">
+              <div class="pp_people_tags_head">
+                <span class="pp_people_name">Other tags</span>
+              </div>
+              <div class="pp_other_tags_content">
+                <ul>
+                  <li>
+                    <a href="">otomotif</a>
+                  </li>
+                  <li>
+                    <a href="">barkersz</a>
+                  </li>
+                  <li>
+                    <a href="">winnerao</a>
+                  </li>
+                  <li>
+                    <a href="">somethinguncommonfromyourmind</a>
+                  </li>
+                  <li>
+                    <a href="">deadterrorist</a>
+                  </li>
+                  <li>
+                    <a href="">ironman4</a>
+                  </li>
+                  <li>
+                    <a href="">casssandra</a>
+                  </li>
+                  <li>
+                    <a href="">OmarSyareef</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="no_margin_bottom hot_jot_path">
+              <div class="hot_stuff_header">
+                <div class="jot_left">
+                  <span class="orange_jots_icon">&nbsp;</span>
+                  <span class="orange_jots">Jots</span>
+                  <span class="clear"></span>
+                </div>
+                <div class="jot_right">
+                  <ul>
+                    <li>
+                      <a href="">
+                        <span class="most_faved_icon">&nbsp;</span>
+                        <span class="most_faved">most faved</span>
+                      </a>
+                    </li>
+                    <li class="orange_dot">.</li>
+                    <li>
+                      <a href="">
+                        <span class="most_comment_icon">&nbsp;</span>
+                        <span class="most_comment">most comment</span>
+                      </a>
+                    </li>
+                    <li class="no_padding_right">
+                      <a href="" class="orange_more">More</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="">
+                <div class="previous_icon">
+                  &nbsp;
+                  <a class="previous" href="">&nbsp;</a>
+                </div>
+                <div class="hot_jot">
+                  <div class="hot_jot_header people_post">
+                    <div class="hot_jot_width header_result">
+                      <img src="/assets/marleene.png" alt=""/>
+                      <span>Phig</span>
+                      <ul>
+                        <li class="fire">&nbsp;</li>
+                        <li class="pp_header_result">6 hours ago</li>
+                        <li class="pp_header_result">.</li>
+                        <li class="pp_header_result">rejotted by 25 peoples</li>
+                        <li class="orange_star">&nbsp;</li>
+                      </ul>
+                    </div>
+                    <div class="down-sign"></div>
+                    <div class="clear"></div>
+                  </div>
+                  <div class="container-result">
+                    <h2 class="pp_jot_modify">get the DVD here > <a href="" class="blue_link">http://bit.ly/asf3ty</a></h2>
+                  </div>
+                  <div class="no_padding_bottom hot_jot_incognito tag-incognito">
+                    <a class="attach_icon" href="">&nbsp;</a>
+                    <div class="pp_url_add">
+                      <div class="own_timeline_jot_right">
+                        <a href="" class="pp_attachtment own_upload_attachment">
+                          <span class="attachment_timeline_icon"></span>
+                          <span class="attachment_timeline_text">http://bit.ly/aspd3</span>
+                        </a>
+                        <span class="pp_uploaded_by uploaded_by">uploaded via lockerz</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hot_jot_incognito tag-incognito">
+                    <span class="hot_jot_incognito_icon">&nbsp;</span>
+                    <div class="button_tag">
+                      <ul>
+                        <li>
+                          <span class="button_tagText">KenyeWest</span>
+                          <span class="not_activeSearch"></span>
+                        </li>
+                        <li>
+                          <span class="button_tagText">RapDVD</span>
+                          <span class="not_activeSearch"></span>
+                        </li>
+                      </ul>
+                      <div class="clear"></div>
+                    </div>
+                  </div>
+                  <div class="hot_jot_comment comment">
+                    <span class="blue_refresh_icon">&nbsp;</span>
+                      <div class="hot_stuff_comment_line comment_line">
+                        <div class="pp_uploaded_by left">
+                          <ul>
+                            <li class="left"><a href="#">16 comments</a></li>
+                            <li class="left">.</li>
+                            <li class="left"><a href="#">View all</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    <div class="clear"></div>
+                  </div>
+                </div>
+                <div class="next_icon">
+                  &nbsp;
+                  <a class="next" href="">&nbsp;</a>
+                </div>
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="hot_media_path">
+              <div class="hot_stuff_header">
+                <div class="media_left">
+                  <span class="orange_media_icon">&nbsp;</span>
+                  <span class="orange_media">Media</span>
+                  <span class="clear"></span>
+                </div>
+                <div class="media_right">
+                  <ul>
+                    <li>
+                      <a href="">
+                        <span class="most_faved">All</span>
+                      </a>
+                    </li>
+                    <li class="orange_dot">.</li>
+                    <li>
+                      <a href="">
+                        <span class="pictures_icon">&nbsp;</span>
+                        <span class="most_comment">Pictures</span>
+                      </a>
+                    </li>
+                    <li class="orange_dot">.</li>
+                    <li>
+                      <a href="">
+                        <span class="videos_icon">&nbsp;</span>
+                        <span class="most_comment">Videos</span>
+                      </a>
+                    </li>
+                    <li class="no_padding_right">
+                      <a href="" class="orange_more">More</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="no_margin_bottom hot_media_path">
+                <div class="hot_media">
+                  <div class="previous_media previous_icon">
+                    &nbsp;
+                    <a class="previous" href="">&nbsp;</a>
+                  </div>
+                  <ul>
+                    <li class="other_media">
+                      <span>
+                        <a href="" class="media_icon">&nbsp;</a>
+                        <a href="" class="play_button">&nbsp;</a>
+                        <a href="/assets/video_1popup.png" rel="image_popup"><img src="/assets/video_1.png" alt="" /></a>
+                      </span>
+                    </li>
+                    <li class="other_media">
+                      <span>
+                        <a href="" class="picture_icon">&nbsp;</a>
+                        <a href="/assets/picture_1popup.png" rel="image_popup"><img src="/assets/picture_1.png" alt="" /></a>
+                      </span>
+                    </li>
+                    <li class="other_media">
+                      <span>
+                        <a href="" class="picture_icon">&nbsp;</a>
+                        <a href="/assets/picture_2popup.png" rel="image_popup"><img src="/assets/picture_2.png" alt="" /></a>
+                      </span>
+                    </li>
+                    <li class="other_media no_margin_right">
+                      <span>
+                        <a href="" class="media_icon">&nbsp;</a>
+                        <a href="" class="play_button">&nbsp;</a>
+                        <a href="/assets/video_2popup.png" rel="image_popup"><img src="/assets/video_2.png" alt="" /></a>
+                      </span>
+                    </li>
+                  </ul>
+                  <div class="previous_media next_icon">
+                    &nbsp;
+                    <a class="next" href="">&nbsp;</a>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <!-- END OF HOT STUFF -->
+
+          <div class="clear"></div>
+        </div>
+
+
+
+
+<%= render 'shared/profile' %>
+
+
+</div>

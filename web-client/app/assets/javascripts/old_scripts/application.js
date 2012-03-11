@@ -65,7 +65,7 @@ function showhide(show){
 
 jQuery(function($){
   /* -- TINY SCROLLBAR -- */
-  $('#scrollbar1').tinyscrollbar();	
+  $('div#scrollbar1').tinyscrollbar();
   
   /* -- REGISTRATION VALIDATION -- */
   $("#registration").bind('click', function(e){
@@ -204,11 +204,14 @@ jQuery(function($){
   });
   
   $('.account_setting_link').click(function(){
-    $(this).addClass('bottom_links_active');
+   $('.change_tab').toggle();
+   $(this).addClass('bottom_links_active');
     $('.pub_profile_link').removeClass('bottom_links_active');
     return false;
   });
-  
+
+
+
   $(".parent_empty_profile").hide();
   $("#user_logged").click(function(){
     $(".middle_content").hide();
@@ -443,15 +446,21 @@ jQuery(function($){
   });
   
   $('.jot_but').click(function(){
-    //$('.jot_upload_media').toggle();
-    $('.jot_mode_hide').toggleClass('show_upload');
+  //  $('.jot_result').hide();
     return false;
   });
+  
   $('.clip_but').click(function(){
-      $('.jot_upload_media').toggle();
-
+     $('.jot_buttons_color').toggleClass('jot_buttons_active');
+     $('.jot_upload_media').toggle();
+     $('.jot_mode_hide').toggleClass('show_upload');
+      return false;
   });
+  
+ 
+
   $('.loc_but').click(function(){
+     // $()
     $('.jot_add_location').toggle();
     $('.jot_mode_hide').toggleClass('show_add');
     return false;
@@ -464,6 +473,7 @@ jQuery(function($){
   });
   
   $('.jot_result').hide();
+
   $('.jot_green_bg').click(function(){
     $('.jot_result').show('slow');
     $('.empty_stream').hide();
@@ -840,6 +850,7 @@ $('#r-jot-tab').bind('click', function(){
 
   //profile
   $('#r-profile-content').hide();
+
 });
 
 $('#signUp').bind('click', function(){
@@ -960,4 +971,55 @@ $('#user_logged').bind('click', function(){
   $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
   $('.jot-search-content').hide();
   $('#r-people-search-result').hide();
+});
+
+
+
+
+
+
+
+$('#profile-tab-tags').bind('click', function(){
+
+    $(this).find('.pp_link_tags').addClass('pp_link_tab_active');
+    $('#profile-tags').show();
+
+    // PROFILE JOTS
+    $('#profile-jots').hide();
+
+    // PROFILE FOLLOW
+    $('#profile-follows').hide();
+    
+});
+
+$('#profile-tab-jots').bind('click', function(){
+
+    $(this).find('.pp_link_tags').addClass('pp_link_tab_active');
+
+     // PROFILE JOTS
+    $('#profile-jots').show();
+
+    // PROFILE FOLLOW
+    $('#profile-follows').hide();
+
+    // PROFILE TAGS
+    $('#profile-tags').hide();
+    
+
+});
+
+$('#profile-tab-follow').bind('click', function(){
+
+    $(this).find('.pp_link_tags').addClass('pp_link_tab_active');
+
+     // PROFILE JOTS
+    $('#profile-jots').hide();
+
+    // PROFILE FOLLOW
+    $('#profile-follows').show();
+
+    // PROFILE TAGS
+    $('#profile-tags').hide();
+
+
 });
