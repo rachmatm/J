@@ -111,6 +111,7 @@ class User
   field :google_user_youtube_id, :type => String
   field :google_user_token, :type => String
   field :google_user_refresh_token, :type => String
+  field :google_user_token_expires_at, :type => DateTime
 
   # ---------------------------------------------------------------------------
   #

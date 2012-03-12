@@ -14,8 +14,11 @@ class GooglesController < ApplicationWithTokenController
                   :client_token_expires_at => Time.parse(@current_user['google_user_token_expires_at'])}
 
     client = YouTubeIt::OAuth2Client.new(parameters)
-    client.video_upload(File.open(params[:files].path), :title => "test",:description => 'some description', :category => 'People',:keywords => %w[cool blah test])
-    debugger
+    video_parameters = {:title => params[:title], :description => params[:description], :category => params[:category],:keywords => params[:keywords].split(", ")}
+    client.video_upload(File.open(params[:files].path), video_parameters)
     redirect_to upload_video_googles_path
+  rescue
+    client.refresh_access_token!
+    redirect_to upload_video_googles_path, :error => "Something went wrong, or some fields are empty, please try again"
   end
 end
