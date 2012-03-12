@@ -1,28 +1,77 @@
 .people_search_result{
-z-index:20;}
+  z-index:20;}
 
 .update_icon{
-background: url("/assets/update-icon-notactive.png") no-repeat 0 0 transparent;
-width:17px;
-height:20px;
-vertical-align: middle;}
+  background: url("/assets/update-icon-notactive.png") no-repeat 0 0 transparent;
+  width:17px;
+  height:20px;
+  vertical-align: middle;}
 
 
 .r-notification-tab-active .update_icon{
-background-image: url("/assets/update-icon-active.png");}
+  background-image: url("/assets/update-icon-active.png");}
 
 .r-notification-tab{
-color: #FFFFFF;
-font-family: "UniSansSemiBoldRegular","HelveticaCE55RomanRegular, Arial,sans serif";
-font-size: 16px;
-line-height: 30px;
-vertical-align: middle;
- margin-right: -8px;}
+  color: #FFFFFF;
+  font-family: "UniSansSemiBoldRegular","HelveticaCE55RomanRegular, Arial,sans serif";
+  font-size: 16px;
+  line-height: 30px;
+  vertical-align: middle;
+  margin-right: -8px;}
 
 .update_text{
-display:none;
-vertical-align: middle;
-padding-right:8px;}
+  display:none;
+  vertical-align: middle;
+  padding-right:8px;}
 
 .r-notification-tab-active .update_text{
-display: inline-block;}
+  display: inline-block;}
+
+.main-registration-form-field-alert label{
+  float: none;
+  font-family: "HelveticaNeue","HelveticaCE55RomanRegular,Arial,sans serif";
+  font-size: 12px;
+  line-height: 14px;}
+
+.main-registration-form-field-alert .error{
+  color: #E24C4B;}
+
+
+.alert-message {
+  background-color: #EEDC94;
+  background-image: -moz-linear-gradient(center top , #FCEEC1, #EEDC94);
+  background-repeat: repeat-x;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-radius: 4px 4px 4px 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+  color: #404040;
+  margin-bottom: 18px;
+  padding: 7px 15px;
+  position: relative;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);}
+
+.btn.danger, .alert-message.danger, .btn.danger:hover, .alert-message.danger:hover, .btn.error, .alert-message.error, .btn.error:hover, .alert-message.error:hover, .btn.success, .alert-message.success, .btn.success:hover, .alert-message.success:hover, .btn.info, .alert-message.info, .btn.info:hover, .alert-message.info:hover {
+  color: #FFFFFF;}
+
+.btn.danger, .alert-message.danger, .btn.error, .alert-message.error {
+  background-color: #C43C35;
+  background-image: -moz-linear-gradient(center top , #EE5F5B, #C43C35);
+  background-repeat: repeat-x;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
+
+.btn.info, .alert-message.info {
+  background-color: #339BB9;
+  background-image: -moz-linear-gradient(center top , #5BC0DE, #339BB9);
+  background-repeat: repeat-x;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
+
+.alert-message ul{
+  font-size: 0.9em;
+  padding: 0 0 0 15px;}
+
+.alert-message h1{
+  font-size: 1em;}
