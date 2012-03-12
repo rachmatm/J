@@ -18,7 +18,7 @@ class GooglesController < ApplicationWithTokenController
     client.video_upload(File.open(params[:files].path), video_parameters)
     redirect_to upload_video_googles_path
   rescue
-    client.refresh_access_token!
+    client.refresh_access_token! if client.present?
     redirect_to upload_video_googles_path, :error => "Something went wrong, or some fields are empty, please try again"
   end
 end
