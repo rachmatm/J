@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
     hydra.queue(send_request)
     hydra.run
 
+
     # TODO : need a better logger, notifier is better
     response = send_request.response
 
@@ -56,5 +57,31 @@ class ApplicationController < ActionController::Base
       'error' => "Terminating Request to API, raised unrecoverable error :("}
   end
 
-  
+  # TOKEN
+  def set_token(hash_of_data, remember_me = nil)
+    session[:token] = Hash.new
+    session[:token].merge! hash_of_data
+    session[:token][:last_input_time] = Time.now
+    session[:token][:remember_me] = true if remember_me.present?
+  end
+
+  def unset_token
+    session[:token] = nil
+  end
+
+  def get_token
+    session[:token]
+  end
+
+  def token_auth?
+    if (get_token.present? and (30.minutes.from_now get_token[:last_input_time]) > Time.now) || (get_token.present? and get_token[:remember_me].present?)
+      true
+    else
+      false
+    end
+  end
+
+  def render_500
+    render :status => 500, :file => Rails.root.join('public/500-api.html'), :content_type => 'text/html', :layout => nil
+  end
 end

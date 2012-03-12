@@ -1,0 +1,21 @@
+require 'oauth2'
+
+class GooglesController < ApplicationWithTokenController
+  def upload_video
+
+  end
+
+  def upload_video_action
+    parameters = {:client_access_token => @current_user['google_user_token'],
+                  :client_refresh_token => @current_user['google_user_refresh_token'],
+                  :client_id => GOOGLE_CLIENT_ID,
+                  :client_secret => GOOGLE_CLIENT_SECRET ,
+                  :dev_key => GOOGLE_YT_DEV_KEY,
+                  :client_token_expires_at => Time.parse(@current_user['google_user_token_expires_at'])}
+
+    client = YouTubeIt::OAuth2Client.new(parameters)
+    client.video_upload(File.open(params[:files].path), :title => "test",:description => 'some description', :category => 'People',:keywords => %w[cool blah test])
+    debugger
+    redirect_to upload_video_googles_path
+  end
+end

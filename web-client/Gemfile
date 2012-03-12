@@ -35,3 +35,12 @@ gem 'jquery-rails'
 
 # To use debugger
 gem 'ruby-debug19', :require => 'ruby-debug'
+
+# Typhoeus runs HTTP requests in parallel while cleanly encapsulating handling logic.
+gem 'typhoeus'
+
+# Twitter login
+gem 'omniauth-twitter'
+
+# Youtube upload
+gem 'youtube_it'

@@ -143,9 +143,10 @@ class Authentication
         :username => google_profile_response['username'][0],
         :google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1')
 
-      user.update_attributes :token => jotky_token, :google_user_token => google_token
+      user.update_attributes :token => jotky_token, :google_user_token => google_token, :google_user_token_expires_at => Time.now + google_token_response['expires_in']
+      user.update_attributes :google_user_refresh_token => google_token_response['refresh_token'] if google_token_response['refresh_token'].present?
 
-      return "http://localhost:5000/omniauth/authenticate_google?username=#{user.username}&jotky_token=#{jotky_token}"
+      return "http://localhost:5000/omniauth/authenticate_google?username=#{user.username}&jotky_token=#{user.token}"
     end
   end
 end
