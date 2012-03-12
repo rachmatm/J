@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
       'error' => "Terminating Request to API, raised unrecoverable error :("}
   end
 
-  # TOKEN
+  # AUTH
   def set_token(hash_of_data, remember_me = nil)
     session[:token] = Hash.new
     session[:token].merge! hash_of_data
@@ -82,6 +82,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_500
-    render :status => 500, :file => Rails.root.join('public/500-api.html'), :content_type => 'text/html', :layout => nil
+    render :status => 500, :file => Rails.root.join('public/500.html'), :content_type => 'text/html', :layout => nil
+  end
+
+  # HTML error respond template
+  def respond_not_found
+    render :file => "#{Rails.root}/public/404.html", :status => :not_found, :content_type => 'text/html'
   end
 end

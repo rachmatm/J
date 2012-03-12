@@ -33,6 +33,10 @@ WebClient::Application.routes.draw do
   get 'profile/other' => 'welcomes#profile_other', :as => 'profile_other'
   
   get 'inbox' => 'welcomes#inbox', :as => 'inbox'
-  
- 
+
+  get 'new-index' => 'welcomes#new_index'
+
+
+  resource :authentications, :path => 'authentication', :only => [:create]
+  resource :registrations, :path => 'registration', :only => [:create]
 end

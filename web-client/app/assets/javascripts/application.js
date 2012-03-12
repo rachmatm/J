@@ -10,15 +10,15 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-// _require json2
+//= require json2
 //= require jquery
-// _require underscore
-// _require backbone
-// _require_tree ./lib
-// _require_tree ./config
-// _require_tree ./model
-// _require_tree ./collection
-// _require_tree ./view
-// _require app.js
+//= require underscore
+//= require backbone
+//= require_tree ./lib
+//= require_tree ./config
+//= require_tree ./model
+//= require_tree ./collection
+//= require_tree ./view
+//= require app.js
 
 //= require_tree ./old_scripts
