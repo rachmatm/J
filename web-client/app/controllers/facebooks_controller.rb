@@ -12,6 +12,10 @@ class FacebooksController < ApplicationWithTokenController
       redirect_to status_facebooks_path, :notice => post_facebook_status_response['notice']
     end
   end
+
+  def upload_photo
+
+  end
   
   def upload_photo_create
 

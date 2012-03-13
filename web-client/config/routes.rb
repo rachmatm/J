@@ -23,6 +23,8 @@ WebClient::Application.routes.draw do
   resource :facebooks, :only => [:status, :post_status, :upload_video, :upload_video_create] do
     get '/status' => 'facebooks#status', :as => 'status'
     post '/status' => 'facebooks#post_status'
+    get '/upload_photo' => 'facebooks#upload_photo', :as => 'upload_photo'
+    post '/upload_photo' => 'facebooks#upload_photo_create'
     get '/upload_video' => 'facebooks#upload_video', :as => 'upload_video'
     post '/upload_video' => 'facebooks#upload_video_create'
   end
