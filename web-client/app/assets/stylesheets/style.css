@@ -226,7 +226,9 @@
 }
 
 .jot_icon span.img_1{
-  background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;
+ 
+ background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;
+
   border: medium none;
   float: left;
   height: 18px;
@@ -276,7 +278,7 @@ span.img_2{
   -moz-border-radius: 5px 5px 0 0;
   -webkit-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
-  background: none repeat scroll 0 0 #dee2e2;
+  background: none repeat scroll 0 0 #cccccc;
   color: #919191;
   cursor: pointer;
   float: right;
@@ -287,7 +289,7 @@ span.img_2{
   text-align: center;
   text-decoration: none;
   width: 170px;
-  text-decoration:none
+  text-decoration:none; text-shadow:0 1px 0 #e2e1e1;
 }
 .sign_up:hover { text-decoration:none}
 .login_content {
@@ -836,7 +838,7 @@ span.img_2{
 ----------------------------------------------------------------------------------------------------*/
 
 .box_signin {
-  background: none repeat scroll 0 0 #dee2e2 ;
+  background: none repeat scroll 0 0 #cccccc ;
   border-bottom: 1px solid #ABABAB;
   height: 217px;
   width: 468px;
@@ -847,12 +849,12 @@ span.img_2{
   display: block;
   font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 14px;
-  padding: 20px 0 0  16px;
+  padding: 18px 0 0 16px;
   text-align: left;
 }
 
 .username {
-  padding: 18px 0 0 50px;
+  padding: 17px 0 5px 50px;
 }
 
 .password {
@@ -868,7 +870,7 @@ span.img_2{
   font-size: 18px;
   line-height: 35px;
   text-shadow: 1px 1px #CCCCCC;
-  width: 100px;;
+  width: 94px;;
 }
 
 .username input[type=text],
@@ -878,13 +880,13 @@ span.img_2{
   border-radius: 5px;
   border: 1px solid #97A7A8;
   font-family: "HelveticaNeue Light","HelveticaNeueLT55RomanRegular",Arial,sans serif;
-  height: 15px;
+  height: 13px;
   padding: 10px 7px;
-  width: 255px;
+  width: 240px;
 }
 
 .remember_login {
-  padding: 20px 0 0 50px;
+  padding: 18px 0 0 50px;
 }
 
 .remember_login input[type=checkbox]{
@@ -906,7 +908,7 @@ span.img_2{
   display: block;
   font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 10px;
-  padding-right: 50px;
+  padding-right: 70px;
 }
 
 .login_button input[type=submit]{
@@ -921,8 +923,8 @@ span.img_2{
   font-family: "UniSansSemiBold",Arial,sans serif;
   font-size: 18px;
   height: 35px;
-  margin: 10px 50px 0 0;
-  padding: 0 18px 2px 18px;
+  margin: 10px 70px 0 0;
+  padding: 0 10px 2px;
   text-shadow: 1px 1px #333333;
 }
 
@@ -930,7 +932,7 @@ span.img_2{
   -moz-border-radius: 0 0 0 8px;
   -webkit-border-radius: 0 0 0 8px;
   border-radius: 0 0 0 8px;
-  background: none repeat scroll 0 0 #dee2e2 ;
+  background: none repeat scroll 0 0 #cccccc ;
   border-top: 1px solid #FFFFFF;
   height: 46px;
   width: 468px;
@@ -938,7 +940,7 @@ span.img_2{
 
 .login_with {
   float: right;
-  margin: 6px 50px 0 0;
+  margin: 6px 70px 0 0;
 }
 
 .login_with p{
@@ -985,14 +987,15 @@ a.twitter{
   line-height: 30px;
   text-align: center;
   text-decoration: none;
-  width: 170px;
+  width: 170px; text-shadow:0 1px 0 #E2E1E1;
+  
 }
 
 .login_path {
   -moz-border-radius: 0 0 5px 0;
   -webkit-border-radius: 0 0 5px 0;
   border-radius: 0 0 5px 0;
-  background: url("/assets/login-path.png") repeat scroll 0 0 transparent;
+  background: url("/assets/login-path.png") repeat scroll 0 0 #CCCCCC;
   height: 245px;
   padding: 20px 0 0;
   position: relative;
@@ -1009,7 +1012,7 @@ a.twitter{
   padding: 0 0 0 20px;
   position: absolute;
   text-align: left;
-  text-shadow: 1px 1px #333333;
+  text-shadow: 1px 1px #588698;
 }
 
 .signup_button {
@@ -1040,7 +1043,7 @@ a.twitter{
   padding: 0 0 0 20px;
   position: absolute;
   text-align: left;
-  text-shadow: 1px 1px #333333;
+  text-shadow: 1px 1px #588698;
 }
 
 .login_separator {
@@ -2408,7 +2411,6 @@ a.twitter{
   color: #fff;
   font-family: "HelveticaCE55RomanBold",Arial,sans serif;
   font-size: 14px;
-  font-weight: bold;
   line-height: 31px;
   padding-left: 10px;
 }
@@ -4209,6 +4211,7 @@ a.connect_cross{
   float: left;
   font-size: 18px;
   margin-top: 10px;
+ 
 }
 
 .faq_description {
@@ -4251,6 +4254,7 @@ a.connect_cross{
   font-size: 24px;
 }
 
+ 
 .compose_new_message {
   border-radius: 5px;
   -moz-border-radius: 5px;
@@ -4259,12 +4263,14 @@ a.connect_cross{
   cursor: pointer;
   display: block;
   float: left;
-  font-family: "UniSansSemiBoldRegular","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-family: "UniSansSemiRegular","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 12px;
   height: 28px;
   line-height: 26px;
   margin: 15px 12px 0;
   padding: 0px 10px;
+  text-shadow:0 1px 0 #e8ecec;
+  
 }
 
 .compose_new_message:hover {
@@ -4274,6 +4280,7 @@ a.connect_cross{
 .compose_new_message a:hover {text-decoration:none;}
 .compose_new_message_active {
   background: url("/assets/basic-gray-click.png") repeat-x;
+  
 }
 
 .compose_new_message span {
@@ -4300,7 +4307,7 @@ a.connect_cross{
   border-bottom: 1px solid #DEDEDE;
   cursor: pointer;
   float: left;
-  padding: 10px 0;
+  padding: 8px 0;
   width: 100%;
 }
 
@@ -4347,14 +4354,15 @@ a.connect_cross{
 
 .date_user span {
   color: #2ba4ab;
-  font-size: 13px;
+  font-size: 11px;
+  margin-right:5px;
 }
 
 .messages_left_path {
   float: left;
   margin-left: 10px;
 }
-
+.padding_bottom_five{ padding-bottom:4px}
 .messages_left_path img{
   float: left;
   height: 27px;
@@ -4398,7 +4406,6 @@ a.connect_cross{
   color: #B2B2B2;
   float: left;
   font-size: 11px;
-  line-height: 30px;
   padding-right: 5px;
 }
 
@@ -4407,7 +4414,6 @@ a.connect_cross{
   float: left;
   font-size: 11px;
   font-weight: bold;
-  line-height: 30px;
   padding-right: 5px;
 }
 
@@ -4416,8 +4422,9 @@ a.connect_cross{
   display: block;
   float: right !important;
   height: 5px;
-  margin: 13px 0 0 10px;
+  margin: 6px 0 0 10px;
   width: 10px;
+  
 }
 
 .messages_up_arrow {
@@ -4425,7 +4432,7 @@ a.connect_cross{
   display: block;
   float: right !important;
   height: 5px;
-  margin: 13px 0 0 10px;
+  margin: 6px 0 0 10px;
   width: 10px;
 }
 
@@ -4766,7 +4773,7 @@ a.connect_cross{
 .hot_stuff_text {
   color: #333333;
   font-size: 25px;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 
 .hot_stuff_header {
@@ -5256,9 +5263,9 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
-  padding-left: 9px;
+  
 }
-
+.pad_core {padding-left: 9px;}
 .win.chrome .first_badge,
 .win.chrome .second_badge,
 .win.chrome .third_badge,
@@ -5295,7 +5302,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
-  padding-left: 9px;
+  
 }
 
 .third_badge {
@@ -5313,7 +5320,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
-  padding-left: 9px;
+  
 }
 
 .stuff_hover .hot_jot_hover{
@@ -5336,14 +5343,16 @@ a.connect_cross{
   top: 64px;
   width: 561px;
   z-index: 100;
+  text-decoration: none;
 }
 
 .hot_jot_hover a {
   color: #FFFFFF;
   font-size: 20px;
   font-weight: bold;
-  text-align: center;
+  text-align: center; 
 }
+
 
 .previous_icon {
   float: left;
@@ -5363,6 +5372,7 @@ a.connect_cross{
   top: 50%;
   width: 18px;
 }
+
 
 .next_icon {
   float: left;
@@ -5385,6 +5395,7 @@ a.connect_cross{
 
 .hot_people ul {
   float: left;
+  padding-left:5px;
 }
 
 .previous_media {
@@ -5395,7 +5406,42 @@ a.connect_cross{
   height: 160px;
   width: 28px;
 }
-
+.previous_icon2{float: left;
+  height: 265px;
+  width: 25px;}
+   .next_icon2  {float: left;
+  height: 265px;
+  width: 25px;}
+  
+.previous_icon2 a{
+background: url("/assets/sprite.png") no-repeat scroll -649px -50px transparent;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 25px;
+	
+    left: 0;
+    position: absolute;
+    top: 60%;
+    width: 18px;
+}
+.next_icon2 a {
+  background: url("/assets/sprite.png") no-repeat scroll -672px -50px transparent;
+  cursor: pointer;
+  display: block;
+  float: right;
+  height: 23px;
+  right: 0;
+  margin-top: -12px;
+  position: absolute;
+  top: 60%;
+  width: 18px;
+}
+.previous_people2 {
+  height: 100px;
+  width: 25px; 
+}
+.nexticon2 { float:left;}
 
 /* END OF HOT STUFF
 ----------------------------------------------------------------------------------------------------*/
@@ -5431,13 +5477,13 @@ a.connect_cross{
         #cboxTitle{position:absolute; top:-20px; left:0; color:#ccc;}
         #cboxCurrent{position:absolute; top:-20px; right:0px; color:#ccc;}
         #cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}
-        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(images/controls.png) no-repeat top left; width:28px; height:65px; text-indent:-9999px;}
+        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(/assets/controls.png) no-repeat top left; width:28px; height:65px; text-indent:-9999px;}
         #cboxPrevious.hover{background-position:bottom left;}
-        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(images/controls.png) no-repeat top right; width:28px; height:65px; text-indent:-9999px;}
+        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(/assets/controls.png) no-repeat top right; width:28px; height:65px; text-indent:-9999px;}
         #cboxNext.hover{background-position:bottom right;}
         #cboxLoadingOverlay{background:#000;}
-        #cboxLoadingGraphic{background:url(images/loading.gif) no-repeat center center;}
-        #cboxClose{position:absolute; top:5px; right:5px; display:block; background:url(images/controls.png) no-repeat top center; width:38px; height:19px; text-indent:-9999px;}
+        #cboxLoadingGraphic{background:url(/assets/loading.gif) no-repeat center center;}
+        #cboxClose{position:absolute; top:5px; right:5px; display:block; background:url(/assets/controls.png) no-repeat top center; width:38px; height:19px; text-indent:-9999px;}
         #cboxClose.hover{background-position:bottom center;}
 
 #cboxCurrent {
@@ -6893,7 +6939,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
 
 .info_public_profile {
   float: left;
-  padding: 43px 0 0 15px;
+  padding: 37px 0 0 19px;
 }
 
 .pp_nickname {
@@ -6968,7 +7014,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
 
 .pp_tab {
   float: left;
-  min-height: 60px;
+  min-height: 45px;
 }
 
 .pp_choice_button {
@@ -7045,7 +7091,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
   display: block;
   float: left;
   font-size: 14px;
-  font-weight: bold;
+  font-weight:normal;
   margin: 0 20px;
   padding-bottom: 5px;
 }

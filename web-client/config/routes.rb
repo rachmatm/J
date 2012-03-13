@@ -45,7 +45,9 @@ WebClient::Application.routes.draw do
   get 'hot_stuff' => 'welcomes#hot_stuff', :as => 'hot_stuff'
   get 'member'    => 'welcomes#member', :as => 'member'
   get 'profile'   => 'welcomes#profile', :as => 'profile'
-  get 'profile/other' => 'welcomes#profile_other', :as => 'profile_other'
+  get 'profile_other' => 'welcomes#profile_other', :as => 'profile_other'
+
+  
   
   get 'inbox' => 'welcomes#inbox', :as => 'inbox'
 
