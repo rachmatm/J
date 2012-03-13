@@ -30,7 +30,7 @@ display: inline-block;}
 
 
 .previous_icon a:hover, .next_icon a:hover , .top_button a:hover , .side-left a:hover,
-.messages_right_path a:hover{ text-decoration: none}
+.messages_right_path a:hover, .previous_people2 a:hover, .about_top a:hover{ text-decoration: none}
 
  
 
@@ -82,4 +82,4 @@ display: inline-block;}
 
 .alert-message h1{
   font-size: 1em;}
-
+.pp_people_block {}

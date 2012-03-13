@@ -103,12 +103,14 @@ jQuery(function($){
 
    $("#signUp").click(function(){
     $(this).addClass('login');
+    $('#r-welcome-content').hide();
     $(".search").hide();
     $(".side-left").hide();
     $(".search_tab").hide();
     $(".searchResult_content_logged").hide();
     $(".login_content").show();
-    $(".welcome_content").show();
+   // $(".welcome_content").show();
+   $('#r-login-anonymous').show();
     return false
   });
   
@@ -203,14 +205,14 @@ jQuery(function($){
     $('.account_setting_link').removeClass('bottom_links_active');
     return false;
   });
-  
+  */
   $('.account_setting_link').click(function(){
    $('.change_tab').toggle();
    $(this).addClass('bottom_links_active');
     $('.pub_profile_link').removeClass('bottom_links_active');
     return false;
   });
-*/
+
 
 
   $(".parent_empty_profile").hide();
@@ -227,7 +229,7 @@ jQuery(function($){
   $('a[rel*=facebox]').facebox({
     loadingImage : '../images/loading.gif',
     closeImage   : '../images/closelabel.png'
-  })
+  });
   
   $('.empty_bio_field').hide();
   $('.empty_bio_text').click(function(){
@@ -390,7 +392,18 @@ jQuery(function($){
   }).mouseout(function(){
     $(this).find('.next').hide();
   });
-  
+
+   $('.previous_icon2').mouseover(function(){
+    $(this).find('.previous').show();
+  }).mouseout(function(){
+    $(this).find('.previous').hide();
+  });
+
+ $('.next_icon2').mouseover(function(){
+    $(this).find('.next').show();
+  }).mouseout(function(){
+    $(this).find('.next').hide();
+  });
   $("a[rel='image_popup']").colorbox();
   $("#click").click(function(){ 
     $('#click').css({
@@ -864,7 +877,7 @@ $('#signUp').bind('click', function(){
   $('#r-jot-tab').find('.jot_text').removeClass('jot_text_active');
   $('#r-jot-result').hide();
   $('#r-jot-result-detail').hide();
-
+  $('#r-login-anonymous').hide();
   //search
   $('#r-search-tab').find('.search_text').addClass('search_text_not_active');
   $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
@@ -876,6 +889,9 @@ $('#signUp').bind('click', function(){
   $('#signUp').addClass('login');
 
   $('#r-signup-content').hide();
+
+  //welcome note
+  $('#r-welcome-content').hide();
 });
 
 
