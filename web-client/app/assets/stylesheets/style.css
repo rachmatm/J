@@ -226,7 +226,9 @@
 }
 
 .jot_icon span.img_1{
-  background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;
+ 
+ background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;
+
   border: medium none;
   float: left;
   height: 18px;
@@ -4209,6 +4211,7 @@ a.connect_cross{
   float: left;
   font-size: 18px;
   margin-top: 10px;
+ 
 }
 
 .faq_description {
@@ -4259,12 +4262,14 @@ a.connect_cross{
   cursor: pointer;
   display: block;
   float: left;
-  font-family: "UniSansSemiBoldRegular","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-family: "UniSansSemiRegular","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 12px;
   height: 28px;
   line-height: 26px;
   margin: 15px 12px 0;
   padding: 0px 10px;
+  text-shadow:0 1px 0 #e8ecec;
+  
 }
 
 .compose_new_message:hover {
@@ -4274,6 +4279,7 @@ a.connect_cross{
 .compose_new_message a:hover {text-decoration:none;}
 .compose_new_message_active {
   background: url("/assets/basic-gray-click.png") repeat-x;
+  
 }
 
 .compose_new_message span {
@@ -4300,7 +4306,7 @@ a.connect_cross{
   border-bottom: 1px solid #DEDEDE;
   cursor: pointer;
   float: left;
-  padding: 10px 0;
+  padding: 8px 0;
   width: 100%;
 }
 
@@ -4347,14 +4353,15 @@ a.connect_cross{
 
 .date_user span {
   color: #2ba4ab;
-  font-size: 13px;
+  font-size: 11px;
+  margin-right:5px;
 }
 
 .messages_left_path {
   float: left;
   margin-left: 10px;
 }
-
+.padding_bottom_five{ padding-bottom:4px}
 .messages_left_path img{
   float: left;
   height: 27px;
@@ -4398,7 +4405,6 @@ a.connect_cross{
   color: #B2B2B2;
   float: left;
   font-size: 11px;
-  line-height: 30px;
   padding-right: 5px;
 }
 
@@ -4407,7 +4413,6 @@ a.connect_cross{
   float: left;
   font-size: 11px;
   font-weight: bold;
-  line-height: 30px;
   padding-right: 5px;
 }
 
@@ -4416,8 +4421,9 @@ a.connect_cross{
   display: block;
   float: right !important;
   height: 5px;
-  margin: 13px 0 0 10px;
+  margin: 6px 0 0 10px;
   width: 10px;
+  
 }
 
 .messages_up_arrow {
@@ -4425,7 +4431,7 @@ a.connect_cross{
   display: block;
   float: right !important;
   height: 5px;
-  margin: 13px 0 0 10px;
+  margin: 6px 0 0 10px;
   width: 10px;
 }
 

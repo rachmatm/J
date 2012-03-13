@@ -29,7 +29,8 @@
 display: inline-block;}
 
 
-.previous_icon a:hover, .next_icon a:hover , .top_button a:hover , .side-left a:hover{ text-decoration: none}
+.previous_icon a:hover, .next_icon a:hover , .top_button a:hover , .side-left a:hover,
+.messages_right_path a:hover{ text-decoration: none}
 
  
 

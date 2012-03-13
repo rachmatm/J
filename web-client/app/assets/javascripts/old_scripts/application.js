@@ -196,7 +196,8 @@ jQuery(function($){
   $("#tech_child_category").hide();
   $("#graphic_child_category").hide();
   $("#fhm_child_category").hide();
-  
+
+  /*
   $('.pub_profile_link').click(function(){
     $(this).addClass('bottom_links_active');
     $('.account_setting_link').removeClass('bottom_links_active');
@@ -209,7 +210,7 @@ jQuery(function($){
     $('.pub_profile_link').removeClass('bottom_links_active');
     return false;
   });
-
+*/
 
 
   $(".parent_empty_profile").hide();
@@ -364,7 +365,7 @@ jQuery(function($){
   
   $('.compose_message_form').hide();
   $('.compose_new_message').click(function(){
-    $(this).addClass('compose_new_message_active');
+    $(this).toggleClass('compose_new_message_active');
     $(this).siblings('.compose_message_form').toggle();
     return false;
   });
@@ -820,6 +821,7 @@ jQuery(function($){
 $('#r-jot-tab').bind('click', function(){
   //jot
   $(this).find('.jot_text').addClass('jot_text_active');
+  $('#r-jot-tab').find('.img_1').addClass('img_1_active');
   $('.jot-tab-content').show();
   $('#r-jot-result').show();
   $('#r-jot-result-detail').hide();
@@ -848,6 +850,7 @@ $('#r-jot-tab').bind('click', function(){
   $('#r-notif-mode-path').hide();
   $('#r-notification-tab').removeClass('r-notification-tab-active');
 
+
   //profile
   $('#r-profile-content').hide();
 
@@ -875,12 +878,43 @@ $('#signUp').bind('click', function(){
   $('#r-signup-content').hide();
 });
 
+
+$('#user_logged').bind('click', function(){
+  // Main Profile Show
+ $('#r-profile-content').show();
+ $('.parent_empty_profile').show();
+
+  // Hide All
+  //notifikasi
+  $('#r-notif-mode-path').hide();
+  $('#r-notification-tab').removeClass('r-notification-tab-active');
+
+  //jot
+  $('.jot-tab-content').hide();
+  $('.jot_mode_hide').removeClass('show_more show_add show_upload show_tags').children().hide();
+  $('.jot_buttons_path').find('a').removeClass('jot_click jot_click_active jot_buttons_active');
+  $('#r-jot-tab').find('.jot_text').removeClass('jot_text_active');
+  $('#r-jot-result').hide();
+  $('#r-jot-result-detail').hide();
+
+  //search
+  $('#r-search-tab').find('.search_text').addClass('search_text_not_active');
+  $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
+  $('.jot-search-content').hide();
+  $('#r-people-search-result').hide();
+});
+
+
 $('#r-search-tab').bind('click', function(){
   //jot
   $('.jot-tab-content').hide();
   $('.jot_mode_hide').removeClass('show_more show_add show_upload show_tags').children().hide();
   $('.jot_buttons_path').find('a').removeClass('jot_click jot_click_active jot_buttons_active');
   $('#r-jot-tab').find('.jot_text').removeClass('jot_text_active');
+  $('#r-jot-tab').find('.img_1').removeClass('img_1_active');
+
+
+
   $('#r-jot-result').hide();
   $('#r-jot-result-detail').hide();
 
@@ -953,25 +987,7 @@ $('#r-notification-tab').bind('click', function(){
   $('#r-welcome-content').hide();
 });
 
-$('#user_logged').bind('click', function(){
-  //notifikasi
-  $('#r-notif-mode-path').hide();
-  $('#r-notification-tab').removeClass('r-notification-tab-active');
-  
-  //jot
-  $('.jot-tab-content').hide();
-  $('.jot_mode_hide').removeClass('show_more show_add show_upload show_tags').children().hide();
-  $('.jot_buttons_path').find('a').removeClass('jot_click jot_click_active jot_buttons_active');
-  $('#r-jot-tab').find('.jot_text').removeClass('jot_text_active');
-  $('#r-jot-result').hide();
-  $('#r-jot-result-detail').hide();
 
-  //search
-  $('#r-search-tab').find('.search_text').addClass('search_text_not_active');
-  $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
-  $('.jot-search-content').hide();
-  $('#r-people-search-result').hide();
-});
 
 
 
