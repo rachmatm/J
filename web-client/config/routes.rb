@@ -9,6 +9,15 @@ WebClient::Application.routes.draw do
   
   resource :status, :only => [:index], :path => 'status'
  
+  resource :omniauth, :only => [:google, :authenticate_google] do
+    get '/google' => 'omniauth#google', :as => 'google'
+    get '/authenticate_google' => 'omniauth#authenticate_google', :as => 'authenticate_google'
+  end
+
+  resource :googles, :only => [:upload_video, :upload_video_action] do
+    get '/upload_video' => 'googles#upload_video', :as => 'upload_video'
+    post '/upload_video' => 'googles#upload_video_action'
+  end
 
   get 'contact' => 'contacts#index', :as => 'contact'
   get 'goodies' => 'goodies#index', :as => 'goodies'

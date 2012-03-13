@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
     hydra.queue(send_request)
     hydra.run
 
+
     # TODO : need a better logger, notifier is better
     response = send_request.response
 
@@ -78,6 +79,10 @@ class ApplicationController < ActionController::Base
     else
       false
     end
+  end
+
+  def render_500
+    render :status => 500, :file => Rails.root.join('public/500.html'), :content_type => 'text/html', :layout => nil
   end
 
   # HTML error respond template
