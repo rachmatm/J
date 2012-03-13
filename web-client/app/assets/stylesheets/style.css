@@ -5336,14 +5336,16 @@ a.connect_cross{
   top: 64px;
   width: 561px;
   z-index: 100;
+  text-decoration: none;
 }
 
 .hot_jot_hover a {
   color: #FFFFFF;
   font-size: 20px;
   font-weight: bold;
-  text-align: center;
+  text-align: center; 
 }
+
 
 .previous_icon {
   float: left;
@@ -6893,7 +6895,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
 
 .info_public_profile {
   float: left;
-  padding: 43px 0 0 15px;
+  padding: 37px 0 0 19px;
 }
 
 .pp_nickname {
@@ -6968,7 +6970,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
 
 .pp_tab {
   float: left;
-  min-height: 60px;
+  min-height: 45px;
 }
 
 .pp_choice_button {
@@ -7045,7 +7047,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
   display: block;
   float: left;
   font-size: 14px;
-  font-weight: bold;
+  font-weight:normal;
   margin: 0 20px;
   padding-bottom: 5px;
 }

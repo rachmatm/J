@@ -58,3 +58,6 @@ gem 'twitter-text'
 
 # For mailing users
 gem 'pony'
+
+# For parsing incoming XML
+gem 'xml-simple'

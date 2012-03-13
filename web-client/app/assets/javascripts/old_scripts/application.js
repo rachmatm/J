@@ -113,12 +113,12 @@ jQuery(function($){
   });
   
   /* -- REPLACE MIDLE CONTENT LANDING PAGE CONTENT TO SIGN UP CONTENT -- */
-  $(".signUp_content").hide();
-  $("#green_signUp").click(function(){
-    $(".middle_content").hide();    
-    $(".signUp_content").show();
-    return false
-  });
+  //$(".signUp_content").hide();
+  //$("#green_signUp").click(function(){
+  //  $(".middle_content").hide();
+  //  $(".signUp_content").show();
+  // return false
+  //});
   
   /* -- REPLACE MIDLE CONTENT LANDING PAGE CONTENT TO SEARCH CONTENT -- */
   $(".search_tab").hide();
@@ -972,10 +972,6 @@ $('#user_logged').bind('click', function(){
   $('.jot-search-content').hide();
   $('#r-people-search-result').hide();
 });
-
-
-
-
 
 
 

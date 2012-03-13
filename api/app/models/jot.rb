@@ -18,8 +18,8 @@ class Jot
   embeds_many :kudos
   belongs_to :user
   has_and_belongs_to_many :user_favorites, :class_name => 'User', :inverse_of => :jot_favorites
-  has_and_belongs_to_many :user_thumbs_up, :class_name => 'User'
-  has_and_belongs_to_many :user_thumbs_down, :class_name => 'User'
+  has_and_belongs_to_many :user_thumbs_up, :class_name => 'User', :inverse_of => :jot_thumbs_up
+  has_and_belongs_to_many :user_thumbs_down, :class_name => 'User', :inverse_of => :jot_thumbs_down
   has_and_belongs_to_many :attachments
   accepts_nested_attributes_for :attachments
 
@@ -59,7 +59,7 @@ class Jot
 
   #
   scope :page, ->(page, per_page) { skip(per_page.to_i * (page.to_i - 1)).limit(per_page.to_i)}
-  scope :order, order_by([[:created_at, :desc]])
+  scope :order_by_default, order_by([[:created_at, :desc]])
 
   # ---------------------------------------------------------------------------
   #

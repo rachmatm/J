@@ -17,7 +17,6 @@ class User
   
   # -- Private Message
   has_many :messages, :foreign_key => :sender_id
-  has_and_belongs_to_many :message_recipients, :class_name => "User", :inverse_of => :user_recipients
 
 
   # -- Nest
@@ -27,9 +26,10 @@ class User
 
   #has_many :favorites
   #has_many :kudos
+  has_many :nests
   has_and_belongs_to_many :jot_favorites, :class_name => "Jot", :inverse_of => :user_favorites
-  has_and_belongs_to_many :jot_thumbs_up, :class_name => "Jot"
-  has_and_belongs_to_many :jot_thumbs_down, :class_name => "Jot"
+  has_and_belongs_to_many :jot_thumbs_up, :class_name => "Jot", :inverse_of => :user_thumbs_up
+  has_and_belongs_to_many :jot_thumbs_down, :class_name => "Jot", :inverse_of => :user_thumbs_down
 
   # Mounting the carrierwave methods into the 'avatar' column on
   mount_uploader :avatar, AvatarUploader, :mount_on => :avatar
@@ -44,8 +44,6 @@ class User
   #
   # -- Account Information
   field :username, :type => String
-  field :facebook_id, :type => String
-  field :twitter_id, :type => String
   field :realname, :type => String
   field :bio, :type => String
   field :url, :type => String
@@ -99,6 +97,20 @@ class User
   field :upload_videos_to_facebook, :type => Boolean, :default => false
   field :upload_videos_to_youtube, :type => Boolean, :default => false
   field :upload_pictures_to_facebook, :type => Boolean, :default => false
+  #
+  # -- Facebook
+  field :facebook_id, :type => String
+  field :facebook_token, :type => String
+  #
+  # -- Twitter
+  field :twitter_id, :type => String
+  field :twitter_user_token, :type => String
+  field :twitter_user_secret, :type => String
+
+  # -- Google
+  field :google_user_youtube_id, :type => String
+  field :google_user_token, :type => String
+  field :google_user_refresh_token, :type => String
 
   # ---------------------------------------------------------------------------
   #
@@ -112,7 +124,7 @@ class User
   # ---------------------------------------------------------------------------
   # 
   # -- Presence
-  validates_presence_of :realname, :username, :email
+  validates_presence_of :realname, :username
   #
   # -- Format
   validates_format_of :username, :with => /^[A-Za-z\d_]+$/, :message => "can only be alphanumeric with no spaces"
@@ -215,7 +227,8 @@ class User
 
   JOT_RELATION_PUBLIC = [
     :attachments,
-    :tags
+    :tags,
+    :user
   ]
 
   # -- Nest fields
@@ -327,7 +340,7 @@ class User
       _jots =  self.jots.find params[:id]
       request_query.merge! :total_jot => 1
     elsif params[:per_page].present? and params[:page].present?
-      _jots = self.jots.page(params[:page], params[:per_page]).order
+      _jots = Jot.any_of({"tag_ids" => {"$in" => self.tags.collect{|tag| tag.id}}}, {'user_id' => self.id}).page(params[:page], params[:per_page]).order_by_default
 
       request_query.merge!({
           :per_page => params[:per_page].to_i,
@@ -336,7 +349,7 @@ class User
           :total_page => (_jots.count / params[:per_page].to_f).ceil })
       
     else
-      _jots = self.jots.all.order
+      _jots = Jot.any_of({"tag_ids" => {"$in" => self.tags.collect{|tag| tag.id}}}, {'user_id' => self.id}).order_by_default
 
       request_query.merge! :total_jot => _jots.count
     end
@@ -355,12 +368,12 @@ class User
 
   def current_user_set_favorite_jot(jot_id)
     jot = Jot.find(jot_id)
-    self.jot_favorites.delete jot
 
     unless self.jot_favorites.include?(jot)
       self.jot_favorites << jot unless self.jot_favorites.include?(jot)
       JsonizeHelper.format :notice => "Jot is now in favorites"
     else
+      self.jot_favorites.delete jot
       return JsonizeHelper.format :notice =>  "Jot is not in favorites anymore"
     end
 
@@ -371,14 +384,13 @@ class User
   def current_user_set_thumbs_up_jot(jot_id)
     jot = Jot.find(jot_id)
 
-    if self.jot_thumbs_up.include?(jot)
-      self.jot_thumbs_up.delete jot
-    else
-      self.jot_thumbs_up << jot
-      self.jot_thumbs_down.delete jot
-    end
+    jot.user_thumbs_up.delete self
+    
+    jot.user_thumbs_up << self
+    
+    jot.user_thumbs_down.delete self
 
-    JsonizeHelper.format :notice => "Jot was thumbed up", :count => "The thumbs up now is #{self.jot_thumbs_up.count} and thumbs down is #{self.jot_thumbs_down.count}"
+    JsonizeHelper.format :notice => "Jot was thumbed up", :content => jot.user_thumbs_up
   rescue
     JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
@@ -386,14 +398,13 @@ class User
   def current_user_set_thumbs_down_jot(jot_id)
     jot = Jot.find(jot_id)
 
-    if self.jot_thumbs_down.include?(jot)
-      self.jot_thumbs_down.delete jot
-    else
-      self.jot_thumbs_down << jot
-      self.jot_thumbs_up.delete jot
-    end
+    jot.user_thumbs_down.delete self
+
+    jot.user_thumbs_down << self
+
+    jot.user_thumbs_up.delete self
     
-    return JsonizeHelper.format :notice => "Jot was thumbed down", :count => "The thumbs up now is #{self.jot_thumbs_up.count} and thumbs down is #{self.jot_thumbs_down.count}"
+    return JsonizeHelper.format :notice => "Jot was thumbed down", :content => jot.user_thumbs_down
   rescue
     return JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
@@ -591,8 +602,6 @@ class User
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
 
-
-
   def update_avatar(parameters)
     parameters[:selected_avatar] ||= 'jotky'
     parameters[:avatar_coord_w] ||= 400
@@ -642,14 +651,120 @@ class User
       return JsonizeHelper.format :content => private_message, :notice => "Private message Successfully Sent"
     end
   end
+
+# Favorites
+# ------------------------------------------------------------------------
+
+  def current_user_set_favorite_jot(jot_id)
+    jot = Jot.find(jot_id)
+
+    if self.jot_favorites.include?(jot)
+      self.jot_favorites.delete jot
+      JsonizeHelper.format :notice =>  "Jot is not in favorites anymore"
+    else
+      self.jot_favorites << jot
+      JsonizeHelper.format :notice => "Jot is now in favorites"
+    end
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
   
   def current_user_unset_private_message(id)
     private_message = Message.find(id)
     if private_message.destroy
-      return JsonizeHelper.format :content => "Message was sucessfully deleted"
+      JsonizeHelper.format :content => "Message was sucessfully deleted"
     end
   rescue
-    return JsonizeHelper.format :failed => true, :error => "Failed to delete message"
+    JsonizeHelper.format :failed => true, :error => "Failed to delete message"
+  end
+
+  def current_user_get_favorite_jot
+    if self.jot_favorites.present?
+      JsonizeHelper.format :content => self.jot_favorites
+    else
+      JsonizeHelper.format :failed => true, :error => "You don't have any favorite", :content => []
+    end
+  end
+
+# Thumbs
+# ------------------------------------------------------------------------
+
+  def current_user_set_thumbs_up_jot(jot_id)
+    jot = Jot.find(jot_id)
+    self.jot_thumbs_down.delete jot if self.jot_thumbs_down_ids.include?(jot.id)
+    self.jot_thumbs_up << jot unless self.jot_thumbs_up_ids.include?(jot.id)
+    JsonizeHelper.format :notice => "Jot was thumbed up", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
+
+  def current_user_set_thumbs_down_jot(jot_id)
+    jot = Jot.find(jot_id)
+    self.jot_thumbs_up.delete jot if self.jot_thumbs_up_ids.include?(jot.id)
+    self.jot_thumbs_down << jot unless self.jot_thumbs_down_ids.include?(jot.id)
+    JsonizeHelper.format :notice => "Jot was thumbed down", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
+
+  def current_user_get_thumbs_up_jot(jot_id)
+    jot = Jot.find(jot_id)
+    JsonizeHelper.format :content => jot.user_thumbs_up.count
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
+
+  def current_user_get_thumbs_down_jot(jot_id)
+    jot = Jot.find(jot_id)
+    JsonizeHelper.format :content => jot.user_thumbs_down.count
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
+
+# Nest
+# ------------------------------------------------------------------------
+
+  def current_user_set_nest(params)
+    params[:tags] = params[:tags].collect { |tag| Tag.find_or_create_by :name => tag } unless params[:tags].nil?
+    nest = self.nests.create params
+
+    if nest.errors.any?
+      JsonizeHelper.format :failed => true, :error => "Nest was not made, please try again", :errors => nest.errors.to_a
+    else
+      JsonizeHelper.format :notice => "Nest was successfully made"
+    end
+  end
+
+  def current_user_unset_nest(nest_id)
+    self.nests.find(nest_id).destroy
+    JsonizeHelper.format :notice => "Nest was deleted successfully"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest mentioned was not found"
+  end
+
+  def current_user_reset_nest(params, nest_id)
+    params[:name] ||= ""
+    params[:tags] = params[:tags].collect { |tag| Tag.find_or_create_by :name => tag } unless params[:tags].nil?
+    current_nest = self.nests.find(nest_id)
+
+    if current_nest.update_attributes params
+      JsonizeHelper.format :notice => "Nest was updated successfully"
+    else
+      JsonizeHelper.format :failed => true, :error => "Nest was not updated successfully", :errors => current_nest.errors.to_a
+    end
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest mentioned was not found"
+  end
+
+  def current_user_get_nest
+    JsonizeHelper.format :content => self.nests
+  end
+
+  def current_user_get_single_nest(nest_id)
+    current_nest = self.nests.find(nest_id)
+    JsonizeHelper.format :content => current_nest
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest mentioned was not found"
   end
   
   def current_user_get_private_message(params={})
@@ -674,6 +789,6 @@ class User
     message_array.flatten
     return JsonizeHelper.format :content => message_array
   rescue
-    return JsonizeHelper.format :failed => true, :error => "Failed to retrive message"
+    return JsonizeHelper.format :failed => true, :error => "Failed to retrieve message"
   end
 end

@@ -84,6 +84,7 @@ GEM
     tzinfo (0.3.31)
     url_mount (0.2.1)
       rack
+    xml-simple (1.1.1)
 
 PLATFORMS
   ruby
@@ -109,3 +110,4 @@ DEPENDENCIES
   tilt
   twitter-text
   typhoeus
+  xml-simple

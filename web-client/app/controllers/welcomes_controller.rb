@@ -20,11 +20,9 @@ class WelcomesController < ApplicationController
   
   def inbox
     render :layout => 'private'
-  end  
+  end
 
-
- 
-
-
-
+  def new_index
+    
+  end
 end

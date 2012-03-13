@@ -7,7 +7,6 @@ class Message
   # Relations
   # ---------------------------------------------------------------------------
   belongs_to :user, :foreign_key => :sender_id
-  has_and_belongs_to_many :user_recipients, :class_name => "User", :inverse_of => :message_recipients
   has_many :replies, :foreign_key => :topic_id, :class_name => "Message", :dependent => :destroy
   
   # ---------------------------------------------------------------------------

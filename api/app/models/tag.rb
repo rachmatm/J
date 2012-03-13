@@ -1,5 +1,9 @@
 class Tag
   include Mongoid::Document
+  has_and_belongs_to_many :jots
+  has_and_belongs_to_many :nests
+  has_and_belongs_to_many :tag_related, :class_name => "Tag", :inverse_of => :tag_relations
+  has_and_belongs_to_many :tag_relations, :class_name => "Tag", :inverse_of => :tag_related
   include Mongoid::Timestamps
 
   #-- Relation

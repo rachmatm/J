@@ -48,6 +48,9 @@
       <form class="well" method="POST" action="<%= Server::Application.routes.url(:admin_clients_create) %>">
 	    <fieldset>
 		  <legend>Add Client Application</legend>
+                  <% flash.each do |error| %>
+                    <p><%= error %></p>
+                  <% end %>
 		  <div class="control-group">
 		    <label for="app-name" class="control-label">App Name</label>
 		    <div class="controls">

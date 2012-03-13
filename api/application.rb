@@ -6,6 +6,7 @@ require 'erb'
 require 'tilt'
 require 'async-rack'
 require 'pony'
+require 'xmlsimple'
 
 module Server
   class Application

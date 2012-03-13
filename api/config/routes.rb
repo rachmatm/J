@@ -44,69 +44,87 @@ HttpRouter.new do
   post('/account/update-avatar(.:format)').to(AccountSettingsAction::UpdateAvatar )
 
   # Jots
-  get('/jots/index(.:format)').to(JotsAction::Index)
-  get('/jots/index-show-more(.:format)').to(JotsAction::IndexShowMore)
-  get('/jots/show(.:format)').to(JotsAction::Show)
-  post('/jots(.:format)').to(JotsAction::Create)
-  post('/jots/update(.:format)').to(JotsAction::Update)
-  post('/jots/destroy(.:format)').to(JotsAction::Destroy)
-
-  # Jots - Favorites
-  get('/jots/favorites/index(.:format)').to(JotsAction::FavoritesIndex)
-  post('/jots/favorites/create(.:format)').to(JotsAction::FavoritesCreate)
-  post('/jots/favorites/destroy(.:format)').to(JotsAction::FavoritesDestroy)
-
-  # Jots - Like
-  post('/jots/like(.:format)').to(JotsAction::LikeCreate)
-  post('/jots/dislike(.:format)').to(JotsAction::DislikeCreate)
-
-  # Jots - Comments
-  post('/jots/comments/create(.:format)').to(JotsAction::CommentsCreate)
-  post('/jots/comments/destroy(.:format)').to(JotsAction::CommentsDestroy)
+  #  get('/jots/index(.:format)').to(JotsAction::Index)
+  #  get('/jots/index-show-more(.:format)').to(JotsAction::IndexShowMore)
+  #  get('/jots/show(.:format)').to(JotsAction::Show)
+  #  post('/jots(.:format)').to(JotsAction::Create)
+  #  post('/jots/update(.:format)').to(JotsAction::Update)
+  #  post('/jots/destroy(.:format)').to(JotsAction::Destroy)
+  #
+  #  # Jots - Favorites
+  #  get('/jots/favorites/index(.:format)').to(JotsAction::FavoritesIndex)
+  #  post('/jots/favorites/create(.:format)').to(JotsAction::FavoritesCreate)
+  #  post('/jots/favorites/destroy(.:format)').to(JotsAction::FavoritesDestroy)
+  #
+  #  # Jots - Like
+  #  post('/jots/like(.:format)').to(JotsAction::LikeCreate)
+  #  post('/jots/dislike(.:format)').to(JotsAction::DislikeCreate)
+  #
+  #  # Jots - Comments
+  #  post('/jots/comments/create(.:format)').to(JotsAction::CommentsCreate)
+  #  post('/jots/comments/destroy(.:format)').to(JotsAction::CommentsDestroy)
+  #
+  #  # Jots - Private Messages
+  #  post('/jots/messages(.:format').to(MessagesAction::CreatePrivateMessages)
+  #  delete('/jots/messages/destroy(.:format').to(MessagesAction::DeletePrivateMessages)
+  #  post('/jots/messages/(:id)/reply(.:format').to(MessagesAction::ReplyPrivateMessages)
+  #  post('/jots/messages/index(.:format').to(MessagesAction::IndexPrivateMessages)
+  #  post('/jots/messages/show/(:id)(.:format').to(MessagesAction::ShowPrivateMessages)
 
   # Me
-  get('/me(.:format').to(MeAction::Index)
-  post('/me(.:format').to(MeAction::Update)
+  get('/me(.:format)').to(MeAction::Index)
+  post('/me(.:format)').to(MeAction::Update)
 
   # Me - Jots
-  post('/me/jots(.:format').to(MeAction::CreateJot)
-  delete('/me/jots/(:id)(.:format').to(MeAction::DeleteJot) # Define "delete" and "put" before "get" for routes that have a same url format
-  get('/me/jots/(:id)(.:format').to(MeAction::ShowJot)
-  get('/me/jots(.:format').to(MeAction::IndexJot)
+  post('/me/jots(.:format)').to(MeAction::CreateJot)
+  delete('/me/jots/(:id)(.:format)').to(MeAction::DeleteJot) # Define "delete" and "put" before "get" for routes that have a same url format
+  get('/me/jots/(:id)(.:format)').to(MeAction::ShowJot)
+  get('/me/jots(.:format)').to(MeAction::IndexJot)
 
   # Me - Nest
-  post('/me/nests(.:format').to(MeAction::CreateNest)
-  delete('/me/nests/(:id)(.:format').to(MeAction::DeleteNest) # Define "delete" and "put" before "get" for routes that have a same url format
-  post('/me/nests/(:id)(.:format').to(MeAction::UpdateNest)
-  get('/me/nests/(:id)(.:format').to(MeAction::ShowNest)
-  get('/me/nests(.:format').to(MeAction::IndexNest)
+  post('/me/nests(.:format)').to(MeAction::CreateNest)
+  delete('/me/nests/(:id)(.:format)').to(MeAction::DeleteNest) # Define "delete" and "put" before "get" for routes that have a same url format
+  post('/me/nests/(:id)(.:format)').to(MeAction::UpdateNest)
+  get('/me/nests/(:id)(.:format)').to(MeAction::ShowNest)
+  get('/me/nests(.:format)').to(MeAction::IndexNest)
   
 
   # Me - Tags
-  post('/me/tags/subscribe(.:format').to(MeAction::SubscribeTags)
-  post('/me/tags/unsubscribe(.:format').to(MeAction::UnsubscribeTags)
-  get('/me/tags(.:format').to(MeAction::IndexTags)
+  post('/me/tags/subscribe(.:format)').to(MeAction::SubscribeTags)
+  post('/me/tags/unsubscribe(.:format)').to(MeAction::UnsubscribeTags)
+  get('/me/tags(.:format)').to(MeAction::IndexTags)
 
   # Me - Private Messages
-  post('/me/messages(.:format').to(MeAction::CreatePrivateMessages)
-  delete('/me/messages/(:id)(.:format').to(MeAction::DeletePrivateMessages)
-  post('/me/messages/(:id)/reply(.:format').to(MeAction::ReplyPrivateMessages)
-  get('/me/messages(.:format').to(MeAction::IndexPrivateMessages)
-  get('/me/messages/(:id)(.:format').to(MeAction::ShowPrivateMessages)
+  post('/me/messages(.:format)').to(MeAction::CreatePrivateMessages)
+  delete('/me/messages/(:id)(.:format)').to(MeAction::DeletePrivateMessages)
+  post('/me/messages/(:id)/reply(.:format)').to(MeAction::ReplyPrivateMessages)
+  get('/me/messages(.:format)').to(MeAction::IndexPrivateMessages)
+  get('/me/messages/(:id)(.:format)').to(MeAction::ShowPrivateMessages)
 
   # Me - Thumbs
-  post('/me/jots/(:id)/thumbsup(.:format)').to(MeAction::AddJotThumbsUp)
-  post('/me/jots/(:id)/thumbsdown(.:format)').to(MeAction::AddJotThumbsDown)
+  post('/me/jots/:id/thumbsup(.:format)').to(MeAction::AddJotThumbsUp)
+  post('/me/jots/:id/thumbsdown(.:format)').to(MeAction::AddJotThumbsDown)
   get('/me/jots/thumbsup(.:format)').to(MeAction::IndexJotThumbsUp)
   get('/me/jots/thumbsdown(.:format)').to(MeAction::IndexJotThumbsDown)
 
   # Me - Favorites
-  post('/me/jots/(:id)/favorites(.:format)').to(MeAction::AddFavoriteJot)
+  post('/me/jots/:id/favorites(.:format)').to(MeAction::AddFavoriteJot)
   post('/me/jots/favorites(.:format)').to(MeAction::IndexFavoriteJots)
 
   # Me - Notifications
   get('/me/notifications(.:format)').to(MeAction::IndexNotifications)
-  
+
+  # Omniauth - Facebook
+  get('/omniauth/facebook(.:format)').to(OmniauthAction::Facebook)
+  get('/omniauth/authenticate_facebook(.:format)').to(OmniauthAction::AuthenticateFacebook)
+
+  # Omniauth - Twitter
+  post('/omniauth/authenticate_twitter(.:format)').to(OmniauthAction::AuthenticateTwitter)
+
+  # Omniauth - Google
+  get('/omniauth/google(.:format)').to(OmniauthAction::Google)
+  get('/oauth2callback(.:format)').to(OmniauthAction::AuthenticateGoogle)
+
   # Asset - https://github.com/joshbuddy/http_router
   add('/assets/').static(Server::Application.root('public')).name(:assets)
 end

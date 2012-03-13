@@ -5,30 +5,35 @@ class Action < Cramp::Action
   def respond_with
     [200, get_content_type]
   end
-  
+
   def get_content_type
     {'Content-Type' => "#{MIME::Types.type_for(params[:format] || '').first}" || 'text/html'}
   end
-  
+
   # Params
   # Hash[:File] = template file path
   # Hash[:locals] = Hash - data
   def render_with_template(params)
     Tilt.register Tilt::ERBTemplate, 'bar'
-    
+
     template = Tilt.new params[:file]
     render template.render Object.new, params[:locals]
   end
-  
+
   # Params
   # String(next_path) = next path after root
   def root_path(next_path)
     Server::Application.root next_path
   end
-  
+
   def declare_auth_admin
     self.auth_admin = AuthHelper.new request.session, 'admin'
-    yield  
+    yield
+  end
+
+  def declare_flash
+    self.flash = FlashHelper.new request.session
+    yield
   end
 
   def start_with_validates_params(allowed_params, &block)

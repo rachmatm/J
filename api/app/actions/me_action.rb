@@ -1,4 +1,8 @@
 module MeAction
+
+# Users
+# ------------------------------------------------------------------------
+
   class Index < ActionWithTokenAuth
     def start
       render @current_user.get
@@ -12,6 +16,9 @@ module MeAction
       finish
     end
   end
+
+# Jots
+# ------------------------------------------------------------------------
 
   class CreateJot < ActionWithTokenAuth
     def start
@@ -48,6 +55,9 @@ module MeAction
     end
   end
 
+# Nest
+# ------------------------------------------------------------------------
+
   class CreateNest < ActionWithTokenAuth
     def start
       render @current_user.current_user_set_nest params
@@ -83,6 +93,9 @@ module MeAction
     end
   end
 
+# Tags
+# ------------------------------------------------------------------------
+
   class SubscribeTags < ActionWithTokenAuth
     def start
       render @current_user.current_user_set_tags params[:tags]
@@ -104,11 +117,10 @@ module MeAction
     end
   end
 
+# Private Messages
+# ------------------------------------------------------------------------
+
   class CreatePrivateMessages < ActionWithTokenAuth
-    def start
-      @current_user.current_user_set_private_message @parameters
-      finish
-    end
   end
 
   class DeletePrivateMessages < ActionWithTokenAuth
@@ -123,19 +135,20 @@ module MeAction
   class ShowPrivateMessages < ActionWithTokenAuth
   end
 
+# Thumbs
+# ------------------------------------------------------------------------
+
   class AddJotThumbsUp < ActionWithTokenAuth
     def start
-      start_with_validates_params [:jot_id] do
-        render @current_user.current_user_set_thumbs_up_jot(@parameters[:jot_id])
-      end
+      render @current_user.current_user_set_thumbs_up_jot params[:id]
+      finish
     end
   end
 
   class AddJotThumbsDown < ActionWithTokenAuth
     def start
-      start_with_validates_params [:jot_id] do
-        render @current_user.current_user_set_thumbs_down_jot(@parameters[:jot_id])
-      end
+      render @current_user.current_user_set_thumbs_down_jot params[:id]
+      finish
     end
   end
 
@@ -153,11 +166,13 @@ module MeAction
     end
   end
 
+# Favorites
+# ------------------------------------------------------------------------
+
   class AddFavoriteJot < ActionWithTokenAuth
     def start
-      start_with_validates_params [:jot_id] do
-        render @current_user.current_user_set_favorite_jot @parameters[:jot_id]
-      end
+      render @current_user.current_user_set_favorite_jot params[:id]
+      finish
     end
   end
 
@@ -167,6 +182,9 @@ module MeAction
       finish
     end
   end
+
+# Notifications
+# ------------------------------------------------------------------------
 
   class IndexNotifications < ActionWithTokenAuth
   end

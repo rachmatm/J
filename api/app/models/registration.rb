@@ -40,7 +40,7 @@ class Registration
 
   def self.set(params = {})
     data = self.create params
-    
+
     if data.errors.present?
       JsonizeHelper.format :errors => data.errors.to_a, :failed => true, :error => "Registration doesn't succeed, please try again."
     elsif data.update_attributes :token => ActiveSupport::SecureRandom.hex(9)
