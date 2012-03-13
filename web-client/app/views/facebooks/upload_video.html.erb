@@ -1,0 +1,12 @@
+<%= form_tag upload_video_facebooks_path, :method => :post, :multipart => true do %>
+  <%= label_tag :title %>
+  <%= text_field_tag :title, '', :class => 'field-text' %>
+  <br />
+  <%= label_tag :description %>
+  <%= text_area_tag :description, '' %>
+  <br />
+  <%= label_tag :files %>
+  <%= file_field_tag :files %>
+  <br />
+  <%= submit_tag %>
+<% end %>

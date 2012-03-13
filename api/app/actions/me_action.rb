@@ -188,4 +188,24 @@ module MeAction
 
   class IndexNotifications < ActionWithTokenAuth
   end
+
+# Facebook
+# ------------------------------------------------------------------------
+
+  class CreateFacebookStatus < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_set_facebook_status params[:message]
+      finish
+    end
+  end
+
+# Twitter
+# ------------------------------------------------------------------------
+
+  class CreateTwitterStatus < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_set_twitter_status params[:status]
+      finish
+    end
+  end
 end
