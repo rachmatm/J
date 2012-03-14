@@ -34,7 +34,7 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
-  resources :jots
+  resources :jots, :only => [:new, :create]
 
   match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 

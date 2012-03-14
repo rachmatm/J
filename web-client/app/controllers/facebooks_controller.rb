@@ -1,4 +1,8 @@
 class FacebooksController < ApplicationWithTokenController
+  def wall
+    
+  end
+
   def status
     
   end

@@ -199,6 +199,13 @@ module MeAction
     end
   end
 
+  class IndexFacebookWall < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_get_facebook_wall params[:message]
+      finish
+    end
+  end
+
 # Twitter
 # ------------------------------------------------------------------------
 
