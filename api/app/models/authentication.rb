@@ -98,7 +98,7 @@ class Authentication
     facebook_token_response = Typhoeus::Request.get("https://graph.facebook.com/oauth/access_token", :params => parameter).body
 
     if facebook_token_response.empty? or facebook_token_response['error'].present?
-      return "http://localhost:5000/omniauth/authenticate_facebook?notice=Something%20went%20wrong,%20Please%20try%20again."
+      return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
     else
       facebook_token = facebook_token_response.gsub(/access_token=(.+)/, '\1')
       facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
@@ -106,11 +106,10 @@ class Authentication
       jotky_token = ActiveSupport::SecureRandom.hex(9)
       user = self.find_or_create_by :realname => profile['name'],
         :username => profile['username'],
-        :facebook_id => profile['id'],
-        :token => jotky_token,
-        :facebook_token => facebook_token
+        :facebook_id => profile['id']
 
-      return "http://localhost:5000/omniauth/authenticate_facebook?facebook_token=#{facebook_token}&username=#{user.username}&jotky_token=#{jotky_token}"
+      user.update_attributes :token => jotky_token, :facebook_token => facebook_token
+      return "http://localhost:5000/omniauth/authenticate_facebook?facebook_token=#{facebook_token}&jotky_token=#{jotky_token}"
     end
   end
 

@@ -45,7 +45,7 @@ class FacebooksController < ApplicationWithTokenController
 
     file = params[:files]
 
-    filename = file.original_filename
+    filename = file.original_filename.gsub(/[\w\s\d\-\?]+\.(\w+)$/, "#{SecureRandom.hex(5)}" + '.\1')
     directory = "#{Rails.root}/tmp/"
 
     path = File.join(directory, filename)
@@ -54,7 +54,10 @@ class FacebooksController < ApplicationWithTokenController
 
     parameters = {:file => File.open(path, "rb")}
 
-    upload_video_request_url = "https://graph-video.facebook.com/me/videos?access_token=#{@current_user['facebook_token']}&title=#{params[:title]}&description=#{URI.escape params[:description]}"
+    upload_video_request_url = "https://graph-video.facebook.com/me/videos?access_token=#{@current_user['facebook_token']}" +
+                               "&title=#{URI.escape params[:title]}" + 
+                               "&description=#{URI.escape params[:description]}"
+
     upload_video_request = Typhoeus::Request.new(upload_video_request_url,
                                                  :header => {'Content-Type' => params[:files].content_type},
                                                  :method => :post,
@@ -64,7 +67,6 @@ class FacebooksController < ApplicationWithTokenController
     hydra.queue(upload_video_request)
     hydra.run
 
-    debugger
     if upload_video_request.response.body['id'].present?
       redirect_to root_path, :notice => "You have successfully uploaded your video"
     else
