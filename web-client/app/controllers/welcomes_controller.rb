@@ -1,7 +1,13 @@
-class WelcomesController < ApplicationController
+class WelcomesController < ApplicationWithTokenController
 
   #home
   def index
+    if @current_user.present?
+      render 'index_member', :layout => 'private2'
+    else
+      render 'new_index', :layout => 'application2'
+    end
+    
   end
 
   def member
@@ -16,13 +22,19 @@ class WelcomesController < ApplicationController
      render :layout => 'private'
   end
 
- 
+  def search_people
+      render :layout => 'private'
+  end
+
+  def jot_detail_active
+    render  :layout => 'private'
+  end
   
   def inbox
     render :layout => 'private'
   end
 
   def new_index
-    
+    render :layout => 'application2'
   end
 end

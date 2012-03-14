@@ -1,5 +1,4 @@
 window.FormView = Backbone.View.extend({
-  el: '',
 
   validate_options: {},
 

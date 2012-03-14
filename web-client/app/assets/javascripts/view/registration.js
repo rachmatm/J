@@ -1,20 +1,22 @@
-window.RegistrationFormView = FormView.extend({
+window.RegistrationView = Backbone.View.extend({
 
-  template: _.template($('#main-registration').html()),
+  template: _.template($('#main-registration-template').html()),
 
-  initialize: function(_validate_options){
-    
-    $('#main-content').append(this.template);
-
-    this.setValidation();
-    this.setRecaptcha();
+  initialize: function(){
+    this.formView = new FormView;
+    this.recaptchaView = new RecaptchaView;
+    this.alertView = new AlertView;
+    this.holderView = new HolderView;
   },
 
+  render: function(){
+    var _this = this;
+    
+    $(this.el).html(this.template);
 
-  setValidation : function(){
-    this.el = $('#main-registration-form');
-
-    this.render({
+    this.formView.setElement('#main-registration-form');
+    
+    this.formView.render({
       rules: {
         'registration[username]': {
           required: true,
@@ -66,8 +68,18 @@ window.RegistrationFormView = FormView.extend({
       },
       submitHandler: function(form){
         $(form).ajaxSubmit({
+          dataType: 'json',
           success: function(data, textStatus, jqXHR){
-
+            if(data.failed === true){
+              _this.alertView.remove();
+              _this.alertView.render('registration-alert',{error: data.error, errors: data.errors});
+              _this.recaptchaView.reload();
+            }
+            else{
+              _this.alertView.remove();
+              _this.alertView.render({notice: data.notice});
+              location.href = '/';
+            }
           },
           error: function(jqXHR, textStatus, errorThrown){
             alert(textStatus);
@@ -75,26 +87,8 @@ window.RegistrationFormView = FormView.extend({
         });
       }
     });
-  },
 
-  setRecaptcha: function(){
-
-    yepnope([{
-      load: 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js',
-      complete: function () {
-        if(!window.Recaptcha){
-          yepnope('/assets/recaptcha_ajax.js');
-        }
-
-        Recaptcha.create(
-          "6LeUR80SAAAAAIIbp6Dt8D1jfZrF3gkn3DN3mVUP",
-          "registration-recaptcha",
-          {
-            theme: "clean",
-            callback: Recaptcha.focus_response_field
-          }
-          );
-      }
-    }]);
+    this.recaptchaView.setElement('#registration-recaptcha');
+    this.recaptchaView.render();
   }
 });

@@ -1,6 +1,6 @@
 <%= render 'shared/magicbox' %>
 
-<div class="pp_tags_path middle_content">
+<div id="r-profile-content" class="pp_tags_path middle_content">
 
   <!-- HEADER PROFILE -->
   <div class="header_public_profile">
@@ -178,7 +178,7 @@
   <!-- JOTS CONTENT -->
   <div id="profile-jots">
     <div class="pp_people_tags_head">
-      <span class="pp_people_name">
+      <span class="pp_people_block">
         <span class="left">MetroFx's jots</span>
         <a href="" class="right">Go to your stream</a>
       </span>
@@ -361,195 +361,652 @@
     </div>
     <div class="pp_viewport viewport">
       <div class="overview">
+
+
+
         <ul class="over_ul">
-          <li class="pp_follow_scroll_path hot_jot_header people_post">
-            <ul>
-              <li><span class="purple_badge green_badge">49</span></li>
-            </ul>
-            <div class="pp_other_follow_left">
-              <img src="/assets/other-pp-sweet.png" alt="" />
-              <div class="pp_info_left">
-                <span class="follow_right_nickname">SweetFay</span>
-                <span class="follow_right_realname">Faye</span>
-                <span class="follow_right_jot_counts">120 jots</span>
-              </div>
-            </div>
-            <div class="pp_other_follow_right">
-              <div class="no_margin button_tag">
-                <ul>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Foursome</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">random</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">fivesome</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">mordor</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">metalsr</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                </ul>
-                <div class="clear"></div>
-              </div>
-            </div>
-            <div class="clear"></div>
-          </li>
+                      <li class="pp_follow_scroll_path hot_jot_header people_post">
+                        <ul>
+                          <li><span class="purple_badge green_badge">49</span></li>
+                        </ul>
+                        <div class="pp_other_follow_left">
+                          <img src="/assets/other-pp-sweet.png" alt="" />
+                          <div class="pp_info_left">
+                            <span class="follow_right_nickname">SweetFay</span>
+                            <span class="follow_right_realname">Faye</span>
+                            <span class="follow_right_jot_counts">120 jots</span>
+                          </div>
+                        </div>
+                        <div class="pp_other_follow_right">
+                          <div class="no_margin button_tag">
+                            <ul>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </li>
 
-          <li class="pp_follow_scroll_path hot_jot_header people_post">
-            <ul>
-              <li><span class="green_badge">22</span></li>
-            </ul>
-            <div class="pp_other_follow_left">
-              <img src="/assets/other-pp-edona.png" alt="" />
-              <div class="pp_info_left">
-                <span class="follow_right_nickname">Edona</span>
-                <span class="follow_right_realname">Edone Berina</span>
-                <span class="follow_right_jot_counts">120 jots</span>
-              </div>
-            </div>
-            <div class="pp_other_follow_right">
-              <div class="no_margin button_tag">
-                <ul>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Foursome</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">sexyass</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">asianhits</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">chnsret</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">normal2</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Hyperact</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                </ul>
-                <div class="clear"></div>
-              </div>
-            </div>
-            <div class="clear"></div>
-          </li>
+                      <li class="pp_follow_scroll_path hot_jot_header people_post">
+                        <ul>
+                          <li><span class="green_badge">22</span></li>
+                        </ul>
+                        <div class="pp_other_follow_left">
+                          <img src="/assets/other-pp-edona.png" alt="" />
+                          <div class="pp_info_left">
+                            <span class="follow_right_nickname">Edona</span>
+                            <span class="follow_right_realname">Edone Berina</span>
+                            <span class="follow_right_jot_counts">120 jots</span>
+                          </div>
+                        </div>
+                        <div class="pp_other_follow_right">
+                          <div class="no_margin button_tag">
+                            <ul>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </li>
 
-          <li class="pp_follow_scroll_path hot_jot_header people_post">
-            <ul>
-              <li><span class="orange_badge green_badge">87</span></li>
-            </ul>
-            <div class="pp_other_follow_left">
-              <img src="/assets/other-pptifa.png" alt="" />
-              <div class="pp_info_left">
-                <span class="follow_right_nickname">TifaLockheart</span>
-                <span class="follow_right_realname">Tifa Lockheart2012</span>
-                <span class="follow_right_jot_counts">24320 Jots</span>
-              </div>
-            </div>
-            <div class="pp_other_follow_right">
-              <div class="no_margin button_tag">
-                <ul>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Foursome</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">sexyass</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">asianhits</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">chnsret</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">normal2</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Hyperact</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Hyperact</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                </ul>
-                <div class="clear"></div>
-              </div>
-            </div>
-            <div class="clear"></div>
-          </li>
-          <li class="pp_follow_scroll_path hot_jot_header people_post">
-            <ul>
-              <li><span class="purple_badge green_badge">49</span></li>
-            </ul>
-            <div class="pp_other_follow_left">
-              <img src="/assets/other-ppj-july.png" alt="" />
-              <div class="pp_info_left">
-                <span class="follow_right_nickname">July</span>
-                <span class="follow_right_realname">July Tan</span>
-                <span class="follow_right_jot_counts">120 jots</span>
-              </div>
-            </div>
-            <div class="pp_other_follow_right">
-              <div class="no_margin button_tag">
-                <ul>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Foursome</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">sexyass</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">asianhits</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">chnsret</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">normal2</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Hyperact</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                  <li>
-                    <span class="pp_padding_but button_tagText">Hyperact</span>
-                    <span class="not_activeSearch">&nbsp;</span>
-                  </li>
-                </ul>
-                <div class="clear"></div>
-              </div>
-            </div>
-            <div class="clear"></div>
-          </li>
+                      <li class="pp_follow_scroll_path hot_jot_header people_post">
+                        <ul>
+                          <li><span class="orange_badge green_badge">87</span></li>
+                        </ul>
+                        <div class="pp_other_follow_left">
+                          <img src="/assets/other-pptifa.png" alt="" />
+                          <div class="pp_info_left">
+                            <span class="follow_right_nickname">TifaLockheart</span>
+                            <span class="follow_right_realname">Tifa Lockheart2012</span>
+                            <span class="follow_right_jot_counts">24320 Jots</span>
+                          </div>
+                        </div>
+                        <div class="pp_other_follow_right">
+                          <div class="no_margin button_tag">
+                            <ul>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </li>
+                      <li class="pp_follow_scroll_path hot_jot_header people_post">
+                        <ul>
+                          <li><span class="purple_badge green_badge">49</span></li>
+                        </ul>
+                        <div class="pp_other_follow_left">
+                          <img src="/assets/other-ppj-july.png" alt="" />
+                          <div class="pp_info_left">
+                            <span class="follow_right_nickname">July</span>
+                            <span class="follow_right_realname">July Tan</span>
+                            <span class="follow_right_jot_counts">120 jots</span>
+                          </div>
+                        </div>
+                        <div class="pp_other_follow_right">
+                          <div class="no_margin button_tag">
+                            <ul>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="pp_button_follows">
+                                  <span class="pp_button_follows_text">Foursome</span>
+                                  <span class="pp_button_follows_icon">&nbsp;</span>
+                                  <div class="pp_show_del action_menu_hide">
+                                    <ul>
+                                      <li>
+                                        <a href="" class="reply_hide">
+                                          <label>show</label>
+                                          <span class="show_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="" class="delete_hide">
+                                          <label>delete</label>
+                                          <span class="delete_icon">&nbsp;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                      </li>
 
-        </ul>
+                    </ul>
+
+
+
+
       </div>
     </div>
     <div class="clear"></div>

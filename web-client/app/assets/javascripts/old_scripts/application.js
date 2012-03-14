@@ -379,31 +379,42 @@ jQuery(function($){
     $(this).removeClass('stuff_hover');
   });
   
-  $('.previous').hide();
+    /*
+  //$('.previous').hide();
   $('.previous_icon').mouseover(function(){
     $(this).find('.previous').show();
-  }).mouseout(function(){
+    $(this).addClass('stuff_hover');
+  });  .mouseout(function(){
     $(this).find('.previous').hide();
   });
+
+  $('.hot_jot').mouseover(function(){
+    $(this).addClass('stuff_hover');
+  }).mouseout(function(){
+    $(this).removeClass('stuff_hover');
+  });
   
-  $('.next').hide();
+  //$('.next').hide();
   $('.next_icon').mouseover(function(){
     $(this).find('.next').show();
-  }).mouseout(function(){
+   // $(this).addClass('previous');
+  }); mouseout(function(){
     $(this).find('.next').hide();
-  });
+  }); 
 
    $('.previous_icon2').mouseover(function(){
     $(this).find('.previous').show();
   }).mouseout(function(){
-    $(this).find('.previous').hide();
+   $(this).find('.previous').hide();
   });
 
  $('.next_icon2').mouseover(function(){
     $(this).find('.next').show();
   }).mouseout(function(){
-    $(this).find('.next').hide();
+   // $(this).find('.next').hide();
   });
+   */
+
   $("a[rel='image_popup']").colorbox();
   $("#click").click(function(){ 
     $('#click').css({
@@ -838,14 +849,14 @@ $('#r-jot-tab').bind('click', function(){
   $('.jot-tab-content').show();
   $('#r-jot-result').show();
   $('#r-jot-result-detail').hide();
-  
+
   //search
   $('#r-search-tab').find('.search_text').addClass('search_text_not_active');
   $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
   $('.jot-search-content').hide();
   $('.welcome_content').hide();
   $('#r-people-search-result').hide();
-  
+
   //login
   $('#signUp').removeClass('login');
   $('.login_content').hide();
@@ -854,7 +865,7 @@ $('#r-jot-tab').bind('click', function(){
 
   $('.search_tab').hide();
   $('.searchResult_content_logged').hide();
-  
+
   //inbox
   $('.inbox_message').hide();
 
@@ -883,7 +894,7 @@ $('#signUp').bind('click', function(){
   $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
   $('.jot-search-content').hide();
   $('#r-people-search-result').hide();
-  
+
   //login
   $('.login_content').show();
   $('#signUp').addClass('login');
@@ -1000,7 +1011,10 @@ $('#r-notification-tab').bind('click', function(){
 
   //profile
   $('#r-profile-content').hide();
+  $('#r-profileother-content').hide();
   $('#r-welcome-content').hide();
+
+
 });
 
 

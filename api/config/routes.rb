@@ -7,7 +7,7 @@ HttpRouter.new do
   get('/users/(:id)(.:format)').to(UsersAction::Show)
 
   # Authentication
-  post('/authentication/login(.:format)').to(AuthenticationAction::Create)
+  post('/authentications(.:format)').to(AuthenticationAction::Create)
   add('/authentication/logout(:token)').to(AuthenticationAction::Destroy)
   post('/authentication/notify_forgot_password(.:format)').to(AuthenticationAction::Notify)
   post('/authentication/reset_forgot_password(.:format)').to(AuthenticationAction::Update)

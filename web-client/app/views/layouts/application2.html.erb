@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Jotky - Landing Page (Not Logged)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <%= stylesheet_link_tag 'application' %>
+    <!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="/assets/ie7.css" />
+	<![endif]-->
+    <!--[if IE 8]>
+	<link rel="stylesheet" type="text/css" href="/assets/ie8.css" />
+	<![endif]-->
+    <!--[if IE 9]>
+	<link rel="stylesheet" type="text/css" href="/assets/ie9.css" />
+	<![endif]-->
+  </head>
+  <body>
+    <div class="wraper container_16">
+      <div class="header">
+        <div class="left_header grid_6">
+          <a href="landing_page.html" class="main_logo">Jotky</a>
+        </div>
+        <div class="middle_header grid_7">
+          <a href="" class="home">
+            <span>&nbsp;</span>
+            Home
+          </a>
+          <a href="/hot_stuff" class="hot_stream">
+            <span></span>
+            Hot Stream
+          </a>
+          <a href="/help" class="help">
+            <span>&nbsp;</span>
+            Help
+          </a>
+          <div class="clear"></div>
+        </div>
+        <div class="right_header grid_3">
+          <a href="" class="sign_in">
+            <span>&nbsp;</span>
+            Sign In
+          </a>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="container">
+        <div>
+          <div class="left_menu grid_2">&nbsp;
+          </div>
+
+          <div class="main_content grid_11" id="main-content">
+            <%= show_alert_message :error => flash[:error], :notice => flash[:notice], :info => flash[:info], :errors => flash[:errors] %>
+            <%= yield %>
+            <div class="clear"></div>
+          </div>
+
+          <div class="right_content grid_3">
+            <%= render 'shared/sidebar' %>
+          </div>
+
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="footer">
+      <div class="footer-menu container_16">
+        <ul>
+          <li class="grid_2"><a href="/about">About</a></li>
+          <li class="grid_2"><a href="/contact">Contact</a></li>
+          <li class="grid_2"><a href="/status">Status</a></li>
+          <li class="grid_2"><a href="/goodies">Goodies</a></li>
+          <li class="grid_2"><a href="/api">API</a></li>
+          <li class="grid_2"><a href="/help">Help</a></li>
+          <li class="grid_2"><a href="/terms">Terms</a></li>
+          <li class="grid_2"><a href="/privacy">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <%= render 'template/main_registration' %>
+    <%= render 'template/main_magicbox_jot_input' %>
+    <%= render 'template/main_magicbox_jot_input_clip' %>
+    <%= render 'template/main_magicbox_jot_input_location' %>
+    <%= render 'template/main_magicbox_jot_input_more_content' %>
+    <%= render 'template/main_magicbox_jot_input_tag' %>
+    <%= render 'template/main_magicbox_login' %>
+    <%= render 'template/main_magicbox_navigation' %>
+    <%= render 'template/main_magicbox_search' %>
+    <%= render 'template/main_magicbox_search_result_tags' %>
+    <%= render 'template/main_registration' %>
+    <%= render 'template/main_welcome' %>
+    <%= render 'template/holder' %>
+    <%= render 'template/alert' %>
+
+    <%= javascript_include_tag 'application2' %>
+    <%= javascript_include_tag 'app.js' %>
+
+    <div id="global-alert" class="global-alert"></div>
+  </body>
+</html>

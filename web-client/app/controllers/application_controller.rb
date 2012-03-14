@@ -16,13 +16,18 @@ class ApplicationController < ActionController::Base
       params = {:token => get_token[:key]}
     end
 
-    send_request = Typhoeus::Request.new File.join(BASE_URL, path), :params => params, :method => method.parameterize.underscore.to_sym
+    send_request = request_connect :url => File.join(BASE_URL, path), :params => params, :method => method.parameterize.underscore.to_sym do |response|
+      ActiveSupport::JSON.decode response.body
+    end
+  end
+
+  def request_connect(parameters, &block)
+    send_request = Typhoeus::Request.new parameters[:url], :params => parameters[:params], :method => parameters[:method]
 
     # Run the request via Hydra.
     hydra = Typhoeus::Hydra.new
     hydra.queue(send_request)
     hydra.run
-
 
     # TODO : need a better logger, notifier is better
     response = send_request.response
@@ -30,7 +35,7 @@ class ApplicationController < ActionController::Base
     request_to_s = "api_connect #{send_request.response.request.url}, #{send_request.response.request.method} #{send_request.response.request.params}"
 
     if response.success?
-      return ActiveSupport::JSON.decode response.body
+      return yield response
     elsif response.timed_out?
 
       logger.fatal ">>>>>>> api_connect: #{request_to_s} \n got a time out!"
