@@ -1,7 +1,13 @@
-class WelcomesController < ApplicationController
+class WelcomesController < ApplicationWithTokenController
 
   #home
   def index
+    if @current_user.present?
+      render 'index_member', :layout => 'private2'
+    else
+      render 'new_index', :layout => 'application2'
+    end
+    
   end
 
   def member
@@ -23,6 +29,6 @@ class WelcomesController < ApplicationController
   end
 
   def new_index
-    
+    render :layout => 'application2'
   end
 end

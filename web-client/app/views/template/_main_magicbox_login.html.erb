@@ -1,0 +1,60 @@
+<script type="text/template" id="main-magicbox-login-template">
+  <div class="login_content clearfix">
+    <div class="left">
+      <div class="left">
+        <div class="box_signin">
+          <h2>Login to start experience jotky</h2>
+          <%= form_tag authentications_path, :id => "main-magicbox-login-form" do %>
+            <div class="form_login">
+              <div class="username">
+                <%= label_tag 'authentication_username', 'Username' %>
+                <%= text_field_tag 'authentication[username]' %>
+                <div class="clear"></div>
+              </div>
+              <div class="password">
+                <%= label_tag 'authentication_password', 'Password' %>
+                <%= password_field_tag 'authentication[password]' %>
+                <div class="clear"></div>
+              </div>
+              <div class="remember_login">
+                <div class="left">
+                  <%= check_box_tag :remember_me%>
+                  <p class="checkbox">Remember me on this computer</p>
+                </div>
+                <div class="right">
+                  <a href="" class="forgot_password">forgot password?</a>
+                </div>
+                <div class="clear"></div>
+              </div>
+              <div class="login_button">
+                <%= submit_tag 'Login' %>
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          <% end %>
+        </div>
+        <div class="box_signinBottom">
+          <div class="login_with">
+            <p>or login with?</p>
+            <a href="#" class="FB"></a>
+            <a href="#" class="twitter"></a>
+          </div>
+        </div>
+      </div>
+      <div class="login_separator">
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="right">
+      <div class="login_path">
+        <span class="text">create a Jotky account</span>
+        <a href="javascript:void(0)" class="signup_button link-to-registration">Sign Up</a>
+        <span class="discover">and discover everything!</span>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</script>

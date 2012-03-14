@@ -39,4 +39,8 @@ WebClient::Application.routes.draw do
 
   resource :authentications, :path => 'authentication', :only => [:create]
   resource :registrations, :path => 'registration', :only => [:create]
+
+  resource :tests
+
+  get 'logout' => 'authentications#destroy'
 end

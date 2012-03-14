@@ -48,38 +48,6 @@
       <div class="container">
         <div>
           <div class="left_menu grid_2">&nbsp;
-            <div class="side-left">
-              <ul>
-                <li class="leftMenu_searchResult">
-                  <a href="" onmouseout="heal()" class="side-menu-top-left">
-                    <label>Jots&nbsp;</label>
-                    <span class="jots-icon">&nbsp;</span>
-                  </a>
-                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
-                </li>
-                <li class="leftMenu_searchResult">
-                  <a href="" onmouseout="heal()" >
-                    <label>People&nbsp;</label>
-                    <span class="people-icon">&nbsp;</span>
-                  </a>
-                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
-                </li>
-                <li class="leftMenu_searchResult">
-                  <a href="" onmouseout="heal()" >
-                    <label>Media&nbsp;</label>
-                    <span class="media-icon">&nbsp;</span>
-                  </a>
-                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
-                </li>
-                <li class="leftMenu_searchResult">
-                  <a href="" onmouseout="heal()" class="side-menu-bottom-left">
-                    <label>Places&nbsp;</label>
-                    <span class="places-icon">&nbsp;</span>
-                  </a>
-                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
-                </li>
-              </ul>
-            </div>
           </div>
 
           <div class="main_content grid_11" id="main-content">
@@ -91,7 +59,7 @@
           <div class="right_content grid_3">
             <%= render 'shared/sidebar' %>
           </div>
-          
+
           <div class="clear"></div>
         </div>
       </div>
@@ -112,20 +80,24 @@
       </div>
       <div class="clear"></div>
     </div>
-    <%#= render 'template/main_registration' %>
+    <%= render 'template/main_registration' %>
+    <%= render 'template/main_magicbox_jot_input' %>
+    <%= render 'template/main_magicbox_jot_input_clip' %>
+    <%= render 'template/main_magicbox_jot_input_location' %>
+    <%= render 'template/main_magicbox_jot_input_more_content' %>
+    <%= render 'template/main_magicbox_jot_input_tag' %>
+    <%= render 'template/main_magicbox_login' %>
+    <%= render 'template/main_magicbox_navigation' %>
+    <%= render 'template/main_magicbox_search' %>
+    <%= render 'template/main_magicbox_search_result_tags' %>
+    <%= render 'template/main_registration' %>
+    <%= render 'template/main_welcome' %>
+    <%= render 'template/holder' %>
+    <%= render 'template/alert' %>
 
-    <%#= render 'template/main_magicbox_jot_input' %>
-    <%#= render 'template/main_magicbox_jot_input_clip' %>
-    <%#= render 'template/main_magicbox_jot_input_location' %>
-    <%#= render 'template/main_magicbox_jot_input_more_content' %>
-    <%#= render 'template/main_magicbox_jot_input_tag' %>
-    <%#= render 'template/main_magicbox_login' %>
-    <%#= render 'template/main_magicbox_navigation' %>
-    <%#= render 'template/main_magicbox_search' %>
-    <%#= render 'template/main_magicbox_search_result_tags' %>
-    <%#= render 'template/main_registration' %>
-    <%#= render 'template/main_welcome' %>
-    
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'application2' %>
+    <%= javascript_include_tag 'app.js' %>
+
+    <div id="global-alert" class="global-alert"></div>
   </body>
 </html>

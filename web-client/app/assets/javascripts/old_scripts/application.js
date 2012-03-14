@@ -813,14 +813,14 @@ $('#r-jot-tab').bind('click', function(){
   $('.jot-tab-content').show();
   $('#r-jot-result').show();
   $('#r-jot-result-detail').hide();
-  
+
   //search
   $('#r-search-tab').find('.search_text').addClass('search_text_not_active');
   $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
   $('.jot-search-content').hide();
   $('.welcome_content').hide();
   $('#r-people-search-result').hide();
-  
+
   //login
   $('#signUp').removeClass('login');
   $('.login_content').hide();
@@ -829,7 +829,7 @@ $('#r-jot-tab').bind('click', function(){
 
   $('.search_tab').hide();
   $('.searchResult_content_logged').hide();
-  
+
   //inbox
   $('.inbox_message').hide();
 
@@ -856,7 +856,7 @@ $('#signUp').bind('click', function(){
   $('#r-search-tab').find('.img_1').addClass('img_1_not_active');
   $('.jot-search-content').hide();
   $('#r-people-search-result').hide();
-  
+
   //login
   $('.login_content').show();
   $('#signUp').addClass('login');

@@ -1,0 +1,25 @@
+<script type="text/template" id="alert-template">
+  <# if(error && errors){ #>
+  <div class="alert-message error">
+    <h1><#= error #></h1>
+
+    <ul>
+      <# _.each(errors, function(error_item){ #>
+      <li><#= error_item #></li>
+      <# }); #>
+    </ul>
+  </div>
+<# }else if(error){ #>
+  <div class="alert-message error">
+    <h1><#= error #></h1>
+  </div>
+<# }else if(notice){ #>
+  <div class="alert-message info">
+    <h1><#= notice #></h1>
+  </div>
+<# }else if(info){ #>
+  <div class="alert-message info">
+    <h1><#= info #></h1>
+  </div>
+<# } #>
+</script>

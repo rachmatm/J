@@ -2,6 +2,7 @@ class ApplicationWithTokenController < ApplicationController
   before_filter :validate_token
   
   def validate_token
+
     if token_auth?
       set_token :key => get_token[:key]
       request_profile = api_connect('me.json', {}, "get", false, true)

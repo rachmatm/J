@@ -5,9 +5,8 @@ module AuthenticationAction
     # Validates the login and return authenticity_token if the username and
     # password is correct
     def start
-      start_with_validates_params [:username, :password] do
-        render Authentication.set @parameters[:username], @parameters[:password]
-      end
+      render Authentication.set params[:username], params[:password]
+      finish
     end
   end
 
