@@ -19,9 +19,15 @@ class WelcomesController < ApplicationWithTokenController
   end
 
   def profile
+     render :layout => 'private'
   end
 
-  def profile_other
+  def search_people
+      render :layout => 'private'
+  end
+
+  def jot_detail_active
+    render  :layout => 'private'
   end
   
   def inbox

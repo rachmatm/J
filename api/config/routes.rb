@@ -114,6 +114,12 @@ HttpRouter.new do
   # Me - Notifications
   get('/me/notifications(.:format)').to(MeAction::IndexNotifications)
 
+  # Me - Facebook
+  post('/me/facebook/status(.:format)').to(MeAction::CreateFacebookStatus)
+
+  # Me - Twitter
+  post('/me/twitter/status(.:format)').to(MeAction::CreateTwitterStatus)
+
   # Omniauth - Facebook
   get('/omniauth/facebook(.:format)').to(OmniauthAction::Facebook)
   get('/omniauth/authenticate_facebook(.:format)').to(OmniauthAction::AuthenticateFacebook)

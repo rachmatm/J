@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>INBOX Jotky (Logged Page)</title>
+    <title>Jotky - Landing Page (LOGIN)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -19,41 +19,89 @@
   <body>
     <div class="wraper container_16">
       <div class="header">
-        <div class="left_header grid_6">
-          <a href="" class="main_logo">Jotky</a>
-        </div>
-        <div class="middle_header grid_7">
-          <a href="" class="home">
-            <span>&nbsp;</span>
-            Home
-          </a>
-          <a href="hot_stuff" class="hot_stream">
-            <span></span>
-            Hot Stream
-          </a>
-          <a href="/inbox" class="inbox">
-            <span>&nbsp;</span>
-            Inbox
-          </a>
-          <div class="clear"></div>
-        </div>
-        <div class="right_header grid_3">
-          <a href="/help" class="help_right">
-            <span>&nbsp;</span>
-            Help
-          </a>
-          <a href="" class="sign_in">
-            <span>&nbsp;</span>
-            Sign Out
-          </a>
-        </div>
+      <div class="left_header grid_6">
+        <a href="" class="main_logo">Jotky</a>
+      </div>
+      <div class="middle_header grid_7">
+        <a href="" class="home">
+          <span></span>
+          Home
+        </a>
+        <a href="/hot_stuff" class="hot_stream">
+          <span></span>
+          Hot Stream
+        </a>
+        <a href="/inbox" class="inbox">
+          <span></span>
+          Inbox
+        </a>
         <div class="clear"></div>
       </div>
+      <div class="right_header grid_3">
+        <a href="" class="help_right">
+          <span></span>
+          Help
+        </a>
+        <a href="" class="sign_in">
+          <span></span>
+          Sign Out
+        </a>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+
+
+
       <div class="container">
         <div>
+          <div class="left_menu grid_2">&nbsp;
+            <div class="side-left">
+              <ul>
+                <li class="leftMenu_searchResult">
+                  <a href="" onmouseout="heal()" class="side-menu-top-left">
+                    <label>Jots&nbsp;</label>
+                    <span class="jots-icon">&nbsp;</span>
+                  </a>
+                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+                </li>
+                <li class="leftMenu_searchResult">
+                  <a href="" onmouseout="heal()" >
+                    <label>People&nbsp;</label>
+                    <span class="people-icon">&nbsp;</span>
+                  </a>
+                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+                </li>
+                <li class="leftMenu_searchResult">
+                  <a href="" onmouseout="heal()" >
+                    <label>Media&nbsp;</label>
+                    <span class="media-icon">&nbsp;</span>
+                  </a>
+                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+                </li>
+                <li class="leftMenu_searchResult">
+                  <a href="" onmouseout="heal()" class="side-menu-bottom-left">
+                    <label>Places&nbsp;</label>
+                    <span class="places-icon">&nbsp;</span>
+                  </a>
+                  <span class="triangle" style="display:none" onmouseout="heal()">&nbsp;</span>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-          <%= yield %>
-          <%= render 'shared/sidebar_private' %>
+
+
+
+          <div class="main_content grid_11" id="main-content">
+            <%= show_alert_message :error => flash[:error], :notice => flash[:notice], :info => flash[:info], :errors => flash[:errors] %>
+            <%= yield %>
+            <div class="clear"></div>
+          </div>
+
+          <div class="right_content grid_3">
+            <%= render 'shared/sidebar_private' %>
+          </div>
 
           <div class="clear"></div>
         </div>
@@ -61,134 +109,56 @@
       <div class="clear"></div>
     </div>
 
+
     <div class="footer">
+
       <div class="drag_box" id="drag_box_user_treat">
-        <div class="drag_box_top">
-          <span>
-            <span class="drag_box_icon">&nbsp;</span>
-            <span class="drag_box_text">Drag Box</span>
-            <span class="drag_box_information">drag and drop everything here</span>
-          </span>
+      <div class="drag_box_top">
+        <span>
+          <span class="drag_box_icon">&nbsp;</span>
+          <span class="drag_box_text">Drag Box</span>
+          <span class="drag_box_information">drag and drop everything here</span>
+        </span>
+      </div>
+      <div class="drag_box_bottom container_16">
+        <div class="grid_3">&nbsp;</div>
+        <div class="drag_box_middle_jot grid_10">
+          <ul>
+            <li class="follow">
+              <span class="follow_icon">&nbsp;</span>
+              <span class="follow_text">follow</span>
+            </li>
+            <li class="mention">
+              <span class="mention_icon">&nbsp;</span>
+              <span class="follow_text">mention</span>
+            </li>
+          </ul>
         </div>
-        <div class="drag_box_bottom container_16">
-          <div class="grid_3">&nbsp;</div>
-          <div class="drag_box_middle_jot grid_10">
-            <ul>
-              <li class="follow">
-                <span class="follow_icon">&nbsp;</span>
-                <span class="follow_text">follow</span>
-              </li>
-              <li class="mention">
-                <span class="mention_icon">&nbsp;</span>
-                <span class="follow_text">mention</span>
-              </li>
-            </ul>
-          </div>
-          <div class="grid_3">&nbsp;</div>
-          <div class="clear"></div>
-        </div>
+        <div class="grid_3">&nbsp;</div>
         <div class="clear"></div>
       </div>
+      <div class="clear"></div>
+    </div>
+      
+
       <div class="footer-menu container_16">
         <ul>
           <li class="grid_2"><a href="/about">About</a></li>
-          <li class="grid_2"><a href="/contact">Contact</a></li>
-          <li class="grid_2"><a href="/status">Status</a></li>
-          <li class="grid_2"><a href="/goodies">Goodies</a></li>
-          <li class="grid_2"><a href="/api">API</a></li>
-          <li class="grid_2"><a href="/help">Help</a></li>
-          <li class="grid_2"><a href="/terms">Terms</a></li>
-          <li class="grid_2"><a href="/privacy">Privacy</a></li>
+          <li class="grid_2"><a href="">Contact</a></li>
+          <li class="grid_2"><a href="">Status</a></li>
+          <li class="grid_2"><a href="">Goodies</a></li>
+          <li class="grid_2"><a href="">API</a></li>
+          <li class="grid_2"><a href="">Help</a></li>
+          <li class="grid_2"><a href="">Terms</a></li>
+          <li class="grid_2"><a href="">Privacy</a></li>
         </ul>
       </div>
       <div class="clear"></div>
     </div>
-
-    <div id="change_avatar" style="display:none;">
-      <div class="blue_popup_header">
-        <span class="white_people">&nbsp;</span>
-        <span class="edit_avatar">Edit Avatar</span>
-      </div>
-      <div class="body_popup">
-        <form action="">
-          <div>
-            <a href="" class="browse_tab">Browse</a>
-            <br class="clear"/>
-            <p>
-              Upload photo from your computer
-              <br class="clear"/>
-              Max file size is 10MB
-              <br class="clear"/>
-              Or use your existing profile picture from:
-            </p>
-            <span class="ava_radio">
-              <label for="ava_1">
-                <img src="/assets/avatar-popup1.png" alt="" />
-                <span class="fb_pop">&nbsp;</span>
-              </label>
-              <input type="radio" name="ava_popup" value="avatar_1" id="ava_1" />
-              <label for="ava_2">
-                <img src="/assets/avatar-popup2.png" alt="" />
-                <span class="twitter_pop">&nbsp;</span>
-              </label>
-              <input type="radio" name="ava_popup" value="avatar_2" id="ava_2" />
-            </span>
-            <input type="submit" value="Ok" class="but_ok_popup"/>
-          </div>
-        </form>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <div id="loading_avatar" style="display: none">
-      <div class="blue_popup_header">
-        <span class="white_people">&nbsp;</span>
-        <span class="edit_avatar">Edit Avatar</span>
-      </div>
-      <div class="loading_body_popup">
-        <span>Uploading avatar.png...</span>
-        <span class="loading_path">
-          <img src="/assets/loading-avatar.png" alt="" />
-          <a href="">cancel</a>
-        </span>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <div id="crop_avatar" style="display:none;">
-      <div class="blue_popup_header">
-        <span class="white_people">&nbsp;</span>
-        <span class="edit_avatar">Edit Avatar</span>
-      </div>
-      <div class="body_popup">
-        <form action="">
-          <div>
-            <p>
-              To edit this image, drag the region below
-              <br class="clear"/>
-              and then click "Save"
-            </p>
-            <span class="crop_image">
-              <span class="left">
-                <span class="before_crop">
-                  <img src="/assets/before-crop.png" alt="" />
-                </span>
-              </span>
-              <span class="right">
-                <span class="preview">Preview</span>
-                <span class="after_crop">
-                  <img src="/assets/after-crop.png" alt="" />
-                </span>
-              </span>
-            </span>
-            <p>Or upload another picture</p>
-            <a href="" class="browse_tab">Browse</a>
-            <input type="submit" value="Save" class="but_save_popup" />
-          </div>
-        </form>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-    </div>
+   
     <%= javascript_include_tag 'application' %>
   </body>
 </html>
+
+
+

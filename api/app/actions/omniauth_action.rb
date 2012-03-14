@@ -17,7 +17,7 @@ module OmniauthAction
   
   class Twitter < ActionWithAppAuth
     before_start :twitter_oauth_dialog
-    
+
     def twitter_oauth_dialog
       
       oauth_callback_url = "http://127.0.0.1:3000/"

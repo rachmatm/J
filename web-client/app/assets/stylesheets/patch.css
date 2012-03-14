@@ -25,7 +25,14 @@
   padding-right:8px;}
 
 .r-notification-tab-active .update_text{
-  display: inline-block;}
+
+display: inline-block;}
+
+
+.previous_icon a:hover, .next_icon a:hover , .top_button a:hover , .side-left a:hover,
+.messages_right_path a:hover, .previous_people2 a:hover, .about_top a:hover{ text-decoration: none}
+
+ 
 
 .main-registration-form-field-alert label{
   float: none;
@@ -103,3 +110,5 @@ opacity: 0.8;
 position: fixed;
 right: 5%;
 top: 15px;}
+
+.pp_people_block { display: block;}

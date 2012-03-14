@@ -1,0 +1,5 @@
+<%= form_tag upload_photo_facebooks_path, :method => :post, :multipart => true do %>
+  <%= label_tag :photo %>
+  <%= file_field_tag :photo %>
+  <%= submit_tag %>
+<% end %>

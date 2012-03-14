@@ -628,6 +628,54 @@ class User
     end
   end
 
+# Facebook
+# ------------------------------------------------------------------------
+
+  def current_user_set_facebook_status(message)
+    post_facebook_status_url = "https://graph.facebook.com/me/feed"
+    parameters = {:access_token => self.facebook_token, :message => message}
+    post_facebook_status_response = ActiveSupport::JSON.decode Typhoeus::Request.post(post_facebook_status_url, :params => parameters ).body
+
+    if post_facebook_status_response != false
+      return JsonizeHelper.format :notice => "You have successfully update your status"
+    else
+      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+    end
+  end
+
+# Twitter
+# ------------------------------------------------------------------------
+
+  def current_user_set_twitter_status(status)
+    post_twitter_status_url = "https://api.twitter.com/1/statuses/update.json"
+
+    headers = { :oauth_consumer_key => TWITTER_CONSUMER_KEY,
+      :oauth_nonce => ActiveSupport::SecureRandom.hex(16),
+      :oauth_signature_method => "HMAC-SHA1",
+      :oauth_timestamp => Time.now.to_i,
+      :oauth_token => self.twitter_user_token,
+      :oauth_version => "1.0"
+    }
+
+    signature_header = headers.merge( { :status => URI.escape(status) } )
+    oauth_signature = TwitterHelper.oauth_signature("post", post_twitter_status_url, self.twitter_user_secret, signature_header)
+
+    headers.merge!( {:oauth_signature => oauth_signature} )
+
+    headers = headers.sort.collect {|key, value| "#{key}=\"#{value}\"" }.join(', ')
+
+    post_twitter_status_response = ActiveSupport::JSON.decode Typhoeus::Request.post(post_twitter_status_url,
+                                                                                     :headers => { :Authorization => "OAuth #{headers}" },
+                                                                                     :body => "status=#{URI.escape status}"
+                                                                                    ).body
+
+    if not post_twitter_status_response['error'].present?
+      return JsonizeHelper.format :notice => "You have successfully update your status"
+    else
+      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+    end
+  end
+
   # Favorite
 
   # Thumbs

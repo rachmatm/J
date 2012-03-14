@@ -118,10 +118,10 @@ class Authentication
 # ------------------------------------------------------------------------
 
   def self.current_user_twitter_authentication(params)
-    user = Authentication.find_or_create_by params
+    user = Authentication.find_or_create_by :username => params[:username], :realname => params[:realname], :twitter_id => params[:twitter_id]
 
     jotky_token = ActiveSupport::SecureRandom.hex(9)
-    user.update_attributes :token => jotky_token
+    user.update_attributes :token => jotky_token, :twitter_user_token => params[:oauth_token], :twitter_user_secret => params[:oauth_secret]
 
     return JsonizeHelper.format :content => {:token => jotky_token}
   end

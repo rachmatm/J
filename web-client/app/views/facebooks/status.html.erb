@@ -1,0 +1,6 @@
+<%= form_tag status_facebooks_path, :method => :post, :multipart => true do %>
+  <%= label_tag :message %>
+  <%= text_area_tag :message, '' %>
+  <br />
+  <%= submit_tag %>
+<% end %>
