@@ -1,0 +1,6 @@
+<%= form_tag status_twitter_path, :method => :post, :multipart => true do %>
+  <%= label_tag :status %>
+  <%= text_area_tag :status, '' %>
+  <br />
+  <%= submit_tag %>
+<% end %>

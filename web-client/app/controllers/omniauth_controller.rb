@@ -1,4 +1,32 @@
 class OmniauthController < ApplicationController
+  def facebook
+    redirect_to BASE_URL + "omniauth/facebook?app_id=#{APP_ID}&secret_key=#{APP_SECRET}"
+  end
+
+  def authenticate_facebook
+    if params[:facebook_token].present?
+      set_token({:key => params[:jotky_token]})
+      redirect_to root_path, :notice => "Username is #{ params[:username] } and #{ params[:facebook_token] } and Jotky Token is #{ params[:jotky_token] }"
+    else
+      redirect_to root_path, :notice => params[:notice]
+    end
+  end
+
+  def authenticate_twitter
+    oauth_hash = request.env['omniauth.auth']
+    parameters = {:oauth_token => oauth_hash.credentials.token,
+      :oauth_secret => oauth_hash.credentials.secret,
+      :username => oauth_hash.info.nickname,
+      :realname => oauth_hash.info.name,
+      :twitter_id => oauth_hash.uid
+    }
+
+    twitter_oauth_response = api_connect('omniauth/authenticate_twitter', parameters, "post", true, false)
+    set_token({:key => twitter_oauth_response['content']['token']})
+
+    redirect_to root_path, :notice => "You have successfully logged in with twitter"
+  end
+
   def google
     redirect_to BASE_URL + "omniauth/google?app_id=#{APP_ID}&secret_key=#{APP_SECRET}"
   end

@@ -1,15 +1,16 @@
 WebClient::Application.routes.draw do
   root :to => 'welcomes#index'
-  
-  
+
   resource :dashboards, :only => [:show], :path => 'dashboard'
 
   #footer
   resource :abouts, :only => [:show], :path => 'about'
-  
+
   resource :status, :only => [:index], :path => 'status'
- 
-  resource :omniauth, :only => [:google, :authenticate_google] do
+
+  resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
+    get '/facebook' => 'omniauth#facebook', :as => 'facebook'
+    get '/authenticate_facebook' => 'omniauth#authenticate_facebook', :as => 'authenticate_facebook'
     get '/google' => 'omniauth#google', :as => 'google'
     get '/authenticate_google' => 'omniauth#authenticate_google', :as => 'authenticate_google'
   end
@@ -18,6 +19,22 @@ WebClient::Application.routes.draw do
     get '/upload_video' => 'googles#upload_video', :as => 'upload_video'
     post '/upload_video' => 'googles#upload_video_action'
   end
+
+  resource :facebooks, :only => [:status, :post_status, :upload_video, :upload_video_create] do
+    get '/status' => 'facebooks#status', :as => 'status'
+    post '/status' => 'facebooks#post_status'
+    get '/upload_photo' => 'facebooks#upload_photo', :as => 'upload_photo'
+    post '/upload_photo' => 'facebooks#upload_photo_create'
+    get '/upload_video' => 'facebooks#upload_video', :as => 'upload_video'
+    post '/upload_video' => 'facebooks#upload_video_create'
+  end
+
+  resource :twitter, :only => [:status, :post_status] do
+    get '/status' => 'twitter#status', :as => 'status'
+    post '/status' => 'twitter#post_status'
+  end
+
+  match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 
   get 'contact' => 'contacts#index', :as => 'contact'
   get 'goodies' => 'goodies#index', :as => 'goodies'
