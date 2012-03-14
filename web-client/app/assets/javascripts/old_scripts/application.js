@@ -379,31 +379,42 @@ jQuery(function($){
     $(this).removeClass('stuff_hover');
   });
   
-  $('.previous').hide();
+    /*
+  //$('.previous').hide();
   $('.previous_icon').mouseover(function(){
     $(this).find('.previous').show();
-  }).mouseout(function(){
+    $(this).addClass('stuff_hover');
+  });  .mouseout(function(){
     $(this).find('.previous').hide();
   });
+
+  $('.hot_jot').mouseover(function(){
+    $(this).addClass('stuff_hover');
+  }).mouseout(function(){
+    $(this).removeClass('stuff_hover');
+  });
   
-  $('.next').hide();
+  //$('.next').hide();
   $('.next_icon').mouseover(function(){
     $(this).find('.next').show();
-  }).mouseout(function(){
+   // $(this).addClass('previous');
+  }); mouseout(function(){
     $(this).find('.next').hide();
-  });
+  }); 
 
    $('.previous_icon2').mouseover(function(){
     $(this).find('.previous').show();
   }).mouseout(function(){
-    $(this).find('.previous').hide();
+   $(this).find('.previous').hide();
   });
 
  $('.next_icon2').mouseover(function(){
     $(this).find('.next').show();
   }).mouseout(function(){
-    $(this).find('.next').hide();
+   // $(this).find('.next').hide();
   });
+   */
+
   $("a[rel='image_popup']").colorbox();
   $("#click").click(function(){ 
     $('#click').css({
@@ -1000,7 +1011,10 @@ $('#r-notification-tab').bind('click', function(){
 
   //profile
   $('#r-profile-content').hide();
+  $('#r-profileother-content').hide();
   $('#r-welcome-content').hide();
+
+
 });
 
 

@@ -16,7 +16,13 @@ class WelcomesController < ApplicationController
      render :layout => 'private'
   end
 
- 
+  def search_people
+      render :layout => 'private'
+  end
+
+  def jot_detail_active
+    render  :layout => 'private'
+  end
   
   def inbox
     render :layout => 'private'
