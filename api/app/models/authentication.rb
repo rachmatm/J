@@ -134,7 +134,7 @@ class Authentication
     google_token_response = ActiveSupport::JSON.decode Typhoeus::Request.post("https://accounts.google.com/o/oauth2/token", :body => body).body
 
     if google_token_response.empty? or google_token_response['error'].present?
-      return "http://localhost:5000/omniauth/authenticate_google?notice=Something%20went%20wrong,%20Please%20try%20again."
+      return "http://localhost:5000/omniauth/authenticate_google?error=Something%20went%20wrong,%20Please%20try%20again."
     else
       google_token = google_token_response['access_token']
       google_profile_response = XmlSimple.xml_in Typhoeus::Request.get("https://gdata.youtube.com/feeds/api/users/default", :params => {:access_token => google_token}).body

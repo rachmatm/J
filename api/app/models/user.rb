@@ -631,6 +631,17 @@ class User
 # Facebook
 # ------------------------------------------------------------------------
 
+  def current_user_get_facebook_wall
+    get_facebook_wall_url = "https://graph.facebook.com/me/home"
+    get_facebook_wall_response = ActiveSupport::JSON.decode Typhoeus::Request.get(get_facebook_wall_url, :params => {:access_token => self.facebook_token, :limit => 5}).body
+
+    if get_facebook_wall_response != false
+      return JsonizeHelper.format :content => get_facebook_wall_response
+    else
+      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+    end
+  end
+
   def current_user_set_facebook_status(message)
     post_facebook_status_url = "https://graph.facebook.com/me/feed"
     parameters = {:access_token => self.facebook_token, :message => message}
@@ -645,6 +656,36 @@ class User
 
 # Twitter
 # ------------------------------------------------------------------------
+
+  def current_user_get_twitter_timeline
+    get_twitter_timeline_url = "https://api.twitter.com/1/statuses/home_timeline.json"
+
+    headers = { :oauth_consumer_key => TWITTER_CONSUMER_KEY,
+      :oauth_nonce => ActiveSupport::SecureRandom.hex(16),
+      :oauth_signature_method => "HMAC-SHA1",
+      :oauth_timestamp => Time.now.to_i,
+      :oauth_token => self.twitter_user_token,
+      :oauth_version => "1.0"
+    }
+
+    signature_header = { :count => 5, :include_entities=> true }.merge headers
+    oauth_signature = TwitterHelper.oauth_signature("get", get_twitter_timeline_url, self.twitter_user_secret, signature_header)
+
+    headers.merge!( {:oauth_signature => oauth_signature} )
+
+    headers = headers.sort.collect {|key, value| "#{key}=\"#{value}\"" }.join(', ')
+
+    get_twitter_timeline_response = ActiveSupport::JSON.decode Typhoeus::Request.get(get_twitter_timeline_url,
+                                                                                     :headers => { :Authorization => "OAuth #{headers}" },
+                                                                                     :params => { :include_entities => true, :count => 5 }
+                                                                                    ).body
+
+    if get_twitter_timeline_response.is_a? Array or get_twitter_timeline_response['error'].present?
+      return JsonizeHelper.format :content => get_twitter_timeline_response
+    else
+      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+    end
+  end
 
   def current_user_set_twitter_status(status)
     post_twitter_status_url = "https://api.twitter.com/1/statuses/update.json"
@@ -717,7 +758,7 @@ class User
   rescue
     JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
-  
+
   def current_user_unset_private_message(id)
     private_message = Message.find(id)
     if private_message.destroy

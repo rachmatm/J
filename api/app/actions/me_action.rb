@@ -192,6 +192,13 @@ module MeAction
 # Facebook
 # ------------------------------------------------------------------------
 
+  class IndexFacebookWall < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_get_facebook_wall
+      finish
+    end
+  end
+
   class CreateFacebookStatus < ActionWithTokenAuth
     def start
       render @current_user.current_user_set_facebook_status params[:message]
@@ -199,15 +206,15 @@ module MeAction
     end
   end
 
-  class IndexFacebookWall < ActionWithTokenAuth
+# Twitter
+# ------------------------------------------------------------------------
+
+  class IndexTwitterTimeline < ActionWithTokenAuth
     def start
-      render @current_user.current_user_get_facebook_wall params[:message]
+      render @current_user.current_user_get_twitter_timeline
       finish
     end
   end
-
-# Twitter
-# ------------------------------------------------------------------------
 
   class CreateTwitterStatus < ActionWithTokenAuth
     def start

@@ -1,4 +1,8 @@
 class TwitterController < ApplicationWithTokenController
+  def timeline
+    @timeline = api_connect('me/twitter/timeline.json', {}, 'get', false, true)['content']
+  end
+
   def status
     
   end

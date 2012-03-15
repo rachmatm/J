@@ -13,7 +13,7 @@ module AuthenticationAction
   class Notify < ActionWithAppAuth
     def start
       start_with_validates_params [:email] do
-        render Authentication.notify_forgot_password @parameters[:email], @client.url
+        render Authentication.notify_forgot_password @parameters[:email], @client.reset_password_confirmation_url
       end
     end
   end

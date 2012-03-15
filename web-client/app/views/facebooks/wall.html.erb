@@ -1,0 +1,6 @@
+<% @wall['data'].each do |fb_data| %>
+  <p>From: <%= fb_data['from']['name'] %></p>
+  <p><%= p "Story: " + fb_data['story']  if fb_data['story'].present? %></p>
+  <p><%= p "Content: " + fb_data['message'] if fb_data['message'].present? %></p>
+  <br />
+<% end %>

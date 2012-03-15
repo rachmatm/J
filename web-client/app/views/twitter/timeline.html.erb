@@ -1,0 +1,8 @@
+<hr />
+<% @timeline.each do |tweet| %>
+  <img src="<%= tweet['user']['profile_image_url_https'] %>" alt="" />
+  <h1><%= tweet['user']['name'] %></h1>
+  <br />
+  <p><%= tweet['text'] %></p>
+  <hr />
+<% end %>
