@@ -1,0 +1,28 @@
+<script  type="text/template" id="main-forgot-template">
+ <div class="forgotPwd_content main_content">
+    <div class="opening_text">
+      <p class="line_one">Create your</p>
+      <p class="line_two">Jotky Account</p>
+    </div>
+    <%= form_tag forgot_path, :id => 'main-forgot-form' do -%>
+      <table class="box_forgot">
+        <tbody>
+          <tr class="reg_email">
+            <td class="label_registration">
+              <%= label_tag 'forgot_email', 'E-mail' %>
+              <%= text_field_tag 'forgot[email]' %>
+            </td>
+            <td class="alert_registration main-forgot-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'forgot_email', 'your email address, please' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr> 
+        </tbody>
+      </table>
+      
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</script>
