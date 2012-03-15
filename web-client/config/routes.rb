@@ -21,6 +21,7 @@ WebClient::Application.routes.draw do
   end
 
   resource :facebooks, :only => [:status, :post_status, :upload_video, :upload_video_create] do
+    get '/wall' => 'facebooks#wall', :as => 'wall'
     get '/status' => 'facebooks#status', :as => 'status'
     post '/status' => 'facebooks#post_status'
     get '/upload_photo' => 'facebooks#upload_photo', :as => 'upload_photo'
@@ -30,6 +31,7 @@ WebClient::Application.routes.draw do
   end
 
   resource :twitter, :only => [:status, :post_status] do
+    get '/timeline' => 'twitter#timeline', :as => 'timeline'
     get '/status' => 'twitter#status', :as => 'status'
     post '/status' => 'twitter#post_status'
   end

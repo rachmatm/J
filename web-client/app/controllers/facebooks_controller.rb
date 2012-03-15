@@ -1,6 +1,6 @@
 class FacebooksController < ApplicationWithTokenController
   def wall
-    
+    @wall = api_connect('me/facebook/wall.json', {}, 'get', false, true)['content']
   end
 
   def status
