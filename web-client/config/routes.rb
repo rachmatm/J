@@ -60,6 +60,8 @@ WebClient::Application.routes.draw do
 
   get 'new-index' => 'welcomes#new_index'
 
+  get '/forgot_password' => 'authentications#forgot_password', :as => 'forgot'
+  post '/forgot_password' => 'authentications#notify_forgot_password'
 
   resource :authentications, :path => 'authentication', :only => [:create]
   resource :registrations, :path => 'registration', :only => [:create]
