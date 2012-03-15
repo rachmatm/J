@@ -47,3 +47,8 @@ gem 'youtube_it'
 
 # To use recaptcha
 gem "recaptcha", '0.3.4', :require => "recaptcha/rails"
+
+gem "uploadify_rails3"
+
+gem "carrierwave", '0.5.8'
+gem "rmagick", '2.13.1'

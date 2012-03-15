@@ -1,11 +1,20 @@
 window.HolderView = Backbone.View.extend({
   template: _.template($('#holder-template').html()),
 
-  renderAppendTo: function(attributes){
-    return $(this.template(attributes || {})).appendTo(this.el);
+  template_variables: {
+    className: '',
+    idName: ''
   },
 
-  renderPrependTo: function(attributes){
-    return $(this.template(attributes || {})).prependTo(this.el);
+  renderAppendTo: function(variables){
+    var _variables = $.extend({}, this.template_variables, variables);
+    
+    return $(this.template(_variables)).appendTo(this.el);
+  },
+
+  renderPrependTo: function(variables){
+    var _variables = $.extend({}, this.template_variables, variables);
+    
+    return $(this.template(_variables)).prependTo(this.el);
   }
 });

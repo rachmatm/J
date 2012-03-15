@@ -1,18 +1,19 @@
 <script type="text/template" id="main-magicbox-jot-input-clip-template">
-  <div class="jot_upload_media">
+  <%= form_tag files_path, :id => 'main-magicbox-jot-input-clip-form', :class => 'main-magicbox-jot-input-form' do %>
+  <div class="jot_upload_media clearfix">
+    <%= session_field_tag %>
     <div class="upload_media_top">
       <span class="upload_media">&nbsp;</span>
       <span class="add_more_text">Upload Media or Add URL</span>
-      <a href="" class="attach_more_things">Attach more things</a>
+      <!-- a href="" class="attach_more_things">Attach more things</a -->
     </div>
     <div class="upload_media_bottom">
-      <form action="">
         <div>
           <div class="submit_upload_media">
-            <input type="text" />
-            <input type="submit" value="Clip"/>
+            <%= text_field_tag 'jot[attachment_uploaded]', 1, :id => 'jot-input-field-attachment-uploaded', :class => 'invisible-2' %>
+            <%= file_field_tag 'attachment', :id => 'jot-input-field-attachment' %>
           </div>
-          <div class="submit_upload_media">
+          <!-- div class="submit_upload_media">
             <img alt="" src="/assets/loading-avatar.png" class="avatar_loading"/>
             <span class="up_img_info">Attaching pretty.jpg..</span>
           </div>
@@ -36,10 +37,10 @@
                 </span>
               </div>
             </div>
-          </div>
+          </div -->
         </div>
-      </form>
     </div>
-    <div class="clear"></div>
+
   </div>
+  <% end %>
 </script>

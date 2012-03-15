@@ -1,5 +1,6 @@
 <script type="text/template" id="main-magicbox-jot-input-location-template">
-  <div class="jot_add_location">
+  <div class="jot_add_location clearfix">
+    <%= form_tag jots_path, :id => '#main-magicbox-jot-input-location-form', :class => 'main-magicbox-jot-input-form' do %>
     <div class="add_location_top">
       <span class="add_location_media">&nbsp;</span>
       <span class="add_more_text">Add location</span>
@@ -67,6 +68,6 @@
         </div>
       </div>
     </div>
-    <div class="clear"></div>
+    <% end %>
   </div>
 </script>
