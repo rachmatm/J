@@ -36,6 +36,8 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
+  resources :jots, :only => [:new, :create]
+
   match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 
   get 'contact' => 'contacts#index', :as => 'contact'
@@ -63,6 +65,10 @@ WebClient::Application.routes.draw do
   resource :registrations, :path => 'registration', :only => [:create]
 
   resource :tests
+
+  resources :jots
+
+  resources :files
 
   get 'logout' => 'authentications#destroy'
 end

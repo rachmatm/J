@@ -1,13 +1,16 @@
 <script type="text/template" id="main-magicbox-jot-input-more-content-template">
-  <div class="jot_more_content">
+  <%= form_tag jots_path, :id => 'main-magicbox-jot-input-more-form', :class => 'main-magicbox-jot-input-form' do %>
+  <div class="jot_more_content clearfix">
+    
     <div class="more_content_top">
       <span class="add_more_icon">&nbsp;</span>
       <span class="add_more_text">Add more content</span>
     </div>
     <div class="more_content_bottom">
-      <textarea cols="" rows=""></textarea>
-      <span class="more_content_count jot_count">512</span>
+      <%= text_area_tag 'jot[detail]', nil, :id => 'jot-input-detail' %>
+      <span class="more_content_count jot_count" id="jot-input-more-text-length">512</span>
     </div>
-    <div class="clear"></div>
+
   </div>
+  <% end %>
 </script>

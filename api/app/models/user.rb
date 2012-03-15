@@ -657,7 +657,7 @@ class User
       :oauth_version => "1.0"
     }
 
-    signature_header = headers.merge( { :status => URI.escape(status) } )
+    signature_header = headers.merge({ :status => ERB::Util::url_encode(status) })
     oauth_signature = TwitterHelper.oauth_signature("post", post_twitter_status_url, self.twitter_user_secret, signature_header)
 
     headers.merge!( {:oauth_signature => oauth_signature} )
@@ -666,7 +666,7 @@ class User
 
     post_twitter_status_response = ActiveSupport::JSON.decode Typhoeus::Request.post(post_twitter_status_url,
                                                                                      :headers => { :Authorization => "OAuth #{headers}" },
-                                                                                     :body => "status=#{URI.escape status}"
+                                                                                     :params => { :status => CGI.escape(status) }
                                                                                     ).body
 
     if not post_twitter_status_response['error'].present?

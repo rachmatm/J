@@ -42,6 +42,7 @@ HttpRouter.new do
   post('/account/update-connection(.:format)').to(AccountSettingsAction::UpdateConnection)
   post('/account/update-media-upload(.:format)').to(AccountSettingsAction::UpdateMediaUpload)
   post('/account/update-avatar(.:format)').to(AccountSettingsAction::UpdateAvatar )
+  post('/files(.:format)').to(FileAction::Create)
 
   # Jots
   #  get('/jots/index(.:format)').to(JotsAction::Index)

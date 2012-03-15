@@ -6,9 +6,10 @@ class OmniauthController < ApplicationController
   def authenticate_facebook
     if params[:facebook_token].present?
       set_token({:key => params[:jotky_token]})
-      redirect_to root_path, :notice => "Username is #{ params[:username] } and #{ params[:facebook_token] } and Jotky Token is #{ params[:jotky_token] }"
+      redirect_to root_path, :notice => "You have successfully logged in with facebook"
     else
-      redirect_to root_path, :notice => params[:notice]
+      flash[:error] = params[:error]
+      redirect_to root_path
     end
   end
 

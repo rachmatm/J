@@ -1,9 +1,12 @@
 <script type="text/template" id="main-magicbox-jot-input-template">
-  <div class="jot_search search jot-tab-content">
-    <input type="text" value="Tags, places, users, search from them here!"/>
-    <input type="submit" value="" class="jot_button"/>
-    <div class="clear"></div>
-  </div>
+
+  <%= form_tag jots_path, :id => 'main-magicbox-jot-input-form', :class => 'main-magicbox-jot-input-form' do %>
+    <div class="jot_search search jot-tab-content clearfix">
+      <%= text_field_tag 'jot[title]', nil, :placeholder => 'Tags, places, users, search from them here!', :id => 'jot-input-title' %>
+      <%= submit_tag "" %>
+    </div>
+  <% end %>
+
 
   <div class="jot_buttons_path jot-tab-content">
     <div class="left">
@@ -45,16 +48,13 @@
       </ul>
     </div>
     <div class="jot_button_right">
-      <span class="jot_count">140</span>
+      <span class="jot_count" id="jot-input-text-length">140</span>
       <a href="" class="jot_down_arrow">&nbsp;</a>
     </div>
   </div>
+  <div class="jot_mode_hide" id="jot-input-more">
 
-  <form action="">
-    <div class="jot_mode_hide" id="jot-input-more">
-
-      <input type="submit" class="jot_green_bg" value="Jot" />
-      <div class="clear"></div>
-    </div>
-  </form>
+    <input type="submit" class="jot_green_bg" value="Jot" />
+    <div class="clear"></div>
+  </div>
 </script>

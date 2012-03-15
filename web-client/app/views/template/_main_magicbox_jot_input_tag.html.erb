@@ -1,5 +1,6 @@
 <script type="text/template" id="main-magicbox-jot-input-tag-template">
-  <div class="jot_tags_post">
+  <div class="jot_tags_post clearfix">
+    <%= form_tag jots_path, :id => '#main-magicbox-jot-input-tag-form', :class => 'main-magicbox-jot-tag-form' do %>
     <div class="jot_top_tags">
       <span class="top_tags_style jot_tags_icon">&nbsp;</span>
       <span class="top_tags_text">Tags of this post</span>
@@ -22,6 +23,6 @@
       <div class="clear"></div>
     </div>
     <div class="jot_bottom_tags"></div>
-    <div class="clear"></div>
+    <% end %>
   </div>
 </script>
