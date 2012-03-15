@@ -680,7 +680,6 @@ class User
                                                                                      :params => { :include_entities => true, :count => 5 }
                                                                                     ).body
 
-    debugger
     if get_twitter_timeline_response.is_a? Array or get_twitter_timeline_response['error'].present?
       return JsonizeHelper.format :content => get_twitter_timeline_response
     else
