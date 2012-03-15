@@ -37,7 +37,8 @@ class OmniauthController < ApplicationController
       set_token({:key => params[:jotky_token]})
       redirect_to root_path, :notice => "#{ params[:username] }, you have authenticated your Youtube account"
     else
-      redirect_to root_path, :notice => params[:notice]
+      flash[:error] = params[:error]
+      redirect_to root_path, :error => params[:error]
     end
   end
 end
