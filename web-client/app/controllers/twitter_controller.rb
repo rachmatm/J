@@ -9,7 +9,8 @@ class TwitterController < ApplicationWithTokenController
     if post_twitter_status_response['failed'] === false
       redirect_to status_twitter_path, :notice => post_twitter_status_response['notice']
     else
-      redirect_to status_twitter_path, :notice => post_twitter_status_response['notice']
+      flash[:error] = post_twitter_status_response['error']
+      redirect_to status_twitter_path
     end
   end
 end
