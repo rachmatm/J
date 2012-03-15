@@ -22,6 +22,10 @@ class WelcomesController < ApplicationWithTokenController
      render :layout => 'private'
   end
 
+  def profile_other
+    render :layout =>'private'
+  end
+
   def search_people
       render :layout => 'private'
   end

@@ -8,6 +8,8 @@ WebClient::Application.routes.draw do
 
   resource :status, :only => [:index], :path => 'status'
 
+  resource :profile, :only  => [:index], :path => 'profile'
+
   resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
     get '/facebook' => 'omniauth#facebook', :as => 'facebook'
     get '/authenticate_facebook' => 'omniauth#authenticate_facebook', :as => 'authenticate_facebook'
@@ -46,7 +48,7 @@ WebClient::Application.routes.draw do
 
   get 'hot_stuff'     => 'welcomes#hot_stuff', :as => 'hot_stuff'
   get 'member'        => 'welcomes#member', :as => 'member'
-  get 'profile'       => 'welcomes#profile', :as => 'profile'
+  
   get 'profile_other' => 'welcomes#profile_other', :as => 'profile_other'
   get 'search_people' =>  'welcomes#search_people', :as => 'search_people'
   get 'jot_detail_active' => 'welcomes#jot_detail_active', :as => 'jot_detail_active'
