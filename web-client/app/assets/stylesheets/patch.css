@@ -112,3 +112,8 @@ right: 5%;
 top: 15px;}
 
 .pp_people_block { display: block;}
+
+.invisible-2{
+height: 0 !important;
+padding: 0 !important;
+width: 0 !important;}

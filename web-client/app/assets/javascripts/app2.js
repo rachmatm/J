@@ -1,3 +1,3 @@
-var magicBoxView = new MagicBoxView;
+var magicBoxPrivateView = new MagicBoxPrivateView;
 
 

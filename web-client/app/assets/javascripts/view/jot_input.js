@@ -9,12 +9,15 @@ window.JotInputView = Backbone.View.extend({
     'click #jot-bar-tag': 'open_tag'
   },
 
+  maxlenght: 140,
+
   initialize: function(){
     this.jotInputMoreContentView = new JotInputMoreContentView;
     this.holderView = new HolderView;
     this.jotInputClip = new JotInputClip;
     this.jotInputLocation = new JotInputLocation;
     this.jotInputTag = new JotInputTag;
+    this.formView = new FormView;
   },
 
   createInputMoreHolder: function(id){
@@ -26,6 +29,8 @@ window.JotInputView = Backbone.View.extend({
   },
 
   render: function(){
+    var _this = this;
+    
     $(this.el).html(this.template);
     this.setButtonAnimation();
 
@@ -35,7 +40,36 @@ window.JotInputView = Backbone.View.extend({
     this.open_clip_present = 0;
     this.open_location_present = 0;
     this.open_tag_present = 0;
+
+    this.formView.setElement('#main-magicbox-jot-input-form');
+
+    this.formView.render({
+      rules: {
+        'jot[title]' : {
+          required: true,
+          maxlength: _this.maxlenght
+        }
+      },
+
+      errorPlacement: function(error, element){},
+
+      submitHandler: function(){
+        return false;
+      }
+    });
+
+    $(this.formView.el).bind('submit', function(){
+      $(_this.el).find('.main-magicbox-jot-input-form').each(function(){
+        alert($(this).valid());
+      });
+    });
+
+    $('#jot-input-title').bind('keyup', function(){
+      $('#jot-input-text-length').text(_this.maxlenght - this.value.length)
+    });
   },
+
+  
 
   setButtonAnimation: function(){
     var buttons = $(this.el).find('.jot-bar-button');

@@ -19,4 +19,15 @@ class Attachment
   validates_integrity_of :file
   validates_processing_of :file
   validates :file, :file_size => { :maximum => 2.gigabytes.to_i }
+
+
+  def self.set(params)
+    data = self.create params
+
+    if data.errors.any?
+      JsonizeHelper.format({:error => 'Upload failed', :errors => data.errors, :failed => true})
+    else
+      JsonizeHelper.format({:content => data})
+    end
+  end
 end

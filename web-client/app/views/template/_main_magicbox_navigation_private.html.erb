@@ -1,4 +1,4 @@
-<script id="main-magicbox-navigation-private-template" type="type/template">
+<script id="main-magicbox-navigation-private-template" type="text/template">
   <div class="top_button" id="main-magicbox-navigation-private">
     <div class="left">
       <a class="search_icon main-magicbox-navigation-search-link" href="#" id="main-magicbox-navigation">
@@ -19,7 +19,7 @@
       </a>
       <a id="user_logged" class="sign_up" href="">
         <img alt="" src="/assets/little-avatar.png">
-        <span class="nickname_logged">MetroFx</span>
+        <span class="nickname_logged"><%= @current_user['username'] %></span>
         <span class="user_little_badge">0</span>
       </a>
     </div>

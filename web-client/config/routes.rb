@@ -66,5 +66,9 @@ WebClient::Application.routes.draw do
 
   resource :tests
 
+  resources :jots
+
+  resources :files
+
   get 'logout' => 'authentications#destroy'
 end
