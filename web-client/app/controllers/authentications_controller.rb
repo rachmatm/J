@@ -68,7 +68,7 @@ class AuthenticationsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        notify_password_request = api_connect('authentication/notify_forgot_password.json', :email => params[:email], "post", true, false)
+        notify_password_request = api_connect('authentication/notify_forgot_password.json', { :email => params[:email]}, "post", true, false)
 
         render :json => notify_password_request
       end

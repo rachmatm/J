@@ -3,14 +3,19 @@ window.LoginView = Backbone.View.extend({
   template: _.template($('#main-magicbox-login-template').html()),
 
   events: {
-    "click .link-to-registration": "open_registration"
+    "click .link-to-registration": "open_registration",
+    "click .link-forgot-password": "open_forgot"
   },
 
   initialize: function(){
+   //
+    this.forgotView = new ForgotView;
     this.registrationView = new RegistrationView;
     this.holderView = new HolderView;
     this.formView = new FormView;
     this.alertView = new AlertView;
+    
+    
   },
 
   render: function(){
@@ -61,6 +66,13 @@ window.LoginView = Backbone.View.extend({
     
     this.registrationView.setElement(this.createHolder('main-registration'));
     this.registrationView.render();
+  },
+
+  open_forgot: function(){
+   
+    this.forgotView.remove();
+    this.forgotView.setElement(this.createHolder('main-forgot'));
+    this.forgotView.render();
   }
 });
 
