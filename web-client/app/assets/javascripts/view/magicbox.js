@@ -16,6 +16,7 @@ window.MagicBoxView = Backbone.View.extend({
     "click .main-magicbox-navigation-search-link": "open_search",
     "click .main-magicbox-navigation-jot-link": "open_jot",
     "click .main-magicbox-navigation-login-link": "open_login"
+    
   },
 
   initialize: function(){
@@ -24,8 +25,8 @@ window.MagicBoxView = Backbone.View.extend({
     this.searchView = new SearchView;
     this.loginView = new LoginView;
     this.holderView = new HolderView;
-    
-    this.render();
+    this.aboutView = new AboutView;
+    //this.render();
   },
 
   render: function(){
@@ -104,7 +105,20 @@ window.MagicBoxView = Backbone.View.extend({
 
   close_welcome: function(){
     this.welcomeView.remove();
-  }
+  },
+   open_about: function(){
+    this.close_welcome();  
+    this.aboutView.remove();
+    this.aboutView.setElement(this.createHolder('main-about'));
+    this.aboutView.render();
+       
+    },
+    close_about: function(){
+        this.close_welcome();
+        this.close_login();
+        this.close_logout();
+        this.close_search();
+    }
 });
 
 //$('#signUp').bind('click', function(){

@@ -4,7 +4,8 @@ WebClient::Application.routes.draw do
   resource :dashboards, :only => [:show], :path => 'dashboard'
 
   #footer
-  resource :abouts, :only => [:show], :path => 'about'
+  
+ # get 'about' => 'abouts#show', :as => 'about'
 
   resource :status, :only => [:index], :path => 'status'
 
