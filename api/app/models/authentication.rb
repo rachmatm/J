@@ -104,11 +104,9 @@ class Authentication
       facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
       profile = ActiveSupport::JSON.decode facebook_access_profile_response
       jotky_token = ActiveSupport::SecureRandom.hex(9)
-      user = self.find_or_create_by :realname => profile['name'],
-        :username => profile['username'],
-        :facebook_id => profile['id']
+      user = self.find_or_create_by :username => profile['username']
 
-      user.update_attributes :token => jotky_token, :facebook_token => facebook_token
+      user.update_attributes :token => jotky_token, :facebook_token => facebook_token, :realname => profile['name'], :facebook_id => profile['id']
       return "http://localhost:5000/omniauth/authenticate_facebook?facebook_token=#{facebook_token}&jotky_token=#{jotky_token}"
     end
   end
@@ -117,10 +115,16 @@ class Authentication
 # ------------------------------------------------------------------------
 
   def self.current_user_twitter_authentication(params)
-    user = Authentication.find_or_create_by :username => params[:username], :realname => params[:realname], :twitter_id => params[:twitter_id]
+    user = Authentication.find_or_create_by :username => params[:username]
 
     jotky_token = ActiveSupport::SecureRandom.hex(9)
-    user.update_attributes :token => jotky_token, :twitter_user_token => params[:oauth_token], :twitter_user_secret => params[:oauth_secret]
+    parameters = {:token => jotky_token,
+                  :twitter_user_token => params[:oauth_token],
+                  :twitter_user_secret => params[:oauth_secret],
+                  :realname => params[:realname],
+                  :twitter_id => params[:twitter_id]}
+
+    user.update_attributes parameters
 
     return JsonizeHelper.format :content => {:token => jotky_token}
   end
@@ -139,12 +143,15 @@ class Authentication
       google_token = google_token_response['access_token']
       google_profile_response = XmlSimple.xml_in Typhoeus::Request.get("https://gdata.youtube.com/feeds/api/users/default", :params => {:access_token => google_token}).body
       jotky_token = ActiveSupport::SecureRandom.hex(9)
-      user = self.find_or_create_by :realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0],
-        :username => google_profile_response['username'][0],
-        :google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1')
+      user = self.find_or_create_by :username => google_profile_response['username'][0]
 
-      user.update_attributes :token => jotky_token, :google_user_token => google_token, :google_user_token_expires_at => Time.now + google_token_response['expires_in']
-      user.update_attributes :google_user_refresh_token => google_token_response['refresh_token'] if google_token_response['refresh_token'].present?
+      parameters = {:google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1'),
+                    :token => jotky_token,
+                    :google_user_token => google_token,
+                    :google_user_token_expires_at => Time.now + google_token_response['expires_in'],
+                    :realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}
+
+      user.update_attributes parameters
 
       return "http://localhost:5000/omniauth/authenticate_google?username=#{user.username}&jotky_token=#{user.token}"
     end

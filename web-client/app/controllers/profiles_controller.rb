@@ -2,20 +2,21 @@ class ProfilesController < ApplicationWithTokenController
   def update
     respond_to do |format|
       format.json do
-        if params['user']['bio'].present? and  @current_user.update_attribute 'bio', params['user']['bio']
-          result = @current_user.bio
-        elsif params['user']['url'].present? and  @current_user.update_attribute 'url', params['user']['url']
-          result = @current_user.url
-        elsif params['user']['location'].present? and  
-          @current_user.update_attributes :location => params['user']['location'], :latitude => params['user']['latitude'],
-          :longitude => params['user']['longitude']
-          result = @current_user.location  
+        if params['user']['username'].present? or params['user']['realname'].present?
+          profile_update_response = api_connect('profile/update', { :username => params['user']['username'], :realname => params['user']['realname'] }, 'post', false, true)
+        elsif params['user']['bio'].present?
+          profile_update_response = api_connect('profile/update', { :bio => params['user']['bio'] }, 'post', false, true)
+        elsif params['user']['url'].present?
+          profile_update_response = api_connect('profile/update', { :url => params['user']['url'] }, 'post', false, true)
+        elsif params['user']['location'].present?
+          parameters = { :location => params['user']['location'], :latitude => params['user']['latitude'], :longitude => params['user']['longitude'] }
+          profile_update_response = api_connect('profile/update', parameters, 'post', false, true)
         else
-          result = @current_user.errors.to_a.join(', ')
+          render :json => { :error => "Invalid entry" }
         end
-        
-        render :json => { :result => result }
-      end  
+
+        render :json => profile_update_response
+      end
       format.all { respond_not_found }
     end
   end
