@@ -23,8 +23,6 @@ class AuthenticationsController < ApplicationController
     redirect_to root_path
   end
 
-  
-
   def forgot_password
     redirect_to root_path, :notice => "You already logged in" if token_auth?
 
