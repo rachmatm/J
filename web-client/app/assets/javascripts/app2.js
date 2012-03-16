@@ -7,7 +7,7 @@ window.App = Backbone.View.extend({
     },
 
     render: function(){
-        this.magicBoxPrivateView.render();
+        //this.magicBoxPrivateView.render();
     },
 
     events: {
