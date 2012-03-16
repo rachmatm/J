@@ -40,6 +40,8 @@ WebClient::Application.routes.draw do
 
   resources :jots, :only => [:new, :create]
 
+  resource :profiles, :only => [:update]
+
   match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 
   get 'contact' => 'contacts#index', :as => 'contact'

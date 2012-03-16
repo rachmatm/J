@@ -1,0 +1,12 @@
+<script id="main-magicbox-profile-bio" type="text/template">
+  <%= form_tag profiles_path(:format => :json), :method => :put, :multipart => true, :id => 'form-current-bio', :class => 'form-current form-current-2' do %>
+    <div class="form-current-field">
+      <%= text_area_tag :bio, @current_user['bio'], :name => "user[bio]", :class => 'field-text auto-resize', :placeholder => "write your short bio here. max 512 characters" %>
+    </div>
+
+    <div class="form-current-field form-current-field-right">
+      <%= image_tag 'ajax-loader-2.gif', :id => 'form-current-bio-loader', :class => 'hidden' %>
+      <%= submit_tag 'Save', :value => 'Save', :class => 'button-2' %>	
+    </div>
+  <% end %>
+</script>
