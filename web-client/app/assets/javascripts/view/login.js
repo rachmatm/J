@@ -63,13 +63,13 @@ window.LoginView = Backbone.View.extend({
 
   open_registration: function(){
     this.registrationView.remove();
-    
+    this.forgotView.remove();
     this.registrationView.setElement(this.createHolder('main-registration'));
     this.registrationView.render();
   },
 
   open_forgot: function(){
-   
+   this.registrationView.remove();
     this.forgotView.remove();
     this.forgotView.setElement(this.createHolder('main-forgot'));
     this.forgotView.render();

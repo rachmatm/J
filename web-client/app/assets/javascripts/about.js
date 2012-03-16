@@ -1,0 +1,1 @@
+var aboutView = new AboutPrivateView;

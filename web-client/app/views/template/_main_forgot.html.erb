@@ -1,8 +1,7 @@
 <script  type="text/template" id="main-forgot-template">
  <div class="forgotPwd_content main_content">
     <div class="opening_text">
-      <p class="line_one">Create your</p>
-      <p class="line_two">Jotky Account</p>
+      <p class="line_one">Identify Your Account</p>
     </div>
     <%= form_tag forgot_path, :id => 'main-forgot-form' do -%>
       <table class="box_forgot">
@@ -18,10 +17,10 @@
               </p>
               <p class="error hidden"></p>
             </td>
-          </tr> 
+          </tr>
         </tbody>
       </table>
-      <div class="reg_agreedButton green_button" id="forgot">
+      <div class="login_button bottom_registrationPath" id="forgot">
           <%= submit_tag 'Recovery' %>
         </div>
     <% end %>

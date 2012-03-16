@@ -3,7 +3,7 @@ window.ForgotView = Backbone.View.extend({
   template: _.template($('#main-forgot-template').html()),
 
   initialize: function(){
-    
+
     this.formView   = new FormView;
     this.alertView  = new AlertView;
     this.holderView = new HolderView;
@@ -52,16 +52,17 @@ window.ForgotView = Backbone.View.extend({
             $(form).ajaxSubmit({
                 dataType: 'json',
                 success: function(data, textStatus, jqXHR){
-                    alert(data);
+
                     if(data.failed === true){
               _this.alertView.remove();
               _this.alertView.render('forgot-alert',{error: data.error, errors: data.errors});
-              _this.recaptchaView.reload();
+
             }
             else{
+                alert(data.notice);
               _this.alertView.remove();
-              _this.alertView.render({notice: data.notice});
-              location.href = '/';
+              _this.alertView.render('forgot-alert',{notice: data.notice});
+
             }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
@@ -70,7 +71,7 @@ window.ForgotView = Backbone.View.extend({
             })
          }
     })
-        
+
   }
 
 });
