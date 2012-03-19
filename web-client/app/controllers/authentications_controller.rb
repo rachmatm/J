@@ -1,14 +1,23 @@
 class AuthenticationsController < ApplicationController
+  layout 'application3'
+  before_filter :validate_auth_user
+  
   def create
     respond_to do |format|
-      format.json do
-        login_request = api_connect('/authentications.json', params[:authentication], "post", true, false)
+
+      format.html do |format|
+        login_request = api_connect '/authentications.json', params[:authentication], "post", true, false
 
         if login_request['failed'] === false
           set_token({:key => login_request['token']}, params[:remember_me])
+          
+          flash[:notice] = login_request['notice']
+          redirect_to :root
+        else
+          flash[:error] = login_request['error']
+          flash[:errors] = login_request['errors']
+          render 'new'
         end
-
-        render :json => login_request
       end
 
       format.all { respond_not_found }
@@ -17,9 +26,13 @@ class AuthenticationsController < ApplicationController
 
   def destroy
     # Logging out, and deleting token in cramp server
-    logout_response = api_connect('authentication/logout.json', {}, "get", false, true)
-    flash[:notice] = logout_response['notice']
-    unset_token
+    
+    if @current_user.present?
+      logout_response = api_connect('authentication/logout.json', {}, "get", false, true)
+      flash[:notice] = logout_response['notice']
+      unset_token
+    end
+    
     redirect_to root_path
   end
 
@@ -44,5 +57,9 @@ class AuthenticationsController < ApplicationController
 
       format.all { respond_not_found }
     end
+  end
+
+  def new
+    
   end
 end

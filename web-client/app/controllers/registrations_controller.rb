@@ -3,8 +3,8 @@ class RegistrationsController < ApplicationController
   def create
 
     respond_to do |format|
-      format.json do
-
+      
+      format.html do
         parameters = {
           privatekey: '6LeUR80SAAAAAHFGOMAxHZ0hpLmFjjpPA15gHePZ',
           remoteip: '127.0.0.1',
@@ -22,9 +22,15 @@ class RegistrationsController < ApplicationController
 
         if send_request["failed"] === false
           set_token({:key => send_request['token']}, params[:remember_me])
+
+          flash[:notice] = send_request[:notice]
+          redirect_to :root
+        else
+
+          flash[:error] = send_request[:error]
+          flash[:errors] = send_request[:errors]
+          redirect_to :root
         end
-        
-        render :json => send_request
       end
 
       format.all { respond_not_found }

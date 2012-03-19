@@ -1,6 +1,5 @@
-require 'oauth2'
-
 class JotsController < ApplicationWithTokenController
+  layout 'application3'
   def new
 
   end
@@ -73,11 +72,20 @@ class JotsController < ApplicationWithTokenController
 
   def index
     jot_index_response = api_connect('me/jots.json', {}, 'get', false, true)
+    
+    #respond_to do |format|
+      #format.json do
+        #render :json => api_connect('/me/jots.json', params[:jot], 'post', true, true)
+      #end
 
     if jot_index_response['failed'] === false
       @jot = jot_index_response['content']
     else
       redirect_to root_path, :notice => "You have no jot to be shown."
     end
+  end
+
+  def index
+    #render :json => api_connect('/me/jots.json', params[:jot], 'get', true, true)
   end
 end

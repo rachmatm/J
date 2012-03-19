@@ -1,0 +1,89 @@
+<div id="main-magicbox-navigation" class="top_button">
+  <a class="search_icon main-magicbox-navigation-search-link" href="<%= searches_path %>">
+    <span class="img_1 main-magicbox-navigation-link-icon-1 img_1_not_active"></span>
+    <span class="search_text main-magicbox-navigation-link-text search_text_not_active">Search</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="jot_icon main-magicbox-navigation-jot-link" href="<%= jots_path %>">
+    <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+    <span class="jot_text main-magicbox-navigation-link-text jot_text_active">Jot</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="sign_up main-magicbox-navigation-login-link" href="<%= new_authentication_path %>">
+    Sign up or Login
+  </a>
+  <div class="clear"></div>
+</div>
+
+<div id="main-magicbox-jot-input" class="magicbox-content-tab">
+
+  <form method="post" id="main-magicbox-jot-input-form" class="main-magicbox-jot-input-form" action="/jots.json" accept-charset="UTF-8" novalidate="novalidate"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="ezvmme7svfv7OdIsoyLqBFG/hMpgNAr9jVCJnwUpQvE=" name="authenticity_token"></div>
+    <div class="jot_search search jot-tab-content clearfix">
+      <input type="text" placeholder="Tags, places, users, search from them here!" name="jot[title]" id="jot-input-title">
+      <input type="submit" value="" name="commit">
+    </div>
+  </form>
+
+  <div class="jot_buttons_path jot-tab-content">
+    <div class="left">
+      <ul>
+        <li>
+          <a id="jot-bar-write-more" class="write_more_but jot_buttons_color jot-bar-button" href="#">
+            <span class="jot_write_icon">&nbsp;</span>
+            <span class="jot_button_text">Write more</span>
+          </a>
+        </li>
+        <li>
+          <a id="jot-bar-clip" class="clip_but jot_but jot_buttons_color jot-bar-button" href="#">
+            <span class="jot_clip_icon">&nbsp;</span>
+            <span class="jot_button_text">Clip</span>
+          </a>
+        </li>
+        <li>
+          <a id="jot-bar-location" class="jot_but loc_but jot_buttons_color jot-bar-button" href="#">
+            <span class="jot_location_icon">&nbsp;</span>
+            <span class="jot_button_text">Location</span>
+          </a>
+        </li>
+        <li>
+          <a id="jot-bar-tag" class="jot_but tags_but jot_buttons_color jot-bar-button" href="#">
+            <span class="jot_tags_icon">&nbsp;</span>
+            <span class="jot_button_text">Tags</span>
+          </a>
+        </li>
+        <li>
+          <a id="jot-bar-facebook" class="jot_buttons_color jot_facebook jot-bar-button" href="#">
+            <span class="jot_fb_icon">&nbsp;</span>
+          </a>
+        </li>
+        <li>
+          <a id="jot-bar-twitter" class="jot_buttons_color no_margin_right jot-bar-button" href="#">
+            <span class="jot_twitter_icon">&nbsp;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="jot_button_right">
+      <span id="jot-input-text-length" class="jot_count">140</span>
+      <a class="jot_down_arrow" href="">&nbsp;</a>
+    </div>
+  </div>
+  <div id="jot-input-more" class="jot_mode_hide">
+
+    <input type="submit" value="Jot" class="jot_green_bg">
+    <div class="clear"></div>
+  </div>
+</div>
+
+
+<%= content_for :template do %>
+  <%= render 'template/main-listing-jot-item' %>
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_include_tag 'view/v2/jot' %>
+
+  <script>
+  
+  </script>
+<% end %>

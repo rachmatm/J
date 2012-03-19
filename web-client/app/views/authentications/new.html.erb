@@ -1,0 +1,58 @@
+<%= render 'shared/magicbox/login' %>
+
+<div id="main-content-middle" class="magicbox-content-tab clearfix"></div>
+
+<%= content_for :template do %>
+  <%= render 'template/main_registration' %>
+  <%= render 'template/main_welcome' %>
+  <%= render 'template/main_forgot' %>
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_include_tag 'view/v2/recaptcha' %>
+  <%= javascript_include_tag 'view/v2/welcome' %>
+  <%= javascript_include_tag 'view/v2/registration' %>
+  <%= javascript_include_tag 'view/v2/forgot' %>
+  <script>
+    var appHolderView = new AppHolderView;
+    appHolderView.setElement('#main-content-middle')
+
+    var holder = appHolderView.render({className: 'main-content-middle'});
+    var registrationView2 = new RegistrationView2;
+    registrationView2.setElement(holder);
+
+    var holder2 = appHolderView.render({className: 'main-content-middle'});
+    var welcomeView2 = new WelcomeView2;
+    welcomeView2.setElement(holder2);
+    welcomeView2.render();
+
+    var holder3 = appHolderView.render({className: 'main-content-middle'});
+    var forgotView = new ForgotView;
+    forgotView.setElement(holder);
+    
+    var registration_open = 0;
+    var forgot_open = 0;
+    
+    $('a[href=#link-to-registration]').live('click', function(){
+
+      if(registration_open == 0){
+        registrationView2.render();
+        registrationView2.render_recaptcha();
+        welcomeView2.remove();
+        registration_open = 1;
+      }
+    });
+
+    $('a[href=#link-forgot-password]').live('click', function(){
+      alert('forgot click')
+      if(forgot_open == 0){
+        forgotView.render();
+        registrationView2.remove();
+        welcomeView2.remove();
+        forgot_open = 1;
+      }
+
+    })
+
+  </script>
+<% end %>

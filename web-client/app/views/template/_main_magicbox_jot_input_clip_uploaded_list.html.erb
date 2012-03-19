@@ -1,0 +1,14 @@
+<script type="text/template" id="main-magicbox-jot-input-clip-uploaded-list-template">
+  <div class="image_upload_path" id="attach-image-<#= id #>">
+    <div class="attach_image">
+      <img src="<#= file_preview_url #>" alt="attach_image">
+    </div>
+    <span class="left">
+      <a href="#" class="img_tittle"><#= file_name #></a>
+      <input type="text" name="jot[attachments_attributes][<#= id #>][file_name]" class="image_upload_input"/>
+      <br class="clear" />
+      <span class="img_resolution">file size <#= file_size #> KB</span>
+    </span>
+    <a href="" class="close_img_path">x</a>
+  </div>
+</script>

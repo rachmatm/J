@@ -1,5 +1,5 @@
 WebClient::Application.routes.draw do
-  root :to => 'welcomes#index'
+  root :to => 'searches#index'
 
   resource :dashboards, :only => [:show], :path => 'dashboard'
 
@@ -12,9 +12,9 @@ WebClient::Application.routes.draw do
   resource :profile, :only  => [:index], :path => 'profile'
 
   resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
-    get '/facebook' => 'omniauth#facebook', :as => 'facebook'
+    get '/facebook' => 'omniauth#facebook', :as => 'login_facebook'
     get '/authenticate_facebook' => 'omniauth#authenticate_facebook', :as => 'authenticate_facebook'
-    get '/google' => 'omniauth#google', :as => 'google'
+    get '/google' => 'omniauth#google', :as => 'login_google'
     get '/authenticate_google' => 'omniauth#authenticate_google', :as => 'authenticate_google'
   end
 
@@ -66,18 +66,23 @@ WebClient::Application.routes.draw do
   get 'new-index' => 'welcomes#new_index'
 
 
-  get '/forgot_password' => 'authentications#forgot_password', :as => 'forgot'
-  post '/forgot_password' => 'authentications#notify_forgot_password'
+ # get '/forgot_password' => 'authentications#forgot_password', :as => 'forgot'
+ # post '/forgot_password' => 'authentications#notify_forgot_password'
 
 
-  resource :authentications, :path => 'authentication', :only => [:create]
+  resources :authentications
   resource :registrations, :path => 'registration', :only => [:create]
-
+  resource :forgots, :path => 'forgot', only => [:create]
   resource :tests
 
   resources :jots
 
   resources :files
-
+  get 'about' => 'abouts#show'
   get 'logout' => 'authentications#destroy'
+
+
+  get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
+
+  resources :searches, :path => 'search'
 end

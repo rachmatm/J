@@ -1,0 +1,76 @@
+<div id="main-magicbox-navigation" class="top_button">
+  <a class="search_icon main-magicbox-navigation-search-link" href="<%= searches_path %>">
+    <span class="img_1 main-magicbox-navigation-link-icon-1 img_1_not_active"></span>
+    <span class="search_text main-magicbox-navigation-link-text search_text_not_active">Search</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="jot_icon main-magicbox-navigation-jot-link" href="<%= jots_path %>">
+    <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+    <span class="jot_text main-magicbox-navigation-link-text">Jot</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="sign_up main-magicbox-navigation-login-link login" href="#">
+    Sign up or Login
+  </a>
+  <div class="clear"></div>
+</div>
+
+<div id="middle-content" class="middle-content">
+  <div class="login_content clearfix">
+    <div class="left">
+      <div class="left">
+        <div class="box_signin">
+          <h2>Login to start experience jotky</h2>
+          <%= form_tag authentications_path, :id => 'main-magicbox-login-form' do %>
+            <div class="form_login">
+
+              <div class="username clearfix">
+                <%= label_tag 'authentication_username', 'Username' %>
+                <%= text_field_tag 'authentication[username]' %>
+              </div>
+              <div class="password">
+                <%= label_tag 'authentication_password', 'Password' %>
+                <%= password_field_tag 'authentication[password]' %>
+              </div>
+              <div class="remember_login">
+                <div class="left">
+                  <%= check_box_tag 'remember_me', 1,false %>
+                  <p class="checkbox">Remember me on this computer</p>
+                </div>
+                <div class="right">
+                  <a class="forgot_password link-forgot-password" href="javascript:void(0)">forgot password?</a>
+                </div>
+                <div class="clear"></div>
+              </div>
+              <div class="login_button">
+                <input type="submit" value="Login" name="commit">
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          <% end %>
+        </div>
+        <div class="box_signinBottom">
+          <div class="login_with">
+            <p>or login with?</p>
+            <%= link_to '', login_facebook_omniauth_path, :class => 'FB' %>
+            <%= link_to '', '/auth/twitter', :class => 'twitter' %>
+          </div>
+        </div>
+      </div>
+      <div class="login_separator">
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="right">
+      <div class="login_path">
+        <span class="text">create a Jotky account</span>
+        <a class="signup_button link-to-registration" href="#link-to-registration">Sign Up</a>
+        <span class="discover">and discover everything!</span>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
