@@ -1,4 +1,4 @@
-class JotsController < ApplicationWithTokenController
+class JotsController < ApplicationController
   layout 'application3'
   def new
 
