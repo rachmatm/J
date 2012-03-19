@@ -5,7 +5,7 @@ class ActionWithTokenAuth < Action
     if params[:token].present? and @current_user = User.where(:token => params[:token]).first
       yield
     else
-      halt 200, get_content_type, JsonizeHelper.format( :error => "Token invalid", :failed => true )
+      halt 200, get_content_type, JsonizeHelper.format( :error => "Please login to do this.", :failed => true )
     end
   end
 end

@@ -5,56 +5,56 @@
       <%= text_field_tag 'jot[title]', nil, :placeholder => 'Tags, places, users, search from them here!', :id => 'jot-input-title' %>
       <%= submit_tag "" %>
     </div>
+
+    <div class="jot_buttons_path jot-tab-content">
+      <div class="left">
+        <ul>
+          <li>
+            <a href="#" class="write_more_but jot_buttons_color jot-bar-button" id="jot-bar-write-more">
+              <span class="jot_write_icon">&nbsp;</span>
+              <span class="jot_button_text">Write more</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="clip_but jot_but jot_buttons_color jot-bar-button" id="jot-bar-clip">
+              <span class="jot_clip_icon">&nbsp;</span>
+              <span class="jot_button_text">Clip</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="jot_but loc_but jot_buttons_color jot-bar-button" id="jot-bar-location">
+              <span class="jot_location_icon">&nbsp;</span>
+              <span class="jot_button_text">Location</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="jot_but tags_but jot_buttons_color jot-bar-button" id="jot-bar-tag">
+              <span class="jot_tags_icon">&nbsp;</span>
+              <span class="jot_button_text">Tags</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="jot_buttons_color jot_facebook jot-bar-button" id="jot-bar-facebook">
+              <span class="jot_fb_icon">&nbsp;</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="jot_buttons_color no_margin_right jot-bar-button" id="jot-bar-twitter">
+              <span class="jot_twitter_icon">&nbsp;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="jot_button_right">
+        <span class="jot_count" id="jot-input-text-length">140</span>
+        <a href="" class="jot_down_arrow">&nbsp;</a>
+      </div>
+    </div>
+   
+    <div class="jot_mode_hide" id="jot-input-more">
+
+      <input type="submit" class="jot_green_bg" value="Jot" />
+      <div class="clear"></div>
+    </div>
   <% end %>
-
-
-  <div class="jot_buttons_path jot-tab-content">
-    <div class="left">
-      <ul>
-        <li>
-          <a href="#" class="write_more_but jot_buttons_color jot-bar-button" id="jot-bar-write-more">
-            <span class="jot_write_icon">&nbsp;</span>
-            <span class="jot_button_text">Write more</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="clip_but jot_but jot_buttons_color jot-bar-button" id="jot-bar-clip">
-            <span class="jot_clip_icon">&nbsp;</span>
-            <span class="jot_button_text">Clip</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="jot_but loc_but jot_buttons_color jot-bar-button" id="jot-bar-location">
-            <span class="jot_location_icon">&nbsp;</span>
-            <span class="jot_button_text">Location</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="jot_but tags_but jot_buttons_color jot-bar-button" id="jot-bar-tag">
-            <span class="jot_tags_icon">&nbsp;</span>
-            <span class="jot_button_text">Tags</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="jot_buttons_color jot_facebook jot-bar-button" id="jot-bar-facebook">
-            <span class="jot_fb_icon">&nbsp;</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="jot_buttons_color no_margin_right jot-bar-button" id="jot-bar-twitter">
-            <span class="jot_twitter_icon">&nbsp;</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="jot_button_right">
-      <span class="jot_count" id="jot-input-text-length">140</span>
-      <a href="" class="jot_down_arrow">&nbsp;</a>
-    </div>
-  </div>
-  <div class="jot_mode_hide" id="jot-input-more">
-
-    <input type="submit" class="jot_green_bg" value="Jot" />
-    <div class="clear"></div>
-  </div>
 </script>

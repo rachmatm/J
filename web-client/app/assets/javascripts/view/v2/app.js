@@ -3,8 +3,14 @@ window.AppView = Backbone.View.extend({
 
   template_variables: {},
 
-  render: function(variables){
+  render: function(variables, reverse){
     var _variables = $.extend({}, this.template_variables, variables);
-    return $(this.template(_variables)).appendTo(this.el);
+
+    if(reverse){
+      return $(this.template(_variables)).prependTo(this.el);
+    }
+    else{
+      return $(this.template(_variables)).appendTo(this.el);
+    }
   }
 });
