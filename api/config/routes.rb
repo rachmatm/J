@@ -45,7 +45,7 @@ HttpRouter.new do
   post('/files(.:format)').to(FileAction::Create)
 
   # Jots
-  #  get('/jots/index(.:format)').to(JotsAction::Index)
+    get('/jots/index(.:format)').to(JotsAction::Index)
   #  get('/jots/index-show-more(.:format)').to(JotsAction::IndexShowMore)
   #  get('/jots/show(.:format)').to(JotsAction::Show)
   #  post('/jots(.:format)').to(JotsAction::Create)

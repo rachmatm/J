@@ -71,49 +71,103 @@ class Jot
   after_create :after_create_set_tag_meta
   after_destroy :after_destroy_unset_tag_meta
 
-  DONT_INCLUDE_THESE_FIELDS = []
+  PRIVATE_FIELDS = []
 
-  def self.get(per_page = nil, page = nil)
-    responds = Hash.new
-    responds[:content] = self.public_data.default_order
-    responds[:content] = responds[:content].paginate(per_page, page) if per_page.present? and page.present?
-    responds[:total_jot] = responds[:content].count
-    responds[:current_page] = page || 1
-    responds[:total_page] = (responds[:total_jot].to_f / per_page).ceil rescue 1
+  PROTECTED_FIELDS = []
 
-    JsonizeHelper.format responds
-  end
+  PUBLIC_FIELD = [
+    :title,
+    :detail,
+    :attachments,
+    :location_latitude,
+    :location_longitude,
+    :location
+  ]
 
-  def self.get_single(id)
-    jot = Jot.find(id)
-    return JsonizeHelper.format :content => jot
-  rescue
-    return JsonizeHelper.format :failed => true, :error => "The following jot #{id} could not be found"
-  end
+  NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
 
-  def self.get_more(skip, limit)
-    responds = Hash.new
-    responds[:content] = self.public_data.default_order.show_more(skip, limit)
-    responds[:next_count_id] = (next_count_id = limit.to_i + skip.to_i) < responds[:content].count ? next_count_id : nil
-    JsonizeHelper.format responds
-  end
+  UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
-  # TODO: Delete
-  # has moved to user
-  def self.set(user_id, params)
-    jot = Jot.create params
-    if jot.errors.any?
-      return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a
+  RELATION_PUBLIC = [
+    :attachments,
+    :tags,
+    :user
+  ]
+
+  def self.get(params = {})
+    request_query = {:per_page => nil, :page => nil, :total_jot => nil, :total_page => nil }
+
+    if params[:id].present?
+      _jots =  self.find params[:id]
+      request_query.merge! :total_jot => 1
+    elsif params[:per_page].present? and params[:page].present?
+      _jots = self.page(params[:page], params[:per_page]).order_by_default
+
+      request_query.merge!({
+          :per_page => params[:per_page].to_i,
+          :page => params[:page].to_i,
+          :total_jot => _jots.count,
+          :total_page => (_jots.count / params[:per_page].to_f).ceil })
+
     else
-      begin
-        Pusher['jots'].trigger!('jot_create', jot)
-      rescue Pusher::Error => e
-        # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
-      end
+      _jots = self.order_by_default
 
-      return JsonizeHelper.format :content => jot, :notice => "Jot Successfully Made"
+      request_query.merge! :total_jot => _jots.count
     end
+
+    JsonizeHelper.format({
+        :content => _jots,
+        :query => request_query
+      },
+      {
+        :except => NON_PUBLIC_FIELDS,
+        :include => RELATION_PUBLIC
+      })
+  rescue
+    JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
+
+  #  def self.get(per_page = nil, page = nil)
+  #    responds = Hash.new
+  #    responds[:content] = self.public_data.default_order
+  #    responds[:content] = responds[:content].paginate(per_page, page) if per_page.present? and page.present?
+  #    responds[:total_jot] = responds[:content].count
+  #    responds[:current_page] = page || 1
+  #    responds[:total_page] = (responds[:total_jot].to_f / per_page).ceil rescue 1
+  #
+  #    JsonizeHelper.format responds
+  #  end
+  #
+  #  def self.get_single(id)
+  #    jot = Jot.find(id)
+  #    return JsonizeHelper.format :content => jot
+  #  rescue
+  #    return JsonizeHelper.format :failed => true, :error => "The following jot #{id} could not be found"
+  #  end
+  #
+  #  def self.get_more(skip, limit)
+  #    responds = Hash.new
+  #    responds[:content] = self.public_data.default_order.show_more(skip, limit)
+  #    responds[:next_count_id] = (next_count_id = limit.to_i + skip.to_i) < responds[:content].count ? next_count_id : nil
+  #    JsonizeHelper.format responds
+  #  end
+  #
+  #  # TODO: Delete
+  #  # has moved to user
+  #  def self.set(user_id, params)
+  #    jot = Jot.create params
+  #    if jot.errors.any?
+  #      return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a
+  #    else
+  #      begin
+  #        Pusher['jots'].trigger!('jot_create', jot)
+  #      rescue Pusher::Error => e
+  #        # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
+  #      end
+  #
+  #      return JsonizeHelper.format :content => jot, :notice => "Jot Successfully Made"
+  #    end
+  #  end
 
   # TODO: Delete
   # has moved to user
@@ -154,21 +208,21 @@ class Jot
 
   protected
   def trigger_realtime_info_create
-#    begin
-#      Pusher['jots'].trigger!('jot_create', self)
-#    rescue Pusher::Error => e
-#      # TODO : need a fallback
-#      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
-#    end
+    #    begin
+    #      Pusher['jots'].trigger!('jot_create', self)
+    #    rescue Pusher::Error => e
+    #      # TODO : need a fallback
+    #      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
+    #    end
   end
 
   def trigger_realtime_info_destroy
-#    begin
-#      Pusher['jots'].trigger!('jot_delete', self)
-#    rescue Pusher::Error => e
-#      # TODO : need a fallback
-#      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
-#    end
+    #    begin
+    #      Pusher['jots'].trigger!('jot_delete', self)
+    #    rescue Pusher::Error => e
+    #      # TODO : need a fallback
+    #      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
+    #    end
   end
 
   def after_create_set_tag_meta

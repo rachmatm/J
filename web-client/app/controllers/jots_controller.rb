@@ -1,4 +1,4 @@
-class JotsController < ApplicationWithTokenController
+class JotsController < ApplicationController
   layout 'application3'
   def new
 
@@ -65,10 +65,21 @@ class JotsController < ApplicationWithTokenController
   end
 
   def index
+    
     respond_to do |format|
       format.json do
-        render :json => api_connect('/me/jots.json', params[:jot], 'post', true, true)
+        unless @current_user.present?
+          render :json => api_connect('jots/index.json', params[:jot], 'get', true)
+        else
+          
+        end
       end
+
+      format.html do
+        
+      end
+
+      format.all { respond_not_found }
     end
   end
 end
