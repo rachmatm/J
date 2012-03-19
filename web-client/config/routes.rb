@@ -39,7 +39,7 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
-  resources :jots
+  resources :jots, :only => [:new, :create, :index]
 
   resource :profiles, :only => [:update]
 
@@ -66,19 +66,19 @@ WebClient::Application.routes.draw do
   get 'new-index' => 'welcomes#new_index'
 
 
-  get '/forgot_password' => 'authentications#forgot_password', :as => 'forgot'
-  post '/forgot_password' => 'authentications#notify_forgot_password'
+ # get '/forgot_password' => 'authentications#forgot_password', :as => 'forgot'
+ # post '/forgot_password' => 'authentications#notify_forgot_password'
 
 
   resources :authentications
   resource :registrations, :path => 'registration', :only => [:create]
-
+  resource :forgots, :path => 'forgot', only => [:create]
   resource :tests
 
   resources :jots
 
   resources :files
-
+  get 'about' => 'abouts#show'
   get 'logout' => 'authentications#destroy'
 
 

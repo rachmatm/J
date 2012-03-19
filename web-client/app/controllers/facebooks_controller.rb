@@ -49,7 +49,7 @@ class FacebooksController < ApplicationWithTokenController
 
     file = params[:files]
 
-    filename = file.original_filename.gsub(/[\w\s\d\-\?]+\.(\w+)$/, "#{SecureRandom.hex(5)}" + '.\1')
+    filename = file.original_filename.gsub(/[^\.]+\.(\w+)/, "#{SecureRandom.hex(5)}" + '.\1')
     directory = "#{Rails.root}/tmp/"
 
     path = File.join(directory, filename)
@@ -71,6 +71,7 @@ class FacebooksController < ApplicationWithTokenController
     hydra.queue(upload_video_request)
     hydra.run
 
+    debugger
     if upload_video_request.response.body['id'].present?
       redirect_to root_path, :notice => "You have successfully uploaded your video"
     else
