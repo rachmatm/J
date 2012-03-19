@@ -58,7 +58,7 @@ window.ProfileView = Backbone.View.extend({
   },
 
   open_url_form: function(){
-    alert('url test');
+   // alert('url test');
     console.log(this)
     this.editUrlView.render();
     $('.empty_url_field').hide();
@@ -69,14 +69,14 @@ window.ProfileView = Backbone.View.extend({
   },
 
   open_location_form: function(){
-     alert('location show test');
+    // alert('location show test');
   },
 
   close_location_form: function(){
     
   },
   open_setting : function(){
-      alert('open setting')
+    //  alert('open setting')
   },
   close_setting : function(){}
 })

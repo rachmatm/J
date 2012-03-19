@@ -39,7 +39,7 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
-  resources :jots
+ # resources :jots
 
   resource :profiles, :only => [:update]
 
@@ -78,7 +78,7 @@ WebClient::Application.routes.draw do
   resources :jots
 
   resources :files
-
+  get 'about' => 'abouts#show'
   get 'logout' => 'authentications#destroy'
 
 
