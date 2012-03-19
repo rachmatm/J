@@ -74,3 +74,16 @@
     <div class="clear"></div>
   </div>
 </div>
+
+
+<%= content_for :template do %>
+  <%= render 'template/main-listing-jot-item' %>
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_include_tag 'view/v2/jot' %>
+
+  <script>
+  
+  </script>
+<% end %>
