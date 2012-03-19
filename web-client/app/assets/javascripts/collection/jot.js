@@ -8,4 +8,3 @@ window.JotCollection = Backbone.Collection.extend({
     return response.content;
   }
 });
-

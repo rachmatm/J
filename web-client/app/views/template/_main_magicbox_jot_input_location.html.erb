@@ -1,73 +1,72 @@
 <script type="text/template" id="main-magicbox-jot-input-location-template">
   <div class="jot_add_location clearfix">
     <%= form_tag jots_path, :id => '#main-magicbox-jot-input-location-form', :class => 'main-magicbox-jot-input-form' do %>
-    <div class="add_location_top">
-      <span class="add_location_media">&nbsp;</span>
-      <span class="add_more_text">Add location</span>
-      <a href="" class="attach_more_location">Attach more location</a>
-    </div>
-    <div class="up_media_top">
-      <div class="upload_media_bottom">
-        <form action="">
-          <div>
+      <div class="add_location_top">
+        <span class="add_location_media">&nbsp;</span>
+        <span class="add_more_text">Add location</span>
+        <a href="" class="attach_more_location">Attach more location</a>
+      </div>
+      <div class="up_media_top">
+        <div class="upload_media_bottom">
+
+          <div class="clearfix">
             <input type="text" value="Jakarta" class="add_own_location"/>
             <input type="submit" value="Insert"/>
           </div>
-        </form>
-        <div class="no_margin_left map_area">
-          <ul>
-            <li>
-              <a href="" class="map_location">
-                <span class="left">
-                  <img src="/assets/first-map.png" alt="" />
-                </span>
-                <span class="place">
-                  <span>&nbsp;</span>
-                  <span>Jakarta Capital Region,</span>
-                  <span>Indonesia</span>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="" class="map_location">
-                <span class="left">
-                  <img src="/assets/second-map.png" alt="" />
-                </span>
-                <span class="place">
-                  <span>Jakarta,</span>
-                  <span>Jakarta Capital Region,</span>
-                  <span>Indonesia</span>
-                </span>
-              </a>
-            </li>
-          </ul>
+          <div class="no_margin_left map_area">
+            <ul>
+              <li>
+                <a href="" class="map_location">
+                  <span class="left">
+                    <img src="/assets/first-map.png" alt="" />
+                  </span>
+                  <span class="place">
+                    <span>&nbsp;</span>
+                    <span>Jakarta Capital Region,</span>
+                    <span>Indonesia</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="" class="map_location">
+                  <span class="left">
+                    <img src="/assets/second-map.png" alt="" />
+                  </span>
+                  <span class="place">
+                    <span>Jakarta,</span>
+                    <span>Jakarta Capital Region,</span>
+                    <span>Indonesia</span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="right">
+          <p class="add_location_info">type an area or use google maps coordinate to add location to your jot</p>
         </div>
       </div>
-      <div class="right">
-        <p class="add_location_info">type an area or use google maps coordinate to add location to your jot</p>
-      </div>
-    </div>
-    <div class="up_media_loc">
-      <div class="loc_style own_jot">
-        <a href="" class="own_location"><img src="/assets/own-location.png" alt="" /></a>
-        <span class="location_info">
-          <a href="" class="tittle_location">Party's Groove</a>
-          <input type="text" class="no_margin_left image_upload_input" />
-          <span class="road_location">Jl. Warung Buncit 09A,</span>
-          <span class="no_padding_top country_location">Jakarta Selatan, Indonesia</span>
-        </span>
-        <a href="" class="close_img_path">x</a>
-      </div>
-      <div class="want_delete_popup">
-        <div class="want_delete_white">
-          <p>Do you want to delete this?</p>
-          <span class="ok_no_button">
-            <a href="" class="but_ok_up">Ok</a>
-            <a href="" class="no_button">No</a>
+      <div class="up_media_loc">
+        <div class="loc_style own_jot">
+          <a href="" class="own_location"><img src="/assets/own-location.png" alt="" /></a>
+          <span class="location_info">
+            <a href="" class="tittle_location">Party's Groove</a>
+            <input type="text" class="no_margin_left image_upload_input" />
+            <span class="road_location">Jl. Warung Buncit 09A,</span>
+            <span class="no_padding_top country_location">Jakarta Selatan, Indonesia</span>
           </span>
+          <a href="" class="close_img_path">x</a>
+        </div>
+        <div class="want_delete_popup">
+          <div class="want_delete_white">
+            <p>Do you want to delete this?</p>
+            <span class="ok_no_button">
+              <a href="" class="but_ok_up">Ok</a>
+              <a href="" class="no_button">No</a>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
     <% end %>
   </div>
 </script>
