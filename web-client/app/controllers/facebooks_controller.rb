@@ -50,7 +50,6 @@ class FacebooksController < ApplicationWithTokenController
     file = params[:files]
 
     filename = file.original_filename.gsub(/[^\.]+\.(\w+)/, "#{SecureRandom.hex(5)}" + '.\1')
-    debugger
     directory = "#{Rails.root}/tmp/"
 
     path = File.join(directory, filename)
