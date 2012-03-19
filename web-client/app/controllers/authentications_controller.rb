@@ -26,12 +26,13 @@ class AuthenticationsController < ApplicationController
 
   def destroy
     # Logging out, and deleting token in cramp server
+    
     if @current_user.present?
       logout_response = api_connect('authentication/logout.json', {}, "get", false, true)
       flash[:notice] = logout_response['notice']
       unset_token
     end
-
+    
     redirect_to root_path
   end
 

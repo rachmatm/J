@@ -54,7 +54,8 @@
           <div class="login_with">
             <p>or login with?</p>
             <a class="FB" href="#"></a>
-            <a class="twitter" href="#"></a>
+            <%= link_to '', facebook_omniauth_path, :class => 'FB' %>
+            <%= link_to '', twitter_omniauth_path, :class => 'twitter' %>
           </div>
         </div>
       </div>
@@ -74,6 +75,3 @@
     <div class="clear"></div>
   </div>
 </div>
-
-
-

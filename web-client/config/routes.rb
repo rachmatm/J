@@ -4,7 +4,8 @@ WebClient::Application.routes.draw do
   resource :dashboards, :only => [:show], :path => 'dashboard'
 
   #footer
-  resource :abouts, :only => [:show], :path => 'about'
+  
+ # get 'about' => 'abouts#show', :as => 'about'
 
   resource :status, :only => [:index], :path => 'status'
 
@@ -39,6 +40,8 @@ WebClient::Application.routes.draw do
   end
 
   resources :jots
+
+  resource :profiles, :only => [:update]
 
   match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 

@@ -1,0 +1,12 @@
+<script id="main-magicbox-profile-url" type="text/template">
+  <%= form_tag profiles_path(:format => :json), :method => :put, :multipart => true, :id => 'form-current-url', :class => 'form-current form-current-2' do %>
+    <div class="form-current-field">
+      <%= text_field_tag :url, @current_user['url'], :name => "user[url]", :class => 'field-text' %>	
+    </div>
+
+    <div class="form-current-field form-current-field-right">
+      <%= image_tag 'ajax-loader-2.gif', :id => 'form-current-url-loader', :class => 'hidden' %>
+      <%= submit_tag 'Save', :value => 'Save', :class => 'button-2' %>	
+    </div>
+  <% end %>
+</script>

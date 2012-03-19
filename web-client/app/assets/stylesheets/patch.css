@@ -34,13 +34,13 @@ display: inline-block;}
 
  
 
-.main-registration-form-field-alert label{
+.main-registration-form-field-alert label, .main-forgot-form-field-alert label{
   float: none;
   font-family: "HelveticaNeue","HelveticaCE55RomanRegular,Arial,sans serif";
   font-size: 12px;
   line-height: 14px;}
 
-.main-registration-form-field-alert .error{
+.main-registration-form-field-alert .error, .main-forgot-form-field-alert .error{
   color: #E24C4B;}
 
 

@@ -1,0 +1,27 @@
+<script id="main-magicbox-profiling" type="text/template">
+  <%= form_tag profiles_path(:format => :json), :method => :put, :multipart => true, :id => 'form-current-bio', :class => 'form-current form-current-2' do %>
+    <div class="form-current-field">
+      <%= text_area_tag :bio, @current_user['bio'], :name => "user[bio]", :class => 'field-text auto-resize', :placeholder => "write your short bio here. max 512 characters" %>
+    </div>
+
+    <div class="form-current-field form-current-field-right">
+      <%= image_tag 'ajax-loader-2.gif', :id => 'form-current-bio-loader', :class => 'hidden' %>
+      <%= submit_tag 'Save', :value => 'Save', :class => 'button-2' %>
+    </div>
+  <% end %>
+
+
+   <%= form_tag profiles_path(:format => :json), :method => :put, :multipart => true, :id => 'form-current-location', :class => 'form-current' do |f|  %>
+    <div class="form-current-field">
+      <%= text_field_tag :location, @current_user['location'], :name => "user[location]", :class => 'field-text', :id => "field_to_location", :autocomplete => :off %>
+      <%= hidden_field_tag :latitude, @current_user['latitude'], :name => "user[latitude]", :id => 'field_latitude' %>
+      <%= hidden_field_tag :longitude, @current_user['longitude'], :name => "user[longitude]", :id => 'field_longitude' %>
+    </div>
+
+    <div class="form-current-field form-current-field-right">
+      <%= image_tag 'ajax-loader-2.gif', :id => 'form-current-location-loader', :class => 'hidden' %>
+      <%= submit_tag 'Save', :value => 'Save', :class => 'button-2' %>
+    </div>
+  <% end %>
+
+</script>

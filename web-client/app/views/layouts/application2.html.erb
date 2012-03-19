@@ -68,7 +68,7 @@
     <div class="footer">
       <div class="footer-menu container_16">
         <ul>
-          <li class="grid_2"><a href="/about">About</a></li>
+          <li class="grid_2"><a href="javascript:void(0)" class="main-about-link">About</a></li>
           <li class="grid_2"><a href="/contact">Contact</a></li>
           <li class="grid_2"><a href="/status">Status</a></li>
           <li class="grid_2"><a href="/goodies">Goodies</a></li>
@@ -80,9 +80,24 @@
       </div>
       <div class="clear"></div>
     </div>
-    <%= yield :template %>
 
-    <%= render 'shared/template' %>
+    <%= render 'template/main_registration' %>
+    <%= render 'template/main_forgot' %>
+    <%= render 'template/main_magicbox_jot_input' %>
+    <%= render 'template/main_magicbox_jot_input_clip' %>
+    <%= render 'template/main_magicbox_jot_input_location' %>
+    <%= render 'template/main_magicbox_jot_input_more_content' %>
+    <%= render 'template/main_magicbox_jot_input_tag' %>
+    <%= render 'template/main_magicbox_login' %>
+    <%= render 'template/main_magicbox_navigation' %>
+    <%= render 'template/main_magicbox_search' %>
+    <%= render 'template/main_magicbox_search_result_tags' %>
+   
+
+    <%= render 'template/main_welcome' %>
+    <%= render 'template/main_about' %>
+    <%= render 'template/holder' %>
+    <%= render 'template/alert' %>
 
     <%= javascript_include_tag 'application2' %>
     <%= javascript_include_tag 'app' %>
