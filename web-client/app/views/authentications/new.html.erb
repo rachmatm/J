@@ -8,6 +8,9 @@
 <% end %>
 
 <%= content_for :javascript do %>
+  <%= javascript_include_tag 'view/v2/recaptcha' %>
+  <%= javascript_include_tag 'view/v2/welcome' %>
+  <%= javascript_include_tag 'view/v2/registration' %>
   <script>
     var appHolderView = new AppHolderView;
     appHolderView.setElement('#main-content-middle')
@@ -21,9 +24,17 @@
     welcomeView2.setElement(holder2);
     welcomeView2.render();
 
+
+    var registration_open = 0;
+    
     $('a[href=#link-to-registration]').live('click', function(){
-      registrationView2.render();
-      welcomeView2.remove();
+
+      if(registration_open == 0){
+        registrationView2.render();
+        registrationView2.render_recaptcha();
+        welcomeView2.remove();
+        registration_open = 1;
+      }
     });
   </script>
 <% end %>

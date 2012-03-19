@@ -6,4 +6,5 @@
 //= require_tree ./config
 //= require_tree ./model
 //= require_tree ./collection
-//= require_tree ./view/v2
+//= require ./view/v2/app
+//= require ./view/v2/app_holder

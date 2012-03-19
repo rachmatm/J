@@ -38,10 +38,17 @@
           <div class="clear"></div>
         </div>
         <div class="right_header grid_3">
-          <a href="" class="sign_in">
-            <span>&nbsp;</span>
-            Sign In
-          </a>
+          <% if @current_user.present? %>
+            <a href="<%= logout_path %>" class="sign_in">
+              <span>&nbsp;</span>
+              Sign Out
+            </a>
+          <% else %>
+            <a href="<%= new_authentication_path %>" class="sign_in">
+              <span>&nbsp;</span>
+              Sign In
+            </a>
+          <% end %>
         </div>
         <div class="clear"></div>
       </div>
@@ -51,7 +58,7 @@
           </div>
 
           <div class="main_content grid_11 cleafix" id="main-content">
-              <%= show_alert_message :error => flash[:error], :notice => flash[:notice], :info => flash[:info], :errors => flash[:errors] %>
+            <%= show_alert_message :error => flash[:error], :notice => flash[:notice], :info => flash[:info], :errors => flash[:errors] %>
             <%= yield %>
           </div>
 
