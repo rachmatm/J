@@ -71,7 +71,6 @@ class FacebooksController < ApplicationWithTokenController
     hydra.queue(upload_video_request)
     hydra.run
 
-    debugger
     if upload_video_request.response.body['id'].present?
       redirect_to root_path, :notice => "You have successfully uploaded your video"
     else

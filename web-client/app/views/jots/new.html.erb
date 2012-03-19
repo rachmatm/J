@@ -1,0 +1,12 @@
+<%= form_tag jots_path, :method => :post, :multipart => true do %>
+  <%= label_tag :title %>
+  <%= text_field_tag :title, '', :class => 'field-text' %>
+  <br />
+  <%= label_tag :detail %>
+  <%= text_area_tag :detail, '' %>
+  <br />
+  <%= label_tag :files %>
+  <%= file_field_tag :files %>
+  <br />
+  <%= submit_tag %>
+<% end %>

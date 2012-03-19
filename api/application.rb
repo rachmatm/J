@@ -7,6 +7,7 @@ require 'tilt'
 require 'async-rack'
 require 'pony'
 require 'xmlsimple'
+require 'oauth2'
 
 module Server
   class Application
