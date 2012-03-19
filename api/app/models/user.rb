@@ -210,28 +210,17 @@ class User
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
   # -- User fields
-  JOT_PRIVATE_FIELDS = []
+  JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
 
-  JOT_PROTECTED_FIELDS = []
+  JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
 
-  JOT_PUBLIC_FIELD = [
-    :title,
-    :detail,
-    :attachments,
-    :location_latitude,
-    :location_longitude,
-    :location
-  ]
+  JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
 
   JOT_NON_PUBLIC_FIELDS = JOT_PRIVATE_FIELDS + JOT_PROTECTED_FIELDS
 
   JOT_UPDATEABLE_FIELDS = JOT_PROTECTED_FIELDS + JOT_PUBLIC_FIELD
 
-  JOT_RELATION_PUBLIC = [
-    :attachments,
-    :tags,
-    :user
-  ]
+  JOT_RELATION_PUBLIC = Jot::RELATION_PUBLIC
 
   # -- Nest fields
   NEST_PRIVATE_FIELDS = []

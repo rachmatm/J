@@ -27,6 +27,21 @@ class JotsController < ApplicationController
   end
 
   def index
-    #render :json => api_connect('/me/jots.json', params[:jot], 'get', true, true)
+    
+    respond_to do |format|
+      format.json do
+        unless @current_user.present?
+          render :json => api_connect('jots/index.json', params[:jot], 'get', true)
+        else
+          
+        end
+      end
+
+      format.html do
+        
+      end
+
+      format.all { respond_not_found }
+    end
   end
 end

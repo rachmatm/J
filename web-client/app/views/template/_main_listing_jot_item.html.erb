@@ -3,16 +3,16 @@
     <div class="own_people_post">
       <div class="own_header_result header_result">
         <img src="/assets/avatar.png" alt="">
-        <span><#= jot_user_username #></span>
+        <span><#= user.username #></span>
         <ul>
           <li class="thumbs_separator">
             &nbsp;
           </li>
           <li class="thumbs_ups">
-            <a href="#"><span class="thumbs_up"></span><#= _.size(jot_user_user_thumbs_up_ids) #></a>
+            <a href="#"><span class="thumbs_up"></span><#= _.size(user_thumbs_up_ids) #></a>
           </li>
           <li class="no_padding_left">
-            <a href="#"><span class="thumbs_down"></span><#= _.size(jot_user_user_thumbs_down_ids) #></a>
+            <a href="#"><span class="thumbs_down"></span><#= _.size(user_thumbs_down_ids) #></a>
           </li>
           <li class="thumbs_separator">
             &nbsp;
@@ -26,8 +26,8 @@
       <div class="clear"></div>
     </div>
     <div class="container-result">
-      <h2><#= jot_title #></h2>
-      <p class="hour"><#= jot_created_at #> - <a href="#" class="link-to-detail-jot">detail</a></p>
+      <h2><#= title #></h2>
+      <p class="hour"><#= created_at #> - <a href="#" class="link-to-detail-jot">detail</a></p>
       <div class="post">
         <span class="post-icon">&nbsp;</span>
         <p>
@@ -49,7 +49,7 @@
         <span class="own_tags_icon">&nbsp;</span>
         <div class="button_tag">
           <ul>
-            <# _.each(jot_tags, function(tag){ #>
+            <# _.each(tags, function(tag){ #>
             <li>
               <span class="button_tagText"><#= tag.name #></span>
               <span class="not_activeSearch"></span>
