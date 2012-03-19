@@ -10,6 +10,12 @@ class Attachment
 
   #-- Fields
   field :file, :type => String
+  field :file_width, :type => String
+  field :file_height, :type => String
+  field :file_size, :type => String
+  field :file_content_type, :type => String
+  field :file_file_size, :type => String
+  field :file_name, :type => String
 
   #-- Uploader
   mount_uploader :file, AttachmentUploader, :mount_on => :file
@@ -22,12 +28,12 @@ class Attachment
 
 
   def self.set(params)
-    data = self.create params
+    data = self.create params.merge(:file_name => params[:file][:filename])
 
     if data.errors.any?
       JsonizeHelper.format({:error => 'Upload failed', :errors => data.errors, :failed => true})
     else
-      JsonizeHelper.format({:content => data})
+      JsonizeHelper.format({:content => [data]})
     end
   end
 end

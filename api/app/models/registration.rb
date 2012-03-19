@@ -44,7 +44,7 @@ class Registration
     if data.errors.present?
       JsonizeHelper.format :errors => data.errors.to_a, :failed => true, :error => "Registration doesn't succeed, please try again."
     elsif data.update_attributes :token => ActiveSupport::SecureRandom.hex(9)
-      JsonizeHelper.format({:content => data.to_a, :token => data.token, :info => "Signed In Successfully"})
+      JsonizeHelper.format({:content => data.to_a, :token => data.token, :notice => "Signed In Successfully"})
     end
   end
 
