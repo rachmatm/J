@@ -39,7 +39,7 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
-  resources :jots, :only => [:new, :create]
+  resources :jots, :only => [:new, :create, :index]
 
   resource :profiles, :only => [:update]
 

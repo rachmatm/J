@@ -5883,7 +5883,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
   padding-left: 10px;
 }
 
-.more_content_bottom textarea {
+.more_content_bottom textarea, .form-current-field textarea {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;

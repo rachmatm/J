@@ -54,7 +54,7 @@ window.MagicBoxPrivateView = MagicBoxView.extend({
     this.searchView.setElement(this.createHolder('main-magicbox-search'));
     this.searchView.render();
     this.open_welcome();
-    
+
     return false;
   },
 
