@@ -6,7 +6,7 @@ window.EditBioView = Backbone.View.extend({
     this.holderView = new HolderView;
     this.formView = new FormView;
     this.alertView = new AlertView;
-
+    
   },
 
   render: function(){
@@ -21,6 +21,7 @@ window.EditBioView = Backbone.View.extend({
         $(form).ajaxSubmit({
           dataType: 'json',
           success: function(data, textStatus, jqXHR){
+              alert(data.notice);
             if(data.failed === true){
               _this.alertView.remove();
               _this.alertView.render('profile-alert',{
@@ -30,10 +31,11 @@ window.EditBioView = Backbone.View.extend({
             }
             else{
               _this.alertView.remove();
-              _this.alertView.render({
-                notice: data.notice
-              });
-              location.href = '/';
+              _this.alertView.render('profile-alert',{notice: data.notice });
+              $('#form-current-bio').hide();
+              $('#bioContent').show();
+              $('#bioContent').html($('#bio').val());
+              
             }
           },
           error: function(jqXHR, textStatus, errorThrown){
