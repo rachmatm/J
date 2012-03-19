@@ -1,6 +1,5 @@
 window.AppView = Backbone.View.extend({
   template: '',
-  templateHolder: _.template($('#holder-template').html()),
 
   template_variables: {},
 

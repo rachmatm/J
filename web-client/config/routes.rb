@@ -12,9 +12,9 @@ WebClient::Application.routes.draw do
   resource :profile, :only  => [:index], :path => 'profile'
 
   resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
-    get '/facebook' => 'omniauth#facebook', :as => 'facebook'
+    get '/facebook' => 'omniauth#facebook', :as => 'login_facebook'
     get '/authenticate_facebook' => 'omniauth#authenticate_facebook', :as => 'authenticate_facebook'
-    get '/google' => 'omniauth#google', :as => 'google'
+    get '/google' => 'omniauth#google', :as => 'login_google'
     get '/authenticate_google' => 'omniauth#authenticate_google', :as => 'authenticate_google'
   end
 

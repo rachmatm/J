@@ -53,9 +53,8 @@
         <div class="box_signinBottom">
           <div class="login_with">
             <p>or login with?</p>
-            <a class="FB" href="#"></a>
-            <%= link_to '', facebook_omniauth_path, :class => 'FB' %>
-            <%= link_to '', twitter_omniauth_path, :class => 'twitter' %>
+            <%= link_to '', login_facebook_omniauth_path, :class => 'FB' %>
+            <%= link_to '', '/auth/twitter', :class => 'twitter' %>
           </div>
         </div>
       </div>
