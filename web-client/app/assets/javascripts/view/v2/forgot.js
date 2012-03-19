@@ -1,3 +1,12 @@
+window.ForgotView = AppView.extend({
+  template: _.template($('#main-forgot-template').html()),
+
+  
+
+ 
+});
+
+/*
 window.ForgotView = Backbone.View.extend({
 
   template: _.template($('#main-forgot-template').html()),
@@ -75,3 +84,5 @@ window.ForgotView = Backbone.View.extend({
   }
 
 });
+
+*/
