@@ -1,0 +1,29 @@
+<%= render 'shared/magicbox/login' %>
+
+<div id="main-content-middle" class="magicbox-content-tab clearfix"></div>
+
+<%= content_for :template do %>
+  <%= render 'template/main_registration' %>
+  <%= render 'template/main_welcome' %>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script>
+    var appHolderView = new AppHolderView;
+    appHolderView.setElement('#main-content-middle')
+
+    var holder = appHolderView.render({className: 'main-content-middle'});
+    var registrationView2 = new RegistrationView2;
+    registrationView2.setElement(holder);
+
+    var holder2 = appHolderView.render({className: 'main-content-middle'});
+    var welcomeView2 = new WelcomeView2;
+    welcomeView2.setElement(holder2);
+    welcomeView2.render();
+
+    $('a[href=#link-to-registration]').live('click', function(){
+      registrationView2.render();
+      welcomeView2.remove();
+    });
+  </script>
+<% end %>

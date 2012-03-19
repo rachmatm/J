@@ -18,6 +18,16 @@ window.JotInputView = Backbone.View.extend({
     this.jotInputLocation = new JotInputLocation;
     this.jotInputTag = new JotInputTag;
     this.formView = new FormView;
+    this.jotListing = new JotListing;
+    this.jotCollection = new JotCollection;
+  },
+
+  createListHolder: function(id){
+    this.holderView.setElement(this.el);
+    return this.holderView.renderAppendTo({
+      idName: id,
+      className: 'magicbox-jot-list'
+    });
   },
 
   createInputMoreHolder: function(id){
@@ -51,25 +61,65 @@ window.JotInputView = Backbone.View.extend({
         }
       },
 
-      errorPlacement: function(error, element){},
-
-      submitHandler: function(){
-        return false;
-      }
+      errorPlacement: function(error, element){}
     });
 
     $(this.formView.el).bind('submit', function(){
-      $(_this.el).find('.main-magicbox-jot-input-form').each(function(){
-        alert($(this).valid());
+      var valid_input = false;
+      var $form_inputs = $(_this.el).find('.main-magicbox-jot-input-form');
+      var input_params = {};
+
+      $form_inputs.each(function(index, form){
+        if($(form).valid() === true){
+          valid_input++;
+          var _input_params = {};
+
+          if(index > 1){
+            $.each($(form).serializeArray(), function(i, field) {
+              _input_params[field.name] = encodeURI(encodeURIComponent(field.value));
+            });
+
+            $.extend(input_params, _input_params);
+          }
+        }
       });
+
+      if($form_inputs.length == valid_input){
+        $(this).ajaxSubmit({
+          success: function(data, textStatus, jqXHR){
+            _this.jotListing.create_item(data.content);
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+            alert('Jot posting failed: '+ textStatus +'');
+          },
+          data: input_params
+        });
+      }
+
+      return false;
     });
 
     $('#jot-input-title').bind('keyup', function(){
       $('#jot-input-text-length').text(_this.maxlenght - this.value.length)
     });
-  },
 
-  
+    this.jotListing.setElement(this.createListHolder('main-magicbox-jot-list'));
+    this.jotListing.render();
+
+    
+
+    var _this = this;
+
+    this.jotCollection.fetch({
+      success: function(){
+        var jots = _this.jotCollection.toJSON();
+
+        $.each(jots, function(){
+          _this.jotListing.create_item(this);
+        });
+      }
+    });
+  },
 
   setButtonAnimation: function(){
     var buttons = $(this.el).find('.jot-bar-button');

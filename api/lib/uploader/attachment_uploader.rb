@@ -1,14 +1,31 @@
 class AttachmentUploader < CarrierWave::Uploader::Base
-  # Choose what kind of storage to use for this uploader:
+  include CarrierWave::RMagick
+  include CarrierWave::Meta
+  
   storage :file
 
-  # Override the directory where uploaded files will be stored.
-  # This is a sensible default for uploaders that are meant to be mounted:
+  process :store_meta
+
   def store_dir
-    "/files/#{model.class.to_s.underscore}/#{model.id}"
+    "./files/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   def root
     Server::Application.root 'public'
+  end
+
+  # Provide a default URL as a default if there hasn't been a file uploaded:
+  def default_url
+    "/files/fallback/" + [version_name, "default.png"].compact.join('_')
+  end
+
+  def url
+    _original_url = super
+    Server::Application.assets _original_url
+  end
+
+  # Create different versions of your uploaded files:
+  version :thumb do
+    process :resize_to_fill => [30, 46]
   end
 end

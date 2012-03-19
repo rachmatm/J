@@ -56,7 +56,7 @@ class Authentication
 
       auth_user.update_attribute :token, ActiveSupport::SecureRandom.hex(9) unless auth_user.token.present?
        
-      return JsonizeHelper.format(:token => auth_user.token) 
+      return JsonizeHelper.format(:token => auth_user.token, :notice => 'you are successfully logged in')
     else
       return JsonizeHelper.format(:error => "Invalid Username or Password", :failed => true) 
     end

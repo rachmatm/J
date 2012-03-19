@@ -1,5 +1,5 @@
 WebClient::Application.routes.draw do
-  root :to => 'welcomes#index'
+  root :to => 'searches#index'
 
   resource :dashboards, :only => [:show], :path => 'dashboard'
 
@@ -38,7 +38,7 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
-  resources :jots, :only => [:new, :create]
+  resources :jots
 
   match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 
@@ -67,7 +67,7 @@ WebClient::Application.routes.draw do
   post '/forgot_password' => 'authentications#notify_forgot_password'
 
 
-  resource :authentications, :path => 'authentication', :only => [:create]
+  resources :authentications
   resource :registrations, :path => 'registration', :only => [:create]
 
   resource :tests
@@ -77,4 +77,9 @@ WebClient::Application.routes.draw do
   resources :files
 
   get 'logout' => 'authentications#destroy'
+
+
+  get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
+
+  resources :searches, :path => 'search'
 end

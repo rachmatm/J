@@ -1,46 +1,22 @@
 <script type="text/template" id="main-magicbox-jot-input-clip-template">
-  <%= form_tag files_path, :id => 'main-magicbox-jot-input-clip-form', :class => 'main-magicbox-jot-input-form' do %>
-  <div class="jot_upload_media clearfix">
-    <%= session_field_tag %>
-    <div class="upload_media_top">
-      <span class="upload_media">&nbsp;</span>
-      <span class="add_more_text">Upload Media or Add URL</span>
-      <!-- a href="" class="attach_more_things">Attach more things</a -->
-    </div>
-    <div class="upload_media_bottom">
-        <div>
-          <div class="submit_upload_media">
-            <%= text_field_tag 'jot[attachment_uploaded]', 1, :id => 'jot-input-field-attachment-uploaded', :class => 'invisible-2' %>
-            <%= file_field_tag 'attachment', :id => 'jot-input-field-attachment' %>
-          </div>
-          <!-- div class="submit_upload_media">
-            <img alt="" src="/assets/loading-avatar.png" class="avatar_loading"/>
-            <span class="up_img_info">Attaching pretty.jpg..</span>
-          </div>
-          <div class="image_upload_path_style">
-            <div class="image_upload_path">
-              <img alt="" src="/assets/img-up.png" class="attach_image" />
-              <span class="left">
-                <a href="" class="img_tittle">pretty.jpg</a>
-                <input type="text" class="image_upload_input" />
-                <br class="clear" />
-                <span class="img_resolution">original size 1068 x 1600</span>
-              </span>
-              <a href="" class="close_img_path">x</a>
-            </div>
-            <div class="want_delete_popup">
-              <div class="want_delete_white">
-                <p>Do you want to delete this?</p>
-                <span class="ok_no_button">
-                  <a href="" class="but_ok_up">Ok</a>
-                  <a href="" class="no_button">No</a>
-                </span>
-              </div>
-            </div>
-          </div -->
+<%= form_tag files_path, :id => 'main-magicbox-jot-input-clip-form', :class => 'main-magicbox-jot-input-form' do %>
+    <div class="jot_upload_media clearfix">
+  <%= session_field_tag %>
+      <div class="upload_media_top">
+        <span class="upload_media">&nbsp;</span>
+        <span class="add_more_text">Upload Media or Add URL</span>
+        <!-- a href="" class="attach_more_things">Attach more things</a -->
+      </div>
+      <div class="upload_media_bottom">
+        <div class="submit_upload_media">
+  <%= text_field_tag 'jot[attachment_uploaded]', 1, :id => 'jot-input-field-attachment-uploaded', :class => 'invisible-2' %>
+  <%= file_field_tag 'attachment', :id => 'jot-input-field-attachment' %>
         </div>
-    </div>
 
-  </div>
-  <% end %>
+        <div class="image_upload_path_style" id="main-magicbox-jot-input-clip-uploaded-files">
+        </div>
+      </div>
+
+    </div>
+<% end %>
 </script>

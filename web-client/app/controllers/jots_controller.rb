@@ -1,4 +1,5 @@
-class JotsController < ApplicationWithTokenController
+class JotsController < ApplicationController
+  layout 'application3'
   def new
 
   end
@@ -17,12 +18,15 @@ class JotsController < ApplicationWithTokenController
 
   def create
     respond_to do |format|
-
       format.json do
-        debugger
+        render :json => api_connect('/me/jots.json', params[:jot], 'post', true, true)
       end
 
       format.all { respond_not_found }
     end
+  end
+
+  def index
+    #render :json => api_connect('/me/jots.json', params[:jot], 'get', true, true)
   end
 end

@@ -1,14 +1,22 @@
 class AuthenticationsController < ApplicationController
+  layout 'application3'
+  
   def create
     respond_to do |format|
-      format.json do
-        login_request = api_connect('/authentications.json', params[:authentication], "post", true, false)
+
+      format.html do |format|
+        login_request = api_connect '/authentications.json', params[:authentication], "post", true, false
 
         if login_request['failed'] === false
           set_token({:key => login_request['token']}, params[:remember_me])
+          
+          flash[:notice] = login_request['notice']
+          redirect_to :root
+        else
+          flash[:error] = login_request['error']
+          flash[:errors] = login_request['errors']
+          render 'new'
         end
-
-        render :json => login_request
       end
 
       format.all { respond_not_found }
@@ -21,37 +29,6 @@ class AuthenticationsController < ApplicationController
     flash[:notice] = logout_response['notice']
     unset_token
     redirect_to root_path
-  end
-
-  def create
-
-    respond_to do |format|
-      format.json do
-
-        parameters = {
-          privatekey: '6LeUR80SAAAAAHFGOMAxHZ0hpLmFjjpPA15gHePZ',
-          remoteip: '127.0.0.1',
-          challenge: params[:recaptcha_challenge_field],
-          response: params[:recaptcha_response_field]
-        }
-
-        send_request = request_connect :url => 'http://www.google.com/recaptcha/api/verify', :params => parameters, :method => :post do |response|
-          if response.body.split("\n").first == "true"
-            api_connect 'registration.json', params[:registration], 'post', true
-          else
-            {:failed => true, :error => 'The CAPTCHA solution was incorrect.'}
-          end
-        end
-
-        if send_request["failed"] === false
-          set_token({:key => send_request['token']}, params[:remember_me])
-        end
-        
-        render :json => send_request
-      end
-
-      format.all { respond_not_found }
-    end
   end
 
   def forgot_password
@@ -75,5 +52,9 @@ class AuthenticationsController < ApplicationController
 
       format.all { respond_not_found }
     end
+  end
+
+  def new
+    
   end
 end

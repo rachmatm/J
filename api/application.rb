@@ -26,7 +26,12 @@ module Server
     
     def self.url(path = nil)
       @_url ||= File.join( 'http://localhost:3000/', path.to_s)
-    end  
+    end
+
+    def self.assets(path = nil)
+      @_assets ||= 'http://localhost:3000/assets'
+      path ? File.join(@_assets, path.to_s) : @_assets
+    end
 
     # Initialize the application
     def self.initialize!

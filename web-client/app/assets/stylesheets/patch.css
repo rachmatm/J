@@ -117,3 +117,42 @@ top: 15px;}
 height: 0 !important;
 padding: 0 !important;
 width: 0 !important;}
+
+.uploadifyQueue{
+margin: 10px 0;}
+
+.uploadifyQueue .uploadifyQueueItem{
+margin-bottom: 20px;
+position: relative;}
+
+.uploadifyQueue .uploadifyQueueItem .cancel{
+left: 270px;
+position: absolute;
+top: 5px;}
+
+.uploadifyQueue .uploadifyQueueItem .fileName{
+color: #FFFFFF;
+font-size: 12px;
+left: 310px;
+position: absolute;
+top: 4px;}
+
+.uploadifyQueue .uploadifyQueueItem .percentage{
+display:none;}
+
+.uploadifyQueue .uploadifyQueueItem .uploadifyProgress{
+background: url("/assets/loading-avatar.png") no-repeat scroll 0 0 transparent;
+height: 25px;
+width: 291px;}
+
+.uploadifyQueue .uploadifyQueueItem .uploadifyProgress .uploadifyProgressBar{
+background: none repeat scroll 0 0 #22A8B0;
+border-radius: 5px 5px 5px 5px;
+display: inline-block;
+height: 25px;}
+
+.attach_image{
+ background: none repeat scroll 0 0 #FFFFFF;}
+
+.upload_media_bottom, .image_upload_path_style{
+float:none;}

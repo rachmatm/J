@@ -5,8 +5,12 @@ class WelcomesController < ApplicationWithTokenController
     if @current_user.present?
       render 'index_member', :layout => 'private2'
     else
+      cookies.delete :user_name
       render 'new_index', :layout => 'application2'
     end
+  end
+
+  def jot
     
   end
 
@@ -39,6 +43,6 @@ class WelcomesController < ApplicationWithTokenController
   end
 
   def new_index
-    render :layout => 'application2'
+    render 'index'
   end
 end

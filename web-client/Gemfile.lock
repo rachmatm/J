@@ -156,13 +156,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  carrierwave (= 0.5.8)
+  carrierwave
   coffee-rails (~> 3.2.1)
   jquery-rails
   omniauth-twitter
   rails (= 3.2.1)
   recaptcha (= 0.3.4)
-  rmagick (= 2.13.1)
+  rmagick
   ruby-debug19
   sass-rails (~> 3.2.3)
   typhoeus

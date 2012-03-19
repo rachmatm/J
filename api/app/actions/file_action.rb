@@ -2,8 +2,9 @@ module FileAction
   class Create < ActionWithTokenAuth
 
     def start
-      render Attachment.set params
-      finish
+       start_with_validates_params [:file] do
+         Attachment.set @parameters
+       end
     end
   end
 end

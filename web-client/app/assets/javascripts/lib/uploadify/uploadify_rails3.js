@@ -20,7 +20,7 @@ jQuery(window).load(function () {
     uploadify_script_data[session_param] = encodeURI(session_token);
   }
 
-  var multi = file.hasClass('multi')
+  var multi = file.hasClass('multi');
 
   var lastResponse = null;
 

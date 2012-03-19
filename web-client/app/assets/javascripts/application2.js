@@ -8,5 +8,3 @@
 //= require_tree ./collection
 //= require_tree ./view
 // require app.js
-
-

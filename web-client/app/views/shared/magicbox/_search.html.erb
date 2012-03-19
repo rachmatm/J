@@ -1,0 +1,73 @@
+<div id="main-magicbox-navigation" class="top_button">
+  <a class="search_icon main-magicbox-navigation-search-link" href="#">
+    <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+    <span class="search_text main-magicbox-navigation-link-text">Search</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="jot_icon main-magicbox-navigation-jot-link" href="<%= jots_path %>">
+    <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+    <span class="jot_text main-magicbox-navigation-link-text">Jot</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="sign_up main-magicbox-navigation-login-link" href="<%= new_authentication_path %>">
+    Sign up or Login
+  </a>
+  <div class="clear"></div>
+</div>
+
+<div id="main-magicbox-search" class="magicbox-content-tab">
+  <div class="search jot-search-content">
+    <input type="text" value="" id="jot-search-field" placeholder="Search everything">
+    <input type="submit" id="gray_search" value="">
+    <!-- SEARCH PEOPLE AUTO COMPLETE BOX -->
+
+    <div id="r-people-result-dropdwn" style="display:none" class="people_result_dropdwn">
+      <div class="result_dropdwn_top">
+        <span>People</span>
+      </div>
+      <div class="result_dropdwn_content">
+        <ul>
+          <li>
+            <a class="r-people-result-dropdwn-item" href="#">
+              <span class="dropdwn_content_photo">
+                <img alt="" src="/assets/ava-farrukh.png">
+              </span>
+              <span class="dropdwn_content_text"><strong>Far</strong>rukh</span>
+            </a>
+          </li>
+          <li>
+            <a class="r-people-result-dropdwn-item" href="#">
+              <span class="dropdwn_content_photo">
+                <img alt="" src="/assets/ava-farter.png">
+              </span>
+              <span class="dropdwn_content_text"><strong>Far</strong>ter</span>
+            </a>
+          </li>
+          <li>
+            <a class="r-people-result-dropdwn-item" href="#">
+              <span class="dropdwn_content_photo">
+                <img alt="" src="/assets/ava-farah.png">
+              </span>
+              <span class="dropdwn_content_text">FAntameRah</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <a class="result_dropdwn_middle" href="">
+        More People Result
+      </a>
+      <div class="result_dropdwn_bottom">
+        <form action="">
+          <div>
+            <label for="auto_comp">turn off auto-complete</label>
+            <input type="checkbox" id="auto_comp" name="auto-complete">
+          </div>
+        </form>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <!-- END OF SEARCH PEOPLE AUTO COMPLETE BOX -->
+    <div class="clear"></div>
+  </div>
+</div>

@@ -154,21 +154,21 @@ class Jot
 
   protected
   def trigger_realtime_info_create
-    begin
-      Pusher['jots'].trigger!('jot_create', self)
-    rescue Pusher::Error => e
-      # TODO : need a fallback
-      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
-    end
+#    begin
+#      Pusher['jots'].trigger!('jot_create', self)
+#    rescue Pusher::Error => e
+#      # TODO : need a fallback
+#      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
+#    end
   end
 
   def trigger_realtime_info_destroy
-    begin
-      Pusher['jots'].trigger!('jot_delete', self)
-    rescue Pusher::Error => e
-      # TODO : need a fallback
-      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
-    end
+#    begin
+#      Pusher['jots'].trigger!('jot_delete', self)
+#    rescue Pusher::Error => e
+#      # TODO : need a fallback
+#      # (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
+#    end
   end
 
   def after_create_set_tag_meta

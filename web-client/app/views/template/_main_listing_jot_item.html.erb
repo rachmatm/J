@@ -1,0 +1,65 @@
+<script id="main-listing-jot-item-template" type="text/template">
+  <div class="search_result_container">
+    <div class="own_people_post">
+      <div class="own_header_result header_result">
+        <img src="/assets/avatar.png" alt="">
+        <span><#= jot_user_username #></span>
+        <ul>
+          <li class="thumbs_separator">
+            &nbsp;
+          </li>
+          <li class="thumbs_ups">
+            <a href="#"><span class="thumbs_up"></span><#= _.size(jot_user_user_thumbs_up_ids) #></a>
+          </li>
+          <li class="no_padding_left">
+            <a href="#"><span class="thumbs_down"></span><#= _.size(jot_user_user_thumbs_down_ids) #></a>
+          </li>
+          <li class="thumbs_separator">
+            &nbsp;
+          </li>
+          <li class="cross">
+            &nbsp;
+          </li>
+        </ul>
+      </div>
+      <div class="own-down-sign down-sign"></div>
+      <div class="clear"></div>
+    </div>
+    <div class="container-result">
+      <h2><#= jot_title #></h2>
+      <p class="hour"><#= jot_created_at #> - <a href="#" class="link-to-detail-jot">detail</a></p>
+      <div class="post">
+        <span class="post-icon">&nbsp;</span>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+          set do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim add minim veniams.
+        </p>
+      </div>
+      <div class="own_jot post">
+        <span class="post_location">&nbsp;</span>
+        <a href="" class="own_location"><img src="/assets/own-location.png" alt=""></a>
+        <span class="location_info">
+          <span class="display_block tittle_location">Party's Groove</span>
+          <span class="road_location">Jl. Warung Buncit 09A,</span>
+          <span class="no_padding_top country_location">Jakarta Selatan, Indonesia</span>
+        </span>
+      </div>
+
+      <div class="tag-incognito">
+        <span class="own_tags_icon">&nbsp;</span>
+        <div class="button_tag">
+          <ul>
+            <# _.each(jot_tags, function(tag){ #>
+            <li>
+              <span class="button_tagText"><#= tag.name #></span>
+              <span class="not_activeSearch"></span>
+            </li>
+            <# }) #>
+          </ul>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</script>

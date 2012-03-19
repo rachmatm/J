@@ -36,7 +36,8 @@ class User
   mount_uploader :avatar_facebook, AvatarUploader, :mount_on => :avatar_facebook
   mount_uploader :avatar_twitter, AvatarUploader, :mount_on => :avatar_twitter
   has_and_belongs_to_many :attachments
-
+  accepts_nested_attributes_for :attachments
+  
   # ---------------------------------------------------------------------------
   #
   # FIELD
@@ -320,7 +321,10 @@ class User
     unless jot.save
       JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
-      JsonizeHelper.format :notice => "Jot Successfully Made"
+      JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
+        :except => JOT_NON_PUBLIC_FIELDS,
+        :include => JOT_RELATION_PUBLIC
+      })
     end
   end
 
@@ -484,7 +488,7 @@ class User
 
     file_objs = Array.new
 
-    files.each do |file|
+    files.each do |id, file|
       begin
         file_objs << self.attachments.push(File.find file[:id])
       rescue

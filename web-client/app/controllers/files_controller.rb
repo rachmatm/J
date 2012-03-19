@@ -7,7 +7,7 @@ class FilesController < ApplicationWithTokenController
         uploader = MediaUploader.new
         uploader.store! params[:Filedata]
 
-        render :json => api_connect('files.json', {:file => uploader.file}, 'post', true, true)
+        render :json => api_connect('files.json', {:file => File.open(uploader.path)}, 'post', true, true)
       end
 
       format.all { respond_not_found }
