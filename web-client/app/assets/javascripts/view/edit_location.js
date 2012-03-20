@@ -1,3 +1,10 @@
+window.LocationView = AppView.extend({
+  template: _.template($('#main-magicbox-profile-location').html())
+
+  
+});
+
+/*
 window.EditLocationView = Backbone.View.extend({
 
   template: _.template($('#main-magicbox-profile-location').html()),
@@ -45,3 +52,4 @@ window.EditLocationView = Backbone.View.extend({
   }
 
 })
+*/

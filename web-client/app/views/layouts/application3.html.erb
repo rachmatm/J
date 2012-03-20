@@ -31,24 +31,43 @@
             <span></span>
             Hot Stream
           </a>
-          <a href="/help" class="help">
+
+
+          
+           <% if @current_user.present? %>
+            <a href="/inbox" class="inbox">
+            <span></span>
+            Inbox
+            </a>
+          <div class="clear"></div>
+          </div>
+        
+           <div class="right_header grid_3">
+             <a href="/help" class="help">
             <span>&nbsp;</span>
             Help
           </a>
-          <div class="clear"></div>
-        </div>
-        <div class="right_header grid_3">
-          <% if @current_user.present? %>
             <a href="<%= logout_path %>" class="sign_in">
               <span>&nbsp;</span>
               Sign Out
             </a>
+        
           <% else %>
+          <a href="/help" class="help">
+            <span>&nbsp;</span>
+            Help
+          </a>
+        
+          <div class="clear"></div>
+          </div>
+          <div class="right_header grid_3">
             <a href="<%= new_authentication_path %>" class="sign_in">
               <span>&nbsp;</span>
               Sign In
             </a>
           <% end %>
+        
+        
         </div>
         <div class="clear"></div>
       </div>
@@ -72,6 +91,36 @@
       <div class="clear"></div>
     </div>
     <div class="footer">
+<% if @current_user.present? %>
+      <div class="drag_box" id="drag_box_user_treat">
+        <div class="drag_box_top">
+          <span>
+            <span class="drag_box_icon">&nbsp;</span>
+            <span class="drag_box_text">Drag Box</span>
+            <span class="drag_box_information">drag and drop everything here</span>
+          </span>
+        </div>
+        <div class="drag_box_bottom container_16">
+          <div class="grid_3">&nbsp;</div>
+          <div class="drag_box_middle_jot grid_10">
+            <ul>
+              <li class="follow">
+                <span class="follow_icon">&nbsp;</span>
+                <span class="follow_text">follow</span>
+              </li>
+              <li class="mention">
+                <span class="mention_icon">&nbsp;</span>
+                <span class="follow_text">mention</span>
+              </li>
+            </ul>
+          </div>
+          <div class="grid_3">&nbsp;</div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+<% end %>
+
       <div class="footer-menu container_16">
         <ul>
           <li class="grid_2"><a href="/about">About</a></li>

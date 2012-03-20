@@ -1,0 +1,67 @@
+<div id="main-magicbox-navigation" class="top_button">
+  <a class="search_icon main-magicbox-navigation-search-link" href="<%= searches_path %>">
+    <span class="img_1 main-magicbox-navigation-link-icon-1 img_1_not_active"></span>
+    <span class="search_text main-magicbox-navigation-link-text search_text_not_active">Search</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="jot_icon main-magicbox-navigation-jot-link" href="<%= jots_path %>">
+    <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+    <span class="jot_text main-magicbox-navigation-link-text">Jot</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <div class="right">
+    <a class="new_update_notactive r-notification-tab" href="#" id="r-notification-tab">
+        <span class="update_icon"></span>
+        <span class="update_text">24 New Updates</span>
+      </a>
+      <a id="user_logged" class="sign_up" href="<%= profiles_path %>">
+        <img alt="" src="/assets/little-avatar.png">
+        <span class="nickname_logged"><%= @current_user['username'] %></span>
+        <span class="user_little_badge">0</span>
+      </a>
+   </div>
+
+  <div class="clear"></div>
+</div>
+
+<div id="middle-content" class="middle-content clearfix">
+  <div class="about">
+        <div class="about_top content">
+          <div class="left">
+            <a href="#change_avatar" class="about_avatar" rel="facebox">&nbsp;</a>
+          </div>
+          <div class="left">
+            <div class="big_badge">0</div>
+            <div class="nickname_realname">
+              <span class="nickname"><%= @current_user['username'] %></span>
+              <br class="clear" />
+              <span class="realname"><%= @current_user['realname'] %></span>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="about_link">
+          <span>0 Tags</span>
+          <span class="no_margin_left">0 Jots</span>
+          <span class="no_margin_left">0 Follows</span>
+        </div>
+        <div class="clear"></div>
+ </div>
+
+
+
+ 
+</div>
+
+ <div class="profile_bottom_links">
+      <a href="#" class="pub_profile_link">
+        <span class="prof_icon">&nbsp;</span>
+        <span class="prof_text">View your public profile</span>
+      </a>
+      <a href="#" class="account_setting_link">
+        <span class="acc_icon">&nbsp;</span>
+        <span class="acc_text">Go to account setting</span>
+      </a>
+</div>
+

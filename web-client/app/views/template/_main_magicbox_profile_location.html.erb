@@ -1,5 +1,5 @@
 <script id="main-magicbox-profile-location" type="text/template">
-  <%= form_tag profiles_path(:format => :json), :method => :put, :multipart => true, :id => 'form-current-location', :class => 'form-current' do |f|  %>
+<!--  <%= form_tag profiles_path(:format => :json), :method => :put, :multipart => true, :id => 'form-current-location', :class => 'form-current' do |f|  %>
     <div class="form-current-field">
       <%= text_field_tag :location, @current_user['location'], :name => "user[location]", :class => 'field-text', :id => "field_to_location", :autocomplete => :off %>
       <%= hidden_field_tag :latitude, @current_user['latitude'], :name => "user[latitude]", :id => 'field_latitude' %>
@@ -11,4 +11,16 @@
       <%= submit_tag 'Save', :value => 'Save', :class => 'button-2' %>	
     </div> 	
   <% end %>
+  -->
+     <div class="left">
+            <span class="location_text">Location</span>
+            <a href="#" class="empty_location_text">click to edit your location</a>
+
+          </div>
+          <div class="right">
+            <div class="map">&nbsp;</div>
+          </div>
+          <span></span>
+          <div class="clear"></div>
+          
 </script>

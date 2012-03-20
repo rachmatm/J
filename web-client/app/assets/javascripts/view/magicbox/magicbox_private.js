@@ -26,6 +26,7 @@ window.MagicBoxPrivateView = MagicBoxView.extend({
   },
 
   open_profile: function(){
+      alert('profile');
     this.close_jot();
     this.close_search();
     this.profileView.remove();
@@ -43,6 +44,7 @@ window.MagicBoxPrivateView = MagicBoxView.extend({
   },
 
   open_search: function(){
+     // alert('search');
     this.close_login();
     this.close_jot();
     this.close_profile();
