@@ -1,3 +1,7 @@
-APP_ID = "4f62b380cc7a670d63000001"
-APP_SECRET = "a06b1aa1e791705b72"
+
+APP_ID = "4f61c474bf11b24368000002"
+APP_SECRET = "bb9b8adb4bb8be96d3"
+
 BASE_URL = "http://localhost:3000/"
+
+
