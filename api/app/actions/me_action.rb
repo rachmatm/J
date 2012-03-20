@@ -192,6 +192,22 @@ module MeAction
 # Facebook
 # ------------------------------------------------------------------------
 
+  class AddFacebookAccountDialog < ActionWithTokenAuth
+    before_start :facebook_oauth_dialog
+
+    def facebook_oauth_dialog
+      halt 302, {'Location' => FB_ADD_OAUTH_URL + "&state=#{@current_user.token}"}
+    end
+  end
+
+  class AddFacebookAccount < Action
+    before_start :facebook_authentication
+
+    def facebook_authentication
+      halt 302, {'Location' => User.where(:token => params[:state]).first.current_user_add_facebook_account(params[:code])}
+    end
+  end
+
   class IndexFacebookWall < ActionWithTokenAuth
     def start
       render @current_user.current_user_get_facebook_wall
@@ -209,6 +225,14 @@ module MeAction
 # Twitter
 # ------------------------------------------------------------------------
 
+  class AddTwitterAccount < ActionWithTokenAuth
+    def start
+      start_with_validates_params [:oauth_token, :oauth_secret, :twitter_id, :username, :realname] do
+        render @current_user.current_user_add_twitter_account @parameters
+      end
+    end
+  end
+
   class IndexTwitterTimeline < ActionWithTokenAuth
     def start
       render @current_user.current_user_get_twitter_timeline
@@ -220,6 +244,25 @@ module MeAction
     def start
       render @current_user.current_user_set_twitter_status params[:status]
       finish
+    end
+  end
+
+# Google
+# ------------------------------------------------------------------------
+
+  class AddGoogleAccountDialog < ActionWithTokenAuth
+    before_start :facebook_oauth_dialog
+
+    def facebook_oauth_dialog
+      halt 302, {'Location' => GOOGLE_ADD_OAUTH_URL + "&state=#{@current_user.token}"}
+    end
+  end
+
+  class AddGoogleAccount < Action
+    before_start :google_authentication
+
+    def google_authentication
+      halt 302, {'Location' => User.where(:token => params[:state]).first.current_user_add_google_account(params[:code])}
     end
   end
 end
