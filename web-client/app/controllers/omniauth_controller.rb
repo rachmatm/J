@@ -6,7 +6,7 @@ class OmniauthController < ApplicationController
   def authenticate_facebook
     if params[:facebook_token].present?
       set_token({:key => params[:jotky_token]})
-      redirect_to root_path, :notice => "You have successfully logged in with facebook"
+      redirect_to profile_other_path, :notice => "You have successfully logged in with facebook"
     else
       flash[:error] = params[:error]
       redirect_to root_path
@@ -15,16 +15,6 @@ class OmniauthController < ApplicationController
   
   def add_facebook_account
     redirect_to BASE_URL + "me/facebook/account?token=#{get_token[:key]}"
-  end
-
-  def add_facebook_authenticate_account
-    if params[:facebook_token].present?
-      set_token({:key => params[:jotky_token]})
-      redirect_to root_path, :notice => "You have successfully logged in with facebook"
-    else
-      flash[:error] = params[:error]
-      redirect_to root_path
-    end
   end
 
   def authenticate_twitter
@@ -38,13 +28,14 @@ class OmniauthController < ApplicationController
 
     if token_auth?
       twitter_oauth_response = api_connect('me/twitter/account.json', parameters, "post", false, true)
+      set_token({:key => twitter_oauth_response['content']['token']})
+      redirect_to profile_other_path, :notice => "You have successfully logged in with twitter"
     else
       twitter_oauth_response = api_connect('omniauth/authenticate_twitter.json', parameters, "post", true, false)
+      set_token({:key => twitter_oauth_response['content']['token']})
+      redirect_to root_path, :notice => "You have successfully logged in with twitter"
     end
 
-    set_token({:key => twitter_oauth_response['content']['token']})
-
-    redirect_to root_path, :notice => "You have successfully logged in with twitter"
   end
 
   def google
@@ -58,7 +49,7 @@ class OmniauthController < ApplicationController
   def authenticate_google
     if params[:jotky_token].present?
       set_token({:key => params[:jotky_token]})
-      redirect_to root_path, :notice => "#{ params[:username] }, you have authenticated your Youtube account"
+      redirect_to profile_other_path, :notice => "#{ params[:username] }, you have authenticated your Youtube account"
     else
       flash[:error] = params[:error]
       redirect_to root_path, :error => params[:error]
