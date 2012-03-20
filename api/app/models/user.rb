@@ -102,17 +102,20 @@ class User
   # -- Facebook
   field :facebook_id, :type => String
   field :facebook_token, :type => String
+  field :facebook_username, :type => String
   #
   # -- Twitter
   field :twitter_id, :type => String
   field :twitter_user_token, :type => String
   field :twitter_user_secret, :type => String
+  field :twitter_user_username, :type => String
 
   # -- Google
   field :google_user_youtube_id, :type => String
   field :google_user_token, :type => String
   field :google_user_refresh_token, :type => String
   field :google_user_token_expires_at, :type => DateTime
+  field :google_user_username, :type => String
 
   # ---------------------------------------------------------------------------
   #
@@ -210,17 +213,32 @@ class User
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
   # -- User fields
-  JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
+  #JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
+  JOT_PRIVATE_FIELDS = []
 
-  JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
+  #JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
+  JOT_PROTECTED_FIELDS = []
 
-  JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
+  #JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
+  JOT_PUBLIC_FIELD = [
+    :title,
+    :detail,
+    :files,
+    :attachments,
+    :location_latitude,
+    :location_longitude,
+    :location
+  ]
 
   JOT_NON_PUBLIC_FIELDS = JOT_PRIVATE_FIELDS + JOT_PROTECTED_FIELDS
 
   JOT_UPDATEABLE_FIELDS = JOT_PROTECTED_FIELDS + JOT_PUBLIC_FIELD
 
-  JOT_RELATION_PUBLIC = Jot::RELATION_PUBLIC
+  JOT_RELATION_PUBLIC = [
+    :attachments,
+    :tags,
+    :user
+  ]
 
   # -- Nest fields
   NEST_PRIVATE_FIELDS = []
@@ -302,15 +320,47 @@ class User
     #set attachment
     file_objs = _current_user_set_files(parameters[:attachments]) if parameters[:attachments].is_a? Array
     parameters.delete :attachments
-    
+
+    #set cross-post upload
+    file = parameters[:files]
+    parameters.delete :files
 
     jot = self.jots.new parameters
     jot.tags = tag_objs
     jot.attachments = file_objs
 
+    # Facebook video upload
+    if self.facebook_token.present? and self.upload_videos_to_facebook and not file[:type].include? 'image'
+      facebook_uploader = AttachmentUploader.new
+      facebook_uploader.store! file
+
+      facebook_upload_video_response = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
+
+      facebook_uploader.remove!
+    end
+
+    # Facebook photo upload
+    if self.facebook_token.present? and self.upload_pictures_to_facebook and file[:type].include? 'image'
+      facebook_upload_photo_response = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
+    end
+
+    # Youtube video upload
+    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and not file[:type].include? 'image'
+
+      youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
+                                                          self.google_user_refresh_token,
+                                                          self.google_user_token_expires_at,
+                                                          parameters[:title],
+                                                          parameters[:description],
+                                                          file[:tempfile])
+
+    end
+
     unless jot.save
       JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
+      self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post
+      self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
       JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
         :except => JOT_NON_PUBLIC_FIELDS,
         :include => JOT_RELATION_PUBLIC
@@ -636,6 +686,25 @@ class User
 # Facebook
 # ------------------------------------------------------------------------
 
+  def current_user_add_facebook_account(code)
+    parameter = { :client_id => FB_APP_ID, :redirect_uri => "http://localhost:3000/me/facebook/authenticate_account", :client_secret => FB_SECRET_KEY, :code => code }
+    facebook_token_response = Typhoeus::Request.get("https://graph.facebook.com/oauth/access_token", :params => parameter).body
+
+    if facebook_token_response.empty? or facebook_token_response['error'].present?
+      return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
+    else
+      facebook_token = facebook_token_response.gsub(/access_token=(.+)/, '\1')
+      facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
+      profile = ActiveSupport::JSON.decode facebook_access_profile_response
+      jotky_token = ActiveSupport::SecureRandom.hex(9)
+
+      parameters = {:token => jotky_token, :facebook_username => profile['username'].downcase, :facebook_token => facebook_token, :realname => profile['name'], :facebook_id => profile['id']}
+
+      Authentication.find(self.id).update_attributes parameters
+      return "http://localhost:5000/omniauth/authenticate_facebook?facebook_token=#{facebook_token}&jotky_token=#{jotky_token}"
+    end
+  end
+
   def current_user_get_facebook_wall
     get_facebook_wall_url = "https://graph.facebook.com/me/home"
     get_facebook_wall_response = ActiveSupport::JSON.decode Typhoeus::Request.get(get_facebook_wall_url, :params => {:access_token => self.facebook_token, :limit => 5}).body
@@ -650,17 +719,38 @@ class User
   def current_user_set_facebook_status(message)
     post_facebook_status_url = "https://graph.facebook.com/me/feed"
     parameters = {:access_token => self.facebook_token, :message => message}
-    post_facebook_status_response = ActiveSupport::JSON.decode Typhoeus::Request.post(post_facebook_status_url, :params => parameters ).body
+
+    post_facebook_status_request = Typhoeus::Request.new(post_facebook_status_url, :method => :post, :params => parameters )
+
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(post_facebook_status_request)
+    hydra.run
+
+    post_facebook_status_response = ActiveSupport::JSON.decode post_facebook_status_request.response.body
 
     if post_facebook_status_response != false
-      return JsonizeHelper.format :notice => "You have successfully update your status"
+      post_facebook_status_response
     else
-      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+      "Something went wrong, please try again"
     end
   end
 
 # Twitter
 # ------------------------------------------------------------------------
+
+  def current_user_add_twitter_account(params)
+    jotky_token = ActiveSupport::SecureRandom.hex(9)
+    parameters = {:token => jotky_token,
+                  :twitter_user_token => params[:oauth_token],
+                  :twitter_user_secret => params[:oauth_secret],
+                  :twitter_user_username => params[:username],
+                  :realname => params[:realname],
+                  :twitter_id => params[:twitter_id]}
+
+    Authentication.find(self.id).update_attributes parameters
+
+    return JsonizeHelper.format :content => {:token => jotky_token}
+  end
 
   def current_user_get_twitter_timeline
     get_twitter_timeline_url = "https://api.twitter.com/1/statuses/home_timeline.json"
@@ -710,15 +800,53 @@ class User
 
     headers = headers.sort.collect {|key, value| "#{key}=\"#{value}\"" }.join(', ')
 
-    post_twitter_status_response = ActiveSupport::JSON.decode Typhoeus::Request.post(post_twitter_status_url,
-                                                                                     :headers => { :Authorization => "OAuth #{headers}" },
-                                                                                     :params => { :status => CGI.escape(status) }
-                                                                                    ).body
+    post_twitter_status_request = Typhoeus::Request.new(post_twitter_status_url,
+                                                        :headers => { :Authorization => "OAuth #{headers}" },
+                                                        :method => :post,
+                                                        :params => { :status => CGI.escape(status) }
+                                                       )
 
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(post_twitter_status_request)
+    hydra.run
+
+    post_twitter_status_response = ActiveSupport::JSON.decode post_twitter_status_request.response.body
     if not post_twitter_status_response['error'].present?
-      return JsonizeHelper.format :notice => "You have successfully update your status"
+      post_twitter_status_response
     else
-      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+      "Something went wrong, please try again"
+    end
+  end
+
+# Twitter
+# ------------------------------------------------------------------------
+
+  def current_user_add_google_account(code)
+    body = "code=#{code}" +
+           "&client_id=#{GOOGLE_CLIENT_ID}" +
+           "&client_secret=#{GOOGLE_CLIENT_SECRET}" +
+           "&redirect_uri=http://localhost:3000/me/google/authenticate_account&grant_type=authorization_code"
+
+    google_token_response = ActiveSupport::JSON.decode Typhoeus::Request.post("https://accounts.google.com/o/oauth2/token", :body => body).body
+
+    if google_token_response.empty? or google_token_response['error'].present?
+      return "http://localhost:5000/omniauth/authenticate_google?error=Something%20went%20wrong,%20Please%20try%20again."
+    else
+      google_token = google_token_response['access_token']
+      google_profile_response = XmlSimple.xml_in Typhoeus::Request.get("https://gdata.youtube.com/feeds/api/users/default", :params => {:access_token => google_token}).body
+      jotky_token = ActiveSupport::SecureRandom.hex(9)
+
+      parameters = {:google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1'),
+                    :token => jotky_token,
+                    :google_user_token => google_token,
+                    :google_user_refresh_token => google_token_response['refresh_token'],
+                    :google_user_username => google_profile_response['username'][0].downcase,
+                    :google_user_token_expires_at => Time.now + google_token_response['expires_in'],
+                    :realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}
+
+      self.update_attributes parameters
+
+      return "http://localhost:5000/omniauth/authenticate_google?username=#{self.username}&jotky_token=#{self.token}"
     end
   end
 

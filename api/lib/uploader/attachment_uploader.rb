@@ -7,7 +7,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   process :store_meta
 
   def store_dir
-    "./files/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "./files/#{model.class.to_s.underscore}/#{mounted_as}/#{ActiveSupport::SecureRandom.hex(10)}"
   end
 
   def root
@@ -24,8 +24,4 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     Server::Application.assets _original_url
   end
 
-  # Create different versions of your uploaded files:
-  version :thumb do
-    process :resize_to_fill => [30, 46]
-  end
 end

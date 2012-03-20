@@ -2433,24 +2433,35 @@
                     <tr>
                       <td class="border_bottom_table td_tittle">
                         <a class="no_margin_left no_margin_right FB" href="">&nbsp;</a>
-                        <span class="name_cross_post">Eko Prasetyo</span>
+                        <span class="name_cross_post"><%= @current_user['facebook_username'] %></span>
                         <a class="unlink" href="">(Unlink)</a>
                       </td>
                       <td class="border_bottom_table td_radio"><input type="radio" name="shorten" value="jots_1" checked="checked"/></td>
                       <td class="border_bottom_table td_radio"><input type="radio" name="shorten" value="jots_1"/></td>
                       <td class="border_bottom_table td_radio"><input type="checkbox" name="shorten" value="jots_1"/></td>
-                      <td class="border_bottom_table"><a class="no_padding_left connect_cross" href="">add more account</a></td>
+                      <td class="border_bottom_table"><a class="no_padding_left connect_cross" href=<%= add_facebook_omniauth_path %>>add account</a></td>
                     </tr>
                     <tr>
                       <td class="border_bottom_table td_tittle">
                         <a class="no_margin_left twitter" href=""></a>
-                        <span class="name_cross_post">@metrofx</span>
+                        <span class="name_cross_post"><%= @current_user['twitter_user_username'] %></span>
                         <a class="unlink" href="">(Unlink)</a>
                       </td>
                       <td class="border_bottom_table td_radio"><input type="radio" name="complete" value="jots_1"  checked="checked"/></td>
                       <td class="border_bottom_table td_radio"><input type="radio" name="complete" value="jots_1"/></td>
                       <td class="border_bottom_table td_radio"><input type="checkbox" name="complete" value="jots_1"/></td>
-                      <td class="border_bottom_table"><a class="no_padding_left connect_cross" href="">add more account</a></td>
+                      <td class="border_bottom_table"><a class="no_padding_left connect_cross" href="/auth/twitter">add account</a></td>
+                    </tr>
+                    <tr>
+                      <td class="border_bottom_table td_tittle">
+                        <a class="no_margin_left twitter" href=""></a>
+                        <span class="name_cross_post"><%= @current_user['google_user_username'] %></span>
+                        <a class="unlink" href="">(Unlink)</a>
+                      </td>
+                      <td class="border_bottom_table td_radio"><input type="radio" name="complete" value="jots_1"  checked="checked"/></td>
+                      <td class="border_bottom_table td_radio"><input type="radio" name="complete" value="jots_1"/></td>
+                      <td class="border_bottom_table td_radio"><input type="checkbox" name="complete" value="jots_1"/></td>
+                      <td class="border_bottom_table"><a class="no_padding_left connect_cross" href=<%= add_google_omniauth_path %>>add account</a></td>
                     </tr>
                     <tr>
                       <td class="td_tittle">
