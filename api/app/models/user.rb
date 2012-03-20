@@ -210,17 +210,32 @@ class User
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
   # -- User fields
-  JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
+  #JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
+  JOT_PRIVATE_FIELDS = []
 
-  JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
+  #JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
+  JOT_PROTECTED_FIELDS = []
 
-  JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
+  #JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
+  JOT_PUBLIC_FIELD = [
+    :title,
+    :detail,
+    :files,
+    :attachments,
+    :location_latitude,
+    :location_longitude,
+    :location
+  ]
 
   JOT_NON_PUBLIC_FIELDS = JOT_PRIVATE_FIELDS + JOT_PROTECTED_FIELDS
 
   JOT_UPDATEABLE_FIELDS = JOT_PROTECTED_FIELDS + JOT_PUBLIC_FIELD
 
-  JOT_RELATION_PUBLIC = Jot::RELATION_PUBLIC
+  JOT_RELATION_PUBLIC = [
+    :attachments,
+    :tags,
+    :user
+  ]
 
   # -- Nest fields
   NEST_PRIVATE_FIELDS = []
@@ -302,14 +317,43 @@ class User
     #set attachment
     file_objs = _current_user_set_files(parameters[:attachments]) if parameters[:attachments].is_a? Array
     parameters.delete :attachments
+    
+    #set cross-post upload
+    file = parameters[:files]
+    parameters.delete :files
 
     jot = self.jots.new parameters
     jot.tags = tag_objs
     jot.attachments = file_objs
+    
+    if self.facebook_token.present? and self.upload_videos_to_facebook == true
+      facebook_uploader = AttachmentUploader.new
+      facebook_uploader.store! file
 
+      facebook_upload_video_response = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
+
+      facebook_uploader.remove!
+    end
+
+    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube == true
+      
+      debugger
+      youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
+                                                          self.google_user_refresh_token,
+                                                          self.google_user_token_expires_at,
+                                                          parameters[:title],
+                                                          parameters[:description],
+                                                          file[:tempfile]
+                                                         )
+
+    end
+
+    debugger
     unless jot.save
       JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
+      self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post
+      self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
       JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
         :except => JOT_NON_PUBLIC_FIELDS,
         :include => JOT_RELATION_PUBLIC
@@ -638,12 +682,19 @@ class User
   def current_user_set_facebook_status(message)
     post_facebook_status_url = "https://graph.facebook.com/me/feed"
     parameters = {:access_token => self.facebook_token, :message => message}
-    post_facebook_status_response = ActiveSupport::JSON.decode Typhoeus::Request.post(post_facebook_status_url, :params => parameters ).body
+
+    post_facebook_status_request = Typhoeus::Request.new(post_facebook_status_url, :method => :post, :params => parameters )
+
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(post_facebook_status_request)
+    hydra.run
+
+    post_facebook_status_response = ActiveSupport::JSON.decode post_facebook_status_request.response.body
 
     if post_facebook_status_response != false
-      return JsonizeHelper.format :notice => "You have successfully update your status"
+      post_facebook_status_response
     else
-      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+      "Something went wrong, please try again"
     end
   end
 
@@ -698,15 +749,21 @@ class User
 
     headers = headers.sort.collect {|key, value| "#{key}=\"#{value}\"" }.join(', ')
 
-    post_twitter_status_response = ActiveSupport::JSON.decode Typhoeus::Request.post(post_twitter_status_url,
-                                                                                     :headers => { :Authorization => "OAuth #{headers}" },
-                                                                                     :params => { :status => CGI.escape(status) }
-                                                                                    ).body
+    post_twitter_status_request = Typhoeus::Request.new(post_twitter_status_url,
+                                                        :headers => { :Authorization => "OAuth #{headers}" },
+                                                        :method => :post,
+                                                        :params => { :status => CGI.escape(status) }
+                                                       )
 
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(post_twitter_status_request)
+    hydra.run
+
+    post_twitter_status_response = ActiveSupport::JSON.decode post_twitter_status_request.response.body
     if not post_twitter_status_response['error'].present?
-      return JsonizeHelper.format :notice => "You have successfully update your status"
+      post_twitter_status_response
     else
-      return JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+      "Something went wrong, please try again"
     end
   end
 
