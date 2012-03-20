@@ -116,10 +116,13 @@ HttpRouter.new do
   get('/me/notifications(.:format)').to(MeAction::IndexNotifications)
 
   # Me - Facebook
+  get('/me/facebook/account(.:format)').to(MeAction::AddFacebookAccountDialog)
+  get('/me/facebook/authenticate_account(.:format)').to(MeAction::AddFacebookAccount)
   get('/me/facebook/wall(.:format)').to(MeAction::IndexFacebookWall)
   post('/me/facebook/status(.:format)').to(MeAction::CreateFacebookStatus)
 
   # Me - Twitter
+  post('/me/twitter/account(.:format)').to(MeAction::AddTwitterAccount)
   get('/me/twitter/timeline(.:format)').to(MeAction::IndexTwitterTimeline)
   post('/me/twitter/status(.:format)').to(MeAction::CreateTwitterStatus)
 

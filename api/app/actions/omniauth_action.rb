@@ -14,41 +14,7 @@ module OmniauthAction
       halt 302, {'Location' => Authentication.current_user_facebook_authentication(params[:code])}
     end
   end
-  
-  class Twitter < ActionWithAppAuth
-    before_start :twitter_oauth_dialog
 
-    def twitter_oauth_dialog
-      
-      oauth_callback_url = "http://127.0.0.1:3000/"
-
-      parameters = { :oauth_consumer_key => TWITTER_CONSUMER_KEY,
-        :oauth_callback => CGI.escape( oauth_callback_url ),
-        :oauth_nonce => ActiveSupport::SecureRandom.base64(22),
-        :oauth_signature_method => "HMAC-SHA1",
-        :oauth_timestamp => Time.now.to_i,
-        :oauth_version => "1.0"
-      }
-
-      oauth_signature = TwitterHelper.oauth_signature("post", "http://127.0.0.1:5000/", parameters)
-
-      parameters.merge!( {:oauth_signature => oauth_signature} )
-
-      header = parameters.sort.collect {|key, value| "#{key}=\"#{value}\"" }.join(', ')
-
-      twitter_oauth_dialog_response = Typhoeus::Request.new("https://api.twitter.com/oauth/request_token",
-                                                             :method => :post,
-                                                             :headers => { :Authorization => "OAuth #{header}" },
-                                                             :params => { :oauth_callback => CGI.escape( oauth_callback_url ) }
-                                                            )
-      hydra = Typhoeus::Hydra.new
-      hydra.queue(twitter_oauth_dialog_response)
-      hydra.run
-
-      halt 302, { 'Location' => "http://localhost:3000/" }
-    end
-  end
-  
   class AuthenticateTwitter < Action
 
     def start

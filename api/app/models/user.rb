@@ -102,17 +102,20 @@ class User
   # -- Facebook
   field :facebook_id, :type => String
   field :facebook_token, :type => String
+  field :facebook_username, :type => String
   #
   # -- Twitter
   field :twitter_id, :type => String
   field :twitter_user_token, :type => String
   field :twitter_user_secret, :type => String
+  field :twitter_user_username, :type => String
 
   # -- Google
   field :google_user_youtube_id, :type => String
   field :google_user_token, :type => String
   field :google_user_refresh_token, :type => String
   field :google_user_token_expires_at, :type => DateTime
+  field :google_user_username, :type => String
 
   # ---------------------------------------------------------------------------
   #
@@ -672,6 +675,25 @@ class User
 # Facebook
 # ------------------------------------------------------------------------
 
+  def current_user_add_facebook_account(code)
+    parameter = { :client_id => FB_APP_ID, :redirect_uri => "http://localhost:3000/me/facebook/authenticate_account", :client_secret => FB_SECRET_KEY, :code => code }
+    facebook_token_response = Typhoeus::Request.get("https://graph.facebook.com/oauth/access_token", :params => parameter).body
+
+    if facebook_token_response.empty? or facebook_token_response['error'].present?
+      return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
+    else
+      facebook_token = facebook_token_response.gsub(/access_token=(.+)/, '\1')
+      facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
+      profile = ActiveSupport::JSON.decode facebook_access_profile_response
+      jotky_token = ActiveSupport::SecureRandom.hex(9)
+
+      parameters = {:token => jotky_token, :facebook_username => profile['username'].downcase, :facebook_token => facebook_token, :realname => profile['name'], :facebook_id => profile['id']}
+
+      Authentication.find(self.id).update_attributes parameters
+      return "http://localhost:5000/omniauth/authenticate_facebook?facebook_token=#{facebook_token}&jotky_token=#{jotky_token}"
+    end
+  end
+
   def current_user_get_facebook_wall
     get_facebook_wall_url = "https://graph.facebook.com/me/home"
     get_facebook_wall_response = ActiveSupport::JSON.decode Typhoeus::Request.get(get_facebook_wall_url, :params => {:access_token => self.facebook_token, :limit => 5}).body
@@ -704,6 +726,20 @@ class User
 
 # Twitter
 # ------------------------------------------------------------------------
+
+  def current_user_add_twitter_account(params)
+    jotky_token = ActiveSupport::SecureRandom.hex(9)
+    parameters = {:token => jotky_token,
+                  :twitter_user_token => params[:oauth_token],
+                  :twitter_user_secret => params[:oauth_secret],
+                  :twitter_user_username => params[:username],
+                  :realname => params[:realname],
+                  :twitter_id => params[:twitter_id]}
+
+    Authentication.find(self.id).update_attributes parameters
+
+    return JsonizeHelper.format :content => {:token => jotky_token}
+  end
 
   def current_user_get_twitter_timeline
     get_twitter_timeline_url = "https://api.twitter.com/1/statuses/home_timeline.json"
@@ -769,6 +805,13 @@ class User
     else
       "Something went wrong, please try again"
     end
+  end
+
+# Twitter
+# ------------------------------------------------------------------------
+
+  def current_user_add_google_account
+    
   end
 
   # Favorite

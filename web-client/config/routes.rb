@@ -14,6 +14,8 @@ WebClient::Application.routes.draw do
   resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
     get '/facebook' => 'omniauth#facebook', :as => 'login_facebook'
     get '/authenticate_facebook' => 'omniauth#authenticate_facebook', :as => 'authenticate_facebook'
+    get '/add_facebook' => 'omniauth#add_facebook_account', :as => 'add_facebook'
+    get '/add_authenticate_facebook' => 'omniauth#add_facebook_authenticate_account', :as => 'add_authenticate_facebook'
     get '/google' => 'omniauth#google', :as => 'login_google'
     get '/authenticate_google' => 'omniauth#authenticate_google', :as => 'authenticate_google'
   end
