@@ -41,6 +41,7 @@ class OmniauthController < ApplicationController
     else
       twitter_oauth_response = api_connect('omniauth/authenticate_twitter.json', parameters, "post", true, false)
     end
+
     set_token({:key => twitter_oauth_response['content']['token']})
 
     redirect_to root_path, :notice => "You have successfully logged in with twitter"
@@ -48,6 +49,10 @@ class OmniauthController < ApplicationController
 
   def google
     redirect_to BASE_URL + "omniauth/google?app_id=#{APP_ID}&secret_key=#{APP_SECRET}"
+  end
+
+  def add_google_account
+    redirect_to BASE_URL + "me/google/account?token=#{get_token[:key]}"
   end
 
   def authenticate_google

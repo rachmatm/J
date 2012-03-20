@@ -246,4 +246,23 @@ module MeAction
       finish
     end
   end
+
+# Google
+# ------------------------------------------------------------------------
+
+  class AddGoogleAccountDialog < ActionWithTokenAuth
+    before_start :facebook_oauth_dialog
+
+    def facebook_oauth_dialog
+      halt 302, {'Location' => GOOGLE_ADD_OAUTH_URL + "&state=#{@current_user.token}"}
+    end
+  end
+
+  class AddGoogleAccount < Action
+    before_start :google_authentication
+
+    def google_authentication
+      halt 302, {'Location' => User.where(:token => params[:state]).first.current_user_add_google_account(params[:code])}
+    end
+  end
 end

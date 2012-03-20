@@ -2453,6 +2453,17 @@
                       <td class="border_bottom_table"><a class="no_padding_left connect_cross" href="/auth/twitter">add account</a></td>
                     </tr>
                     <tr>
+                      <td class="border_bottom_table td_tittle">
+                        <a class="no_margin_left twitter" href=""></a>
+                        <span class="name_cross_post"><%= @current_user['google_user_username'] %></span>
+                        <a class="unlink" href="">(Unlink)</a>
+                      </td>
+                      <td class="border_bottom_table td_radio"><input type="radio" name="complete" value="jots_1"  checked="checked"/></td>
+                      <td class="border_bottom_table td_radio"><input type="radio" name="complete" value="jots_1"/></td>
+                      <td class="border_bottom_table td_radio"><input type="checkbox" name="complete" value="jots_1"/></td>
+                      <td class="border_bottom_table"><a class="no_padding_left connect_cross" href=<%= add_google_omniauth_path %>>add account</a></td>
+                    </tr>
+                    <tr>
                       <td class="td_tittle">
                         <p class="p_information">Your setting are saved</p>
                       </td>

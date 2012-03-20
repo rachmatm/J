@@ -126,6 +126,10 @@ HttpRouter.new do
   get('/me/twitter/timeline(.:format)').to(MeAction::IndexTwitterTimeline)
   post('/me/twitter/status(.:format)').to(MeAction::CreateTwitterStatus)
 
+  # Me - Google
+  get('/me/google/account(.:format)').to(MeAction::AddGoogleAccountDialog)
+  get('/me/google/authenticate_account(.:format)').to(MeAction::AddGoogleAccount)
+
   # Omniauth - Facebook
   get('/omniauth/facebook(.:format)').to(OmniauthAction::Facebook)
   get('/omniauth/authenticate_facebook(.:format)').to(OmniauthAction::AuthenticateFacebook)
@@ -135,7 +139,7 @@ HttpRouter.new do
 
   # Omniauth - Google
   get('/omniauth/google(.:format)').to(OmniauthAction::Google)
-  get('/oauth2callback(.:format)').to(OmniauthAction::AuthenticateGoogle)
+  get('/omniauth/authenticate_google(.:format)').to(OmniauthAction::AuthenticateGoogle)
 
   # Asset - https://github.com/joshbuddy/http_router
   add('/assets/').static(Server::Application.root('public')).name(:assets)

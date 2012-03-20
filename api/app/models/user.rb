@@ -810,8 +810,33 @@ class User
 # Twitter
 # ------------------------------------------------------------------------
 
-  def current_user_add_google_account
-    
+  def current_user_add_google_account(code)
+    body = "code=#{code}" +
+           "&client_id=#{GOOGLE_CLIENT_ID}" +
+           "&client_secret=#{GOOGLE_CLIENT_SECRET}" +
+           "&redirect_uri=http://localhost:3000/me/google/authenticate_account&grant_type=authorization_code"
+
+    google_token_response = ActiveSupport::JSON.decode Typhoeus::Request.post("https://accounts.google.com/o/oauth2/token", :body => body).body
+
+    if google_token_response.empty? or google_token_response['error'].present?
+      return "http://localhost:5000/omniauth/authenticate_google?error=Something%20went%20wrong,%20Please%20try%20again."
+    else
+      google_token = google_token_response['access_token']
+      google_profile_response = XmlSimple.xml_in Typhoeus::Request.get("https://gdata.youtube.com/feeds/api/users/default", :params => {:access_token => google_token}).body
+      jotky_token = ActiveSupport::SecureRandom.hex(9)
+
+      parameters = {:google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1'),
+                    :token => jotky_token,
+                    :google_user_token => google_token,
+                    :google_user_refresh_token => google_token_response['refresh_token'],
+                    :google_user_username => google_profile_response['username'][0].downcase,
+                    :google_user_token_expires_at => Time.now + google_token_response['expires_in'],
+                    :realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}
+
+      self.update_attributes parameters
+
+      return "http://localhost:5000/omniauth/authenticate_google?username=#{self.username}&jotky_token=#{self.token}"
+    end
   end
 
   # Favorite
