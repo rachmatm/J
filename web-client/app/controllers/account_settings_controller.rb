@@ -50,16 +50,6 @@ class AccountSettingsContoller < ApplicationWithTokenController
     end
   end
 
-  def update_default_post
-    respond_to do |format|
-      format.json do
-        update_default_post_response = api_connect('account/update-default-post.json', params[:user], "post", false, true)
-
-        render :json => update_default_post_response
-      end
-    end
-  end
-
   def update_connection
     respond_to do |format|
       format.json do

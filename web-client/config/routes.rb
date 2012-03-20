@@ -40,6 +40,16 @@ WebClient::Application.routes.draw do
   end
 
   resource :profiles, :only => [:update]
+  
+  resource :account_settings, :except => [:update, :new, :create, :destroy, :edit, :show] do
+    post '/update_email' => 'account_settings#update_email', :as => 'update_email'
+    post '/update_password' => 'account_settings#update_password', :as => 'update_password'
+    post '/update_privacy' => 'account_settings#update_privacy', :as => 'update_privacy'
+    post '/update_your_stream' => 'account_settings#update_your_stream', :as => 'update_your_stream'
+    post '/update_default_post' => 'account_settings#update_default_post', :as => 'update_default_post'
+    post '/update_connection' => 'account_settings#update_connection', :as => 'update_connection'
+    post '/update_media_upload' => 'account_settings#update_media_upload', :as => 'update_media_upload'
+  end
 
   match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 

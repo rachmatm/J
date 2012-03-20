@@ -325,8 +325,9 @@ class User
     jot = self.jots.new parameters
     jot.tags = tag_objs
     jot.attachments = file_objs
-    
-    if self.facebook_token.present? and self.upload_videos_to_facebook == true
+
+    # Facebook video upload
+    if self.facebook_token.present? and self.upload_videos_to_facebook and not file[:type].include? 'image'
       facebook_uploader = AttachmentUploader.new
       facebook_uploader.store! file
 
@@ -335,20 +336,23 @@ class User
       facebook_uploader.remove!
     end
 
-    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube == true
-      
-      debugger
+    # Facebook photo upload
+    if self.facebook_token.present? and self.upload_pictures_to_facebook and file[:type].include? 'image'
+      facebook_upload_photo_response = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
+    end
+
+    # Youtube video upload
+    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and not file[:type].include? 'image'
+
       youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
                                                           self.google_user_refresh_token,
                                                           self.google_user_token_expires_at,
                                                           parameters[:title],
                                                           parameters[:description],
-                                                          file[:tempfile]
-                                                         )
+                                                          file[:tempfile])
 
     end
 
-    debugger
     unless jot.save
       JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else

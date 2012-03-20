@@ -2,10 +2,10 @@ GOOGLE_CLIENT_ID = "1056251033952.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET = "fSNrvlAtliOnQXx3doMVod7e"
 GOOGLE_YT_DEV_KEY = "AI39si6OyQw9QKnPeiU5Y29tBgm4WjmfZyB860G-CfosFyUZpPsJO-ayiIgDFyNnIQijTGuLuJ86Zbx1VN3aH8LqN-Jglg5iXg"
 GOOGLE_OAUTH_URL = "https://accounts.google.com/o/oauth2/auth?" + 
+                   "response_type=code&" +
                    "client_id=#{GOOGLE_CLIENT_ID}&" +
                    "redirect_uri=http://localhost:3000/oauth2callback&" +
                    "scope=https://gdata.youtube.com&" +
-                   "response_type=code&" +
                    "access_type=offline"
 
 class GoogleHelper

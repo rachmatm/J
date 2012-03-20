@@ -133,7 +133,10 @@ class Authentication
 # ------------------------------------------------------------------------
 
   def self.current_user_google_authentication(code)
-    body = "code=#{code}&client_id=#{GOOGLE_CLIENT_ID}&client_secret=#{GOOGLE_CLIENT_SECRET}&redirect_uri=http://localhost:3000/oauth2callback&grant_type=authorization_code"
+    body = "code=#{code}" +
+           "&client_id=#{GOOGLE_CLIENT_ID}" +
+           "&client_secret=#{GOOGLE_CLIENT_SECRET}" +
+           "&redirect_uri=http://localhost:3000/oauth2callback&grant_type=authorization_code"
 
     google_token_response = ActiveSupport::JSON.decode Typhoeus::Request.post("https://accounts.google.com/o/oauth2/token", :body => body).body
 
@@ -148,6 +151,7 @@ class Authentication
       parameters = {:google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1'),
                     :token => jotky_token,
                     :google_user_token => google_token,
+                    :google_user_refresh_token => google_token_response['refresh_token'],
                     :google_user_token_expires_at => Time.now + google_token_response['expires_in'],
                     :realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}
 

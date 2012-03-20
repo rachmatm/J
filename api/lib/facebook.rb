@@ -17,6 +17,30 @@ class FacebookHelper
     hydra.queue(upload_video_request)
     hydra.run
     
-    return ActiveSupport::JSON.decode upload_video_request.response.body
+    if upload_photo_request.response.body.present?
+      ActiveSupport::JSON.decode upload_video_request.response.body
+    else
+      "Something went wrong, please try again"
+    end
+  end
+  
+  def self.upload_photo(description, file, token)
+
+    parameters = {:message => description, :source => File.open(file.path, "r")}
+
+    upload_photo_request_url = "https://graph.facebook.com/me/photos?access_token=#{token}"
+    upload_photo_request = Typhoeus::Request.new(upload_photo_request_url,
+                                                 :method => :post,
+                                                 :params => parameters)
+
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(upload_photo_request)
+    hydra.run
+
+    if upload_photo_request.response.body.present?
+      ActiveSupport::JSON.decode upload_photo_request.response.body
+    else
+      "Something went wrong, please try again"
+    end
   end
 end
