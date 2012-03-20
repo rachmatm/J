@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
+    <%= csrf_meta_tag %>
+    <%= session_meta_tag %>
     <%= stylesheet_link_tag 'application' %>
     <!--[if IE 7]>
 	<link rel="stylesheet" type="text/css" href="/assets/ie7.css" />
@@ -86,7 +88,7 @@
       </div>
       <div class="clear"></div>
     </div>
-
+    
     <%= render 'template/holder' %>
     <%= yield :template %>
     <%= javascript_include_tag 'application3' %>

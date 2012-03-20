@@ -9,16 +9,15 @@
             &nbsp;
           </li>
           <li class="thumbs_ups">
-            <a href="#"><span class="thumbs_up"></span><#= _.size(user_thumbs_up_ids) #></a>
+            <a href="#" class="link-to-thumbsup"><span class="thumbs_up"></span><span class="thumbsup-counter"><#= _.size(user_thumbs_up_ids) #></span></a>
           </li>
           <li class="no_padding_left">
-            <a href="#"><span class="thumbs_down"></span><#= _.size(user_thumbs_down_ids) #></a>
+            <a href="#" class="link-to-thumbsdown"><span class="thumbs_down"></span><span class="thumbsdown-counter"><#= _.size(user_thumbs_down_ids) #></span></a>
           </li>
           <li class="thumbs_separator">
             &nbsp;
           </li>
-          <li class="cross">
-            &nbsp;
+          <li class="cross link-to-delete">
           </li>
         </ul>
       </div>

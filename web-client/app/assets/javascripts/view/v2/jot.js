@@ -13,13 +13,21 @@ window.JotView = AppView.extend({
     this.jots = new JotCollection;
     
     this.appHolderView = new AppHolderView;
-    
-    this.jotItem = new JotItem;
+
+    this.findLocation = new FindLocation({
+      source: '/maps.json'
+    });
 
     this.jots.bind('add', this.renderOneItemReverse, this);
     this.jots.bind('reset', this.render, this);
     this.jots.bind('all', this.renderAllItem, this);
     
+    this.get({
+      timestamp: 'now'
+    });
+  },
+
+  get: function(params){
     this.jots.fetch({
       error: function(jqXHR, textStatus, errorThrown){
         alert(textStatus);
@@ -27,6 +35,12 @@ window.JotView = AppView.extend({
       success: function(data, textStatus, jqXHR){
         if(data.failed === true){
           alert(data.error);
+        }
+      },
+      data:{
+        jot:{
+          timestamp: params.timestamp,
+          per_page: 1
         }
       }
     });
@@ -112,11 +126,15 @@ window.JotView = AppView.extend({
     var jot = data.toJSON();
 
     this.appHolderView.setElement('#main-content-middle-jot-list');
+    
     var el = this.appHolderView.render({
       idName: 'main-content-middle-jot-list-item-'+ jot._id,
       className: 'main-content-middle-jot-list-item'
     }, reverse);
 
+    this.jotItem = new JotItem({
+      model: data
+    });
     this.jotItem.setElement(el);
 
     this.jotItem.render(jot);
@@ -132,7 +150,8 @@ window.JotView = AppView.extend({
     'click #jot-bar-location': 'open_location',
     'click #jot-bar-tag': 'open_tag',
     'click #jot-bar-facebook': 'open_facebook',
-    'click #jot-bar-twitter': 'open_twitter'
+    'click #jot-bar-twitter': 'open_twitter',
+    'click .show-more-jot': 'show_more'
   },
 
   createMoreInputHolder: function(id){
@@ -187,6 +206,27 @@ window.JotView = AppView.extend({
     else{
       this.open_location_more_el = this.createMoreInputHolder('more');
       $(this.open_location_more_el).html(this.inputLocationTemplate);
+
+      this.findLocation.setElement('#field-to-location');
+      this.findLocation.render();
+
+    //      $('#field-to-location').find_maps({
+    //        source_url: "/maps",
+    //        on_item_click: function(item, $input_field){
+    //          $('#jot_location_latitude').val(item.lat);
+    //          $('#jot_location_longitude').val(item.lng);
+    //
+    //          var result_holder = $('#jot-map-thumb-result');
+    //          var result_thumb_holder = result_holder.find('.jot-map-thumb');
+    //          var result_label_holder = result_holder.find('.jot-map-label-field');
+    //
+    //          result_thumb_holder.html('<img src="'+ item.img +'" alt="'+ item.label +'">');
+    //
+    //          result_label_holder.val(item.label);
+    //
+    //          result_holder.removeClass('hidden');
+    //        }
+    //      });
     }
   },
   
@@ -200,6 +240,19 @@ window.JotView = AppView.extend({
 
   open_twitter: function(){
     
-  }
+  },
 
+  show_more: function(){
+    if(this.jots.length == 0){
+      $('.show-more-jot').hide();
+    }
+    else{
+      var data = this.jots.toJSON();
+      var data_last = _.last(data);
+
+      this.get({
+        timestamp: data_last.updated_at
+      });
+    }
+  }
 });
