@@ -1,24 +1,24 @@
 <%= render 'shared/magicbox/search' %>
 <div id="main-content-middle" class="middle_content clearfix">
 <%= content_for :template do %>
-  <%= render 'template/main_about' %>
- 
+  <%= render 'template/main_home_detail' %>
+
 <% end %>
 
 
 <%= content_for :javascript do %>
-  
-  <%= javascript_include_tag 'view/v2/about' %>
+
+  <%= javascript_include_tag 'view/v2/home' %>
   <script>
     var appHolderView = new AppHolderView;
     appHolderView.setElement('#main-content-middle');
 
     var holder = appHolderView.render({className: 'middle_content'});
-    var aboutView = new AboutView;
-    aboutView.setElement(holder);
-    aboutView.render();
+    var homeDetailView = new HomeDetailView;
+    homeDetailView.setElement(holder);
+    homeDetailView.render();
 
-    what_jotky_default
+    
   </script>
 
 

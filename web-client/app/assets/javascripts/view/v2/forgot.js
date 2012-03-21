@@ -1,5 +1,5 @@
 window.ForgotView = AppView.extend({
-  template: _.template($('#main-forgot-template').html()),
+  template: _.template($('#main-forgot-template').html())
 
   
 
