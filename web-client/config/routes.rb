@@ -95,6 +95,7 @@ WebClient::Application.routes.draw do
   resources :files
   get 'about' => 'abouts#show'
   get 'logout' => 'authentications#destroy'
+  get 'home_detail' => 'homes#show'
 
   get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
 

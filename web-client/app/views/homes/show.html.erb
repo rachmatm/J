@@ -1,0 +1,26 @@
+<%= render 'shared/magicbox/jot' %>
+<div id="main-content-middle" class="timeline_jot_path middle_content clearfix">
+<%= content_for :template do %>
+  <%= render 'template/main_home_detail' %>
+
+<% end %>
+
+
+<%= content_for :javascript do %>
+
+  <%= javascript_include_tag 'view/v2/home' %>
+  <script>
+    var appHolderView = new AppHolderView;
+    appHolderView.setElement('#main-content-middle');
+
+    var holder = appHolderView.render({className: 'middle_content'});
+    var homeDetailView = new HomeDetailView;
+    homeDetailView.setElement(holder);
+    homeDetailView.render();
+
+    
+  </script>
+
+
+<% end %>
+</div>
