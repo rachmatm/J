@@ -365,7 +365,6 @@ class User
 
     # Saving attachment in user
     self.save
-    debugger
     unless jot.save
       JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
@@ -873,7 +872,7 @@ class User
                     :google_user_token_expires_at => Time.now + google_token_response['expires_in']}
 
       self.update_attributes parameters
-      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstName'][0].present?
+      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstName'].present?
 
       return "http://localhost:5000/omniauth/authenticate_google?username=#{self.username}&jotky_token=#{self.token}"
     end

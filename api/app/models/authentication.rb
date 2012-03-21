@@ -136,7 +136,7 @@ class Authentication
     body = "code=#{code}" +
            "&client_id=#{GOOGLE_CLIENT_ID}" +
            "&client_secret=#{GOOGLE_CLIENT_SECRET}" +
-           "&redirect_uri=http://localhost:3000/oauth2callback&grant_type=authorization_code"
+           "&redirect_uri=http://localhost:3000/omniauth/authenticate_google&grant_type=authorization_code"
 
     google_token_response = ActiveSupport::JSON.decode Typhoeus::Request.post("https://accounts.google.com/o/oauth2/token", :body => body).body
 
