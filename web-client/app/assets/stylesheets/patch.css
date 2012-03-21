@@ -231,3 +231,15 @@ background: #24B0B9;}
 .jot-find-location .jcarousel-item {
 height: 75px;
 width: 235px;}
+
+.show-more-list{
+background: none repeat scroll 0 0 #EBEDEF;
+border-radius: 5px 5px 5px 5px;
+color: #007E86;
+cursor: pointer;
+margin-top: 20px;
+padding: 10px 15px;
+text-align: center;}
+
+#jot-comment-form textarea.error{
+background:#E77471}
