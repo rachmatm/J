@@ -70,7 +70,7 @@ WebClient::Application.routes.draw do
   get 'privacy' => 'privacys#index', :as=> 'privacy'
 
 
-  get 'hot_stuff'     => 'welcomes#hot_stuff', :as => 'hot_stuff'
+  
   get 'member'        => 'welcomes#member', :as => 'member'
   
   get 'profile_other' => 'welcomes#profile_other', :as => 'profile_other'
@@ -97,7 +97,7 @@ WebClient::Application.routes.draw do
   get 'about' => 'abouts#show'
   get 'logout' => 'authentications#destroy'
   get 'home_detail' => 'homes#show'
-
+  get 'hot_stuff'     => 'hotstuffs#show'
   get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
 
   resources :searches, :path => 'search'

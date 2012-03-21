@@ -233,7 +233,7 @@ height: 75px;
 width: 235px;}
 
 
-.jot-title-heading { margin-bottom: 13px; margin-top: 20px}
+.jot-title-heading {  margin-top: 20px}
 .jot-title-heading h2 {
     color: #333333;
     float: left;
@@ -277,7 +277,7 @@ width: 235px;}
 .upper_new_jots  .dateJots {
     color: #999999;
     font-size: 11px; float: left;
-    padding-top: 13px;
+    padding-top: 10px;
 }
 
 .heading-jots-attach { margin-bottom: 13px;}
@@ -299,3 +299,10 @@ width: 235px;}
 
 .people_comments p { font-weight: normal;}
  .time_com { margin-right: 15px}
+ .strent { font-weight: bolder; padding-top: 5px !important;}
+  .strenth{color: #999999;
+    
+    font-size: 11px;
+    padding-left: 5px !important;
+    padding-right: 10px !important;
+    padding-top: 8px;}
