@@ -9,9 +9,25 @@
     <span class="jot_text main-magicbox-navigation-link-text">Jot</span>
     <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
   </a>
+
+  <% if @current_user.present? %>
+   <div class="right">
+    <a class="new_update_notactive r-notification-tab" href="#" id="r-notification-tab">
+        <span class="update_icon"></span>
+        <span class="update_text">24 New Updates</span>
+      </a>
+      <a id="user_logged" class="sign_up" href="<%= profiles_path %>">
+        <img alt="" src="/assets/little-avatar.png">
+        <span class="nickname_logged"><%= @current_user['username'] %></span>
+        <span class="user_little_badge">0</span>
+      </a>
+   </div>
+ <% else %>
   <a class="sign_up main-magicbox-navigation-login-link" href="<%= new_authentication_path %>">
     Sign up or Login
   </a>
+   <% end %>
+  
   <div class="clear"></div>
 </div>
 

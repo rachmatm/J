@@ -1,4 +1,10 @@
-class ProfilesController < ApplicationWithTokenController
+class ProfilesController <  ApplicationController
+  layout 'application3'
+  before_filter :validate_auth_user
+  
+  def show
+  end
+ 
   def update
     respond_to do |format|
       format.json do

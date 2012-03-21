@@ -9,7 +9,7 @@ WebClient::Application.routes.draw do
 
   resource :status, :only => [:index], :path => 'status'
 
-  resource :profile, :only  => [:index], :path => 'profile'
+  
 
   resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
     get '/facebook' => 'omniauth#facebook', :as => 'login_facebook'
@@ -41,6 +41,12 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
+  resources :jots do
+    get 'thumbsup'
+    get 'thumbsdown'
+    get 'destroy'
+  end
+
   resource :profiles, :only => [:update]
   
   resource :account_settings, :except => [:update, :new, :create, :destroy, :edit, :show] do
@@ -52,6 +58,7 @@ WebClient::Application.routes.draw do
     post '/update_connection' => 'account_settings#update_connection', :as => 'update_connection'
     post '/update_media_upload' => 'account_settings#update_media_upload', :as => 'update_media_upload'
   end
+
 
   match '/auth/twitter/callback', :to => 'omniauth#authenticate_twitter'
 
@@ -82,7 +89,9 @@ WebClient::Application.routes.draw do
   resource :registrations, :path => 'registration', :only => [:create]
   resource :tests
 
-  resources :jots, :only => [:new, :create, :index]
+  resources :maps
+
+  resources :jots
 
   resources :files
   get 'about' => 'abouts#show'
@@ -91,4 +100,12 @@ WebClient::Application.routes.draw do
   get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
 
   resources :searches, :path => 'search'
+
+
+  resource :profiles, :path => 'profile' do
+    get '/profile' => 'profiles#index'
+  end
+
+
+  
 end

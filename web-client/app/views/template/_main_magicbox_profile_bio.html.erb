@@ -1,7 +1,17 @@
 <script id="main-magicbox-profile-bio" type="text/template">
+<div class="bio">
+        <div class="bio_tag">
+            <span>Bio</span>
+            <% if @current_user['bio'].present? %>
+              <a id="bioContent" href="#bioContent" class="empty_bio_text"><%=  @current_user['bio'] %></a>
+            <% else %>
+              <a id="bioContent" href="#bioContent" class="empty_bio_text">click to edit your bio</a>
+            <% end %>
 
-  
+        </div>
 
+    <div  id="profile-bio-edit">
+<span>Bio</span>
   <%= form_tag profiles_path(:format => :json), :method => :put, :multipart => true, :id => 'form-current-bio', :class => 'empty_bio_field form-current form-current-2' do %>
     <div class="form-current-field">
       <%= text_area_tag :bio, @current_user['bio'], :name => "user[bio]", :class => 'field-text auto-resize', :placeholder => "write your short bio here. max 512 characters" %>
@@ -12,4 +22,7 @@
       <%= submit_tag 'Save', :value => 'Save', :class => 'but_save_popup' %>
     </div>
   <% end %>
+            
+    </div>
+  
 </script>
