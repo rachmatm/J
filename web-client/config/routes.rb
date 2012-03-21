@@ -9,8 +9,6 @@ WebClient::Application.routes.draw do
 
   resource :status, :only => [:index], :path => 'status'
 
-  
-
   resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
     get '/facebook' => 'omniauth#facebook', :as => 'login_facebook'
     get '/authenticate_facebook' => 'omniauth#authenticate_facebook', :as => 'authenticate_facebook'
@@ -45,6 +43,9 @@ WebClient::Application.routes.draw do
     get 'thumbsup'
     get 'thumbsdown'
     get 'destroy'
+    post 'comments' => 'jots#create_comments'
+
+    resources :jot_comments, :path => 'comments'
   end
 
   resource :profiles, :only => [:update]
@@ -91,11 +92,10 @@ WebClient::Application.routes.draw do
 
   resources :maps
 
-  resources :jots
-
   resources :files
   get 'about' => 'abouts#show'
   get 'logout' => 'authentications#destroy'
+  get 'home_detail' => 'homes#show'
 
   get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
 

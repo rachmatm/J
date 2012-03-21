@@ -95,11 +95,11 @@ window.JotView = AppView.extend({
               _this.jots.add(data.content);
             }
 
-            $(form).find('input textarea').removeAttr('disabled');
+            $(form).find('input, textarea').removeAttr('disabled');
           },
 
           beforeSend: function(){
-            $(form).find('input textarea').attr({
+            $(form).find('input, textarea').attr({
               'disabled': 'disabled'
             });
           }
@@ -151,7 +151,7 @@ window.JotView = AppView.extend({
     'click #jot-bar-tag': 'open_tag',
     'click #jot-bar-facebook': 'open_facebook',
     'click #jot-bar-twitter': 'open_twitter',
-    'click .show-more-jot': 'show_more'
+    'click .show-more-list-jot': 'show_more'
   },
 
   createMoreInputHolder: function(id){
@@ -244,7 +244,7 @@ window.JotView = AppView.extend({
 
   show_more: function(){
     if(this.jots.length == 0){
-      $('.show-more-jot').hide();
+      $('.show-more-list-jot').hide();
     }
     else{
       var data = this.jots.toJSON();

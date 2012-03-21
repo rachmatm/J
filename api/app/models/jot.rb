@@ -11,7 +11,8 @@ class Jot
   accepts_nested_attributes_for :tags
 
   #has_and_belongs_to_many :tags
-  embeds_many :comments
+  has_many :comments
+  
   embeds_many :kudos
   belongs_to :user
   has_and_belongs_to_many :user_favorites, :class_name => 'User', :inverse_of => :jot_favorites
@@ -99,35 +100,71 @@ class Jot
     :locations
   ]
 
+  RELATION_PUBLIC_DETAIL = [
+    :comments
+  ]
+
   def self.get(params = {})
-    request_query = {:per_page => nil, :page => nil, :total_jot => nil, :total_page => nil }
+    request_query = {}
+    respond_include = []
 
     if params[:id].present?
-      _jots =  self.find params[:id]
-      request_query.merge! :total_jot => 1
-    elsif params[:per_page].present? and params[:page].present?
-      _jots = self.page(params[:page], params[:per_page]).order_by_default
+      data =  self.find params[:id]
 
-      request_query.merge!({
-          :per_page => params[:per_page].to_i,
-          :page => params[:page].to_i,
-          :total_jot => _jots.count,
-          :total_page => (_jots.count / params[:per_page].to_f).ceil })
+      request_query = {:total_jot => 1}
+      respond_include = RELATION_PUBLIC_DETAIL
+
+    elsif params[:per_page].present? and params[:page].present?
+
+      data = self.page(params[:page], params[:per_page]).order_by_default
+
+      request_query = {
+        :per_page => params[:per_page].to_i,
+        :page => params[:page].to_i,
+        :total_jot => data.count,
+        :total_page => (data.count / params[:per_page].to_f).ceil }
 
     else
-      _jots = self.order_by_default
+      data = self.order_by_default
 
-      request_query.merge! :total_jot => _jots.count
+      request_query = {:total_jot => data.count}
     end
 
     JsonizeHelper.format({
-        :content => _jots,
-        :query => request_query
+        :content => data,
+        :query => {:per_page => nil, :page => nil, :total_jot => nil, :total_page => nil }.merge(request_query)
       },
       {
         :except => NON_PUBLIC_FIELDS,
-        :include => RELATION_PUBLIC
+        :include => RELATION_PUBLIC + respond_include
       })
+  rescue
+    JsonizeHelper.format :failed => true, :error => 'Jot not found'
+  end
+
+  def self.get_comment(jot_id, parameters)
+    jot = Jot.find jot_id
+    request_query = {}
+
+    if parameters[:per_page].present? and parameters[:page].present?
+      data = jot.comments.where(:jot_id => jot_id).page(parameters[:page], parameters[:per_page]).order_by_default
+
+      request_query = {
+        :per_page => parameters[:per_page].to_i,
+        :page => parameters[:page].to_i,
+        :total_comment => data.count,
+        :total_page => (data.count / parameters[:per_page].to_f).ceil }
+    end
+
+    JsonizeHelper.format({
+        :content => data,
+        :query => {:per_page => nil, :page => nil, :total_comment => nil, :total_page => nil}.merge(request_query)
+      },
+      {
+        :except => Comment::NON_PUBLIC_FIELDS,
+        :include => Comment::RELATION_PUBLIC
+      })
+
   rescue
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end

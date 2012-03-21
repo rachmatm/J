@@ -74,4 +74,29 @@ class JotsController < ApplicationController
       format.all { respond_not_found }
     end
   end
+
+
+  def show
+    respond_to do |format|
+      format.html do
+        data = api_connect("/jots/index.json", {:id => params[:id]}, 'get', true, true)
+
+        if data['failed'] === true
+          respond_not_found
+        else
+          @jot = data['content'] || {}
+        end
+      end
+    end
+  end
+
+  def create_comments
+    respond_to do |format|
+      format.json do
+        render :json => api_connect("/me/jots/#{params[:jot_id]}/comments.json", params[:comment], 'post', true, true)
+      end
+
+      format.all { respond_not_found }
+    end
+  end
 end

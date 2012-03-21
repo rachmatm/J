@@ -1,0 +1,32 @@
+<script id="main-listing-jot-comment-item-template" type="text/template">
+  <div class="cleafix" class="main-listing-jot-comment-item" id="main-listing-jot-comment-item-<#= _id #>">
+    <div class="left">
+      <img alt="" src="/assets/abdu-avatar.png">
+    </div>
+    <div class="content-text">
+      <span class="name"><#= username #></span>
+      <div class="right time">
+        <#= created_at #>
+        <div class="action_menu_hide" style="display: none;">
+          <ul>
+            <li>
+              <a class="comment_hide" href="">
+                <label>hide</label>
+                <span class="hide_icon">&nbsp;</span>
+              </a>
+            </li>
+            <li>
+              <a class="comment_flag" href="">
+                <label>flag as</label>
+                <span class="flag_icon">&nbsp;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a class="comment_down_arrow" href="" style="display: none;">&nbsp;</a>
+      </div>
+      <div class="clear"></div>
+      <p><#= detail #></p>
+    </div>
+  </div>
+</script>

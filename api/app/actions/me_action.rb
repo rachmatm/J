@@ -55,6 +55,20 @@ module MeAction
     end
   end
 
+  class CreateJotComment < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_set_jot_comment params[:jot_id], params
+      finish 
+    end
+  end
+
+  class IndexJotComment < ActionWithTokenAuth
+    def start
+      render Jot.get_comment(params[:jot_id], params)
+      finish
+    end
+  end
+
 # Nest
 # ------------------------------------------------------------------------
 
