@@ -6,9 +6,6 @@ class Jot
   #
   # Relations
   # ---------------------------------------------------------------------------
-  #
-  # -- Account Setting
-  #has_many :favorites
   has_and_belongs_to_many :tags
   #embeds_many :tags
   accepts_nested_attributes_for :tags
@@ -20,8 +17,12 @@ class Jot
   has_and_belongs_to_many :user_favorites, :class_name => 'User', :inverse_of => :jot_favorites
   has_and_belongs_to_many :user_thumbs_up, :class_name => 'User', :inverse_of => :jot_thumbs_up
   has_and_belongs_to_many :user_thumbs_down, :class_name => 'User', :inverse_of => :jot_thumbs_down
+
   has_and_belongs_to_many :attachments
   accepts_nested_attributes_for :attachments
+
+  has_and_belongs_to_many :locations
+  accepts_nested_attributes_for :locations
 
   # ---------------------------------------------------------------------------
   #
@@ -59,7 +60,9 @@ class Jot
 
   #
   scope :page, ->(page, per_page) { skip(per_page.to_i * (page.to_i - 1)).limit(per_page.to_i)}
-  scope :order_by_default, order_by([[:created_at, :desc]])
+  scope :order_by_default, order_by([[:updated_at, :desc]])
+  scope :before_the_time, ->(timestamp, per_page) { where(:updated_at.lt => timestamp).limit(per_page.to_i)}
+  scope :find_by_user_tags, ->(user) {any_of({"tag_ids" => {"$in" => user.tags.collect{|tag| tag.id}}}, {'user_id' => user.id})}
 
   # ---------------------------------------------------------------------------
   #
@@ -81,7 +84,8 @@ class Jot
     :attachments,
     :location_latitude,
     :location_longitude,
-    :location
+    :location,
+    :locations_attributes
   ]
 
   NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
@@ -91,7 +95,8 @@ class Jot
   RELATION_PUBLIC = [
     :attachments,
     :tags,
-    :user
+    :user,
+    :locations
   ]
 
   def self.get(params = {})

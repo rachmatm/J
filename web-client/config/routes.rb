@@ -41,6 +41,11 @@ WebClient::Application.routes.draw do
     post '/status' => 'twitter#post_status'
   end
 
+  resources :jots do
+    get 'thumbsup'
+    get 'thumbsdown'
+    get 'destroy'
+  end
 
   resource :profiles, :only => [:update]
   
@@ -84,7 +89,9 @@ WebClient::Application.routes.draw do
   resource :registrations, :path => 'registration', :only => [:create]
   resource :tests
 
-  resources :jots, :only => [:new, :create, :index]
+  resources :maps
+
+  resources :jots
 
   resources :files
   get 'about' => 'abouts#show'

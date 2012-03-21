@@ -100,7 +100,7 @@ class Authentication
     if facebook_token_response.empty? or facebook_token_response['error'].present?
       return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
     else
-      facebook_token = facebook_token_response.gsub(/access_token=(.+)/, '\1')
+      facebook_token = facebook_token_response.gsub(/access_token=(.+)&.*/, '\1')
       facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
       profile = ActiveSupport::JSON.decode facebook_access_profile_response
       jotky_token = ActiveSupport::SecureRandom.hex(9)

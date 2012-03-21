@@ -320,7 +320,7 @@ class User
     #set attachment
     file_objs = _current_user_set_files(parameters[:attachments]) if parameters[:attachments].is_a? Array
     parameters.delete :attachments
-    
+
     #set cross-post upload
     file = parameters[:files]
     parameters.delete :files
@@ -330,7 +330,7 @@ class User
     jot.attachments = file_objs
 
     # Facebook video upload
-    if self.facebook_token.present? and self.upload_videos_to_facebook and not file[:type].include? 'image'
+    if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
       facebook_uploader = AttachmentUploader.new
       facebook_uploader.store! file
 
@@ -340,12 +340,12 @@ class User
     end
 
     # Facebook photo upload
-    if self.facebook_token.present? and self.upload_pictures_to_facebook and file[:type].include? 'image'
+    if self.facebook_token.present? and self.upload_pictures_to_facebook and ( file.present? and file[:type].include? 'image' )
       facebook_upload_photo_response = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
     end
 
     # Youtube video upload
-    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and not file[:type].include? 'image'
+    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and ( file.present? and not file[:type].include? 'image' )
 
       youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
                                                           self.google_user_refresh_token,
@@ -385,17 +385,26 @@ class User
       _jots =  self.jots.find params[:id]
       request_query.merge! :total_jot => 1
     elsif params[:per_page].present? and params[:page].present?
-      _jots = Jot.any_of({"tag_ids" => {"$in" => self.tags.collect{|tag| tag.id}}}, {'user_id' => self.id}).page(params[:page], params[:per_page]).order_by_default
-
+      _jots = Jot.find_by_user_tags(self).page(params[:page], params[:per_page]).order_by_default
+      
       request_query.merge!({
           :per_page => params[:per_page].to_i,
           :page => params[:page].to_i,
           :total_jot => _jots.count,
           :total_page => (_jots.count / params[:per_page].to_f).ceil })
+
+    elsif params[:timestamp] == 'now' and params[:per_page].present?
+      params_timestamp = Time.now()
       
+      _jots = Jot.find_by_user_tags(self).before_the_time(params_timestamp, params[:per_page] ).order_by_default
+      
+    elsif params[:timestamp] and params[:per_page].present?
+      params_timestamp = Time.iso8601(params[:timestamp])
+      
+      _jots = Jot.find_by_user_tags(self).before_the_time(params_timestamp, params[:per_page]).order_by_default
+
     else
       _jots = Jot.any_of({"tag_ids" => {"$in" => self.tags.collect{|tag| tag.id}}}, {'user_id' => self.id}).order_by_default
-
       request_query.merge! :total_jot => _jots.count
     end
 
@@ -435,7 +444,8 @@ class User
     
     jot.user_thumbs_down.delete self
 
-    JsonizeHelper.format :notice => "Jot was thumbed up", :content => jot.user_thumbs_up
+    JsonizeHelper.format :notice => "Jot was thumbed up",
+      :total_thumbsup => jot.user_thumbs_up.length, :total_thumbsdown => jot.user_thumbs_down.length
   rescue
     JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
@@ -449,7 +459,8 @@ class User
 
     jot.user_thumbs_up.delete self
     
-    return JsonizeHelper.format :notice => "Jot was thumbed down", :content => jot.user_thumbs_down
+    return JsonizeHelper.format :notice => "Jot was thumbed down",
+      :total_thumbsup => jot.user_thumbs_up.length, :total_thumbsdown => jot.user_thumbs_down.length
   rescue
     return JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
@@ -682,12 +693,12 @@ class User
     if facebook_token_response.empty? or facebook_token_response['error'].present?
       return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
     else
-      facebook_token = facebook_token_response.gsub(/access_token=(.+)/, '\1')
+      facebook_token = facebook_token_response.gsub(/access_token=(.+)&.*/, '\1')
       facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
       profile = ActiveSupport::JSON.decode facebook_access_profile_response
       jotky_token = ActiveSupport::SecureRandom.hex(9)
 
-      parameters = {:token => jotky_token, :facebook_username => profile['username'].downcase, :facebook_token => facebook_token, :realname => profile['name'], :facebook_id => profile['id']}
+      parameters = {:token => jotky_token, :facebook_username => profile['username'], :facebook_token => facebook_token, :realname => profile['name'], :facebook_id => profile['id']}
 
       Authentication.find(self.id).update_attributes parameters
       return "http://localhost:5000/omniauth/authenticate_facebook?facebook_token=#{facebook_token}&jotky_token=#{jotky_token}"
@@ -830,10 +841,12 @@ class User
                     :google_user_token => google_token,
                     :google_user_refresh_token => google_token_response['refresh_token'],
                     :google_user_username => google_profile_response['username'][0].downcase,
-                    :google_user_token_expires_at => Time.now + google_token_response['expires_in'],
-                    :realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}
+                    :google_user_token_expires_at => Time.now + google_token_response['expires_in']}
+                    
 
       self.update_attributes parameters
+      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstname'].present?
+
 
       return "http://localhost:5000/omniauth/authenticate_google?username=#{self.username}&jotky_token=#{self.token}"
     end
@@ -901,23 +914,23 @@ class User
 # Thumbs
 # ------------------------------------------------------------------------
 
-  def current_user_set_thumbs_up_jot(jot_id)
-    jot = Jot.find(jot_id)
-    self.jot_thumbs_down.delete jot if self.jot_thumbs_down_ids.include?(jot.id)
-    self.jot_thumbs_up << jot unless self.jot_thumbs_up_ids.include?(jot.id)
-    JsonizeHelper.format :notice => "Jot was thumbed up", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
-  rescue
-    JsonizeHelper.format :failed => true, :error => "Jot was not found"
-  end
+#  def current_user_set_thumbs_up_jot(jot_id)
+#    jot = Jot.find(jot_id)
+#    self.jot_thumbs_down.delete jot if self.jot_thumbs_down_ids.include?(jot.id)
+#    self.jot_thumbs_up << jot unless self.jot_thumbs_up_ids.include?(jot.id)
+#    JsonizeHelper.format :notice => "Jot was thumbed up", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
+#  rescue
+#    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+#  end
 
-  def current_user_set_thumbs_down_jot(jot_id)
-    jot = Jot.find(jot_id)
-    self.jot_thumbs_up.delete jot if self.jot_thumbs_up_ids.include?(jot.id)
-    self.jot_thumbs_down << jot unless self.jot_thumbs_down_ids.include?(jot.id)
-    JsonizeHelper.format :notice => "Jot was thumbed down", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
-  rescue
-    JsonizeHelper.format :failed => true, :error => "Jot was not found"
-  end
+#  def current_user_set_thumbs_down_jot(jot_id)
+#    jot = Jot.find(jot_id)
+#    self.jot_thumbs_up.delete jot if self.jot_thumbs_up_ids.include?(jot.id)
+#    self.jot_thumbs_down << jot unless self.jot_thumbs_down_ids.include?(jot.id)
+#    JsonizeHelper.format :notice => "Jot was thumbed down", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
+#  rescue
+#    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+#  end
 
   def current_user_get_thumbs_up_jot(jot_id)
     jot = Jot.find(jot_id)

@@ -6,6 +6,7 @@
     <h2>Stream</h2>
   </div>
   <div class="search_result_holder clearfix middle-content main-content-middle" id="main-content-middle-jot-list"></div>
+  <div><button type="button" class="show-more-jot">Show More!</button></div>
 </div>
 
 <%= content_for :template do %>
@@ -15,8 +16,12 @@
 <% end %>
 
 <%= content_for :javascript do %>
+  <%= javascript_include_tag 'view/v2/carousel' %>
+  <%= javascript_include_tag 'view/v2/find_location' %>
   <%= javascript_include_tag 'view/v2/jot' %>
   <%= javascript_include_tag 'view/v2/jot/jot_item' %>
+
+
 
   <script>
     var jotView = new JotView;
