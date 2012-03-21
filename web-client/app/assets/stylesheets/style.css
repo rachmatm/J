@@ -1979,6 +1979,7 @@ a.twitter{
 
 .comment ul li a {
   color: #2BA4AB;
+  font-weight:bold;
 }
 
 .comment ul li a:hover {
@@ -7493,7 +7494,7 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
 
 .jot_detail_right {
   float: left;
-  padding: 13px 0 0 10px;
+  padding: 10px 0 0 10px;
 }
 
 .jot_detail_nickname {
