@@ -328,24 +328,30 @@ class User
     jot = self.jots.new parameters
     jot.tags = tag_objs
     jot.attachments = file_objs
+    
+    #hydra setup, parallel request
+    hydra = Typhoeus::Hydra.new
 
     # Facebook video upload
-    if self.facebook_token.present? and self.upload_videos_to_facebook and not file[:type].include? 'image'
+    if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
       facebook_uploader = AttachmentUploader.new
       facebook_uploader.store! file
 
       facebook_upload_video_response = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
 
+      hydra.queue(facebook_upload_video_response)
       facebook_uploader.remove!
     end
 
     # Facebook photo upload
-    if self.facebook_token.present? and self.upload_pictures_to_facebook and file[:type].include? 'image'
+    if self.facebook_token.present? and self.upload_pictures_to_facebook and ( file.present? and file[:type].include? 'image' )
       facebook_upload_photo_response = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
+      
+      hydra.queue(facebook_upload_photo_response)
     end
 
     # Youtube video upload
-    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and not file[:type].include? 'image'
+    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and ( file.present? and not file[:type].include? 'image' )
 
       youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
                                                           self.google_user_refresh_token,
@@ -356,6 +362,7 @@ class User
 
     end
 
+    hydra.run if file.present?
     unless jot.save
       JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
@@ -830,10 +837,10 @@ class User
                     :google_user_token => google_token,
                     :google_user_refresh_token => google_token_response['refresh_token'],
                     :google_user_username => google_profile_response['username'][0].downcase,
-                    :google_user_token_expires_at => Time.now + google_token_response['expires_in'],
-                    :realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}
+                    :google_user_token_expires_at => Time.now + google_token_response['expires_in']}
 
       self.update_attributes parameters
+      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstName'][0].present?
 
       return "http://localhost:5000/omniauth/authenticate_google?username=#{self.username}&jotky_token=#{self.token}"
     end
