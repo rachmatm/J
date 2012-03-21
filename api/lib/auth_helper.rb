@@ -23,5 +23,5 @@ class AuthHelper
       logout!
       return false
     end  
-  end      
+  end
 end
