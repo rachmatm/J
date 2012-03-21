@@ -317,37 +317,30 @@ class User
     tag_names = Twitter::Extractor.extract_hashtags(parameters[:title])
     tag_objs = _current_user_set_tags(tag_names)
 
-    #set attachment
-    file_objs = _current_user_set_files(parameters[:attachments]) if parameters[:attachments].is_a? Array
+    #set cross-post upload
+    file = parameters[:attachments]
     parameters.delete :attachments
 
-    #set cross-post upload
-    file = parameters[:files]
-    parameters.delete :files
+    attachments = []
 
     jot = self.jots.new parameters
     jot.tags = tag_objs
-    jot.attachments = file_objs
-    
-    #hydra setup, parallel request
-    hydra = Typhoeus::Hydra.new
 
     # Facebook video upload
     if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
       facebook_uploader = AttachmentUploader.new
       facebook_uploader.store! file
 
-      facebook_upload_video_response = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
+      facebook_upload_video_request = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
 
-      hydra.queue(facebook_upload_video_response)
-      facebook_uploader.remove!
+      facebook_uploader.remove! if facebook_uploader.present?
+      facebook_upload_video = Attachment.set(facebook_upload_video_request.response.body, 'facebook', self.facebook_token)
+      attachments << facebook_upload_video
     end
 
     # Facebook photo upload
     if self.facebook_token.present? and self.upload_pictures_to_facebook and ( file.present? and file[:type].include? 'image' )
-      facebook_upload_photo_response = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
-      
-      hydra.queue(facebook_upload_photo_response)
+      facebook_upload_photo_request = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
     end
 
     # Youtube video upload
@@ -360,13 +353,23 @@ class User
                                                           parameters[:description],
                                                           file[:tempfile])
 
+      attachments << Attachment.set(youtube_upload_response, 'youtube')
     end
 
-    hydra.run if file.present?
+    attachments.each do |attachment|
+      self.attachment_ids << attachment.id
+      jot.attachment_ids << attachment.id
+    end
+
+    # Saving attachment in user
+    self.save
+    debugger
     unless jot.save
       JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
-      self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post
+      self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post and
+        not facebook_upload_video_request.present? and not facebook_upload_photo_request.present?
+
       self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
       JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
         :except => JOT_NON_PUBLIC_FIELDS,
@@ -700,7 +703,7 @@ class User
     if facebook_token_response.empty? or facebook_token_response['error'].present?
       return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
     else
-      facebook_token = facebook_token_response.gsub(/access_token=(.+)&.*/, '\1')
+      facebook_token = facebook_token_response.gsub(/access_token=([^&]+)&?.*/, '\1')
       facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
       profile = ActiveSupport::JSON.decode facebook_access_profile_response
       jotky_token = ActiveSupport::SecureRandom.hex(9)

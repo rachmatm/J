@@ -9,13 +9,13 @@ class JotsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
-        if params[:files].present?
+        if params[:attachments].present?
           uploader = MediaUploader.new
-          uploader.store! params[:files]
-          params.merge!({:files => File.open(uploader.path, 'r')})
+          uploader.store! params[:attachments]
+          params.merge!({:attachments => File.open(uploader.path, 'r')})
         end
         jot_create_response = api_connect('me/jots.json', params, 'post', false, true)
-        uploader.remove! if params[:files].present?
+        uploader.remove! if params[:attachments].present?
         redirect_to new_jot_path, :notice => jot_create_response['notice']
       end
 

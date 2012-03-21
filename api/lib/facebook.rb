@@ -17,10 +17,14 @@ class FacebookHelper
                                                   :header => {'Content-Type' => file.content_type},
                                                   :method => :post,
                                                   :params => parameters)
+    
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(upload_video_request)
+    hydra.run
 
     return upload_video_request
   end
-
+  
   def self.upload_photo(description, file, token)
 
     parameters = {:message => description, :source => File.open(file.path, "r")}
@@ -29,6 +33,10 @@ class FacebookHelper
     upload_photo_request = Typhoeus::Request.new(upload_photo_request_url,
                                                  :method => :post,
                                                  :params => parameters)
+
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(upload_photo_request)
+    hydra.run
 
     return upload_photo_request
   end
