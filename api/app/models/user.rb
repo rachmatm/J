@@ -31,7 +31,7 @@ class User
 
   has_many :comments
 
-  embeds_many :notifications
+  has_many :notifications
 
   # ---------------------------------------------------------------------------
   #
@@ -721,6 +721,10 @@ class User
     else
       return JsonizeHelper.format :failed => true, :error => "Avatar upload failed", :errors => self.errors.to_a.uniq
     end
+  end
+
+  def current_user_get_notifications
+    return JsonizeHelper.format :content => self.notifications
   end
 
   # Facebook

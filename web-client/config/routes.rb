@@ -96,6 +96,8 @@ WebClient::Application.routes.draw do
 
   resources :maps
 
+  resources :notification, :path => 'notification', :only => [:index]
+
   resources :files
   get 'about' => 'abouts#show'
   get 'logout' => 'authentications#destroy'

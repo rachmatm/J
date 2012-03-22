@@ -293,9 +293,14 @@ class Jot
     mentions = Twitter::Extractor.extract_mentioned_screen_names(self.title)
     mentions.each do |mention|
       user = User.where(:username => mention).first
-      notification = user.notifications.new :type => 'user', :summary => "mentioned you in his/her", :content => self.title, :time => self.created_at, :jot_id => self.id  if user.present?
-      notification.authors << self.user_id
-      user.save
+      parameters = {:type => 'user',
+                    :authors => [self.user_id],
+                    :summary => 'mentioned you in his/her',
+                    :content => self.title,
+                    :time => self.created_at,
+                    :jot_id => self.id}
+
+      user.notifications.create parameters if user.present?
     end
   end
 end

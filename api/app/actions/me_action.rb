@@ -201,6 +201,10 @@ module MeAction
 # ------------------------------------------------------------------------
 
   class IndexNotifications < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_get_notifications
+      finish
+    end
   end
 
 # Facebook

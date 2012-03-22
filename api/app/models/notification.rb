@@ -5,7 +5,7 @@ class Notification
   #
   # Relations
   # ---------------------------------------------------------------------------
-  embedded_in :user
+  belongs_to :user
 
   field :authors, :type => Array, :default => []
   field :summary, :type => String

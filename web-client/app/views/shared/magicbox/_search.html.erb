@@ -12,7 +12,7 @@
 
   <% if @current_user.present? %>
    <div class="right">
-    <a class="new_update_notactive r-notification-tab" href="#" id="r-notification-tab">
+    <a class="new_update_notactive r-notification-tab" href=<%= notification_index_path %> id="r-notification-tab">
         <span class="update_icon"></span>
         <span class="update_text">24 New Updates</span>
       </a>

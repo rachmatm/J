@@ -10,7 +10,7 @@ class AuthenticationsController < ApplicationController
 
         if login_request['failed'] === false
           set_token({:key => login_request['token']}, params[:remember_me])
-          
+
           flash[:notice] = login_request['notice']
           redirect_to :root
         else

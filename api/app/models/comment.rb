@@ -76,14 +76,20 @@ class Comment
   def after_create_append_notification
     jot = Jot.find(self.jot_id)
     user = User.find(jot.user_id)
-    same_type_notifications = user.notifications.where(:jot_id => jot.id).first
+    same_type_notifications = user.notifications.where(:jot_id => jot.id, :type => 'jot').first
 
     if same_type_notifications.present?
       same_type_notifications.update_attributes :content => self.detail, :time => self.created_at
       same_type_notifications.authors << self.user_id unless same_type_notifications.authors.include? self.user_id
     else
-      notification = user.notifications.new({ :type => 'jot', :summary => " replied your", :content => self.detail, :time => self.created_at, :jot_id => self.jot_id })
-      notification.authors << self.user_id
+      parameters = {:type => 'jot',
+                    :authors => [self.user_id],
+                    :summary => " replied your",
+                    :content => self.detail,
+                    :time => self.created_at,
+                    :jot_id => self.jot_id}
+
+      notification = user.notifications.create parameters
     end
 
     user.save
