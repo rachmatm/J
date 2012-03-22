@@ -1,0 +1,81 @@
+<script id="main-registration-template" type="text/template">
+  <div class="signUp_content main_content">
+    <div class="opening_text">
+      <p class="line_one">Create your</p>
+      <p class="line_two">Jotky Account</p>
+    </div>
+    <%= form_tag registrations_path, :id => 'main-registration-form' do -%>
+      <table class="box_registration">
+        <tbody>
+          <tr class="reg_username">
+            <td class="label_registration">
+              <%= label_tag 'registration_username', 'Username' %>
+              <%= text_field_tag 'registration[username]' %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_username', 'we appreciate a catchy name' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+          <tr class="reg_realname">
+            <td class="label_registration">
+              <%= label_tag 'registration_realname', 'Real name' %>
+              <%= text_field_tag 'registration[realname]' %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_realname', ' phoneys will be arrested! nah, kidding :P' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+          <tr class="reg_email">
+            <td class="label_registration">
+              <%= label_tag 'registration_email', 'E-mail' %>
+              <%= text_field_tag 'registration[email]' %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_email', 'your email address, please' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+          <tr class="reg_password">
+            <td class="label_registration">
+              <%= label_tag 'registration_password', 'Password' %>
+              <%= password_field_tag 'registration[password]' %>
+            </td>
+            <td class="alert_registration main-registration-form-field-alert">
+              <p class="default_text">
+                <%= label_tag 'registration_email', 'must be 6 characters or more please use a good one' %>
+              </p>
+              <p class="error hidden"></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="bottom_registrationPath">
+        <div class="RegRemember_login">
+          <%= check_box_tag :remember_me%><p class="checkbox">Remember me on this computer</p>
+        </div>
+        <br class="clear"/>
+        <div class="RegRemember_login" id="registration-recaptcha">
+         
+        </div>
+        <br class="clear"/>
+
+        <div class="termsOf_service">
+          <p>before we proceed to the next phase please read our <a href="#">terms of service</a></p>
+        </div>
+        <div class="reg_agreedButton green_button" id="registration">
+          <%= submit_tag 'Yes, agreed, create my account' %>
+        </div>
+        <div class="clear"></div>
+      </div>
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</script>

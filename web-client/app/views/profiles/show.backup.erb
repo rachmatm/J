@@ -1,0 +1,47 @@
+<%= render 'shared/magicbox/profile' %>
+<div id="main-profile" class="magicbox-content-tab clearfix">
+<%= content_for :template do %>
+  <%= render 'template/main_magicbox_profile' %>
+  <%= render 'template/main_magicbox_profile_bio' %>
+  <%= render 'template/main_magicbox_profile_location' %>
+<% end %>
+
+<%= content_for :javascript do %>
+
+  <%= javascript_include_tag 'view/v2/profile' %>
+ <%= javascript_include_tag 'view/v2/edit_bio' %>
+ <%= javascript_include_tag 'view/edit_location' %>
+
+  <script>
+
+    var appHolderView = new AppHolderView;
+    appHolderView.setElement('#middle-content')
+
+    var holderBio = appHolderView.render({className: 'change_tab'});
+    var bioView2 = new BioView2;
+    bioView2.setElement(holderBio);
+    bioView2.render();
+    $('#profile-bio-edit').hide();
+
+    var holderLocation = appHolderView.render({className: 'location'});
+    var locationView = new LocationView;
+    locationView.setElement(holderLocation);
+    locationView.render();
+
+    $('a[href=#bioContent]').live('click', function(){
+     $('.bio_tag').hide();
+     $('#profile-bio-edit').show();
+    });
+
+
+
+
+  </script>
+<% end %>
+
+
+</div>
+<!--
+
+
+-->
