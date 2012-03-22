@@ -8,6 +8,7 @@ HttpRouter.new do
 
   # Authentication
   post('/authentications(.:format)').to(AuthenticationAction::Create)
+  
   add('/authentication/logout(:token)').to(AuthenticationAction::Destroy)
   post('/authentication/notify_forgot_password(.:format)').to(AuthenticationAction::Notify)
   post('/authentication/reset_forgot_password(.:format)').to(AuthenticationAction::Update)
@@ -45,7 +46,7 @@ HttpRouter.new do
   post('/files(.:format)').to(FileAction::Create)
 
   # Jots
-    get('/jots/index(.:format)').to(JotsAction::Index)
+  get('/jots/index(.:format)').to(JotsAction::Index)
   #  get('/jots/index-show-more(.:format)').to(JotsAction::IndexShowMore)
   #  get('/jots/show(.:format)').to(JotsAction::Show)
   #  post('/jots(.:format)').to(JotsAction::Create)
@@ -78,6 +79,7 @@ HttpRouter.new do
 
   # Me - Jots
   post('/me/jots(.:format)').to(MeAction::CreateJot)
+  post('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::CreateJotComment)
   delete('/me/jots/(:id)(.:format)').to(MeAction::DeleteJot) # Define "delete" and "put" before "get" for routes that have a same url format
   get('/me/jots/(:id)(.:format)').to(MeAction::ShowJot)
   get('/me/jots(.:format)').to(MeAction::IndexJot)
@@ -143,4 +145,7 @@ HttpRouter.new do
 
   # Asset - https://github.com/joshbuddy/http_router
   add('/assets/').static(Server::Application.root('public')).name(:assets)
+
+  #Jots - Comment
+  get('/jots/(:jot_id)/comments(.:format)').to(MeAction::IndexJotComment)
 end

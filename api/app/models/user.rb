@@ -8,18 +8,9 @@ class User
   #
   # Relations
   # ---------------------------------------------------------------------------
-  #
-  # -- Tag
   has_and_belongs_to_many :tags
-  #
-  # -- Jot
   has_many :jots
-  
-  # -- Private Message
   has_many :messages, :foreign_key => :sender_id
-
-
-  # -- Nest
   has_many :nests
 
   accepts_nested_attributes_for :jots
@@ -35,8 +26,10 @@ class User
   mount_uploader :avatar, AvatarUploader, :mount_on => :avatar
   mount_uploader :avatar_facebook, AvatarUploader, :mount_on => :avatar_facebook
   mount_uploader :avatar_twitter, AvatarUploader, :mount_on => :avatar_twitter
-  has_and_belongs_to_many :attachments
+  has_many :attachments
   accepts_nested_attributes_for :attachments
+
+  has_many :comments
   
   # ---------------------------------------------------------------------------
   #
@@ -161,7 +154,7 @@ class User
   validates_inclusion_of :show_anonymous_jots, :in => ["yes", "no"], :allow_nil => true
   validates_inclusion_of :auto_shorten_url, :in => ["always", "ask", "never"], :allow_nil => true
   validates_inclusion_of :auto_complete, :in => ["always", "ask", "never"], :allow_nil => true
-  validates_inclusion_of :facebook_connection, :twitter_connection, :in => ["allow", "deny"], :allow_nil => true
+  validates_inclusion_of :facebook_connection, :twitter_connection, :in => ["allow", "deny", "always"], :allow_nil => true
 
   # -- User fields
   PRIVATE_FIELDS = [
@@ -213,32 +206,17 @@ class User
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
   # -- User fields
-  #JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
-  JOT_PRIVATE_FIELDS = []
+  JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
 
-  #JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
-  JOT_PROTECTED_FIELDS = []
+  JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
 
-  #JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
-  JOT_PUBLIC_FIELD = [
-    :title,
-    :detail,
-    :files,
-    :attachments,
-    :location_latitude,
-    :location_longitude,
-    :location
-  ]
+  JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
 
   JOT_NON_PUBLIC_FIELDS = JOT_PRIVATE_FIELDS + JOT_PROTECTED_FIELDS
 
   JOT_UPDATEABLE_FIELDS = JOT_PROTECTED_FIELDS + JOT_PUBLIC_FIELD
 
-  JOT_RELATION_PUBLIC = [
-    :attachments,
-    :tags,
-    :user
-  ]
+  JOT_RELATION_PUBLIC = Jot::RELATION_PUBLIC
 
   # -- Nest fields
   NEST_PRIVATE_FIELDS = []
@@ -317,54 +295,80 @@ class User
     tag_names = Twitter::Extractor.extract_hashtags(parameters[:title])
     tag_objs = _current_user_set_tags(tag_names)
 
-    #set attachment
-    file_objs = _current_user_set_files(parameters[:attachments]) if parameters[:attachments].is_a? Array
-    parameters.delete :attachments
+    #location
+    parameters_location = []
+    parameters[:locations_attributes].to_a.each do | location |
+      parameters_location << location[1]
+    end
+    parameters[:locations_attributes] = parameters_location
 
+    #attachment
+    parameters_location = []
+    parameters[:attachments_attributes].to_a.each do | location |
+      parameters_location << location[1]
+    end
+    parameters[:attachments_attributes] = parameters_location
+    
+    
     #set cross-post upload
-    file = parameters[:files]
-    parameters.delete :files
+    #file = parameters[:attachments]
+    #parameters.delete :attachments
+    #    attachments = []
+    #
 
     jot = self.jots.new parameters
     jot.tags = tag_objs
-    jot.attachments = file_objs
 
     # Facebook video upload
-    if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
-      facebook_uploader = AttachmentUploader.new
-      facebook_uploader.store! file
+    #    if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
+    #      facebook_uploader = AttachmentUploader.new
+    #      facebook_uploader.store! file
+    #
+    #      facebook_upload_video_request = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
+    #
+    #      facebook_uploader.remove! if facebook_uploader.present?
+    #      facebook_upload_video = Attachment.set(facebook_upload_video_request.response.body, 'facebook', self.facebook_token)
+    #      attachments << facebook_upload_video
+    #    end
 
-      facebook_upload_video_response = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
+    #    # Facebook photo upload
+    #    if self.facebook_token.present? and self.upload_pictures_to_facebook and ( file.present? and file[:type].include? 'image' )
+    #      facebook_upload_photo_request = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
+    #    end
 
-      facebook_uploader.remove!
-    end
+    #    # Youtube video upload
+    #    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and ( file.present? and not file[:type].include? 'image' )
+    #
+    #      youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
+    #        self.google_user_refresh_token,
+    #        self.google_user_token_expires_at,
+    #        parameters[:title],
+    #        parameters[:description],
+    #        file[:tempfile])
+    #
+    #      attachments << Attachment.set(youtube_upload_response, 'youtube')
+    #    end
 
-    # Facebook photo upload
-    if self.facebook_token.present? and self.upload_pictures_to_facebook and ( file.present? and file[:type].include? 'image' )
-      facebook_upload_photo_response = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
-    end
+    #    attachments.each do |attachment|
+    #      self.attachment_ids << attachment.id
+    #      jot.attachment_ids << attachment.id
+    #    end
 
-    # Youtube video upload
-    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and ( file.present? and not file[:type].include? 'image' )
-
-      youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
-                                                          self.google_user_refresh_token,
-                                                          self.google_user_token_expires_at,
-                                                          parameters[:title],
-                                                          parameters[:description],
-                                                          file[:tempfile])
-
-    end
-
+    # Saving attachment in user
+    #    self.save
+       
     unless jot.save
-      JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
+      return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
-      self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post
-      self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
-      JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
-        :except => JOT_NON_PUBLIC_FIELDS,
-        :include => JOT_RELATION_PUBLIC
-      })
+      #self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post and
+      #not facebook_upload_video_request.present? and not facebook_upload_photo_request.present?
+
+      #self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
+      
+      return JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
+          :except => JOT_NON_PUBLIC_FIELDS,
+          :include => JOT_RELATION_PUBLIC
+        })
     end
   end
 
@@ -487,6 +491,23 @@ class User
     else
       return JsonizeHelper.format :notice => "You don't have any Thumbs Up Jot"
     end
+  end
+
+  def current_user_set_jot_comment(jot_id, parameters = {})
+    parameters.keep_if {|key, value| Comment::UPDATEABLE_FIELDS.include? key }
+
+    data = self.comments.new parameters.merge(:jot_id => jot_id)
+
+    if data.save
+      JsonizeHelper.format({:notice => "Jot's Comment Successfully Made", :content => data}, {
+          :except => Comment::NON_PUBLIC_FIELDS,
+          :include => Comment::RELATION_PUBLIC
+        })
+    else
+      JsonizeHelper.format :failed => true, :error => "Jot's Comment was not made", :errors => data.errors.to_a.uniq
+    end
+  rescue Exception => msg
+    JsonizeHelper.format :failed => true, :error => msg
   end
 
   # Relation: Tags
@@ -683,8 +704,8 @@ class User
     end
   end
 
-# Facebook
-# ------------------------------------------------------------------------
+  # Facebook
+  # ------------------------------------------------------------------------
 
   def current_user_add_facebook_account(code)
     parameter = { :client_id => FB_APP_ID, :redirect_uri => "http://localhost:3000/me/facebook/authenticate_account", :client_secret => FB_SECRET_KEY, :code => code }
@@ -693,7 +714,7 @@ class User
     if facebook_token_response.empty? or facebook_token_response['error'].present?
       return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
     else
-      facebook_token = facebook_token_response.gsub(/access_token=(.+)&.*/, '\1')
+      facebook_token = facebook_token_response.gsub(/access_token=([^&]+)&?.*/, '\1')
       facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
       profile = ActiveSupport::JSON.decode facebook_access_profile_response
       jotky_token = ActiveSupport::SecureRandom.hex(9)
@@ -735,17 +756,17 @@ class User
     end
   end
 
-# Twitter
-# ------------------------------------------------------------------------
+  # Twitter
+  # ------------------------------------------------------------------------
 
   def current_user_add_twitter_account(params)
     jotky_token = ActiveSupport::SecureRandom.hex(9)
     parameters = {:token => jotky_token,
-                  :twitter_user_token => params[:oauth_token],
-                  :twitter_user_secret => params[:oauth_secret],
-                  :twitter_user_username => params[:username],
-                  :realname => params[:realname],
-                  :twitter_id => params[:twitter_id]}
+      :twitter_user_token => params[:oauth_token],
+      :twitter_user_secret => params[:oauth_secret],
+      :twitter_user_username => params[:username],
+      :realname => params[:realname],
+      :twitter_id => params[:twitter_id]}
 
     Authentication.find(self.id).update_attributes parameters
 
@@ -771,9 +792,9 @@ class User
     headers = headers.sort.collect {|key, value| "#{key}=\"#{value}\"" }.join(', ')
 
     get_twitter_timeline_response = ActiveSupport::JSON.decode Typhoeus::Request.get(get_twitter_timeline_url,
-                                                                                     :headers => { :Authorization => "OAuth #{headers}" },
-                                                                                     :params => { :include_entities => true, :count => 5 }
-                                                                                    ).body
+      :headers => { :Authorization => "OAuth #{headers}" },
+      :params => { :include_entities => true, :count => 5 }
+    ).body
 
     if get_twitter_timeline_response.is_a? Array or get_twitter_timeline_response['error'].present?
       return JsonizeHelper.format :content => get_twitter_timeline_response
@@ -801,10 +822,10 @@ class User
     headers = headers.sort.collect {|key, value| "#{key}=\"#{value}\"" }.join(', ')
 
     post_twitter_status_request = Typhoeus::Request.new(post_twitter_status_url,
-                                                        :headers => { :Authorization => "OAuth #{headers}" },
-                                                        :method => :post,
-                                                        :params => { :status => CGI.escape(status) }
-                                                       )
+      :headers => { :Authorization => "OAuth #{headers}" },
+      :method => :post,
+      :params => { :status => CGI.escape(status) }
+    )
 
     hydra = Typhoeus::Hydra.new
     hydra.queue(post_twitter_status_request)
@@ -818,14 +839,14 @@ class User
     end
   end
 
-# Twitter
-# ------------------------------------------------------------------------
+  # Twitter
+  # ------------------------------------------------------------------------
 
   def current_user_add_google_account(code)
     body = "code=#{code}" +
-           "&client_id=#{GOOGLE_CLIENT_ID}" +
-           "&client_secret=#{GOOGLE_CLIENT_SECRET}" +
-           "&redirect_uri=http://localhost:3000/me/google/authenticate_account&grant_type=authorization_code"
+      "&client_id=#{GOOGLE_CLIENT_ID}" +
+      "&client_secret=#{GOOGLE_CLIENT_SECRET}" +
+      "&redirect_uri=http://localhost:3000/me/google/authenticate_account&grant_type=authorization_code"
 
     google_token_response = ActiveSupport::JSON.decode Typhoeus::Request.post("https://accounts.google.com/o/oauth2/token", :body => body).body
 
@@ -837,16 +858,14 @@ class User
       jotky_token = ActiveSupport::SecureRandom.hex(9)
 
       parameters = {:google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1'),
-                    :token => jotky_token,
-                    :google_user_token => google_token,
-                    :google_user_refresh_token => google_token_response['refresh_token'],
-                    :google_user_username => google_profile_response['username'][0].downcase,
-                    :google_user_token_expires_at => Time.now + google_token_response['expires_in']}
-                    
+        :token => jotky_token,
+        :google_user_token => google_token,
+        :google_user_refresh_token => google_token_response['refresh_token'],
+        :google_user_username => google_profile_response['username'][0],
+        :google_user_token_expires_at => Time.now + google_token_response['expires_in']}
 
       self.update_attributes parameters
-      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstname'].present?
-
+      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstName'].present?
 
       return "http://localhost:5000/omniauth/authenticate_google?username=#{self.username}&jotky_token=#{self.token}"
     end
@@ -877,8 +896,8 @@ class User
     end
   end
 
-# Favorites
-# ------------------------------------------------------------------------
+  # Favorites
+  # ------------------------------------------------------------------------
 
   def current_user_set_favorite_jot(jot_id)
     jot = Jot.find(jot_id)
@@ -911,26 +930,26 @@ class User
     end
   end
 
-# Thumbs
-# ------------------------------------------------------------------------
+  # Thumbs
+  # ------------------------------------------------------------------------
 
-#  def current_user_set_thumbs_up_jot(jot_id)
-#    jot = Jot.find(jot_id)
-#    self.jot_thumbs_down.delete jot if self.jot_thumbs_down_ids.include?(jot.id)
-#    self.jot_thumbs_up << jot unless self.jot_thumbs_up_ids.include?(jot.id)
-#    JsonizeHelper.format :notice => "Jot was thumbed up", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
-#  rescue
-#    JsonizeHelper.format :failed => true, :error => "Jot was not found"
-#  end
+  #  def current_user_set_thumbs_up_jot(jot_id)
+  #    jot = Jot.find(jot_id)
+  #    self.jot_thumbs_down.delete jot if self.jot_thumbs_down_ids.include?(jot.id)
+  #    self.jot_thumbs_up << jot unless self.jot_thumbs_up_ids.include?(jot.id)
+  #    JsonizeHelper.format :notice => "Jot was thumbed up", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
+  #  rescue
+  #    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  #  end
 
-#  def current_user_set_thumbs_down_jot(jot_id)
-#    jot = Jot.find(jot_id)
-#    self.jot_thumbs_up.delete jot if self.jot_thumbs_up_ids.include?(jot.id)
-#    self.jot_thumbs_down << jot unless self.jot_thumbs_down_ids.include?(jot.id)
-#    JsonizeHelper.format :notice => "Jot was thumbed down", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
-#  rescue
-#    JsonizeHelper.format :failed => true, :error => "Jot was not found"
-#  end
+  #  def current_user_set_thumbs_down_jot(jot_id)
+  #    jot = Jot.find(jot_id)
+  #    self.jot_thumbs_up.delete jot if self.jot_thumbs_up_ids.include?(jot.id)
+  #    self.jot_thumbs_down << jot unless self.jot_thumbs_down_ids.include?(jot.id)
+  #    JsonizeHelper.format :notice => "Jot was thumbed down", :count => "The thumbs up now is #{jot.user_thumbs_up.count} and thumbs down is #{jot.user_thumbs_down.count}"
+  #  rescue
+  #    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  #  end
 
   def current_user_get_thumbs_up_jot(jot_id)
     jot = Jot.find(jot_id)
@@ -946,8 +965,8 @@ class User
     JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
 
-# Nest
-# ------------------------------------------------------------------------
+  # Nest
+  # ------------------------------------------------------------------------
 
   def current_user_set_nest(params)
     params[:tags] = params[:tags].collect { |tag| Tag.find_or_create_by :name => tag } unless params[:tags].nil?

@@ -6,6 +6,8 @@ window.JotView = AppView.extend({
 
   inputLocationTemplate: _.template($('#main-magicbox-jot-input-location-template').html()),
 
+  inputClipTemplate: _.template($('#main-magicbox-jot-input-clip-template').html()),
+
   el: $('#main-content'),
 
   initialize: function() {
@@ -17,6 +19,8 @@ window.JotView = AppView.extend({
     this.findLocation = new FindLocation({
       source: '/maps.json'
     });
+
+    this.jotAddClip = new JotAddClip;
 
     this.jots.bind('add', this.renderOneItemReverse, this);
     this.jots.bind('reset', this.render, this);
@@ -95,11 +99,11 @@ window.JotView = AppView.extend({
               _this.jots.add(data.content);
             }
 
-            $(form).find('input textarea').removeAttr('disabled');
+            $(form).find('input, textarea').removeAttr('disabled');
           },
 
           beforeSend: function(){
-            $(form).find('input textarea').attr({
+            $(form).find('input, textarea').attr({
               'disabled': 'disabled'
             });
           }
@@ -151,7 +155,7 @@ window.JotView = AppView.extend({
     'click #jot-bar-tag': 'open_tag',
     'click #jot-bar-facebook': 'open_facebook',
     'click #jot-bar-twitter': 'open_twitter',
-    'click .show-more-jot': 'show_more'
+    'click .show-more-list-jot': 'show_more'
   },
 
   createMoreInputHolder: function(id){
@@ -190,8 +194,22 @@ window.JotView = AppView.extend({
     return false;
   },
 
+  open_clip_el: '',
+
   open_clip: function(){
-    
+     var _this = this;
+
+    if(this.open_clip_el){
+      this.open_clip_el.remove();
+      this.open_clip_el = '';
+    }
+    else{
+      this.open_clip_el = this.createMoreInputHolder('clip');
+      $(this.open_clip_el).html(this.inputClipTemplate);
+
+      this.jotAddClip.setElement('#field-to-attachment');
+      this.jotAddClip.render();
+    }
   },
 
   open_location_more_el: '',
@@ -244,7 +262,7 @@ window.JotView = AppView.extend({
 
   show_more: function(){
     if(this.jots.length == 0){
-      $('.show-more-jot').hide();
+      $('.show-more-list-jot').hide();
     }
     else{
       var data = this.jots.toJSON();

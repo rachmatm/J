@@ -42,6 +42,9 @@ end
 
 Bundler.require(:default, Server::Application.env)
 
+Cramp.logger = Logger.new Server::Application.root("/log/#{Server::Application.env}.log")
+Cramp.logger.level = Logger::DEBUG
+
 # Load MongoDB
 ENV['RACK_ENV'] = Server::Application.env
 Mongoid.load!("./config/mongoid.yml")

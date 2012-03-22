@@ -6,18 +6,23 @@
     <h2>Stream</h2>
   </div>
   <div class="search_result_holder clearfix middle-content main-content-middle" id="main-content-middle-jot-list"></div>
-  <div><button type="button" class="show-more-jot">Show More!</button></div>
+
+  <div class="show-more-list show-more-list-jot">
+    Show more...
+  </div>
 </div>
 
 <%= content_for :template do %>
   <%= render 'template/main_listing_jot_item' %>
   <%= render 'template/main_magicbox_jot_input_more_content' %>
   <%= render 'template/main_magicbox_jot_input_location' %>
+  <%= render 'template/main_magicbox_jot_input_clip' %>
 <% end %>
 
 <%= content_for :javascript do %>
   <%= javascript_include_tag 'view/v2/carousel' %>
   <%= javascript_include_tag 'view/v2/find_location' %>
+  <%= javascript_include_tag 'view/v2/jot_add_clip' %>
   <%= javascript_include_tag 'view/v2/jot' %>
   <%= javascript_include_tag 'view/v2/jot/jot_item' %>
 

@@ -9,14 +9,18 @@ class JotsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
-        if params[:files].present?
+        if params[:attachments].present?
           uploader = MediaUploader.new
-          uploader.store! params[:files]
-          params.merge!({:files => File.open(uploader.path, 'r')})
+          uploader.store! params[:attachments]
+          params.merge!({:attachments => File.open(uploader.path, 'r')})
         end
+
+        
         jot_create_response = api_connect('me/jots.json', params, 'post', false, true)
-        uploader.remove! if params[:files].present?
+        uploader.remove! if params[:attachments].present?
         redirect_to new_jot_path, :notice => jot_create_response['notice']
+
+        
       end
 
       format.json do
@@ -69,6 +73,31 @@ class JotsController < ApplicationController
       end
 
       format.html do
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
+
+  def show
+    respond_to do |format|
+      format.html do
+        data = api_connect("/jots/index.json", {:id => params[:id]}, 'get', true, true)
+
+        if data['failed'] === true
+          respond_not_found
+        else
+          @jot = data['content'] || {}
+        end
+      end
+    end
+  end
+
+  def create_comments
+    respond_to do |format|
+      format.json do
+        render :json => api_connect("/me/jots/#{params[:jot_id]}/comments.json", params[:comment], 'post', true, true)
       end
 
       format.all { respond_not_found }

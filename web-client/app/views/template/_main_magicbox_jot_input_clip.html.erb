@@ -1,7 +1,7 @@
 <script type="text/template" id="main-magicbox-jot-input-clip-template">
-<%= form_tag files_path, :id => 'main-magicbox-jot-input-clip-form', :class => 'main-magicbox-jot-input-form' do %>
+<%#= form_tag files_path, :id => 'main-magicbox-jot-input-clip-form', :class => 'main-magicbox-jot-input-form' do %>
     <div class="jot_upload_media clearfix">
-  <%= session_field_tag %>
+  <%#= session_field_tag %>
       <div class="upload_media_top">
         <span class="upload_media">&nbsp;</span>
         <span class="add_more_text">Upload Media or Add URL</span>
@@ -9,8 +9,9 @@
       </div>
       <div class="upload_media_bottom">
         <div class="submit_upload_media">
-  <%= text_field_tag 'jot[attachment_uploaded]', 1, :id => 'jot-input-field-attachment-uploaded', :class => 'invisible-2' %>
-  <%= file_field_tag 'attachment', :id => 'jot-input-field-attachment' %>
+  <%#= text_field_tag 'jot[attachment_uploaded]', 1, :id => 'jot-input-field-attachment-uploaded', :class => 'invisible-2' %>
+  <%#= file_field_tag 'attachment', :id => 'jot-input-field-attachment' %>
+  <%= text_field_tag 'attachments', nil, :class => "add_own_location no-float", :id => "field-to-attachment", :autocomplete => :off %>
         </div>
 
         <div class="image_upload_path_style" id="main-magicbox-jot-input-clip-uploaded-files">
@@ -18,5 +19,5 @@
       </div>
 
     </div>
-<% end %>
+<%# end %>
 </script>

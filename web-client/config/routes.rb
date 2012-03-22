@@ -9,8 +9,6 @@ WebClient::Application.routes.draw do
 
   resource :status, :only => [:index], :path => 'status'
 
-  
-
   resource :omniauth, :only => [:google, :authenticate_google, :facebook, :authenticate_facebook] do
     get '/facebook' => 'omniauth#facebook', :as => 'login_facebook'
     get '/authenticate_facebook' => 'omniauth#authenticate_facebook', :as => 'authenticate_facebook'
@@ -45,9 +43,12 @@ WebClient::Application.routes.draw do
     get 'thumbsup'
     get 'thumbsdown'
     get 'destroy'
+    post 'comments' => 'jots#create_comments'
+
+    resources :jot_comments, :path => 'comments'
   end
 
-  resource :profiles, :only => [:update]
+  resource :profiles
   
   resource :account_settings, :except => [:update, :new, :create, :destroy, :edit, :show] do
     post '/update_email' => 'account_settings#update_email', :as => 'update_email'
@@ -86,12 +87,14 @@ WebClient::Application.routes.draw do
   post '/forgot_password' => 'authentications#notify_forgot_password'
 
   resources :authentications
-  resource :registrations, :path => 'registration', :only => [:create]
+
+  # registration
+  get 'signup' => 'registrations#new', :as => :signup
+  post 'signup' => 'registrations#create', :as => :signup_create
+
   resource :tests
 
   resources :maps
-
-  resources :jots
 
   resources :files
   get 'about' => 'abouts#show'
@@ -101,12 +104,4 @@ WebClient::Application.routes.draw do
   get 'jotpost' => 'jotposts#show'
 
   resources :searches, :path => 'search'
-
-
-  resource :profiles, :path => 'profile' do
-    get '/profile' => 'profiles#index'
-  end
-
-
-  
 end

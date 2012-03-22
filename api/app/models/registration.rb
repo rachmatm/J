@@ -1,7 +1,3 @@
-#
-# Registration.set({realname, username, email, password})
-# => {Token}
-
 class Registration
   include Mongoid::Document
   store_in :users
@@ -26,20 +22,34 @@ class Registration
 
   before_create :set_secure_password, :before_create_set_avatar
 
-  DONT_INCLUDE_THESE_FIELDS = [
+  PRIVATE_FIELDS = [
     :avatar_selected,
     :password_hash,
-    :password_salt]
+    :password_salt
+  ]
 
-  PUBCLIC_FIELD = [
-    :realname,
+  PROTECTED_FIELDS = []
+
+  PUBLIC_FIELD = [
     :username,
+    :realname,
     :email,
-    :avatar]
+    :password,
+    :created_at,
+    :updated_at
+  ]
+
+  NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
+
+  UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
+
+  RELATION_PUBLIC = []
 
 
-  def self.set(params = {})
-    data = self.create params
+  def self.set(parameters)
+    parameters.keep_if {|key, value| UPDATEABLE_FIELDS.include? key }
+
+    data = self.create parameters
 
     if data.errors.present?
       JsonizeHelper.format :errors => data.errors.to_a, :failed => true, :error => "Registration doesn't succeed, please try again."

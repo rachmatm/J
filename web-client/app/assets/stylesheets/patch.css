@@ -26,13 +26,13 @@
 
 .r-notification-tab-active .update_text{
 
-display: inline-block;}
+  display: inline-block;}
 
 
 .previous_icon a:hover, .next_icon a:hover , .top_button a:hover , .side-left a:hover,
 .messages_right_path a:hover, .previous_people2 a:hover, .about_top a:hover{ text-decoration: none}
 
- 
+
 
 .main-registration-form-field-alert label, .main-forgot-form-field-alert label{
   float: none;
@@ -106,129 +106,209 @@ display: inline-block;}
 
 
 .global-alert{
-opacity: 0.8;
-position: fixed;
-right: 5%;
-top: 15px;}
+  opacity: 0.8;
+  position: fixed;
+  right: 5%;
+  top: 15px;}
 
 .pp_people_block { display: block;}
 
 .invisible-2{
-height: 0 !important;
-padding: 0 !important;
-width: 0 !important;}
+  height: 0 !important;
+  padding: 0 !important;
+  width: 0 !important;}
 
 .uploadifyQueue{
-margin: 10px 0;}
+  margin: 10px 0;}
 
 .uploadifyQueue .uploadifyQueueItem{
-margin-bottom: 20px;
-position: relative;}
+  margin-bottom: 20px;
+  position: relative;}
 
 .uploadifyQueue .uploadifyQueueItem .cancel{
-left: 270px;
-position: absolute;
-top: 5px;}
+  left: 270px;
+  position: absolute;
+  top: 5px;}
 
 .uploadifyQueue .uploadifyQueueItem .fileName{
-color: #FFFFFF;
-font-size: 12px;
-left: 310px;
-position: absolute;
-top: 4px;}
+  color: #FFFFFF;
+  font-size: 12px;
+  left: 310px;
+  position: absolute;
+  top: 4px;}
 
 .uploadifyQueue .uploadifyQueueItem .percentage{
-display:none;}
+  display:none;}
 
 .uploadifyQueue .uploadifyQueueItem .uploadifyProgress{
-background: url("/assets/loading-avatar.png") no-repeat scroll 0 0 transparent;
-height: 25px;
-width: 291px;}
+  background: url("/assets/loading-avatar.png") no-repeat scroll 0 0 transparent;
+  height: 25px;
+  width: 291px;}
 
 .uploadifyQueue .uploadifyQueueItem .uploadifyProgress .uploadifyProgressBar{
-background: none repeat scroll 0 0 #22A8B0;
-border-radius: 5px 5px 5px 5px;
-display: inline-block;
-height: 25px;}
+  background: none repeat scroll 0 0 #22A8B0;
+  border-radius: 5px 5px 5px 5px;
+  display: inline-block;
+  height: 25px;}
 
 .attach_image{
- background: none repeat scroll 0 0 #FFFFFF;}
+  background: none repeat scroll 0 0 #FFFFFF;}
 
 .upload_media_bottom, .image_upload_path_style{
-float:none;}
+  float:none;}
 
 
 .find-maps-holder{
-display: inline-block;
-vertical-align: top;}
+  display: inline-block;
+  vertical-align: top;}
 
 .find-maps-holder .jcarousel-skin-tango{
-position: absolute;
-overflow: hidden;
-height:0;}
+  position: absolute;
+  overflow: hidden;
+  height:0;}
 
 .find-maps-holder .jcarousel-skin-tango .jcarousel-container-horizontal{
-background: none repeat scroll 0 0 #A0B2B3;
-border: medium none;
-border-radius: 0 5px 5px 5px;
-margin-left: 5px;
-margin-top: -1px;}
+  background: none repeat scroll 0 0 #A0B2B3;
+  border: medium none;
+  border-radius: 0 5px 5px 5px;
+  margin-left: 5px;
+  margin-top: -1px;}
 
 .find-maps-holder .jcarousel-skin-tango .jcarousel-item{
-width:235px;
-height:75px;
-cursor:pointer;}
+  width:235px;
+  height:75px;
+  cursor:pointer;}
 
 .find-maps-holder .jcarousel-skin-tango .jcarousel-item-placeholder{
-background:url("ajax-loader.gif") no-repeat center center transparent;}
+  background:url("ajax-loader.gif") no-repeat center center transparent;}
 
 .find-maps-list-img{
-width:100px;
-height:75px;
-display:inline-block;
-vertical-align:top;
-margin-right:10px}
+  width:100px;
+  height:75px;
+  display:inline-block;
+  vertical-align:top;
+  margin-right:10px}
 
 .find-maps-list-label{
-color: #FFFFFF;
-display: inline-block;
-vertical-align: middle;
-width: 125px;}
+  color: #FFFFFF;
+  display: inline-block;
+  vertical-align: middle;
+  width: 125px;}
 
 .no-float{
-float:none !important;}
+  float:none !important;}
 
 .close-find_maps{
-position: absolute;
-right: 5px;
-top: 5px;
-z-index: 30;}
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 30;}
 
 .icon{
-display:inline-block;}
+  display:inline-block;}
 
 .icon-colorbox-close{
-background: url("/assets/closelabel.png") no-repeat 0 0 transparent;
-width:14px;
-height:14px;}
+  background: url("/assets/closelabel.png") no-repeat 0 0 transparent;
+  width:14px;
+  height:14px;}
 
 .jot-map-thumb{
-float:left;}
+  float:left;}
 
 .add_location_info{
-padding-top:0;}
+  padding-top:0;}
 
 .jot-find-location .jcarousel-container-horizontal {
-width: 518px !important;
-margin-top:10px !important;}
+  width: 518px !important;
+  margin-top:10px !important;}
 
 .jot-find-location .jcarousel-clip-horizontal{
-width: 520px !important;}
+  width: 520px !important;}
 
 .jot-find-location .jcarousel-container{
-background: #24B0B9;}
+  background: #24B0B9;}
 
 .jot-find-location .jcarousel-item {
-height: 75px;
-width: 235px;}
+  height: 75px;
+  width: 235px;}
+
+
+.show-more-list{
+  background: none repeat scroll 0 0 #EBEDEF;
+  border-radius: 5px 5px 5px 5px;
+  color: #007E86;
+  cursor: pointer;
+  margin-top: 20px;
+  padding: 10px 15px;
+  text-align: center;}
+
+#jot-comment-form textarea.error{
+  background:#E77471}
+
+.jot-title-heading { margin-bottom: 13px; margin-top: 20px}
+.jot-title-heading h2 {
+  color: #333333;
+  float: left;
+  font-family: "HelveticaNeue Bold","HelveticaNeue CE 55 Roman",Arial,sans serif;
+  font-size: 22px;
+}
+.jot-title-heading h2 a{
+  color: #2BA4AB;
+
+}
+.upper_label {
+  color: #999999;
+  float: right;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 1px 0 0 10px;
+}
+
+.upper_pannel_jots {
+  background: none repeat scroll 0 0 #F2F5F5;
+  border-radius: 5px 5px 0 0;
+  float: right;
+  padding: 6px;
+  width: 440px;
+}
+.lower_pannel_jots {background: none repeat scroll 0 0 #F2F5F5;
+                    border-radius: 0 0 5px 5px ;
+                    float: right;
+                    padding: 6px;
+                    width: 440px;}
+
+.lower_pannel_jots li {
+  float: left;
+  margin-right: 10px;
+}
+.upper_pannel_jots li {
+  float: left;
+  margin-right: 10px;
+}
+
+.upper_new_jots  .dateJots {
+  color: #999999;
+  font-size: 11px; float: left;
+  padding-top: 13px;
+}
+
+.heading-jots-attach { margin-bottom: 13px;}
+
+.heading-jots-attach h4 { font-size: 12px; float: left; color: #999999; padding-top: 11px; padding-left: 10px}
+
+.triangle_inbox_right {
+  background: url("/assets/sprite.png") no-repeat scroll -470px -271px transparent;
+  bottom: -17px;
+  float: right;
+  height: 16px;
+  left: -4px;
+  position: relative;
+  width: 16px;
+}
+.right_reply { margin-right: 60px}
+.reply_list { margin-top:10px; margin-right: 10px}
+.content-jots {width:510px}
+
+.people_comments p { font-weight: normal;}
+.time_com { margin-right: 15px}
 

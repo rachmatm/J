@@ -26,7 +26,7 @@
     </div>
     <div class="container-result">
       <h2><#= title #></h2>
-      <p class="hour"><#= created_at #> - <a href="#" class="link-to-detail-jot">detail</a></p>
+      <p class="hour"><#= created_at #> - <a href="/jots/<#= _id #>" class="link-to-detail-jot">detail</a></p>
 
       <# if(detail){ #>
       <div class="post">
@@ -36,16 +36,18 @@
         </p>
       </div>
       <# } #>
- 
-      
+
+
       <div class="own_jot post">
         <span class="post_location">&nbsp;</span>
+        
         <a href="" class="own_location"><img src="/assets/own-location.png" alt=""></a>
         <span class="location_info">
           <span class="display_block tittle_location">Party's Groove</span>
           <span class="road_location">Jl. Warung Buncit 09A,</span>
           <span class="no_padding_top country_location">Jakarta Selatan, Indonesia</span>
         </span>
+   
       </div>
 
       <div class="tag-incognito">

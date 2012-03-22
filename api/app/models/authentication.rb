@@ -100,11 +100,11 @@ class Authentication
     if facebook_token_response.empty? or facebook_token_response['error'].present?
       return "http://localhost:5000/omniauth/authenticate_facebook?error=Something%20went%20wrong,%20Please%20try%20again."
     else
-      facebook_token = facebook_token_response.gsub(/access_token=(.+)&.*/, '\1')
+      facebook_token = facebook_token_response.gsub(/access_token=([^&]+)&?.*/, '\1')
       facebook_access_profile_response = Typhoeus::Request.get("https://graph.facebook.com/me", :params => {:access_token => facebook_token}).body
       profile = ActiveSupport::JSON.decode facebook_access_profile_response
       jotky_token = ActiveSupport::SecureRandom.hex(9)
-      user = self.find_or_create_by :username => profile['username'].downcase, :facebook_username => profile['username'].downcase
+      user = self.find_or_create_by :username => profile['username'], :facebook_username => profile['username']
 
       user.update_attributes :token => jotky_token, :facebook_token => facebook_token, :realname => profile['name'], :facebook_id => profile['id']
       return "http://localhost:5000/omniauth/authenticate_facebook?facebook_token=#{facebook_token}&jotky_token=#{jotky_token}"
@@ -115,7 +115,7 @@ class Authentication
 # ------------------------------------------------------------------------
 
   def self.current_user_twitter_authentication(params)
-    user = self.find_or_create_by :username => params[:username].downcase, :twitter_user_username => params[:username].downcase
+    user = self.find_or_create_by :username => params[:username].downcase, :twitter_user_username => params[:username]
 
     jotky_token = ActiveSupport::SecureRandom.hex(9)
     parameters = {:token => jotky_token,
@@ -136,7 +136,7 @@ class Authentication
     body = "code=#{code}" +
            "&client_id=#{GOOGLE_CLIENT_ID}" +
            "&client_secret=#{GOOGLE_CLIENT_SECRET}" +
-           "&redirect_uri=http://localhost:3000/oauth2callback&grant_type=authorization_code"
+           "&redirect_uri=http://localhost:3000/omniauth/authenticate_google&grant_type=authorization_code"
 
     google_token_response = ActiveSupport::JSON.decode Typhoeus::Request.post("https://accounts.google.com/o/oauth2/token", :body => body).body
 

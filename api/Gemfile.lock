@@ -53,6 +53,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mailfactory (1.4.0)
+      mime-types (>= 1.13.1)
     mime-types (1.17.2)
     mongo (1.5.2)
       bson (= 1.5.2)
@@ -132,6 +134,7 @@ DEPENDENCIES
   cramp (= 0.15.1)
   http_router
   i18n (= 0.5.0)
+  mailfactory
   mime-types
   mongoid (= 2.2.5)
   pony

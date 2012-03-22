@@ -7,7 +7,7 @@ class Action < Cramp::Action
   end
 
   def get_content_type
-    {'Content-Type' => "#{MIME::Types.type_for(params[:format] || '').first}" || 'text/html'}
+    {'Content-Type' => "text/html", "Cache-Control" => "max-age=0, private, must-revalidate", "Date" => "Wed, 21 Mar 2012 20:31:53 GMT"}
   end
 
   # Params
