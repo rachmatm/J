@@ -1568,11 +1568,10 @@ a.twitter{
   width: 5px;
 }
 
-.header_result ul li a{
+.header_result ul li a,   .header_result_green ul li a{
   color: #809AA0;
   font-family: "HelveticaCE55RomanBold",Arial,sans serif;
   font-size: 12px;
-  font-weight: bold;
   line-height: 32px;
 }
 
@@ -1769,6 +1768,8 @@ a.twitter{
   width: 16px;
 }
 
+
+
 .post p {
   color: #333333;
   float: left;
@@ -1816,7 +1817,7 @@ a.twitter{
 
 #video-detail {
   float: left;
-  width: 460px;
+  
 }
 
 .video-title {
@@ -1836,6 +1837,7 @@ a.twitter{
   font-family: "HelveticaNeue",Arial,sans serif;
   font-size: 11px;
   margin-top: 2px;
+  line-height: 17px;
 }
 
 .link {
@@ -1910,10 +1912,13 @@ a.twitter{
   height: 23px;
   line-height: 23px;
   padding: 0 15px;
+  text-shadow: 0 1px 0 #f1f3f2;
 }
 
 .active_tagResult {
-  background: #afe0e1;
+   background: none repeat scroll 0 0 #E0982B;
+    color: #333333;
+    text-shadow: 0 1px 0 #F8C552;
 }
 
 .not_activeSearch {
@@ -1934,8 +1939,8 @@ a.twitter{
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
-  background: url("/assets/sprite.png") no-repeat scroll -75px -209px #afe0e1;
-  border-left: 1px solid #d3ebec;
+  background: url("/assets/sprite.png") no-repeat scroll -75px -209px #DBDFE0;
+  border-left: 1px solid #f2f5ec;
   cursor: pointer;
   display: block;
   float: left;
@@ -2001,6 +2006,7 @@ a.twitter{
   font-size: 11px;
   font-weight: bold;
   margin-right: 5px !important;
+  margin-left: 7px;
 }
 
 .comment ul li.people_comments:hover {
@@ -4850,7 +4856,7 @@ a.connect_cross{
   color: #999999;
   float: right;
   font-size: 12px;
-  font-weight: bold;
+  
   line-height: 33px;
   padding-left: 5px;
 }
@@ -5004,7 +5010,7 @@ a.connect_cross{
 }
 
 .hot_jot_comment {
-  border-bottom: 1px solid #DEDEDE;
+  
   float: left;
   margin: 0 10px 10px;
   padding: 8px 0;

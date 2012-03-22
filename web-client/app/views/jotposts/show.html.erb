@@ -1,0 +1,26 @@
+<%= render 'shared/magicbox/jot' %>
+<div id="main-content-middle" class="timeline_jot_path middle_content clearfix">
+<%= content_for :template do %>
+  <%= render 'template/main_jotpost' %>
+
+<% end %>
+
+
+<%= content_for :javascript do %>
+
+  <%= javascript_include_tag 'view/v2/jotpost' %>
+  <script>
+    var appHolderView = new AppHolderView;
+    appHolderView.setElement('#main-content-middle');
+
+    var holder = appHolderView.render({className: 'middle_content'});
+    var jotpostView = new JotpostView;
+    jotpostView.setElement(holder);
+    jotpostView.render();
+
+
+  </script>
+
+
+<% end %>
+</div>

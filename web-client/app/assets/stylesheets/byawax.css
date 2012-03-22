@@ -1,0 +1,176 @@
+.header_result_green {
+    background: url("/assets/bg-head-green.png") repeat-x scroll 0 0 transparent;
+    border-radius: 5px 5px 5px 5px;
+    float: left;
+    font-size: 14px;
+    height: 32px;
+    position: relative;
+    width: 640px;
+}
+
+.jot_asset_left  { padding-right: 12px }
+.pad_ten { padding-top: 10px;}
+.padzero { margin-top: 0 !important;}
+
+.overview_comment{ padding-left: 25px}
+
+.input_second { width: 510px; }
+.padbot_ten { margin-bottom: 10px}
+.bordertop_post { border-top: 1px solid #DEDEDE;}
+.widefive { width: 500px !important;}
+
+.down-sign-green{
+    background: url("/assets/down_sign_green.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 5px;
+    margin-left: 30px;
+    width: 15px;
+
+}
+
+
+.attach-icon{
+     background:url("/assets/sprite.png") no-repeat scroll -127px -205px transparent;
+  float: left;
+  height: 16px;
+  margin: 10px 10px 10px 0;
+  width: 16px;
+}
+
+
+.name_blue {
+    color: #2BA4AB;
+    float: left;
+    font-family: "HelveticaNeue",Arial,sans serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+.header_post_jot {
+    background: url("/assets/bg-head-result.png") repeat-x scroll 0 0 transparent;
+    border-radius: 5px 5px 5px 5px;
+    float: left;
+    font-size: 14px;
+    height: 32px;
+    position: relative;
+    width: 640px;
+}
+
+.header_post_jot  ul , .header_result_green ul{
+    float: right;
+}
+.header_post_jot ul li a, .header_result_green ul li a {
+    color: #809AA0;
+    font-family: "HelveticaCE55Roman",Arial,sans serif;
+    font-size: 12px;
+    line-height: 32px;
+}
+.header_post_jot img, .header_result_green img{
+    float: left;
+    height: 18px;
+    margin: 7px 10px;
+    width: 18px;
+}
+.header_post_jot span, .header_result_green span{
+    float: left;
+    font-weight: bold;
+    line-height: 32px;
+}
+
+
+.header_post_jot li, .header_result_green li {float: left;
+    padding-right:13px; padding-left: 10px}
+
+.header_post_jot  .stretch { padding:3px; color: #809AA0}
+/* -------------- HEADING ----------- */
+
+.jot-title-heading {  margin-top: 20px}
+.jot-title-heading h2 {
+    color: #333333;
+    float: left;
+    font-family: "HelveticaNeue Bold","HelveticaNeue CE 55 Roman",Arial,sans serif;
+    font-size: 22px;
+}
+.jot-title-heading h2 a{
+    color: #2BA4AB;
+
+}
+.upper_label {
+    color: #999999;
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 1px 0 0 10px;
+}
+
+.upper_pannel_jots {
+    background: none repeat scroll 0 0 #F2F5F5;
+    border-radius: 5px 5px 0 0;
+    float: right;
+    padding: 6px;
+    width: 440px;
+}
+.lower_pannel_jots {background: none repeat scroll 0 0 #F2F5F5;
+    border-radius: 0 0 5px 5px ;
+    float: right;
+    padding: 6px;
+    width: 440px;}
+
+.lower_pannel_jots li {
+    float: left;
+    margin-right: 10px;
+}
+.upper_pannel_jots li {
+    float: left;
+    margin-right: 10px;
+}
+
+.upper_new_jots  .dateJots {
+    color: #999999;
+    font-size: 11px; float: left;
+    padding-top: 10px;
+}
+
+.heading-jots-attach { margin-bottom: 13px;}
+
+.heading-jots-attach h4 { font-size: 12px; float: left; color: #999999; padding-top: 11px; padding-left: 10px}
+
+.triangle_inbox_right {
+    background: url("/assets/sprite.png") no-repeat scroll -470px -271px transparent;
+    bottom: -17px;
+    float: right;
+    height: 16px;
+    left: -4px;
+    position: relative;
+    width: 16px;
+}
+.right_reply { margin-right: 60px}
+.reply_list { margin-top:10px; margin-right: 10px}
+.content-jots {width:510px}
+
+.people_comments p { font-weight: normal;}
+ .time_com { margin-right: 15px}
+ .strent { font-weight: bolder; padding-top: 5px !important;}
+  .strenth{color: #999999;
+
+    font-size: 11px;
+    padding-left: 5px !important;
+    padding-right: 10px !important;
+    padding-top: 8px;}
+
+
+  .header_thumbup{  background: url("/assets/sprite.png") no-repeat scroll -527px -658px transparent;
+    display: inline-block;
+    float: left;
+    height: 17px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+.header_rejot {
+    background: url("/assets/sprite.png") no-repeat scroll -566px -695px transparent;
+    display: inline-block;
+    float: left;
+    height: 17px;
+    margin-top: 8px;
+    width: 17px;
+}

@@ -3,4 +3,5 @@
  *= require style
  *= require_tree ./jquery-carousel
  *= require patch
+ *= require byawax
 */
