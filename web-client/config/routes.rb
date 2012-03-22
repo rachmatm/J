@@ -98,7 +98,7 @@ WebClient::Application.routes.draw do
   get 'logout' => 'authentications#destroy'
   get 'home_detail' => 'homes#show'
   get 'hot_stuff'     => 'hotstuffs#show'
-  get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
+  get 'jotpost' => 'jotposts#show'
 
   resources :searches, :path => 'search'
 

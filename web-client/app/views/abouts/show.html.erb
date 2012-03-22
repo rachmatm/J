@@ -9,6 +9,7 @@
 <%= content_for :javascript do %>
   
   <%= javascript_include_tag 'view/v2/about' %>
+ <%= javascript_include_tag 'view/about' %>
   <script>
     var appHolderView = new AppHolderView;
     appHolderView.setElement('#main-content-middle');
@@ -18,7 +19,7 @@
     aboutView.setElement(holder);
     aboutView.render();
 
-    what_jotky_default
+    
   </script>
 
 
