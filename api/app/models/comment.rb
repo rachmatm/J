@@ -41,6 +41,13 @@ class Comment
   scope :page, ->(page, per_page) { skip(per_page.to_i * (page.to_i - 1)).limit(per_page.to_i)}
   scope :order_by_default, order_by([[:updated_at, :asc]])
 
+  # ---------------------------------------------------------------------------
+  #
+  # CALLBACKS
+  # ---------------------------------------------------------------------------
+  #
+  after_create :after_create_append_notification
+
   #  def self.set(user_id, jot_id, content)
   #    current_comment = Jot.find(jot_id).comments.create :user_id => user_id, :author => User.find(user_id).username, :content => content
   #
@@ -65,4 +72,20 @@ class Comment
   #    rescue
   #      return JsonizeHelper.format :failed => true, :error => "Comment doesn't exist"
   #  end
+
+  def after_create_append_notification
+    jot = Jot.find(self.jot_id)
+    user = User.find(jot.user_id)
+    same_type_notifications = user.notifications.where(:jot_id => jot.id).first
+
+    if same_type_notifications.present?
+      same_type_notifications.update_attributes :content => self.detail, :time => self.created_at
+      same_type_notifications.authors << self.user_id unless same_type_notifications.authors.include? self.user_id
+    else
+      notification = user.notifications.new({ :type => 'jot', :summary => " replied your", :content => self.detail, :time => self.created_at, :jot_id => self.jot_id })
+      notification.authors << self.user_id
+    end
+
+    user.save
+  end
 end

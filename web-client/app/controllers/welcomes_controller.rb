@@ -27,7 +27,10 @@ class WelcomesController < ApplicationWithTokenController
   end
 
   def profile_other
+    debugger
     render :layout =>'private'
+    @notification_for_user = @current_user['notifications'].select { |n| n['type'] == 'user' }.present? ? @current_user['notifications'].select { |n| n['type'] == 'user' } : []
+    @notification_for_user_jot = @current_user['notifications'].select { |n| n['type'] == 'jot' }
   end
 
   def search_people

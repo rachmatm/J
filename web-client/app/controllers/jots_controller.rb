@@ -68,7 +68,7 @@ class JotsController < ApplicationController
         unless @current_user.present?
           render :json => api_connect('jots/index.json', params[:jot], 'get', true)
         else
-          render :json => api_connect('me/jots.json', params[:jot], 'get', true, true)
+          render :json => api_connect('jots/index.json', params[:jot], 'get', true, true)
         end
       end
 

@@ -74,6 +74,7 @@ class Jot
   after_destroy :trigger_realtime_info_destroy
   after_create :after_create_set_tag_meta
   after_destroy :after_destroy_unset_tag_meta
+  after_create :after_create_append_notification
 
   PRIVATE_FIELDS = []
 
@@ -286,5 +287,9 @@ class Jot
         tag._current_tag_set_meta 'weight' => (tag.meta['weight'].to_i - 1)
       end
     end
+  end
+
+  def after_create_append_notification
+    #User.find(self.user_id).notifications.create({ :type => 'jot', :author => "You", :summary => " have made a", :content => self.title, :time => self.created_at, :jot_id => self.id })
   end
 end
