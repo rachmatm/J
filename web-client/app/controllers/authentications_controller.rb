@@ -1,6 +1,6 @@
 class AuthenticationsController < ApplicationController
   layout 'application3'
-  before_filter :redirect_to_root_when_logged
+  before_filter :redirect_to_root_when_logged, :except => [:logout]
   
   def create
     respond_to do |format|
@@ -24,14 +24,13 @@ class AuthenticationsController < ApplicationController
     end
   end
 
-  def destroy
+  def logout
     # Logging out, and deleting token in cramp server
     
-    if @current_user.present?
-      logout_response = api_connect('authentication/logout.json', {}, "get", false, true)
-      flash[:notice] = logout_response['notice']
-      unset_token
-    end
+
+    logout_response = api_connect('authentication/logout.json', {}, "get", false, true)
+    flash[:notice] = logout_response['notice']
+    unset_token
     
     redirect_to root_path
   end

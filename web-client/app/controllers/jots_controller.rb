@@ -15,7 +15,6 @@ class JotsController < ApplicationController
           params.merge!({:attachments => File.open(uploader.path, 'r')})
         end
 
-        
         jot_create_response = api_connect('me/jots.json', params, 'post', false, true)
         uploader.remove! if params[:attachments].present?
         redirect_to new_jot_path, :notice => jot_create_response['notice']
@@ -98,6 +97,26 @@ class JotsController < ApplicationController
     respond_to do |format|
       format.json do
         render :json => api_connect("/me/jots/#{params[:jot_id]}/comments.json", params[:comment], 'post', true, true)
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
+  def fav
+    respond_to do |format|
+      format.json do
+        render :json => api_connect("/me/jots/#{params[:jot_id]}/favorites.json", {}, 'post', false, true)
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
+  def rejot
+    respond_to do |format|
+      format.json do
+        render :json => api_connect("/me/jots/#{params[:jot_id]}/rejot.json", {}, 'post', false, true)
       end
 
       format.all { respond_not_found }

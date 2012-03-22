@@ -44,6 +44,8 @@ WebClient::Application.routes.draw do
     get 'thumbsdown'
     get 'destroy'
     post 'comments' => 'jots#create_comments'
+    get 'fav'
+    get 'rejot'
 
     resources :jot_comments, :path => 'comments'
   end
@@ -90,6 +92,7 @@ WebClient::Application.routes.draw do
 
   # registration
   get 'signup' => 'registrations#new', :as => :signup
+  get 'logout' => 'authentications#logout', :as => :logout
   post 'signup' => 'registrations#create', :as => :signup_create
 
   resource :tests
@@ -98,7 +101,7 @@ WebClient::Application.routes.draw do
 
   resources :files
   get 'about' => 'abouts#show'
-  get 'logout' => 'authentications#destroy'
+  
   get 'home_detail' => 'homes#show'
 
   get 'jot' => 'welcomes#jot', :as => 'welcome_jot'

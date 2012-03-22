@@ -111,8 +111,11 @@ HttpRouter.new do
   get('/me/jots/thumbsdown(.:format)').to(MeAction::IndexJotThumbsDown)
 
   # Me - Favorites
-  post('/me/jots/:id/favorites(.:format)').to(MeAction::AddFavoriteJot)
-  post('/me/jots/favorites(.:format)').to(MeAction::IndexFavoriteJots)
+  post('/me/jots/:jot_id/favorites(.:format)').to(MeAction::AddFavoriteJot)
+  get('/me/jots/favorites(.:format)').to(MeAction::IndexFavoriteJots)
+
+  # Me - Rejot
+  post('/me/jots/(:jot_id)/rejot(.:format)').to(MeAction::AddRejot)
 
   # Me - Notifications
   get('/me/notifications(.:format)').to(MeAction::IndexNotifications)

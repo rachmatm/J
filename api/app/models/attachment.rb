@@ -3,8 +3,8 @@ class Attachment
   include Mongoid::Timestamps
 
   #-- Relations
-  belongs_to :users
-  belongs_to :jots
+  belongs_to :user
+  belongs_to :jot
 
   #-- Fields
   #field :source, :type => String

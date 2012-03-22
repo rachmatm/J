@@ -30,6 +30,8 @@ class User
   accepts_nested_attributes_for :attachments
 
   has_many :comments
+
+  has_and_belongs_to_many :jot_rejoters, :class_name => 'Jot', :inverse_of => :user_rejoters
   
   # ---------------------------------------------------------------------------
   #
@@ -205,6 +207,10 @@ class User
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
+  RELATION_PUBLIC = [
+    :jot_favorites
+  ]
+
   # -- User fields
   JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
 
@@ -268,7 +274,7 @@ class User
       users = self.all.order
     end
 
-    JsonizeHelper.format({:content => users}, {:except => NON_PUBLIC_FIELDS})
+    JsonizeHelper.format({:content => users}, {:except => NON_PUBLIC_FIELDS, :include => RELATION_PUBLIC})
   rescue
     JsonizeHelper.format(:failed => true, :error => 'user not found')
   end
@@ -287,37 +293,50 @@ class User
     end
   end
 
+  def _current_user_set_locations(parameters)
+    parameters_location = []
+
+    parameters.to_a.each do | location |
+      parameters_location << location[1]
+    end
+    
+    parameters = parameters_location
+
+    Location.find Mongoid.master['locations'].insert(parameters)
+  rescue
+    []
+  end
+
+  def _current_user_set_attachments(parameters)
+    parameters_location = []
+
+    parameters.to_a.each do | location |
+      parameters_location << location[1]
+    end
+
+    parameters = parameters_location
+
+    Attachment.find Mongoid.master['attachments'].insert(parameters)
+  rescue
+    []
+  end
+
   # Relation: Jots
   def current_user_set_jot(parameters = {})
     parameters.keep_if {|key, value| JOT_UPDATEABLE_FIELDS.include? key }
 
+    jot = self.jots.new parameters
+    
     #set tags
     tag_names = Twitter::Extractor.extract_hashtags(parameters[:title])
     tag_objs = _current_user_set_tags(tag_names)
-
-    #location
-    parameters_location = []
-    parameters[:locations_attributes].to_a.each do | location |
-      parameters_location << location[1]
-    end
-    parameters[:locations_attributes] = parameters_location
-
-    #attachment
-    parameters_location = []
-    parameters[:attachments_attributes].to_a.each do | location |
-      parameters_location << location[1]
-    end
-    parameters[:attachments_attributes] = parameters_location
-    
+    jot.tags = tag_objs
     
     #set cross-post upload
     #file = parameters[:attachments]
     #parameters.delete :attachments
     #    attachments = []
     #
-
-    jot = self.jots.new parameters
-    jot.tags = tag_objs
 
     # Facebook video upload
     #    if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
@@ -356,18 +375,30 @@ class User
 
     # Saving attachment in user
     #    self.save
-       
+    
     unless jot.save
       return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
+
+      #set location
+      location_objs = _current_user_set_locations(parameters[:locations])
+      jot.locations.concat(location_objs)
+
+      #set attachment
+      attachments_objs = _current_user_set_attachments(parameters[:attachments])
+      jot.attachments.concat(attachments_objs)
+
+      jot.reload
+
       #self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post and
       #not facebook_upload_video_request.present? and not facebook_upload_photo_request.present?
 
       #self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
-      
+
+       
       return JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
-          :except => JOT_NON_PUBLIC_FIELDS,
-          :include => JOT_RELATION_PUBLIC
+          :except => Jot::NON_PUBLIC_FIELDS,
+          :include => Jot::RELATION_PUBLIC
         })
     end
   end
@@ -411,14 +442,14 @@ class User
       _jots = Jot.any_of({"tag_ids" => {"$in" => self.tags.collect{|tag| tag.id}}}, {'user_id' => self.id}).order_by_default
       request_query.merge! :total_jot => _jots.count
     end
-
+    
     JsonizeHelper.format({
         :content => _jots,
         :query => request_query
       },
       {
-        :except => JOT_NON_PUBLIC_FIELDS, 
-        :include => JOT_RELATION_PUBLIC
+        :except => Jot::NON_PUBLIC_FIELDS,
+        :include => Jot::RELATION_PUBLIC
       })
   rescue
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
@@ -428,13 +459,31 @@ class User
     jot = Jot.find(jot_id)
 
     unless self.jot_favorites.include?(jot)
-      self.jot_favorites << jot unless self.jot_favorites.include?(jot)
-      JsonizeHelper.format :notice => "Jot is now in favorites"
+      self.jot_favorites << jot
+      JsonizeHelper.format :notice => "Jot is now in favorites", :faved => true
     else
       self.jot_favorites.delete jot
-      return JsonizeHelper.format :notice =>  "Jot is not in favorites anymore"
+      return JsonizeHelper.format :notice =>  "Jot is not in favorites anymore", :faved => false
     end
 
+  rescue
+    return JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
+
+  def current_user_set_rejot(jot_id)
+    jot = Jot.find jot_id
+    xjot = jot.clone
+    xjot.save
+    xjot.user_rejoters.concat([self])
+    xjot.reload
+
+    JsonizeHelper.format({
+        :content => xjot
+      },
+      {
+        :except => Jot::NON_PUBLIC_FIELDS,
+        :include => Jot::RELATION_PUBLIC
+      })
   rescue
     return JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
@@ -898,20 +947,6 @@ class User
 
   # Favorites
   # ------------------------------------------------------------------------
-
-  def current_user_set_favorite_jot(jot_id)
-    jot = Jot.find(jot_id)
-
-    if self.jot_favorites.include?(jot)
-      self.jot_favorites.delete jot
-      JsonizeHelper.format :notice =>  "Jot is not in favorites anymore"
-    else
-      self.jot_favorites << jot
-      JsonizeHelper.format :notice => "Jot is now in favorites"
-    end
-  rescue
-    JsonizeHelper.format :failed => true, :error => "Jot was not found"
-  end
 
   def current_user_unset_private_message(id)
     private_message = Message.find(id)

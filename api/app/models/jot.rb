@@ -19,11 +19,11 @@ class Jot
   has_and_belongs_to_many :user_thumbs_up, :class_name => 'User', :inverse_of => :jot_thumbs_up
   has_and_belongs_to_many :user_thumbs_down, :class_name => 'User', :inverse_of => :jot_thumbs_down
 
-  has_and_belongs_to_many :attachments
-  accepts_nested_attributes_for :attachments
+  has_many :attachments
 
   has_many :locations
-  accepts_nested_attributes_for :locations
+
+  has_and_belongs_to_many :user_rejoters, :class_name => 'User', :inverse_of => :jot_rejoters
 
   # ---------------------------------------------------------------------------
   #
@@ -33,9 +33,6 @@ class Jot
   # -- Account Information
   field :title, :type => String
   field :detail, :type => String
-  field :location_latitude, :type => String
-  field :location_longitude, :type => String
-  field :location, :type => String
 
   # ---------------------------------------------------------------------------
   #
@@ -83,10 +80,10 @@ class Jot
     :title,
     :detail,
     :attachments,
-    :location_latitude,
-    :location_longitude,
-    :location,
-    :locations_attributes
+    :created_at,
+    :updated_at,
+    :locations,
+    :attachments
   ]
 
   NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
@@ -97,7 +94,8 @@ class Jot
     :attachments,
     :tags,
     :user,
-    :locations
+    :locations,
+    :user_rejoters
   ]
 
   RELATION_PUBLIC_DETAIL = [

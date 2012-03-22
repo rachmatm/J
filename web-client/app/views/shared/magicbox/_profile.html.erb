@@ -15,7 +15,7 @@
       <span class="update_text">24 New Updates</span>
     </a>
     <a id="user_logged" class="sign_up" href="<%= profiles_path %>">
-      <img alt="" src="/assets/little-avatar.png">
+      <img alt="<%= @current_user['username'] %>" src="<%= @current_user['avatar']['thumb_small']['url'] %>">
       <span class="nickname_logged"><%= @current_user['username'] %></span>
       <span class="user_little_badge">0</span>
     </a>

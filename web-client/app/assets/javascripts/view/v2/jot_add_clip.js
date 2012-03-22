@@ -15,7 +15,7 @@ window.JotAddClip = AppView.extend({
   findLocation: function(event){
 
     if(event.keyCode == 13){
-      $('<div class="clearfix"><input type="text" name="jot[locations_attributes]['+ this.location_index +'][name]" value="'+ this.el.value +'"></div>').appendTo('#main-magicbox-jot-input-clip-uploaded-files');
+      $('<div class="clearfix"><input type="text" name="jot[attachments]['+ this.location_index +'][name]" value="'+ this.el.value +'"></div>').appendTo('#main-magicbox-jot-input-clip-uploaded-files');
       this.el.value = '';
       this.location_index++;
     }

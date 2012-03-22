@@ -20,6 +20,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
    "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   end
 
+  def url
+    _original_url = super
+    Server::Application.assets _original_url
+  end
+
   def root
     Server::Application.root 'public'
   end

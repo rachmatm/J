@@ -185,7 +185,7 @@ module MeAction
 
   class AddFavoriteJot < ActionWithTokenAuth
     def start
-      render @current_user.current_user_set_favorite_jot params[:id]
+      render @current_user.current_user_set_favorite_jot params[:jot_id]
       finish
     end
   end
@@ -196,6 +196,17 @@ module MeAction
       finish
     end
   end
+
+
+# Favorites
+# ------------------------------------------------------------------------
+  class AddRejot < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_set_rejot params[:jot_id]
+      finish
+    end
+  end
+
 
 # Notifications
 # ------------------------------------------------------------------------
