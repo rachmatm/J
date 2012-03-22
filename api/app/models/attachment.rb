@@ -26,7 +26,6 @@ class Attachment
 
       facebook_video_info = ActiveSupport::JSON.decode facebook_video_info_request.response.body
 
-      debugger
       parameters = {:source => facebook_video_info['embed_html'].scan(/http:\/\/www\.facebook\.com\/v\/\d+/)[0],
                     :media_type => media_type,
                     :api_name => api_name,

@@ -356,7 +356,7 @@ class User
 
     # Saving attachment in user
     #    self.save
-        
+       
     unless jot.save
       return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
