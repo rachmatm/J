@@ -1,25 +1,24 @@
 <%= render 'shared/magicbox/search' %>
-<div id="main-content-middle" class="middle_content clearfix">
+<div id="main-content-middle" class="timeline_jot_path middle_content clearfix">
 <%= content_for :template do %>
-  <%= render 'template/main_about' %>
- 
+  <%= render 'template/main_hotstuff' %>
+
 <% end %>
 
 
 <%= content_for :javascript do %>
-  
-  <%= javascript_include_tag 'view/v2/about' %>
- <%= javascript_include_tag 'view/about' %>
+
+  <%= javascript_include_tag 'view/v2/hotstuff' %>
   <script>
     var appHolderView = new AppHolderView;
     appHolderView.setElement('#main-content-middle');
 
     var holder = appHolderView.render({className: 'middle_content'});
-    var aboutView = new AboutView;
-    aboutView.setElement(holder);
-    aboutView.render();
+    var hotstuffView = new HotstuffView;
+    hotstuffView.setElement(holder);
+    hotstuffView.render();
 
-    
+
   </script>
 
 

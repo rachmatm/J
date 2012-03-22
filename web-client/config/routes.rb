@@ -73,7 +73,7 @@ WebClient::Application.routes.draw do
   get 'privacy' => 'privacys#index', :as=> 'privacy'
 
 
-  get 'hot_stuff'     => 'welcomes#hot_stuff', :as => 'hot_stuff'
+  
   get 'member'        => 'welcomes#member', :as => 'member'
   
   get 'profile_other' => 'welcomes#profile_other', :as => 'profile_other'
@@ -103,8 +103,8 @@ WebClient::Application.routes.draw do
   get 'about' => 'abouts#show'
   
   get 'home_detail' => 'homes#show'
-
-  get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
+  get 'hot_stuff'     => 'hotstuffs#show'
+  get 'jotpost' => 'jotposts#show'
 
   resources :searches, :path => 'search'
 end
