@@ -30,7 +30,7 @@ window.FindLocation = AppView.extend({
   findLocation: function(event){
 
     if(event.keyCode == 13){
-      $('<div><input type="text" name="jot[locations_attributes]['+ this.location_index +'][name]" value="'+ this.el.value +'"></div>').appendTo('#jot-input-location-list');
+      $('<div><input type="text" name="jot[locations]['+ this.location_index +'][name]" value="'+ this.el.value +'"></div>').appendTo('#jot-input-location-list');
       this.el.value = '';
       this.location_index++;
     }

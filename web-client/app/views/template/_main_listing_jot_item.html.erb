@@ -2,7 +2,7 @@
   <div class="search_result_container">
     <div class="own_people_post">
       <div class="own_header_result header_result">
-        <img src="/assets/avatar.png" alt="">
+        <img src="<#= user.avatar.thumb_small.url #>" alt="<#= user.username #>">
         <span><#= user.username #></span>
         <ul>
           <li class="thumbs_separator">
@@ -13,6 +13,29 @@
           </li>
           <li class="no_padding_left">
             <a href="#" class="link-to-thumbsdown"><span class="thumbs_down"></span><span class="thumbsdown-counter"><#= _.size(user_thumbs_down_ids) #></span></a>
+          </li>
+          <li class="thumbs_separator">
+            &nbsp;
+          </li>
+          <li class="no_padding_left">
+            
+            <# if(user_rejoters.length > 0){ #>
+              <a href="/jots/<#= _id #>/rejot.json" class="link-to-rejot">rejot | rejotted by : <#= user_rejoters[0].username #></a>
+            <# }else{ #>
+              <a href="/jots/<#= _id #>/rejot.json" class="link-to-rejot">rejot</a>
+            <# } #>
+
+            
+          </li>
+          <li class="thumbs_separator">
+            &nbsp;
+          </li>
+          <li class="no_padding_left">
+            <# if(faved){ #>
+             <a href="#" class="link-to-fav">faved</a>
+            <# }else{ #>
+             <a href="#" class="link-to-fav">fav</a>
+            <# } #>
           </li>
           <li class="thumbs_separator">
             &nbsp;
@@ -37,26 +60,43 @@
       </div>
       <# } #>
 
-
+      <# if(locations.length > 0){ #>
       <div class="own_jot post">
         <span class="post_location">&nbsp;</span>
-        
+        <# _.each(locations, function(location){ #>
         <a href="" class="own_location"><img src="/assets/own-location.png" alt=""></a>
         <span class="location_info">
-          <span class="display_block tittle_location">Party's Groove</span>
+          <span class="display_block tittle_location"><#= location.name #></span>
           <span class="road_location">Jl. Warung Buncit 09A,</span>
           <span class="no_padding_top country_location">Jakarta Selatan, Indonesia</span>
         </span>
-   
+        <# }) #>
       </div>
+      <# } #>
 
+      <# if(attachments.length > 0){ #>
+      <div class="own_jot post">
+        <span class="attach_img_icon">&nbsp;</span>
+        <# _.each(attachments, function(attachment){ #>
+        <span class="own_upload_media"><img alt="" src="images/img-own-timeline.png"></span>
+        <span class="location_info">
+          <span class="own_up_picture">&nbsp;</span>
+          <span class="image_file_name"><#= attachment.name #></span>
+          <span class="image_url">http://tinypic.com/wjfi2i</span>
+          <span class="uploaded_by">uploaded via lockerz</span>
+        </span>
+        <# }) #>
+      </div>
+      <# } #>
+
+      <# if(tags.length > 0){ #>
       <div class="tag-incognito">
         <span class="own_tags_icon">&nbsp;</span>
         <div class="button_tag">
           <ul>
-            <# _.each(tag_ids, function(tag){ #>
+            <# _.each(tags, function(tag){ #>
             <li>
-              <span class="button_tagText"><#= tag #></span>
+              <span class="button_tagText"><#= tag.name #></span>
               <span class="not_activeSearch"></span>
             </li>
             <# }) #>
@@ -64,6 +104,8 @@
           <div class="clear"></div>
         </div>
       </div>
+      <# } #>
+      
     </div>
     <div class="clear"></div>
   </div>

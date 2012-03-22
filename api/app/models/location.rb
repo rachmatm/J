@@ -4,5 +4,5 @@ class Location
 
   field :name, :type => String
 
-  belongs_to :jots
+  belongs_to :jot
 end

@@ -9,7 +9,8 @@ window.JotItem = AppView.extend({
   events:{
     'click .link-to-thumbsup': 'thumbsup',
     'click .link-to-thumbsdown': 'thumbsdown',
-    'click .link-to-delete': 'destroy'
+    'click .link-to-delete': 'destroy',
+    'click .link-to-fav': 'favorite'
   },
 
   thumbsup: function(){
@@ -81,5 +82,32 @@ window.JotItem = AppView.extend({
     });
 
     return false;
+  },
+
+  favorite: function(){
+    var data = this.model.toJSON();
+    var _this = this;
+    
+    $.ajax({
+      url: '/jots/'+ data._id +'/fav.json',
+      success: function(data, textStatus, jqXHR){
+        if(data.failed === true){
+          alert(data.error);
+        }
+        else{
+          if(data.faved){
+            $(_this.el).find('.link-to-fav').text('faved');
+          }
+          else{
+            $(_this.el).find('.link-to-fav').text('fav');
+          }
+          
+        }
+      },
+
+      error: function(jqXHR, textStatus, errorThrown){
+        alert("Thumbsup action failed: " + textStatus)
+      }
+    });
   }
 });

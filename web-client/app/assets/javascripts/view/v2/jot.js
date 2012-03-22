@@ -10,7 +10,10 @@ window.JotView = AppView.extend({
 
   el: $('#main-content'),
 
-  initialize: function() {
+  initialize: function(options) {
+    this.options = options;
+    var _this = this;
+    
     //this.input = this.$("#new-todo");
     this.jots = new JotCollection;
     
@@ -23,11 +26,32 @@ window.JotView = AppView.extend({
     this.jotAddClip = new JotAddClip;
 
     this.jots.bind('add', this.renderOneItemReverse, this);
-    this.jots.bind('reset', this.render, this);
-    this.jots.bind('all', this.renderAllItem, this);
+    this.jots.bind('all', this.render, this);
+    this.jots.bind('reset', this.renderAllItem, this);
     
     this.get({
       timestamp: 'now'
+    });
+
+    $('.link-to-rejot').live('click', function(){
+      $.ajax({
+        url: this.href,
+
+        success: function(data, textStatus, jqXHR){
+          if(data.failed === true){
+            alert(data.error);
+          }
+          else{
+            _this.jots.add(data.content);
+
+          }
+        },
+
+        error: function(jqXHR, textStatus, errorThrown){
+          alert("Thumbsup action failed: " + textStatus)
+        }
+      });
+      return false;
     });
   },
 
@@ -98,14 +122,9 @@ window.JotView = AppView.extend({
             else{
               _this.jots.add(data.content);
             }
-
-            $(form).find('input, textarea').removeAttr('disabled');
           },
 
           beforeSend: function(){
-            $(form).find('input, textarea').attr({
-              'disabled': 'disabled'
-            });
           }
         });
 
@@ -128,20 +147,27 @@ window.JotView = AppView.extend({
 
   renderOneItem: function(data, reverse){
     var jot = data.toJSON();
+    var _this = this;
 
+    var faved = in_array(jot._id, this.options.jot_favorite_ids);
+    
     this.appHolderView.setElement('#main-content-middle-jot-list');
     
     var el = this.appHolderView.render({
       idName: 'main-content-middle-jot-list-item-'+ jot._id,
       className: 'main-content-middle-jot-list-item'
     }, reverse);
-
+    
     this.jotItem = new JotItem({
-      model: data
+      model: data,
+      jot_thumbs_up_ids: _this.jot_thumbs_up_ids
     });
     this.jotItem.setElement(el);
 
-    this.jotItem.render(jot);
+
+    this.jotItem.render($.extend(jot, {
+      faved: faved
+    }));
   },
 
   renderOneItemReverse: function(data){
@@ -197,7 +223,7 @@ window.JotView = AppView.extend({
   open_clip_el: '',
 
   open_clip: function(){
-     var _this = this;
+    var _this = this;
 
     if(this.open_clip_el){
       this.open_clip_el.remove();
