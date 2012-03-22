@@ -290,6 +290,12 @@ class Jot
   end
 
   def after_create_append_notification
-    #User.find(self.user_id).notifications.create({ :type => 'jot', :author => "You", :summary => " have made a", :content => self.title, :time => self.created_at, :jot_id => self.id })
+    mentions = Twitter::Extractor.extract_mentioned_screen_names(self.title)
+    mentions.each do |mention|
+      user = User.where(:username => mention).first
+      notification = user.notifications.new :type => 'user', :summary => "mentioned you in his/her", :content => self.title, :time => self.created_at, :jot_id => self.id  if user.present?
+      notification.authors << self.user_id
+      user.save
+    end
   end
 end

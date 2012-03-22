@@ -41,7 +41,7 @@
               <div class="notif_info_right">
                 <div class="primary_content">
                   <p class="notif_info_title">
-                    <a href="/user/<%= notif['authors'].last %>" ><%= notif['author'] %></a> <%= notif['summary'] %> <a href="/jots/<%= notif['jot_id'] %>">jot</a>
+                    <a href="/user/<%= notif['authors'].last %>" ><%= notif['authors'].last %></a> <%= notif['summary'] %> <a href="/jots/<%= notif['jot_id'] %>">jot</a>
                   </p>
                   <div class="notif_info_upload">
                     <span><%= distance_of_time_in_words Time.now, Time.parse(notif['time']) %> ago</span>
@@ -157,9 +157,9 @@
                 <div class="primary_content">
                   <p class="notif_info_title">
                     <% if notif['authors'].count <= 1 %>
-                      <a href="/user/<%= notif['authors'][0] %>" ><%= notif['authors'][0] %></a> <%= notif['summary'] %> <a href="/jots/<%= notif['jot_id'] %>">jot</a>
+                      <a href="/user/<%= notif['authors'].last %>" ><%= notif['authors'].last %></a> <%= notif['summary'] %> <a href="/jots/<%= notif['jot_id'] %>">jot</a>
                     <% else %>
-                      <a href="/user/<%= notif['authors'][0] %>" ><%= notif['authors'][0] %></a> and <a href="#"> <%= notif['authors'].count - 1 %> others </a><%= notif['summary'] %> 
+                      <a href="/user/<%= notif['authors'].last %>" ><%= notif['authors'].last %></a> and <a href="#"> <%= notif['authors'].count - 1 %> others </a><%= notif['summary'] %> 
                       <a href="/jots/<%= notif['jot_id'] %>">jot</a>
                     <% end %>
                   </p>
