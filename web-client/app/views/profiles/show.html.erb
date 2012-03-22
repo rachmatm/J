@@ -1,47 +1,64 @@
 <%= render 'shared/magicbox/profile' %>
-<div id="main-profile" class="magicbox-content-tab clearfix">
-<%= content_for :template do %>
-  <%= render 'template/main_magicbox_profile' %>
-  <%= render 'template/main_magicbox_profile_bio' %>
-  <%= render 'template/main_magicbox_profile_location' %>
-<% end %>
 
-<%= content_for :javascript do %>
-
-  <%= javascript_include_tag 'view/v2/profile' %>
- <%= javascript_include_tag 'view/v2/edit_bio' %>
- <%= javascript_include_tag 'view/edit_location' %>
-
-  <script>
-    
-    var appHolderView = new AppHolderView;
-    appHolderView.setElement('#middle-content')
-
-    var holderBio = appHolderView.render({className: 'change_tab'});
-    var bioView2 = new BioView2;
-    bioView2.setElement(holderBio);
-    bioView2.render();
-    $('#profile-bio-edit').hide();
-    
-    var holderLocation = appHolderView.render({className: 'location'});
-    var locationView = new LocationView;
-    locationView.setElement(holderLocation);
-    locationView.render();
-
-    $('a[href=#bioContent]').live('click', function(){
-     $('.bio_tag').hide();
-     $('#profile-bio-edit').show();
-    });
-
-    
-
-
-  </script>
-<% end %>
-
-
+<div class="parent_empty_profile main_content" style="display: block;">
+  <div class="empty_profile">
+    <div class="about">
+      <div class="about_top_content">
+        <div class="left">
+          <div class="about_avatar">&nbsp;</div>
+        </div>
+        <div class="left">
+          <div class="big_badge">0</div>
+          <div class="nickname_realname">
+            <span class="nickname">MetroFx</span>
+            <br class="clear">
+            <span class="realname">Eko Prasetyo</span>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="about_link">
+        <span>0 Tags</span>
+        <span class="no_margin_left">0 Jots</span>
+        <span class="no_margin_left">0 Follows</span>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="bio">
+      <div class="bio_tag">
+        <span>Bio</span>
+        <a href="">click to edit your bio</a>
+      </div>
+      <div class="url_tag">
+        <span>URL</span>
+        <a class="empty_url" href="">click to edit your URL</a>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="location">
+      <div class="left">
+        <span class="location_text">Location</span>
+        <a href="">click to edit your location</a>
+      </div>
+      <div class="right">
+        <div class="map">&nbsp;</div>
+      </div>
+      <span></span>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="profile_bottom_links">
+    <a class="pub_profile_link" href="#">
+      <span class="prof_icon">&nbsp;</span>
+      <span class="prof_text">View your public profile</span>
+    </a>
+    <a class="account_setting_link" href="<%= edit_profiles_path %>">
+      <span class="acc_icon">&nbsp;</span>
+      <span class="acc_text">Go to account setting</span>
+    </a>
+  </div>
+  <div class="clear"></div>
 </div>
-<!--
 
-
--->

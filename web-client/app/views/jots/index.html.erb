@@ -16,11 +16,13 @@
   <%= render 'template/main_listing_jot_item' %>
   <%= render 'template/main_magicbox_jot_input_more_content' %>
   <%= render 'template/main_magicbox_jot_input_location' %>
+  <%= render 'template/main_magicbox_jot_input_clip' %>
 <% end %>
 
 <%= content_for :javascript do %>
   <%= javascript_include_tag 'view/v2/carousel' %>
   <%= javascript_include_tag 'view/v2/find_location' %>
+  <%= javascript_include_tag 'view/v2/jot_add_clip' %>
   <%= javascript_include_tag 'view/v2/jot' %>
   <%= javascript_include_tag 'view/v2/jot/jot_item' %>
 

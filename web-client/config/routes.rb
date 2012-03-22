@@ -48,7 +48,7 @@ WebClient::Application.routes.draw do
     resources :jot_comments, :path => 'comments'
   end
 
-  resource :profiles, :only => [:update]
+  resource :profiles
   
   resource :account_settings, :except => [:update, :new, :create, :destroy, :edit, :show] do
     post '/update_email' => 'account_settings#update_email', :as => 'update_email'
@@ -87,7 +87,11 @@ WebClient::Application.routes.draw do
   post '/forgot_password' => 'authentications#notify_forgot_password'
 
   resources :authentications
-  resource :registrations, :path => 'registration', :only => [:create]
+
+  # registration
+  get 'signup' => 'registrations#new', :as => :signup
+  post 'signup' => 'registrations#create', :as => :signup_create
+
   resource :tests
 
   resources :maps
@@ -100,12 +104,4 @@ WebClient::Application.routes.draw do
   get 'jot' => 'welcomes#jot', :as => 'welcome_jot'
 
   resources :searches, :path => 'search'
-
-
-  resource :profiles, :path => 'profile' do
-    get '/profile' => 'profiles#index'
-  end
-
-
-  
 end

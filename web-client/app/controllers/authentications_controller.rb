@@ -1,6 +1,6 @@
 class AuthenticationsController < ApplicationController
   layout 'application3'
-  before_filter :validate_auth_user
+  before_filter :redirect_to_root_when_logged
   
   def create
     respond_to do |format|
@@ -60,6 +60,10 @@ class AuthenticationsController < ApplicationController
   end
 
   def new
-    
+  end
+
+  def redirect_to_root_when_logged
+    validate_auth_user
+    redirect_to :root if @current_user.present?
   end
 end

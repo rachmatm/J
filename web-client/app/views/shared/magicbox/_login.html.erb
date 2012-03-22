@@ -34,7 +34,7 @@
               </div>
               <div class="remember_login">
                 <div class="left">
-                  <%= check_box_tag 'remember_me', 1,false %>
+                  <%= check_box_tag 'remember_me', 1 ,false %>
                   <p class="checkbox">Remember me on this computer</p>
                 </div>
                 <div class="right">
@@ -66,7 +66,7 @@
     <div class="right">
       <div class="login_path">
         <span class="text">create a Jotky account</span>
-        <a class="signup_button link-to-registration" href="#link-to-registration">Sign Up</a>
+        <%= link_to 'Sign Up', signup_path, :class => 'signup_button' %>
         <span class="discover">and discover everything!</span>
       </div>
       <div class="clear"></div>

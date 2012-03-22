@@ -2,6 +2,9 @@ module AdminClientsAction
   class Index < ActionWithAdminAuth
 
     def start
+      mailer = Mailer.new
+      mailer.reset_password_notification
+
       clients = Client.all
       render_with_template :file => root_path('views/admin_clients/index.html.erb'), :locals => {:clients => clients}
       finish

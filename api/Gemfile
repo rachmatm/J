@@ -64,3 +64,5 @@ gem 'xml-simple'
 
 # Youtube upload
 gem 'youtube_it'
+
+gem 'mailfactory'

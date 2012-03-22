@@ -14,9 +14,13 @@ class JotsController < ApplicationController
           uploader.store! params[:attachments]
           params.merge!({:attachments => File.open(uploader.path, 'r')})
         end
+
+        
         jot_create_response = api_connect('me/jots.json', params, 'post', false, true)
         uploader.remove! if params[:attachments].present?
         redirect_to new_jot_path, :notice => jot_create_response['notice']
+
+        
       end
 
       format.json do

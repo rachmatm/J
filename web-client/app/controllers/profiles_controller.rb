@@ -3,26 +3,33 @@ class ProfilesController <  ApplicationController
   before_filter :validate_auth_user
   
   def show
+    
+  end
+
+  def edit
+    data = api_connect('me.json', params[:profile], 'get', false, true)
+    @profile = data['content']
   end
  
   def update
     respond_to do |format|
       format.json do
-        if params['user']['username'].present? or params['user']['realname'].present?
-          profile_update_response = api_connect('profile/update', { :username => params['user']['username'], :realname => params['user']['realname'] }, 'post', false, true)
-        elsif params['user']['bio'].present?
-          profile_update_response = api_connect('profile/update', { :bio => params['user']['bio'] }, 'post', false, true)
-        elsif params['user']['url'].present?
-          profile_update_response = api_connect('profile/update', { :url => params['user']['url'] }, 'post', false, true)
-        elsif params['user']['location'].present?
-          parameters = { :location => params['user']['location'], :latitude => params['user']['latitude'], :longitude => params['user']['longitude'] }
-          profile_update_response = api_connect('profile/update', parameters, 'post', false, true)
-        else
-          render :json => { :error => "Invalid entry" }
-        end
-
-        render :json => profile_update_response
+        render :json =>  api_connect('me.json', params[:profile], 'post', false, true)
       end
+
+      format.html do
+        data = api_connect('me.json', params[:profile], 'post', false, true)
+
+        if data['failed'] === true
+          flash[:error] = data['error']
+          flash[:errors] = data['errors']
+          render 'edit'
+        else
+          flash[:notice] = data['notice']
+          redirect_to edit_profiles_path
+        end
+      end
+      
       format.all { respond_not_found }
     end
   end

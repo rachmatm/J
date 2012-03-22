@@ -42,6 +42,8 @@ gem 'typhoeus'
 # Twitter login
 gem 'omniauth-twitter'
 
+gem 'omniauth-facebook'
+
 # Youtube upload
 gem 'youtube_it'
 

@@ -8,18 +8,9 @@ class User
   #
   # Relations
   # ---------------------------------------------------------------------------
-  #
-  # -- Tag
   has_and_belongs_to_many :tags
-  #
-  # -- Jot
   has_many :jots
-  
-  # -- Private Message
   has_many :messages, :foreign_key => :sender_id
-
-
-  # -- Nest
   has_many :nests
 
   accepts_nested_attributes_for :jots
@@ -35,7 +26,7 @@ class User
   mount_uploader :avatar, AvatarUploader, :mount_on => :avatar
   mount_uploader :avatar_facebook, AvatarUploader, :mount_on => :avatar_facebook
   mount_uploader :avatar_twitter, AvatarUploader, :mount_on => :avatar_twitter
-  has_and_belongs_to_many :attachments
+  has_many :attachments
   accepts_nested_attributes_for :attachments
 
   has_many :comments
@@ -163,7 +154,7 @@ class User
   validates_inclusion_of :show_anonymous_jots, :in => ["yes", "no"], :allow_nil => true
   validates_inclusion_of :auto_shorten_url, :in => ["always", "ask", "never"], :allow_nil => true
   validates_inclusion_of :auto_complete, :in => ["always", "ask", "never"], :allow_nil => true
-  validates_inclusion_of :facebook_connection, :twitter_connection, :in => ["allow", "deny"], :allow_nil => true
+  validates_inclusion_of :facebook_connection, :twitter_connection, :in => ["allow", "deny", "always"], :allow_nil => true
 
   # -- User fields
   PRIVATE_FIELDS = [
@@ -215,32 +206,17 @@ class User
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
   # -- User fields
-  #JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
-  JOT_PRIVATE_FIELDS = []
+  JOT_PRIVATE_FIELDS = Jot::PRIVATE_FIELDS
 
-  #JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
-  JOT_PROTECTED_FIELDS = []
+  JOT_PROTECTED_FIELDS = Jot::PROTECTED_FIELDS
 
-  #JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
-  JOT_PUBLIC_FIELD = [
-    :title,
-    :detail,
-    :files,
-    :attachments,
-    :location_latitude,
-    :location_longitude,
-    :location
-  ]
+  JOT_PUBLIC_FIELD = Jot::PUBLIC_FIELD
 
   JOT_NON_PUBLIC_FIELDS = JOT_PRIVATE_FIELDS + JOT_PROTECTED_FIELDS
 
   JOT_UPDATEABLE_FIELDS = JOT_PROTECTED_FIELDS + JOT_PUBLIC_FIELD
 
-  JOT_RELATION_PUBLIC = [
-    :attachments,
-    :tags,
-    :user
-  ]
+  JOT_RELATION_PUBLIC = Jot::RELATION_PUBLIC
 
   # -- Nest fields
   NEST_PRIVATE_FIELDS = []
@@ -319,61 +295,77 @@ class User
     tag_names = Twitter::Extractor.extract_hashtags(parameters[:title])
     tag_objs = _current_user_set_tags(tag_names)
 
-    #set cross-post upload
-    file = parameters[:attachments]
-    parameters.delete :attachments
+    #location
+    parameters_location = []
+    parameters[:locations_attributes].to_a.each do | location |
+      parameters_location << location[1]
+    end
+    parameters[:locations_attributes] = parameters_location
 
-    attachments = []
+    #attachment
+    parameters_location = []
+    parameters[:attachments_attributes].to_a.each do | location |
+      parameters_location << location[1]
+    end
+    parameters[:attachments_attributes] = parameters_location
+    
+    
+    #set cross-post upload
+    #file = parameters[:attachments]
+    #parameters.delete :attachments
+    #    attachments = []
+    #
 
     jot = self.jots.new parameters
     jot.tags = tag_objs
 
     # Facebook video upload
-    if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
-      facebook_uploader = AttachmentUploader.new
-      facebook_uploader.store! file
+    #    if self.facebook_token.present? and self.upload_videos_to_facebook and ( file.present? and not file[:type].include? 'image' )
+    #      facebook_uploader = AttachmentUploader.new
+    #      facebook_uploader.store! file
+    #
+    #      facebook_upload_video_request = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
+    #
+    #      facebook_uploader.remove! if facebook_uploader.present?
+    #      facebook_upload_video = Attachment.set(facebook_upload_video_request.response.body, 'facebook', self.facebook_token)
+    #      attachments << facebook_upload_video
+    #    end
 
-      facebook_upload_video_request = FacebookHelper.upload_video(parameters[:title], parameters[:description], facebook_uploader, self.facebook_token)
+    #    # Facebook photo upload
+    #    if self.facebook_token.present? and self.upload_pictures_to_facebook and ( file.present? and file[:type].include? 'image' )
+    #      facebook_upload_photo_request = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
+    #    end
 
-      facebook_uploader.remove! if facebook_uploader.present?
-      facebook_upload_video = Attachment.set(facebook_upload_video_request.response.body, 'facebook', self.facebook_token)
-      attachments << facebook_upload_video
-    end
+    #    # Youtube video upload
+    #    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and ( file.present? and not file[:type].include? 'image' )
+    #
+    #      youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
+    #        self.google_user_refresh_token,
+    #        self.google_user_token_expires_at,
+    #        parameters[:title],
+    #        parameters[:description],
+    #        file[:tempfile])
+    #
+    #      attachments << Attachment.set(youtube_upload_response, 'youtube')
+    #    end
 
-    # Facebook photo upload
-    if self.facebook_token.present? and self.upload_pictures_to_facebook and ( file.present? and file[:type].include? 'image' )
-      facebook_upload_photo_request = FacebookHelper.upload_photo(parameters[:description], file[:tempfile], self.facebook_token)
-    end
-
-    # Youtube video upload
-    if self.google_user_youtube_id.present? and self.upload_videos_to_youtube and ( file.present? and not file[:type].include? 'image' )
-
-      youtube_upload_response = GoogleHelper.upload_video(self.google_user_token,
-        self.google_user_refresh_token,
-        self.google_user_token_expires_at,
-        parameters[:title],
-        parameters[:description],
-        file[:tempfile])
-
-      attachments << Attachment.set(youtube_upload_response, 'youtube')
-    end
-
-    attachments.each do |attachment|
-      self.attachment_ids << attachment.id
-      jot.attachment_ids << attachment.id
-    end
+    #    attachments.each do |attachment|
+    #      self.attachment_ids << attachment.id
+    #      jot.attachment_ids << attachment.id
+    #    end
 
     # Saving attachment in user
-    self.save
-    debugger
+    #    self.save
+        
     unless jot.save
-      JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
+      return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot.errors.to_a.uniq
     else
-      self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post and
-        not facebook_upload_video_request.present? and not facebook_upload_photo_request.present?
+      #self.current_user_set_facebook_status parameters[:title] if self.facebook_always_cross_post and
+      #not facebook_upload_video_request.present? and not facebook_upload_photo_request.present?
 
-      self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
-      JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
+      #self.current_user_set_twitter_status parameters[:title] if self.twitter_always_cross_post
+      
+      return JsonizeHelper.format({:notice => "Jot Successfully Made", :content => jot}, {
           :except => JOT_NON_PUBLIC_FIELDS,
           :include => JOT_RELATION_PUBLIC
         })
@@ -866,14 +858,14 @@ class User
       jotky_token = ActiveSupport::SecureRandom.hex(9)
 
       parameters = {:google_user_youtube_id => google_profile_response['id'][0].gsub(/http:\/\/gdata.youtube.com\/feeds\/api\/users\/(.+)/, '\1'),
-                    :token => jotky_token,
-                    :google_user_token => google_token,
-                    :google_user_refresh_token => google_token_response['refresh_token'],
-                    :google_user_username => google_profile_response['username'][0],
-                    :google_user_token_expires_at => Time.now + google_token_response['expires_in']}
+        :token => jotky_token,
+        :google_user_token => google_token,
+        :google_user_refresh_token => google_token_response['refresh_token'],
+        :google_user_username => google_profile_response['username'][0],
+        :google_user_token_expires_at => Time.now + google_token_response['expires_in']}
 
       self.update_attributes parameters
-      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstName'][0].present?
+      self.update_attributes({:realname => google_profile_response['firstName'][0] + " " + google_profile_response['lastName'][0]}) if google_profile_response['firstName'].present?
 
       return "http://localhost:5000/omniauth/authenticate_google?username=#{self.username}&jotky_token=#{self.token}"
     end

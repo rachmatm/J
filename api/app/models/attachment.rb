@@ -3,15 +3,17 @@ class Attachment
   include Mongoid::Timestamps
 
   #-- Relations
-  has_and_belongs_to_many :users
-  has_and_belongs_to_many :jots
+  belongs_to :users
+  belongs_to :jots
 
   #-- Fields
-  field :source, :type => String
-  field :media_type, :type => String
-  field :api_name, :type => String
-  field :embed_html, :type => String
-  field :thumbnail_url, :type => String
+  #field :source, :type => String
+  #field :media_type, :type => String
+  #field :api_name, :type => String
+  #field :embed_html, :type => String
+  #field :thumbnail_url, :type => String
+
+  field :url, :type => String
 
   def self.set(media, api_name, access_token = "", media_type = "Video")
     if api_name == "facebook" and media_type == "Video"

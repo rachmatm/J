@@ -8,3 +8,4 @@
 //= require_tree ./collection
 //= require ./view/v2/app
 //= require ./view/v2/app_holder
+//= require ./view/v2/global
