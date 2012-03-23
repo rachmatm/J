@@ -203,15 +203,18 @@ display: inline-block;
 }
 
 .header_rejot:hover{ background: url("/assets/sprite.png") no-repeat scroll -126px -250px transparent;}
+
 .header_fav {
-    background: url("/assets/sprite.png") no-repeat scroll -211px -24px transparent;
-    display: inline-block;
-    float: left;
-    height: 17px;
-    margin-top: 6px;
-    width: 17px;
-    padding-right: 10px
-}
+background: url("/assets/sprite.png") no-repeat scroll -317px -267px transparent;
+display: inline-block;
+float: left;
+height: 17px;
+margin-top: 6px;
+width: 17px;
+margin-right: 10px;
+padding-right:0;}
+
+
 
 .lastli { margin-right: 15px}
 

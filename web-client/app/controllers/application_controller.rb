@@ -98,7 +98,14 @@ class ApplicationController < ActionController::Base
   def validate_auth_user
     set_token :key => get_token[:key]
     request_profile = api_connect('me.json', {}, "get", true, true);
-    @current_user = request_profile['content'] if request_profile['failed'] === false;   
+
+    if request_profile['failed'] === false
+      @current_user = request_profile['content']
+    else
+      @current_user = []
+    end
+    
+       
   end
 
   def redirect_to_root

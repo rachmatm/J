@@ -66,7 +66,6 @@ class Jot
   #
   # CALLBACKS
   # ---------------------------------------------------------------------------
-  #
   after_create :trigger_realtime_info_create
   after_destroy :trigger_realtime_info_destroy
   after_create :after_create_set_tag_meta
@@ -77,31 +76,15 @@ class Jot
 
   PROTECTED_FIELDS = []
 
-  PUBLIC_FIELD = [
-    :title,
-    :detail,
-    :attachments,
-    :created_at,
-    :updated_at,
-    :locations,
-    :attachments
-  ]
+  PUBLIC_FIELD = [:title,:detail,:attachments,:created_at,:updated_at,:locations,:attachments]
 
   NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
-  RELATION_PUBLIC = [
-    :attachments,
-    :tags,
-    :user,
-    :locations,
-    :user_rejoters
-  ]
+  RELATION_PUBLIC = [:attachments,:tags,:user,:locations,:user_rejoters]
 
-  RELATION_PUBLIC_DETAIL = [
-    :comments
-  ]
+  RELATION_PUBLIC_DETAIL = [:comments]
 
   def self.get(params = {})
     request_query = {}

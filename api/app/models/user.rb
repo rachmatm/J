@@ -341,7 +341,7 @@ class User
 
   # Relation: Jots
   def current_user_set_jot(parameters = {})
-    parameters.keep_if {|key, value| JOT_UPDATEABLE_FIELDS.include? key }
+    parameters.keep_if {|key, value| Jot::UPDATEABLE_FIELDS.include? key }
 
     jot = self.jots.new parameters
     
