@@ -105,7 +105,7 @@ WebClient::Application.routes.draw do
 
   resources :files
   get 'about' => 'abouts#show'
-  
+
   get 'home_detail' => 'homes#show'
   get 'hot_stuff'     => 'hotstuffs#show'
   get 'jotpost' => 'jotposts#show'

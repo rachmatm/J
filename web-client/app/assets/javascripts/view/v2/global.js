@@ -139,3 +139,20 @@ $('.clear_all_jot').live('click', function(){
   });
   return false;
 });
+
+// Search AJAX
+
+$('#search-form').ajaxForm({
+  dataType: 'json',
+  error: function(jqXHR, textStatus, errorThrown){
+    alert(textStatus);
+  },
+  success: function(data, textStatus, jqXHR){
+    if(data.failed === true){
+      alert(data.error);
+    }
+    else{
+      alert(data.content);
+    }
+  }
+});

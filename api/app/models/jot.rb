@@ -168,6 +168,21 @@ class Jot
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
 
+  def self.get_search(texts)
+    mentions = Twitter::Extractor.extract_mentioned_screen_names(texts)
+    tags = Twitter::Extractor.extract_hashtags(texts)
+    text_array = []
+
+    texts.split(' ').each do |text|
+      text_regex = Regexp.new(text, true)
+      text_array.push(text_regex)
+    end
+
+    search_result = ActiveSupport::JSON.encode Jot.where(:title.in => text_array)
+
+    JsonizeHelper.format :content => search_result
+  end
+
   #  def self.get(per_page = nil, page = nil)
   #    responds = Hash.new
   #    responds[:content] = self.public_data.default_order

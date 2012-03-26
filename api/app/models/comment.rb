@@ -76,11 +76,11 @@ class Comment
   def after_create_append_notification
     jot = Jot.find(self.jot_id)
     user = User.find(jot.user_id)
-    same_type_notifications = user.notifications.where(:jot_id => jot.id, :type => 'jot').first
+    same_type_notifications = user.notifications.where(:jot_id => self.jot_id, :type => 'jot').first
 
     if same_type_notifications.present?
       same_type_notifications.update_attributes :content => self.detail, :time => self.created_at
-      same_type_notifications.authors << self.user_id unless same_type_notifications.authors.include? self.user_id
+      same_type_notifications.authors << self.user_id unless same_type_notifications.authors.include? self.user_id and self.user_id == jot.user_id
     else
       parameters = {:type => 'jot',
                     :authors => [self.user_id],
@@ -89,7 +89,7 @@ class Comment
                     :time => self.created_at,
                     :jot_id => self.jot_id}
 
-      notification = user.notifications.create parameters
+      notification = user.notifications.create parameters unless self.user_id == jot.user_id
     end
 
     user.save

@@ -1,8 +1,15 @@
 module JotsAction
-  
+
   class Index < Action
     def start
       render Jot.get params
+      finish
+    end
+  end
+
+  class Search < ActionWithAppAuth
+    def start
+      render Jot.get_search params[:texts]
       finish
     end
   end
