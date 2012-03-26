@@ -99,7 +99,9 @@ WebClient::Application.routes.draw do
 
   resources :maps
 
-  resources :notification, :path => 'notification', :only => [:index]
+  resources :notification, :path => 'notification', :only => [:index, :destroy] do
+    get 'destroy'
+  end
 
   resources :files
   get 'about' => 'abouts#show'

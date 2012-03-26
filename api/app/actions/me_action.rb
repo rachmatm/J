@@ -218,6 +218,13 @@ module MeAction
     end
   end
 
+  class DeleteNotifications < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_unset_notifications params[:id], params[:type]
+      finish
+    end
+  end
+
 # Facebook
 # ------------------------------------------------------------------------
 

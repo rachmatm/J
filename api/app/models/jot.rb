@@ -298,7 +298,7 @@ class Jot
                     :time => self.created_at,
                     :jot_id => self.id}
 
-      user.notifications.create parameters if user.present?
+      user.notifications.create parameters if user.present? and mention != self.user_id
     end
   end
 end

@@ -119,6 +119,7 @@ HttpRouter.new do
 
   # Me - Notifications
   get('/me/notifications(.:format)').to(MeAction::IndexNotifications)
+  delete('/me/notifications/(:id)(.:format)').to(MeAction::DeleteNotifications)
 
   # Me - Facebook
   get('/me/facebook/account(.:format)').to(MeAction::AddFacebookAccountDialog)
