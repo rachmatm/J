@@ -178,13 +178,14 @@ class Jot
     search_type = search_type.present? ? search_type : texts.split(/\s|,\s|,/)
 
     search_criteria = users.present? ? {:user_id.in => text_array} : {:tag_ids.all => text_array}
-    search_criteria = hashtags.present? ? search_criteria : {:title.all => text_array}
+    search_criteria = (users.present? or hashtags.present?) ? search_criteria : {:title.all => text_array}
 
     search_type.each do |text|
       text_regex = /#{text}/i
       text_array.push(text_regex)
     end
 
+    debugger
     search_result = ActiveSupport::JSON.encode Jot.where(search_criteria)
 
     JsonizeHelper.format :content => search_result
