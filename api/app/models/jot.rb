@@ -170,15 +170,28 @@ class Jot
 
   def self.get_search(texts)
     #mentions = Twitter::Extractor.extract_mentioned_screen_names(texts)
+    mentions = texts.scan(/@[\w\d]+/)
     #tags = Twitter::Extractor.extract_hashtags(texts)
+    hashtags = texts.scan(/#[\w\d]+/)
     text_array = []
+    
+    if mentions.present?
+      search_result = ActiveSupport::JSON.encode Jot.where(:user_id => /#{ mentions[0][1..-1] }/i)
+    elsif hashtags.present?
+      hashtags.each do |text|
+        text_regex = Regexp.new(text, true)
+        text_array.push(text_regex)
+      end
 
-    texts.split(' ').each do |text|
-      text_regex = Regexp.new(text, true)
-      text_array.push(text_regex)
+      search_result = ActiveSupport::JSON.encode Jot.where(:title.in => text_array)
+    else
+      texts.split(' ').each do |text|
+        text_regex = Regexp.new(text, true)
+        text_array.push(text_regex)
+      end
+
+      search_result = ActiveSupport::JSON.encode Jot.where(:title.in => text_array)
     end
-
-    search_result = ActiveSupport::JSON.encode Jot.where(:title.in => text_array)
 
     JsonizeHelper.format :content => search_result
   end
