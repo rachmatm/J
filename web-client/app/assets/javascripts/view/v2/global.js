@@ -152,7 +152,31 @@ $('#search-form').ajaxForm({
       alert(data.error);
     }
     else{
-      alert(data.content);
+      console.log(data.content)
+      console.log(data.content.length)
+      $('#main-welcome').html(data.content);
     }
   }
 });
+
+$('.search_resultsContent li').click(function(){
+  $(this).find('.not_active').toggleClass('activeSearch', 'not_active');
+  $('#jot-search-field').val($('#jot-search-field').val() + ' ' + $(this).find('.choice_text').html());
+});
+
+$('#jot-search-field').each(function() {
+   // Save current value of element
+   $(this).data('oldVal', $(this).val());
+
+   // Look for changes in the value
+   $(this).bind("propertychange keyup input paste", function(event){
+      // If value has changed...
+      if ($(this).data('oldVal') != $(this).val() && $(this).val().length > 2) {
+       // Updated stored value
+       $(this).data('oldVal', $(this).val());
+
+       // Do action
+       $('.search_box_from_nest').show();
+     }
+   });
+ });
