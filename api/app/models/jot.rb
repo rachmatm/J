@@ -169,8 +169,8 @@ class Jot
   end
 
   def self.get_search(texts)
-    mentions = Twitter::Extractor.extract_mentioned_screen_names(texts)
-    tags = Twitter::Extractor.extract_hashtags(texts)
+    #mentions = Twitter::Extractor.extract_mentioned_screen_names(texts)
+    #tags = Twitter::Extractor.extract_hashtags(texts)
     text_array = []
 
     texts.split(' ').each do |text|
