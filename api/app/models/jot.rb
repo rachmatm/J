@@ -185,7 +185,6 @@ class Jot
       text_array.push(text_regex)
     end
 
-    debugger
     search_result = ActiveSupport::JSON.encode Jot.where(search_criteria)
 
     JsonizeHelper.format :content => search_result
