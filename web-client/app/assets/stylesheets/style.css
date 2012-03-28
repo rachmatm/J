@@ -1,4 +1,4 @@
-.main_logo {
+,.main_logo {
   background: url("/assets/sprite.png") no-repeat scroll 0 -1px transparent;
   cursor: pointer;
   display: block;
@@ -323,7 +323,8 @@ span.img_2{
 }
 
 .search input[type=submit] {
-  background: url("/assets/sprite.png") no-repeat scroll -344px -1px transparent;
+ /* background: url("/assets/sprite.png") no-repeat scroll -344px -1px transparent;*/
+  background:url("/assets/search_btn.png") no-repeat scroll 0 0 transparent;
   border: medium none;
   cursor: pointer;
   float: right;
@@ -332,7 +333,8 @@ span.img_2{
 }
 
 .search input[type=submit]:hover {
-  background: url("/assets/sprite.png") no-repeat scroll -424px -1px transparent;
+  /*background: url("/assets/sprite.png") no-repeat scroll -424px -1px transparent;*/
+  background:url("/assets/search_btn.png") no-repeat scroll -74px 0px transparent;
   border: medium none;
   cursor: pointer;
   float: right;
@@ -1906,14 +1908,25 @@ a.twitter{
   color: #666666;
   cursor: pointer;
   float: left;
-  font-family: "HelveticaNeue Light","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 11px;
   font-weight: bold;
   height: 23px;
   line-height: 23px;
   padding: 0 15px;
-  text-shadow: 0 1px 0 #f1f3f2;
+  text-shadow: 0 1px 0 #FFFFFF;
 }
+
+.button_tagText:hover {
+background: #dcdfdf; /* Old browsers */
+background: -moz-linear-gradient(top, #dcdfdf 0%, #b6b9b9 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dcdfdf), color-stop(100%,#b6b9b9)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* IE10+ */
+background: linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdfdf', endColorstr='#b6b9b9',GradientType=0 );
+text-decoration:none; color:#333333;}
 
 .active_tagResult {
    background: none repeat scroll 0 0 #E0982B;
@@ -1925,7 +1938,7 @@ a.twitter{
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
-  background: url("/assets/sprite.png") no-repeat scroll -46px -177px #dcdfdf;
+  background: url("/assets/plus.png") no-repeat scroll 6px -1px #DCDFDF;
   border-left: 1px solid #d3ebec;
   cursor: pointer;
   display: block;
@@ -1934,7 +1947,10 @@ a.twitter{
   padding: 0 7px;
   width: 10px;
 }
+.not_activeSearch:hover {   
 
+background: url("/assets/plushov.png") no-repeat scroll 6px -1px #b6b9b9;
+}
 .activeSearch {
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
@@ -1988,7 +2004,8 @@ a.twitter{
 }
 
 .comment ul li a:hover {
-  text-shadow: -1px -1px #CCCCCC;
+  
+  text-decoration:underline
 }
 
 .people_comments {
@@ -2569,10 +2586,12 @@ a.twitter{
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   background: none repeat scroll 0 0 #999999;
-  float: right;
-  height: 30px;
-  margin-right: 37px;
-  width: 484px;
+ padding-left:1px;
+    float: right;
+    height: 55px;
+    margin-right: 25px;
+    position: relative;
+    width: 495px;
 }
 
 .about_link span{
@@ -2580,14 +2599,13 @@ a.twitter{
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   background: none repeat scroll 0 0 #E7F7F7;
-  color: #666666;
+  color: #696468;
   float: left;
-  height: 28px;
   margin: 1px;
-  width: 160px;
+  width: 80px;
   font-size: 14px;
-  text-align: center;
   line-height: 28px;
+  padding:5px 5px 10px 20px;
 }
 
 .bio {
@@ -8670,7 +8688,7 @@ span.privacy_text {
   border-radius: 5px;
   background: #edf1f2;
   float: left;
-  padding: 10px;
+  padding: 0px;
   width: 100%;
 }
 
@@ -8678,10 +8696,11 @@ span.privacy_text {
   color: #616262;
   font-size: 13px;
   line-height: 20px;
+  padding:8px;
 }
 
 td.td_tittle {
-  padding-top: 2px;
+ 
   width: 200px;
 }
 

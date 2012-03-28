@@ -7,14 +7,17 @@ window.AboutView = Backbone.View.extend({
     
     $(this.el).html(this.template);
   }
-});
-*/
 
+});
+
+*/
 window.AboutView = AppView.extend({
   template: _.template($('#main-about-template').html()),
-   events: {
-    "click .about_default": "open_registration",
-    "click .what_jotky_default": "open_forgot"
-  }
+   render: function(){
+    
+    $(this.el).html(this.template);
+    
+  
 
+  }
 });

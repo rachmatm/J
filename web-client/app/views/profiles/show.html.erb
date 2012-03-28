@@ -8,7 +8,7 @@
           <div class="about_avatar">&nbsp;</div>
         </div>
         <div class="left">
-          <div class="big_badge">0</div>
+          
           <div class="nickname_realname">
             <span class="nickname">MetroFx</span>
             <br class="clear">
@@ -19,9 +19,12 @@
         <div class="clear"></div>
       </div>
       <div class="about_link">
-        <span>0 Tags</span>
-        <span class="no_margin_left">0 Jots</span>
-        <span class="no_margin_left">0 Follows</span>
+       
+        <span class="no_margin_left"><a href="#">89</a> <p>Jots</p></span>
+        <span class="no_margin_left"><a href="#">190</a> <p>Followers</p></span>
+        <span class="no_margin_left"><a href="#">20</a> <p>Following</p></span>
+        <span class="no_margin_left"><a href="#">20</a> <p>Following</p></span>
+        <div class="badge_about">40</div>
       </div>
       <div class="clear"></div>
     </div>
@@ -50,15 +53,238 @@
     <div class="clear"></div>
   </div>
   <div class="profile_bottom_links">
-    <a class="pub_profile_link" href="#">
-      <span class="prof_icon">&nbsp;</span>
-      <span class="prof_text">View your public profile</span>
-    </a>
-    <a class="account_setting_link" href="<%= edit_profiles_path %>">
-      <span class="acc_icon">&nbsp;</span>
-      <span class="acc_text">Go to account setting</span>
+   
+    <a class="account_setting_profile" href="<%= edit_profiles_path %>">
+    
+      <span class="acc_text">Click here for profile detail and account setting</span>
     </a>
   </div>
   <div class="clear"></div>
+
+
+
+    <div>
+
+      <span class="privacy_text">Profile</span>
+      <table class="account_setting_table fixed_height"><tbody>
+
+
+
+
+
+          <tr><td class="border_bottom_table" colspan="2"><span class="left cont_setting bigF">user name</span><a href="" class="icon-edit">edit</a></td></tr>
+ <tr>
+    <td rowspan="2"  class="nopadmar"><img src="/assets/propic_3.png" class="left"></td>
+    <td class=" border_bottom_table"><span class="left cont_setting_long">Inside, the first task is to create our assets directory, with the mkdir task (just like on the command line). Next, we make two antcalls</span><a href="" class="icon-edit">edit</a></td>
+  </tr>
+  <tr>
+    <td ><span class="left cont_setting">alamat url</span><a href="" class="icon-edit">edit</a></td>
+  </tr>
+
+  <tr><td></td></tr>
+
+      </tbody></table>
+
+   
+
+  </div>
+
+
+
+
+
+
+  <div>
+    <div class="left profile_email_setting">
+      <span class="privacy_text">Account</span>
+      <table class="account_setting_table fixed_height"><tbody>
+          <tr><td class="border_bottom_table"><span class="left cont_setting">user name</span><a href="" class="icon-edit">edit</a></td></tr>
+<tr><td class="">
+    <span class="left cont_setting">Address</span><a href="" class="icon-edit">edit</a>
+  </td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="left profile_password_setting ">
+      <span class="privacy_text">Map </span>
+    <table class="account_setting_table fixed_height"><tbody>
+        <tr><td><div class="map">&nbsp;</div></td></tr>
+          <tr><td class="infotxt">&nbsp;</td></tr>
+      </tbody></table>
+    </div>
+
+  </div>
+
+
+
+  <div>
+    <div class="left profile_email_setting">
+      <span class="privacy_text">E-Mail </span>
+      <table class="account_setting_table fixed_height"><tbody>
+          <tr><td><span class="left cont_setting">user.account@gmail.com</span><a href="" class="icon-edit">edit</a></td></tr>
+<tr><td class="infotxt">The email displayed below will be used for password recovery please make sure it fits your preferences</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="left profile_password_setting ">
+      <span class="privacy_text">Password </span>
+    <table class="account_setting_table fixed_height"><tbody>
+        <tr><td><span class="left cont_setting_right">Change your password</span><a href="" class="icon-edit">edit</a></td></tr>
+          <tr><td class="infotxt">&nbsp;</td></tr>
+      </tbody></table>
+    </div>
+
+  </div>
+
+   <div>
+    <span class="privacy_text">Privacy </span>
+    <%= form_tag profiles_path, :id => 'profiles-form-crosspost', :method => :put do  %>
+      <div>
+        <table class="account_setting_table">
+          <tbody>
+            <tr>
+              <td class="td_tittle"></td>
+              <td class="td_radio">Everyone</td>
+              <td class="td_radio">Friends</td>
+              <td class="td_radio">Hide</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">
+               
+                <span class="name_cross_post">Jots</span>
+
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[facebook_connection]', 'allow', @profile['facebook_connection'] == 'allow'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[facebook_connection]', 'deny', @profile['facebook_connection'] == 'deny'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[facebook_connection]', 'always', @profile['facebook_connection'] == 'always'  %>
+              </td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">
+                
+                <span class="name_cross_post">E-Mail</span>
+
+              </td>
+              <td class="border_bottom_table td_radio">
+                 <%= radio_button_tag 'profile[twitter_connection]', 'allow', @profile['twitter_connection'] == 'allow'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[twitter_connection]', 'deny', @profile['twitter_connection'] == 'deny'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[twitter_connection]', 'always', @profile['twitter_connection'] == 'always'  %>
+              </td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">
+
+                <span class="name_cross_post">Location</span>
+
+              </td>
+              <td class="border_bottom_table td_radio">
+                 <%= radio_button_tag 'profile[twitter_connection]', 'allow', @profile['twitter_connection'] == 'allow'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[twitter_connection]', 'deny', @profile['twitter_connection'] == 'deny'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[twitter_connection]', 'always', @profile['twitter_connection'] == 'always'  %>
+              </td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="td_tittle">
+                
+              </td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+
+
+
+  <div>
+    <span class="privacy_text">Connections </span>
+    <%= form_tag profiles_path, :id => 'profiles-form-crosspost', :method => :put do  %>
+      <div>
+        <table class="account_setting_table">
+          <tbody>
+            <tr>
+              <td class="td_tittle">set default cross-posting</td>
+              <td class="td_radio">Allow</td>
+              <td class="td_radio">Deny</td>
+              <td class="td_radio">Always Cross-post</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">
+                <a href="" class="no_margin_left no_margin_right FB">&nbsp;</a>
+                <span class="name_cross_post">Eko Prasetyo</span>
+               
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[facebook_connection]', 'allow', @profile['facebook_connection'] == 'allow'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[facebook_connection]', 'deny', @profile['facebook_connection'] == 'deny'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[facebook_connection]', 'always', @profile['facebook_connection'] == 'always'  %>
+              </td>
+              <td class="border_bottom_table"><a href="" class="no_padding_left connect_cross">(unlink)</a></td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">
+                <a href="" class="no_margin_left twitter"></a>
+                <span class="name_cross_post">@metrofx</span>
+               
+              </td>
+              <td class="border_bottom_table td_radio">
+                 <%= radio_button_tag 'profile[twitter_connection]', 'allow', @profile['twitter_connection'] == 'allow'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[twitter_connection]', 'deny', @profile['twitter_connection'] == 'deny'  %>
+              </td>
+              <td class="border_bottom_table td_radio">
+                <%= radio_button_tag 'profile[twitter_connection]', 'always', @profile['twitter_connection'] == 'always'  %>
+              </td>
+              <td class="border_bottom_table"><a href="" class="no_padding_left connect_cross">(unlink)</a></td>
+            </tr>
+            <tr>
+              <td class="td_tittle">
+                <a class="no_padding_left connect_cross">Youtube</a>
+              </td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td>
+                
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+
+
+
+
 </div>
 

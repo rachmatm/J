@@ -3,7 +3,8 @@ class ProfilesController <  ApplicationController
   before_filter :validate_auth_user
   
   def show
-    
+    data = api_connect('me.json', params[:profile], 'get', false, true)
+    @profile = data['content']
   end
 
   def edit
