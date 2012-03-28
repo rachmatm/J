@@ -621,6 +621,12 @@ class User
     self.save
   end
 
+  def current_user_search_tags(text)
+    search_result = ActiveSupport::JSON.encode Tag.where(:name => /#{text}/i)
+
+    JsonizeHelper.format :content => search_result
+  end
+
   # Relation: Files
   def _current_user_set_files(files = [])
     raise 'User#_current_user_set_files Wrong Parameters' unless files.is_a? Array

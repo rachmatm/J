@@ -159,50 +159,107 @@ $('#search-form').ajaxForm({
   }
 });
 
-$('.search_resultsContent li').toggle(function(){
+function bindsearchresult(){
+  $('.search_resultsContent li').toggle(function(){
 
-  var tag_name = $(this).find('.choice_text').html() + ' ';
+    // Appending whitespace so it is a little more proper
+    var tag_name = $(this).find('.choice_text').html() + ' ';
+    var breadcrumb_name = $(this).find('.choice_text').html();
 
-  // Testing the input box for whitespace at end of line
-  if (!(/\s$/).test($('#jot-search-field').val()) && !($('#jot-search-field').val() == '')) {
-    tag_name = ' ' + tag_name;
-  }
+    // Testing the input box for whitespace at end of line
+    if (!(/\s$/).test($('#jot-search-field').val()) && !($('#jot-search-field').val() == '')) {
+      tag_name = ' ' + tag_name;
+    }
 
-  $('#jot-search-field').val($('#jot-search-field').val() + tag_name);
+    // Appending clicked tag
+    $('#jot-search-field').val($('#jot-search-field').val() + tag_name);
 
-  $(this).find('.not_active').addClass('activeSearch');
-  $(this).find('.choice_text').addClass('active_choiceTexts');
+    // Changing the appearance according to the state
+    $(this).find('.not_active').addClass('activeSearch');
+    $(this).find('.choice_text').addClass('active_choiceTexts');
 
-}, function(){
+    // Appending to the breadcrumb
+    $('.breadcrumb_search li').append('<span class="tag_' + breadcrumb_name +
+                                      '">&gt; </span><a class="tag_' + breadcrumb_name +
+                                      '" href="">' + breadcrumb_name + '</a>');
 
-  var tag_name = $(this).find('.choice_text').html() + ' ';
-  
-  if (!(/\s$/).test($('#jot-search-field').val())) {
-    tag_name = ' ' + tag_name;
-  }
+  }, function(){
 
-  var tag_regex = new RegExp("(.*)" + tag_name + "(.*)");
-  var tag_replace = $('#jot-search-field').val().replace(tag_regex, '$1$2');
+    // Appending whitespace so it is a little more proper
+    var tag_name = $(this).find('.choice_text').html() + ' ';
 
-  $('#jot-search-field').val(tag_replace);
-  $(this).find('.not_active').removeClass('activeSearch');
-  $(this).find('.choice_text').removeClass('active_choiceTexts');
+    // Testing the input box for whitespace at end of line
+    if (!(/\s$/).test($('#jot-search-field').val())) {
+      tag_name = ' ' + tag_name;
+    }
 
-});
+    // Setting up proper regex capture and replacing
+    // the old value in the input box with the new one
+    var tag_regex = new RegExp("(.*)" + tag_name + "(.*)");
+    var tag_replace = $('#jot-search-field').val().replace(tag_regex, '$1$2');
+
+    // Deleting clicked tag
+    $('#jot-search-field').val(tag_replace);
+
+    // Changing the appearance according to the state
+    $(this).find('.not_active').removeClass('activeSearch');
+    $(this).find('.choice_text').removeClass('active_choiceTexts');
+
+    $('.tag_' + $(this).find('.choice_text').html()).remove();
+  });
+}
 
 $('#jot-search-field').each(function() {
-   // Save current value of element
-   $(this).data('oldVal', $(this).val());
+  // Save current value of element
+  $(this).data('oldVal', $(this).val());
 
-   // Look for changes in the value
-   $(this).bind("propertychange keyup input paste", function(event){
-      // If value has changed...
-      if ($(this).data('oldVal') != $(this).val() && $(this).val().length > 2) {
-       // Updated stored value
-       $(this).data('oldVal', $(this).val());
+  // Look for changes in the value
+  $(this).bind("propertychange keyup input paste", function(event){
+  // If value has changed...
+    if ($(this).data('oldVal') != $(this).val() && $(this).val().length > 1) {
+      // Updated stored value
+      $(this).data('oldVal', $(this).val());
 
-       // Do action
-       $('.search_box_from_nest').show();
-     }
-   });
- });
+      // Do action
+      $('.search_box_from_nest').show();
+
+      // Send the request
+      $.ajax({
+        url: '/search/get_tag.json',
+        type: 'GET',
+        data: 'text=' + $(this).val(),
+
+        // Action taken if the request is successful
+        success: function (data, textStatus, jqXHR) {
+          if (data.failed === true) {
+            alert(data.error);
+          } else {
+            var new_tags = "";
+
+            // Parse each result that comes in and put
+            // it in the appropriate place
+            $.each($.parseJSON(data.content), function(index, value){
+              if ($(new_tags).length < 5) {
+                new_tags = new_tags + '<li class="Lev_1"><span class="choice_text">' + value.name + '</span><span class="not_active"></span></li>'
+              } else if ($(new_tags).length >= 5 && $(new_tags).length < 10) {
+                new_tags = new_tags + '<li class="Lev_2"><span class="choice_text">' + value.name + '</span><span class="not_active"></span></li>'
+              } else {
+                new_tags = new_tags + '<li class="Lev_3"><span class="choice_text">' + value.name + '</span><span class="not_active"></span></li>'
+              }
+            });
+
+            // Wrap the new_tags variable so it can
+            // run the find() method properly
+            new_tags = '<div>' + new_tags + '</div>'
+
+            // Appending the tags to its appropriate level
+            $('.search_resultsContent > div.level_1 > ul').html($(new_tags).find('.Lev_1'));
+            $('.search_resultsContent > div.level_2 > ul').html($(new_tags).find('.Lev_2'));
+            $('.search_resultsContent > div.level_3 > ul').html($(new_tags).find('.Lev_3'));
+            bindsearchresult();
+          }
+        }
+      });
+    }
+  });
+});

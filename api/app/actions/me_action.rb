@@ -131,6 +131,13 @@ module MeAction
     end
   end
 
+  class SearchTags < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_search_tags params[:text]
+      finish
+    end
+  end
+
 # Private Messages
 # ------------------------------------------------------------------------
 

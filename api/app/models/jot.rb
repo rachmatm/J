@@ -175,7 +175,7 @@ class Jot
     text_array = []
 
     search_type = users.present? ? users : hashtags
-    search_type = search_type.present? ? search_type : texts.split(/\s|,\s|,/)
+    search_type = search_type.present? ? search_type : texts.split(/\s|,\s|,|\s,/)
 
     search_criteria = users.present? ? {:user_id.in => text_array} : {:tag_ids.all => text_array}
     search_criteria = (users.present? or hashtags.present?) ? search_criteria : {:title.all => text_array}
@@ -311,6 +311,7 @@ class Jot
 
   def after_create_append_notification
     mentions = Twitter::Extractor.extract_mentioned_screen_names(self.title)
+
     mentions.each do |mention|
       user = User.where(:username => mention).first
       parameters = {:type => 'user',
