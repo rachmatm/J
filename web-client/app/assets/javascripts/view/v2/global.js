@@ -152,7 +152,42 @@ $('#search-form').ajaxForm({
       alert(data.error);
     }
     else{
-      alert(data.content);
+      console.log(data.content)
+      console.log(data.content.length)
+      $('#main-welcome').html(data.content);
     }
   }
 });
+
+$('.search_resultsContent li').toggle(function(){
+  var tag_name = $(this).find('.choice_text').html();
+
+  $('#jot-search-field').val($('#jot-search-field').val() + ' ' + tag_name);
+  $(this).find('.not_active').addClass('activeSearch');
+  $(this).find('.choice_text').addClass('active_choiceTexts');
+}, function(){
+  var tag_name = ' ' + $(this).find('.choice_text').html();
+  var tag_regex = new RegExp("([\d\w]*)\s*" + tag_name + "\s*([\d\w]*)");
+  var tag_replace = $('#jot-search-field').val().replace(tag_regex, '$1$2');
+
+  $('#jot-search-field').val(tag_replace);
+  $(this).find('.not_active').removeClass('activeSearch');
+  $(this).find('.choice_text').removeClass('active_choiceTexts');
+});
+
+$('#jot-search-field').each(function() {
+   // Save current value of element
+   $(this).data('oldVal', $(this).val());
+
+   // Look for changes in the value
+   $(this).bind("propertychange keyup input paste", function(event){
+      // If value has changed...
+      if ($(this).data('oldVal') != $(this).val() && $(this).val().length > 2) {
+       // Updated stored value
+       $(this).data('oldVal', $(this).val());
+
+       // Do action
+       $('.search_box_from_nest').show();
+     }
+   });
+ });
