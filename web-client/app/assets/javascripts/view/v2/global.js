@@ -159,9 +159,20 @@ $('#search-form').ajaxForm({
   }
 });
 
-$('.search_resultsContent li').click(function(){
-  $(this).find('.not_active').toggleClass('activeSearch', 'not_active');
-  $('#jot-search-field').val($('#jot-search-field').val() + ' ' + $(this).find('.choice_text').html());
+$('.search_resultsContent li').toggle(function(){
+  var tag_name = $(this).find('.choice_text').html();
+
+  $('#jot-search-field').val($('#jot-search-field').val() + ' ' + tag_name);
+  $(this).find('.not_active').addClass('activeSearch');
+  $(this).find('.choice_text').addClass('active_choiceTexts');
+}, function(){
+  var tag_name = ' ' + $(this).find('.choice_text').html();
+  var tag_regex = new RegExp("([\d\w]*)\s*" + tag_name + "\s*([\d\w]*)");
+  var tag_replace = $('#jot-search-field').val().replace(tag_regex, '$1$2');
+
+  $('#jot-search-field').val(tag_replace);
+  $(this).find('.not_active').removeClass('activeSearch');
+  $(this).find('.choice_text').removeClass('active_choiceTexts');
 });
 
 $('#jot-search-field').each(function() {
