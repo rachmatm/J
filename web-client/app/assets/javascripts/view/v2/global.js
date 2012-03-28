@@ -159,7 +159,7 @@ $('#search-form').ajaxForm({
   }
 });
 
-function bindsearchresult(){
+$('.search_resultsContent li').live('click', function(){
   $('.search_resultsContent li').toggle(function(){
 
     // Appending whitespace so it is a little more proper
@@ -212,7 +212,7 @@ function bindsearchresult(){
 
     $('.tag_' + $(this).find('.choice_text').html()).remove();
   });
-}
+});
 
 $('#jot-search-field').each(function() {
   // Save current value of element
@@ -232,6 +232,7 @@ $('#jot-search-field').each(function() {
       $.ajax({
         url: '/search/get_tag.json',
         type: 'GET',
+        dataType: 'json',
         data: 'text=' + $(this).val(),
 
         // Action taken if the request is successful
@@ -261,7 +262,6 @@ $('#jot-search-field').each(function() {
             $('.search_resultsContent > div.level_1 > ul').html($(new_tags).find('.Lev_1'));
             $('.search_resultsContent > div.level_2 > ul').html($(new_tags).find('.Lev_2'));
             $('.search_resultsContent > div.level_3 > ul').html($(new_tags).find('.Lev_3'));
-            bindsearchresult();
           }
         }
       });
