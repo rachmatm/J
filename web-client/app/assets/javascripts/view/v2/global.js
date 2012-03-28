@@ -160,19 +160,34 @@ $('#search-form').ajaxForm({
 });
 
 $('.search_resultsContent li').toggle(function(){
-  var tag_name = $(this).find('.choice_text').html();
 
-  $('#jot-search-field').val($('#jot-search-field').val() + ' ' + tag_name);
+  var tag_name = $(this).find('.choice_text').html() + ' ';
+
+  // Testing the input box for whitespace at end of line
+  if (!(/\s$/).test($('#jot-search-field').val()) && !($('#jot-search-field').val() == '')) {
+    tag_name = ' ' + tag_name;
+  }
+
+  $('#jot-search-field').val($('#jot-search-field').val() + tag_name);
+
   $(this).find('.not_active').addClass('activeSearch');
   $(this).find('.choice_text').addClass('active_choiceTexts');
+
 }, function(){
-  var tag_name = ' ' + $(this).find('.choice_text').html();
-  var tag_regex = new RegExp("([\d\w]*)\s*" + tag_name + "\s*([\d\w]*)");
+
+  var tag_name = $(this).find('.choice_text').html() + ' ';
+  
+  if (!(/\s$/).test($('#jot-search-field').val())) {
+    tag_name = ' ' + tag_name;
+  }
+
+  var tag_regex = new RegExp("(.*)" + tag_name + "(.*)");
   var tag_replace = $('#jot-search-field').val().replace(tag_regex, '$1$2');
 
   $('#jot-search-field').val(tag_replace);
   $(this).find('.not_active').removeClass('activeSearch');
   $(this).find('.choice_text').removeClass('active_choiceTexts');
+
 });
 
 $('#jot-search-field').each(function() {
