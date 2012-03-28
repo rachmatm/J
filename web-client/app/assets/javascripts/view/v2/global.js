@@ -179,9 +179,14 @@ function bindsearchresult(){
     $(this).find('.choice_text').addClass('active_choiceTexts');
 
     // Appending to the breadcrumb
-    $('.breadcrumb_search li').append('<span class="tag_' + breadcrumb_name +
-                                      '">&gt; </span><a class="tag_' + breadcrumb_name +
-                                      '" href="">' + breadcrumb_name + '</a>');
+    if ($('.breadcrumb_search').find('a').length > 0) {
+      $('.breadcrumb_search li').append('<span class="tag_' + breadcrumb_name +
+                                        '">&gt; </span><a class="tag_' + breadcrumb_name +
+                                        '" href="">' + breadcrumb_name + '</a>');
+    } else {
+      $('.breadcrumb_search li').append('<a class="tag_' + breadcrumb_name +
+                                        '" href="">' + breadcrumb_name + '</a>');
+    }
 
   }, function(){
 
