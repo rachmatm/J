@@ -159,7 +159,7 @@ $('#search-form').ajaxForm({
   }
 });
 
-$('.search_resultsContent li').live('click', function(){
+$('.search_resultsContent').delegate('li', 'click', function(){
   $('.search_resultsContent li').toggle(function(){
 
     // Appending whitespace so it is a little more proper
