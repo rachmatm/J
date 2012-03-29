@@ -96,7 +96,7 @@ class Comment
 
     user.save
 
-  # Rescue to nothing, just a fallback in case something happens
+  # Rescue to nothing, just a fallback in case jot or user is not found
   rescue
   end
 end
