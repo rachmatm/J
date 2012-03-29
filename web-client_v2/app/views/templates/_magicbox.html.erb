@@ -1,0 +1,496 @@
+<script type="text/template" id="magicbox-template">
+
+  <div class="top_button clearfix" id="main-magicbox-navigation">
+    <a id="magicbox-navigation-search" href="#!/search" class="search_icon">
+      <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+      <span class="search_text main-magicbox-navigation-link-text">Search</span>
+      <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+    </a>
+    <a id="magicbox-navigation-jot" href="#!/jots" class="jot_icon">
+      <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+      <span class="jot_text main-magicbox-navigation-link-text jot_text_active">Jot</span>
+      <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+    </a>
+
+    <# if(_.isEmpty(current_user)){ #>
+
+    <a id="magicbox-navigation-login" href="#!/login" class="sign_up">
+      Sign up or Login
+    </a>
+
+    <# }else{ #>
+
+    <div id="magicbox-navigation-logged-in" class="right">
+      <a class="new_update_notactive r-notification-tab" href="#!/notification" id="magicbox-navigation-logged-in-notification">
+        <span class="update_icon"></span>
+        <span class="update_text">24 New Updates</span>
+      </a>
+      <a id="magicbox-navigation-logged-in-user-panel" class="sign_up" href="#!/profile">
+        <# if(current_user.avatar){ #>
+        <img class="template-avatar-small" alt="<#= current_user.username #>" src="<#= current_user.avatar.thumb_small.url #>">
+        <# } #>
+        <span class="nickname_logged template-username"><#= current_user.username #></span>
+        <span class="user_little_badge">0</span>
+      </a>
+    </div>
+
+    <# } #>
+  </div>
+
+  <div class="magicbox-content-tab" id="magicbox-content-tab">
+
+    <div class="magicbox-content-tab-item hidden" id="magicbox-search">
+      <div class="search jot-search-content clearfix">
+        <input type="text" placeholder="Search everything" id="jot-search-field" value="">
+        <input type="submit" value="" id="gray_search">
+      </div>
+    </div>
+
+    <div class="magicbox-content-tab-item" id="magicbox-jot">
+      <form method="post" id="jots-form" action="/jots" accept-charset="UTF-8" novalidate="novalidate"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="INuKFJyrknpPaoxOpo5a5pR63VyYdyHSFjnHMLAIrXI=" name="authenticity_token"></div>
+        <div class="jot_search search jot-tab-content clearfix">
+          <input type="text" placeholder="Tags, places, users, search from them here!" name="jot[title]" id="jot-form-title-field" autocomplete="off" class="valid">
+          <input type="submit" value="" name="commit">
+        </div>
+
+
+        <div class="jot_buttons_path jot-tab-content">
+          <div class="left">
+            <ul>
+              <li>
+                <a href="#" class="write_more_but jot_buttons_color jot-bar-button" id="jot-bar-write-more">
+                  <span class="jot_write_icon">&nbsp;</span>
+                  <span class="jot_button_text">Write more</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="clip_but jot_but jot_buttons_color jot-bar-button" id="jot-bar-clip">
+                  <span class="jot_clip_icon">&nbsp;</span>
+                  <span class="jot_button_text">Clip</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="jot_but loc_but jot_buttons_color jot-bar-button" id="jot-bar-location">
+                  <span class="jot_location_icon">&nbsp;</span>
+                  <span class="jot_button_text">Location</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="jot_but tags_but jot_buttons_color jot-bar-button" id="jot-bar-tag">
+                  <span class="jot_tags_icon">&nbsp;</span>
+                  <span class="jot_button_text">Tags</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="jot_buttons_color jot_facebook jot-bar-button" id="jot-bar-facebook">
+                  <span class="jot_fb_icon">&nbsp;</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="jot_buttons_color no_margin_right jot-bar-button" id="jot-bar-twitter">
+                  <span class="jot_twitter_icon">&nbsp;</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="jot_button_right">
+            <span class="jot_count" id="jot-input-text-length">140</span>
+            <a href="" class="jot_down_arrow">&nbsp;</a>
+          </div>
+        </div>
+        <div class="jot_mode_hide" id="jot-input-more">
+
+          <input type="submit" class="jot_green_bg" value="Jot">
+          <div class="clear"></div>
+        </div>
+      </form>  </div>
+
+    <div class="middle-content magicbox-content-tab-item hidden" id="magicbox-login">
+      <div class="login_content clearfix">
+        <div class="left">
+          <div class="left">
+            <div class="box_signin">
+              <h2>Login to start experience jotky</h2>
+
+              <form method="post" id="login-form" action="/authentications" accept-charset="UTF-8" novalidate="novalidate"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="INuKFJyrknpPaoxOpo5a5pR63VyYdyHSFjnHMLAIrXI=" name="authenticity_token"></div>
+                <div class="form_login">
+
+                  <div class="username clearfix">
+                    <label for="authentication_username">Username</label>
+                    <input type="text" name="authentication[username]" id="authentication_username" class="valid">
+                  </div>
+                  <div class="password">
+                    <label for="authentication_password">Password</label>
+                    <input type="password" name="authentication[password]" id="authentication_password" class="valid">
+                  </div>
+                  <div class="remember_login">
+                    <div class="left">
+                      <input type="checkbox" value="1" name="remember_me" id="remember_me">
+                      <p class="checkbox">Remember me on this computer</p>
+                    </div>
+                    <div class="right">
+                      <a href="javascript:void(0)" class="forgot_password link-forgot-password">forgot password?</a>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                  <div class="login_button">
+                    <input type="submit" value="Login" name="commit">
+                    <div class="clear"></div>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </form>          </div>
+            <div class="box_signinBottom">
+              <div class="login_with">
+                <p>or login with?</p>
+                <%= link_to '', login_with_facebook_path, :class => 'FB' %>
+                <%= link_to '', login_with_twitter_path, :class => 'twitter' %>
+              </div>
+            </div>
+          </div>
+          <div class="login_separator">
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="right">
+          <div class="login_path">
+            <span class="text">create a Jotky account</span>
+            <a class="signup_button" href="#!/signup">Sign Up</a>
+            <span class="discover">and discover everything!</span>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div id="magicbox-profile" class="magicbox-content-tab-item parent_empty_profile main_content clearfix hidden">
+      <div class="empty_profile">
+        <div class="about">
+          <div class="about_top">
+            <div class="left">
+              <div class="about_avatar">
+                <# if(current_user.avatar){ #>
+                <img src="<#= current_user.avatar.thumb_big.url #>" alt="<#= current_user.username #>">
+                <# } #>
+              </div>
+            </div>
+            <div class="left">
+              <div class="big_badge">0</div>
+              <div class="nickname_realname">
+                <span class="nickname"><#= current_user.username #></span>
+                <br class="clear">
+                <span class="realname"><#= current_user.realname #></span>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="about_link">
+            <span>0 Tags</span>
+            <span class="no_margin_left">0 Jots</span>
+            <span class="no_margin_left">0 Follows</span>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="bio">
+          <div class="bio_tag">
+            <span>Bio</span>
+            <a href="javascript:void(0);">click to edit your bio</a>
+          </div>
+          <div class="url_tag">
+            <span>URL</span>
+            <a href="javascript:void(0);">click to edit your URL</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="location">
+          <div class="left">
+            <span class="location_text">Location</span>
+            <a href="javascript:void(0);">click to edit your location</a>
+          </div>
+          <div class="right">
+            <div class="map">&nbsp;</div>
+          </div>
+          <span></span>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="profile_bottom_links">
+        <a class="pub_profile_link" href="#!/public">
+          <span class="prof_icon">&nbsp;</span>
+          <span class="prof_text">View your public profile</span>
+        </a>
+        <a class="account_setting_link" href="#!/setting">
+          <span class="acc_icon">&nbsp;</span>
+          <span class="acc_text">Go to account setting</span>
+        </a>
+      </div>
+    </div>
+
+    <div id="magicbox-setting" class="account_setting magicbox-content-tab-item clearfix hidden">
+      <div class="about">
+        <div class="about_top">
+          <div class="left">
+            <div class="about_avatar">
+              <# if(current_user.avatar){ #>
+              <img src="<#= current_user.avatar.thumb_big.url #>" alt="<#= current_user.username #>">
+              <# } #>
+            </div>
+          </div>
+          <div class="left">
+            <div class="big_badge">0</div>
+            <div class="nickname_realname">
+              <span class="nickname"><#= current_user.username #></span>
+              <br class="clear">
+              <span class="realname"><#= current_user.realname #></span>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="about_link">
+          <span>0 Tags</span>
+          <span class="no_margin_left">0 Jots</span>
+          <span class="no_margin_left">0 Follows</span>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="email_password">
+        <div class="left_path">
+          <span class="email_text">Email</span>
+          <div class="email_path">
+            <form class="" action="">
+              <div>
+                <input type="text" value="metrofx@gmail.com">
+                <input type="submit" value="Save" class="but_save_popup">
+              </div>
+            </form>
+            <span class="email_information">your email wil not shown to public and it will be used for password recovery</span>
+          </div>
+        </div>
+        <div class="right_path">
+          <span class="pass_text">Password</span>
+          <div class="pass_path">
+            <form class="" action="">
+              <div>
+                <input type="password" class="no_margin_top" value="12345678">
+                <input type="password" value="12345678">
+                <input type="submit" value="Save" class="save_style but_save_popup">
+              </div>
+            </form>
+            <span class="pass_information">6-30 characters</span>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="privacy">
+        <span class="privacy_text">Privacy</span>
+        <form action="">
+          <div>
+            <table class="account_setting_table">
+              <tbody>
+                <tr>
+                  <td class="td_tittle">&nbsp;</td>
+                  <td class="td_radio">Everyone</td>
+                  <td class="td_radio">Friends</td>
+                  <td class="td_radio">Hide</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="border_bottom_table td_tittle">Jots</td>
+                  <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="jots"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="jots"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="jots"></td>
+                  <td class="border_bottom_table">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="border_bottom_table td_tittle">Show Location</td>
+                  <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="show_location"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="show_location"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="show_location"></td>
+                  <td class="border_bottom_table">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="border_bottom_table td_tittle">Show Kudos</td>
+                  <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="show_kudos"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="show_kudos"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="show_kudos"></td>
+                  <td class="border_bottom_table">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="td_tittle">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td>
+                    <input type="submit" class="save_style but_save_popup" value="Save">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="privacy">
+        <span class="privacy_text">Deafult Post</span>
+        <form action="">
+          <div>
+            <table class="account_setting_table">
+              <tbody>
+                <tr>
+                  <td class="td_tittle">&nbsp;</td>
+                  <td class="td_radio">Always</td>
+                  <td class="td_radio">Ask</td>
+                  <td class="td_radio">Never</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="border_bottom_table td_tittle">Auto-shorten URL</td>
+                  <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="shorten"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="shorten"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="shorten"></td>
+                  <td class="border_bottom_table">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="border_bottom_table td_tittle">Auto Complete</td>
+                  <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="complete"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="complete"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="complete"></td>
+                  <td class="border_bottom_table">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="td_tittle">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td>
+                    <input type="submit" class="save_style but_save_popup" value="Save">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="privacy">
+        <span class="privacy_text">Connections and Cross-posts<a href="" class="connect_cross">(what is this?)</a></span>
+        <form action="">
+          <div>
+            <table class="account_setting_table">
+              <tbody>
+                <tr>
+                  <td class="td_tittle">&nbsp;</td>
+                  <td class="td_radio">Allow</td>
+                  <td class="td_radio">Deny</td>
+                  <td class="td_radio">Always Cross-post</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="border_bottom_table td_tittle">
+                    <a href="" class="no_margin_left no_margin_right FB">&nbsp;</a>
+                    <span class="name_cross_post">Eko Prasetyo</span>
+                    <a href="" class="unlink">(Unlink)</a>
+                  </td>
+                  <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="shorten"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="shorten"></td>
+                  <td class="border_bottom_table td_radio"><input type="checkbox" value="jots_1" name="shorten"></td>
+                  <td class="border_bottom_table"><a href="" class="no_padding_left connect_cross">add more account</a></td>
+                </tr>
+                <tr>
+                  <td class="border_bottom_table td_tittle">
+                    <a href="" class="no_margin_left twitter"></a>
+                    <span class="name_cross_post">@metrofx</span>
+                    <a href="" class="unlink">(Unlink)</a>
+                  </td>
+                  <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="complete"></td>
+                  <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="complete"></td>
+                  <td class="border_bottom_table td_radio"><input type="checkbox" value="jots_1" name="complete"></td>
+                  <td class="border_bottom_table"><a href="" class="no_padding_left connect_cross">add more account</a></td>
+                </tr>
+                <tr>
+                  <td class="td_tittle">
+                    <p class="p_information">Your setting are saved</p>
+                  </td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td>
+                    <input type="submit" class="save_style but_save_popup" value="Save">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="privacy">
+        <span class="privacy_text">Media Upload</span>
+        <form action="">
+          <div>
+            <table class="account_setting_table">
+              <tbody>
+                <tr>
+                  <td colspan="5"><p class="border_bottom_table p_information">If you choose to upload media from your computer, they will be stored either on your Facebook account, your youtube account, or both*</p></td>
+                </tr>
+                <tr>
+                  <td class="td_tittle">
+                    <span class="upload_videos">&nbsp;</span>
+                    <span class="upload_videos_text">Upload videos to</span>
+                  </td>
+                  <td class="td_radio">
+                    <label class="fb_label" for="first_fb_label"></label>
+                    <input type="checkbox" id="first_fb_label" name="complete">
+                  </td>
+                  <td class="td_radio">
+                    <label class="youtube_label" for="youtube_label"></label>
+                    <input type="checkbox" id="youtube_label" name="complete">
+                  </td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="td_tittle">
+                    <span class="upload_picture">&nbsp;</span>
+                    <span class="upload_videos_text">Upload pictures to</span>
+                  </td>
+                  <td class="td_radio">
+                    <label class="fb_label" for="second_fb_label"></label>
+                    <input type="checkbox" id="second_fb_label" name="complete">
+                  </td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="td_tittle">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td class="td_radio">&nbsp;</td>
+                  <td>
+                    <input type="submit" class="save_style but_save_popup" value="Save">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+
+      <div class="profile_bottom_links">
+        <a class="pub_profile_link" href="#!/public">
+          <span class="prof_icon">&nbsp;</span>
+          <span class="prof_text">View your public profile</span>
+        </a>
+        <a class="account_setting_link bottom_links_active" href="javascript:void(0)">
+          <span class="acc_icon">&nbsp;</span>
+          <span class="acc_text">Go to account setting</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</script>

@@ -1,0 +1,350 @@
+<div id="main-magicbox-navigation" class="top_button clearfix">
+  <a class="search_icon" href="#!/search" id="magicbox-navigation-search">
+    <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+    <span class="search_text main-magicbox-navigation-link-text">Search</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+  <a class="jot_icon" href="#!/jots" id="magicbox-navigation-jot">
+    <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
+    <span class="jot_text main-magicbox-navigation-link-text">Jot</span>
+    <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
+  </a>
+
+  <a class="sign_up hidden" href="#!/login" id="magicbox-navigation-login">
+    Sign up or Login
+  </a>
+
+  <div class="right hidden" id="magicbox-navigation-logged-in">
+    <a id="magicbox-navigation-logged-in-notification" href="/notification" class="new_update_notactive r-notification-tab">
+      <span class="update_icon"></span>
+      <span class="update_text">24 New Updates</span>
+    </a>
+    <a href="/profiles" class="sign_up" id="magicbox-navigation-logged-in-user-panel">
+      <img src="http://localhost:3000/assets/images/fallback/thumb_small_default.png" alt="rachmatm" class="template-avatar-small">
+      <span class="nickname_logged template-username"></span>
+      <span class="user_little_badge">0</span>
+    </a>
+  </div>
+</div>
+
+<div id="magicbox-content-tab" class="magicbox-content-tab">
+
+  <div id="magicbox-search" class="magicbox-content-tab-item">
+    <div class="search jot-search-content">
+      <input type="text" value="" id="jot-search-field" placeholder="Search everything">
+      <input type="submit" id="gray_search" value="">
+      <!-- SEARCH PEOPLE AUTO COMPLETE BOX -->
+
+      <div id="r-people-result-dropdwn" style="display:none" class="people_result_dropdwn">
+        <div class="result_dropdwn_top">
+          <span>People</span>
+        </div>
+        <div class="result_dropdwn_content">
+          <ul>
+            <li>
+              <a class="r-people-result-dropdwn-item" href="#">
+                <span class="dropdwn_content_photo">
+                  <img alt="" src="/assets/ava-farrukh.png">
+                </span>
+                <span class="dropdwn_content_text"><strong>Far</strong>rukh</span>
+              </a>
+            </li>
+            <li>
+              <a class="r-people-result-dropdwn-item" href="#">
+                <span class="dropdwn_content_photo">
+                  <img alt="" src="/assets/ava-farter.png">
+                </span>
+                <span class="dropdwn_content_text"><strong>Far</strong>ter</span>
+              </a>
+            </li>
+            <li>
+              <a class="r-people-result-dropdwn-item" href="#">
+                <span class="dropdwn_content_photo">
+                  <img alt="" src="/assets/ava-farah.png">
+                </span>
+                <span class="dropdwn_content_text">FAntameRah</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a class="result_dropdwn_middle" href="">
+          More People Result
+        </a>
+        <div class="result_dropdwn_bottom">
+          <form action="">
+            <div>
+              <label for="auto_comp">turn off auto-complete</label>
+              <input type="checkbox" id="auto_comp" name="auto-complete">
+            </div>
+          </form>
+        </div>
+        <div class="clear"></div>
+      </div>
+
+      <!-- END OF SEARCH PEOPLE AUTO COMPLETE BOX -->
+      <div class="clear"></div>
+    </div>
+  </div>
+
+  <div id="magicbox-jot" class="magicbox-content-tab-item hidden">
+    <%= form_tag jots_path, :id => 'jots-form' do %>
+      <div class="jot_search search jot-tab-content clearfix">
+        <%= text_field_tag 'jot[title]', nil, :placeholder => 'Tags, places, users, search from them here!',
+          :id => 'jot-form-title-field', :autocomplete => :off %>
+        <%= submit_tag '' %>
+      </div>
+
+
+      <div class="jot_buttons_path jot-tab-content">
+        <div class="left">
+          <ul>
+            <li>
+              <a id="jot-bar-write-more" class="write_more_but jot_buttons_color jot-bar-button" href="#">
+                <span class="jot_write_icon">&nbsp;</span>
+                <span class="jot_button_text">Write more</span>
+              </a>
+            </li>
+            <li>
+              <a id="jot-bar-clip" class="clip_but jot_but jot_buttons_color jot-bar-button" href="#">
+                <span class="jot_clip_icon">&nbsp;</span>
+                <span class="jot_button_text">Clip</span>
+              </a>
+            </li>
+            <li>
+              <a id="jot-bar-location" class="jot_but loc_but jot_buttons_color jot-bar-button" href="#">
+                <span class="jot_location_icon">&nbsp;</span>
+                <span class="jot_button_text">Location</span>
+              </a>
+            </li>
+            <li>
+              <a id="jot-bar-tag" class="jot_but tags_but jot_buttons_color jot-bar-button" href="#">
+                <span class="jot_tags_icon">&nbsp;</span>
+                <span class="jot_button_text">Tags</span>
+              </a>
+            </li>
+            <li>
+              <a id="jot-bar-facebook" class="jot_buttons_color jot_facebook jot-bar-button" href="#">
+                <span class="jot_fb_icon">&nbsp;</span>
+              </a>
+            </li>
+            <li>
+              <a id="jot-bar-twitter" class="jot_buttons_color no_margin_right jot-bar-button" href="#">
+                <span class="jot_twitter_icon">&nbsp;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="jot_button_right">
+          <span id="jot-input-text-length" class="jot_count">140</span>
+          <a class="jot_down_arrow" href="">&nbsp;</a>
+        </div>
+      </div>
+      <div id="jot-input-more" class="jot_mode_hide">
+
+        <input type="submit" value="Jot" class="jot_green_bg">
+        <div class="clear"></div>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="magicbox-login" class="middle-content magicbox-content-tab-item hidden">
+    <div class="login_content clearfix">
+      <div class="left">
+        <div class="left">
+          <div class="box_signin">
+            <h2>Login to start experience jotky</h2>
+
+            <%= form_tag authentications_path, :id => "login-form" do  %>
+              <div class="form_login">
+
+                <div class="username clearfix">
+                  <%= label_tag 'authentication_username', 'Username' %>
+                  <%= text_field_tag 'authentication[username]' %>
+                </div>
+                <div class="password">
+                  <%= label_tag 'authentication_password', 'Password' %>
+                  <%= password_field_tag 'authentication[password]' %>
+                </div>
+                <div class="remember_login">
+                  <div class="left">
+                    <%= check_box_tag 'remember_me', 1 ,false %>
+                    <p class="checkbox">Remember me on this computer</p>
+                  </div>
+                  <div class="right">
+                    <a class="forgot_password link-forgot-password" href="javascript:void(0)">forgot password?</a>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <div class="login_button">
+                  <%= submit_tag 'Login' %>
+                  <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+              </div>
+            <% end %>
+          </div>
+          <div class="box_signinBottom">
+            <div class="login_with">
+              <p>or login with?</p>
+              <a href="#" class="FB"></a>
+              <a href="#" class="twitter"></a>
+            </div>
+          </div>
+        </div>
+        <div class="login_separator">
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="right">
+        <div class="login_path">
+          <span class="text">create a Jotky account</span>
+          <a href="#!/signup" class="signup_button">Sign Up</a>
+          <span class="discover">and discover everything!</span>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+</div>
+
+<div id="main-middle" class="main-middle">
+  <div id="main-middle-welcome" class="main-middle-item clearfix">
+    <div class="welcome_content middle_content">
+      <div class="welcome">
+        <p>Welcome to</p>
+      </div>
+      <div class="big_logo"></div>
+      <div class="main-text">
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          It has survived not only five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+        </p>
+        <span></span>
+        <div class="clear"></div>
+      </div>
+      <div class="green_button">
+        <input type="submit" value="see our hottest contents">
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+  <div id="main-middle-signup" class="main-middle-item clearfix hidden">
+    <div id="main-middle-signup-alert"></div>
+    <div class="signUp_content main_content">
+      <div class="opening_text">
+        <p class="line_one">Create your</p>
+        <p class="line_two">Jotky Account</p>
+      </div>
+      <%= form_tag registrations_path(:format => :json), :id => 'signup-form' do -%>
+
+        <table class="box_registration">
+          <tbody>
+            <tr class="reg_username">
+              <td class="label_registration">
+                <%= label_tag 'registration_username', 'Username' %>
+                <%= text_field_tag 'registration[username]', nil %>
+              </td>
+              <td class="alert_registration main-registration-form-field-alert">
+                <p class="default_text">
+                  <%= label_tag 'registration_username', 'we appreciate a catchy name' %>
+                </p>
+                <p class="error hidden"></p>
+              </td>
+            </tr>
+            <tr class="reg_realname">
+              <td class="label_registration">
+                <%= label_tag 'registration_realname', 'Real name' %>
+                <%= text_field_tag 'registration[realname]', nil %>
+              </td>
+              <td class="alert_registration main-registration-form-field-alert">
+                <p class="default_text">
+                  <%= label_tag 'registration_realname', ' phoneys will be arrested! nah, kidding :P' %>
+                </p>
+                <p class="error hidden"></p>
+              </td>
+            </tr>
+            <tr class="reg_email">
+              <td class="label_registration">
+                <%= label_tag 'registration_email', 'E-mail' %>
+                <%= text_field_tag 'registration[email]', nil %>
+              </td>
+              <td class="alert_registration main-registration-form-field-alert">
+                <p class="default_text">
+                  <%= label_tag 'registration_email', 'your email address, please' %>
+                </p>
+                <p class="error hidden"></p>
+              </td>
+            </tr>
+            <tr class="reg_password">
+              <td class="label_registration">
+                <%= label_tag 'registration_password', 'Password' %>
+                <%= password_field_tag 'registration[password]', nil %>
+              </td>
+              <td class="alert_registration main-registration-form-field-alert">
+                <p class="default_text">
+                  <%= label_tag 'registration_email', 'must be 6 characters or more please use a good one' %>
+                </p>
+                <p class="error hidden"></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="bottom_registrationPath">
+          <div class="RegRemember_login">
+            <%= check_box_tag :remember_me%><p class="checkbox">Remember me on this computer</p>
+          </div>
+          <br class="clear"/>
+          <div class="RegRemember_login">
+            <script type="text/javascript">
+              var RecaptchaOptions = {theme: 'clean'};
+            </script>
+            <script type="text/javascript"
+                    src="http://www.google.com/recaptcha/api/challenge?k=<%= RECAPTCHA_PUBLIC_KEY %>">
+            </script>
+            <noscript>
+              <iframe src="http://www.google.com/recaptcha/api/noscript?k=<%= RECAPTCHA_PUBLIC_KEY %>"
+                      height="300" width="500" frameborder="0" theme="clean"></iframe><br>
+              <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+              </textarea>
+              <input type="hidden" name="recaptcha_response_field"
+                     value="manual_challenge">
+            </noscript>
+
+          </div>
+          <br class="clear"/>
+
+          <div class="termsOf_service">
+            <p>before we proceed to the next phase please read our <a href="#">terms of service</a></p>
+          </div>
+          <div class="reg_agreedButton green_button" id="registration">
+            <%= submit_tag 'Yes, agreed, create my account' %>
+          </div>
+          <div class="clear"></div>
+        </div>
+      <% end %>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+  <div id="main-middle-jot" class="main-middle-item clearfix hidden">
+    <div class="jot_result middle_content">
+      <div class="clearfix">
+        <div class="search_result_heading clearfix">
+          <span class="blue_stream">&nbsp;</span>
+          <h2>Stream</h2>
+        </div>
+      </div>
+
+      <div id="main-middle-jot-list">
+
+      </div>
+    </div>
+  </div>
+</div>

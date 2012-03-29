@@ -103,9 +103,10 @@ class ApplicationController < ActionController::Base
       @current_user = request_profile['content']
     else
       @current_user = []
+
+      flash[:error] = request_profile['error']
+      flash[:errors] = request_profile['errors']
     end
-    
-       
   end
 
   def redirect_to_root

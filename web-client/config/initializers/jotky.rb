@@ -1,6 +1,6 @@
 APP_ID = "4f558e0b84802721ad000002"
 APP_SECRET = "d93740423ad2854f33"
-BASE_URL = "http://localhost:3000/"
+BASE_URL = "http://localhost:8000/"
 
 
 # Rachmat
