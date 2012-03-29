@@ -104,7 +104,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-text (1.4.16)
+    twitter-text (1.4.17)
       activesupport
     typhoeus (0.3.3)
       mime-types

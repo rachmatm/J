@@ -151,6 +151,28 @@ class Jot
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
 
+  def self.get_search(texts)
+    users = Twitter::Extractor.extract_mentioned_screen_names(texts)
+    hashtags = Twitter::Extractor.extract_hashtags(texts)
+
+    text_array = []
+
+    search_type = users.present? ? users : hashtags
+    search_type = search_type.present? ? search_type : texts.split(/\s|,\s|,/)
+
+    search_criteria = users.present? ? {:user_id.in => text_array} : {:tag_ids.all => text_array}
+    search_criteria = (users.present? or hashtags.present?) ? search_criteria : {:title.all => text_array}
+
+    search_type.each do |text|
+      text_regex = /#{text}/i
+      text_array.push(text_regex)
+    end
+
+    search_result = ActiveSupport::JSON.encode Jot.where(search_criteria)
+
+    JsonizeHelper.format :content => search_result
+  end
+
   #  def self.get(per_page = nil, page = nil)
   #    responds = Hash.new
   #    responds[:content] = self.public_data.default_order
@@ -281,7 +303,7 @@ class Jot
                     :time => self.created_at,
                     :jot_id => self.id}
 
-      user.notifications.create parameters if user.present?
+      user.notifications.create parameters if user.present? and mention != self.user_id
     end
   end
 end

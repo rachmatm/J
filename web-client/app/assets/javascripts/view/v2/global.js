@@ -49,3 +49,145 @@ $('#main-registration-form').validate({
     $alert_section.children('.default_text').removeClass('hidden');
   }
 });
+
+// Notification AJAX
+
+$('.update_close').hide();
+$('.notif_info_content_more').hide();
+
+$('.more_update_display').click(function(){
+  var more_id = new String ( $(this).attr('id') );
+  $('.notif_' + more_id + ' .notif_info_content_more').toggle();
+  $('.notif_' + more_id + ' .notif_info_content_less').toggle();
+  $(this).html(($(this).html() == 'more') ? 'less' : 'more');
+});
+
+$('.notif_information').mouseover(function(){
+  $(this).find('.update_close').show();
+}).mouseout(function(){
+  $('.update_close').hide();
+});
+
+$('.update_close').live('click', function(){
+  var notif_id = new String ( $(this).attr('id') );
+  $.ajax({
+    url: '/notification/' + notif_id + '/destroy.json',
+    type: 'GET',
+    success: function(data, textStatus, jqXHR){
+      if(data.failed === true){
+        alert(data.error);
+      }
+      else{
+        $('.notif_' + notif_id).hide(850, function(){
+          $(this).remove();
+          $('span.update_text').html($('.notif_information').length + ' New Updates');
+        });
+      }
+    },
+
+    error: function(jqXHR, textStatus, errorThrown){
+      alert("Deleting notification failed: " + textStatus);
+    }
+  });
+  return false;
+});
+
+$('.clear_all_you').live('click', function(){
+  $.ajax({
+    url: '/notification/all/destroy.json',
+    type: 'get',
+    data: {type: 'user'},
+    success: function(data, textstatus, jqxhr){
+      if(data.failed === true){
+        alert(data.error);
+      }
+      else{
+        $('.notif_new_update_you li').hide(850, function(){
+          $(this).remove();
+          $('span.update_text').html($('.notif_information').length + ' new updates');
+        });
+      }
+    },
+
+    error: function(jqxhr, textstatus, errorthrown){
+      alert("deleting notification failed: " + textstatus);
+    }
+  });
+  return false;
+});
+
+$('.clear_all_jot').live('click', function(){
+  $.ajax({
+    url: '/notification/all/destroy.json',
+    type: 'get',
+    data: {type: 'jot'},
+    success: function(data, textstatus, jqxhr){
+      if(data.failed === true){
+        alert(data.error);
+      }
+      else{
+        $('.notif_new_update_jot li').hide(850, function(){
+          $(this).remove();
+          $('span.update_text').html($('.notif_information').length + ' new updates');
+        });
+      }
+    },
+
+    error: function(jqxhr, textstatus, errorthrown){
+      alert("deleting notification failed: " + textstatus);
+    }
+  });
+  return false;
+});
+
+// Search AJAX
+
+$('#search-form').ajaxForm({
+  dataType: 'json',
+  error: function(jqXHR, textStatus, errorThrown){
+    alert(textStatus);
+  },
+  success: function(data, textStatus, jqXHR){
+    if(data.failed === true){
+      alert(data.error);
+    }
+    else{
+      console.log(data.content)
+      console.log(data.content.length)
+      $('#main-welcome').html(data.content);
+    }
+  }
+});
+
+$('.search_resultsContent li').toggle(function(){
+  var tag_name = $(this).find('.choice_text').html();
+
+  $('#jot-search-field').val($('#jot-search-field').val() + ' ' + tag_name);
+  $(this).find('.not_active').addClass('activeSearch');
+  $(this).find('.choice_text').addClass('active_choiceTexts');
+}, function(){
+  var tag_name = ' ' + $(this).find('.choice_text').html();
+  var tag_regex = new RegExp("([\d\w]*)\s*" + tag_name + "\s*([\d\w]*)");
+  var tag_replace = $('#jot-search-field').val().replace(tag_regex, '$1$2');
+
+  $('#jot-search-field').val(tag_replace);
+  $(this).find('.not_active').removeClass('activeSearch');
+  $(this).find('.choice_text').removeClass('active_choiceTexts');
+});
+
+$('#jot-search-field').each(function() {
+   // Save current value of element
+   $(this).data('oldVal', $(this).val());
+
+   // Look for changes in the value
+   $(this).bind("propertychange keyup input paste", function(event){
+      // If value has changed...
+      if ($(this).data('oldVal') != $(this).val() && $(this).val().length > 2) {
+       // Updated stored value
+       $(this).data('oldVal', $(this).val());
+
+       // Do action
+       $('.search_box_from_nest').show();
+     }
+   });
+ });

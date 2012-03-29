@@ -13,7 +13,6 @@ class Notification
   field :content, :type => String
   field :jot_id, :type => String
   field :type, :type => String
-  field :read, :type => Boolean, :default => false
 
   validates_presence_of :summary, :time
 end

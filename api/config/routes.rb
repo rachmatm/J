@@ -47,6 +47,7 @@ HttpRouter.new do
 
   # Jots
   get('/jots/index(.:format)').to(JotsAction::Index)
+  get('/jots/search(.:format)').to(JotsAction::Search)
   #  get('/jots/index-show-more(.:format)').to(JotsAction::IndexShowMore)
   #  get('/jots/show(.:format)').to(JotsAction::Show)
   #  post('/jots(.:format)').to(JotsAction::Create)
@@ -119,6 +120,7 @@ HttpRouter.new do
 
   # Me - Notifications
   get('/me/notifications(.:format)').to(MeAction::IndexNotifications)
+  delete('/me/notifications/(:id)(.:format)').to(MeAction::DeleteNotifications)
 
   # Me - Facebook
   get('/me/facebook/account(.:format)').to(MeAction::AddFacebookAccountDialog)
@@ -149,6 +151,6 @@ HttpRouter.new do
   # Asset - https://github.com/joshbuddy/http_router
   add('/assets/').static(Server::Application.root('public')).name(:assets)
 
-  #Jots - Comment
+  # Jots - Comment
   get('/jots/(:jot_id)/comments(.:format)').to(MeAction::IndexJotComment)
 end

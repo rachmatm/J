@@ -770,8 +770,23 @@ class User
     end
   end
 
+  # Notifications
+  # ------------------------------------------------------------------------
+
   def current_user_get_notifications
     return JsonizeHelper.format :content => self.notifications
+  end
+
+  def current_user_unset_notifications(notification_id, type = 'none')
+    if notification_id != 'all'
+      self.notifications.find(notification_id).destroy
+    else
+      self.notifications.where(:type => type).destroy
+    end
+
+    JsonizeHelper.format :notice => "Successfully deleted"
+  rescue
+    JsonizeHelper.format :error => "Notifications not found", :failed => true
   end
 
   # Facebook
