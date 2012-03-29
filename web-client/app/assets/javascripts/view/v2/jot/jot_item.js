@@ -96,10 +96,10 @@ window.JotItem = AppView.extend({
         }
         else{
           if(data.faved){
-            $(_this.el).find('.link-to-fav').text('faved');
+            $(_this.el).find('.link-to-fav').find('.header_fav').addClass('header_fav_active');
           }
           else{
-            $(_this.el).find('.link-to-fav').text('fav');
+            $(_this.el).find('.link-to-fav').find('.header_fav').removeClass('header_fav_active');
           }
           
         }

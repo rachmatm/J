@@ -1,0 +1,13 @@
+.side-left {
+  top: 405px !important;
+}
+
+.first_badge,
+.second_badge,
+.third_badge {
+  margin-left: -5px;
+}
+
+.hot_people_path {
+  height: 210px;
+}

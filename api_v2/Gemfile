@@ -1,0 +1,102 @@
+source :rubygems
+
+# Cramp is a fully asynchronous real-time web application framework in Ruby.
+# It is built on top of EventMachine and primarily designed for working with larger number of open connections and providing full-duplex bi-directional communication.
+# http://cramp.in/
+gem 'cramp', '0.15.1'
+
+# Async webserver for running a cramp application
+# http://code.macournoyer.com/thin/
+gem 'thin'
+
+# Rack based routing
+# https://github.com/joshbuddy/http_router
+gem 'http_router'
+
+# Collection of async-proof rack middlewares 
+# https://github.com/rkh/async-rack.git
+gem 'async-rack'
+
+# Pusher is a hosted API for quickly, easily and securely adding scalable realtime functionality to web and mobile apps.
+# http://pusher.com/ 
+gem "pusher"
+
+# Mongoid (pronounced mann-goyd) is an Object-Document-Mapper (ODM) for MongoDB written in Ruby.
+# http://mongoid.org/
+gem "mongoid", "2.2.5"
+gem "bson_ext"
+
+# Classier solution for file uploads for Rails, Sinatra and other Ruby web frameworks
+# https://github.com/jnicklas/carrierwave
+gem "carrierwave"
+gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
+gem "rmagick", "2.13.1"
+gem 'carrierwave-meta'
+
+# An easy way to keep your users’ passwords secure.
+# http://bcrypt-ruby.rubyforge.org/
+gem 'bcrypt-ruby', :require => 'bcrypt'
+
+# This library allows for the identification of a file’s likely MIME content type.
+# http://mime-types.rubyforge.org/
+gem 'mime-types'
+
+# Typhoeus runs HTTP requests in parallel while cleanly encapsulating handling logic.
+# http://rubygems.org/gems/typhoeus
+gem 'typhoeus'
+
+# Generic interface to multiple Ruby template engines 
+# https://github.com/rtomayko/tilt
+gem 'tilt'
+
+# This library uses a large list (the wordnet corpus) of english words
+# and provides an enumerator interface to that corpus that will return the words in a random order without repeats.
+# http://rubygems.org/gems/random-word
+gem 'random-word'
+
+# New wave Internationalization support for Ruby.
+# http://rubygems.org/gems/i18n
+gem 'i18n', '0.5.0'
+
+# A toolkit of support libraries and Ruby core extensions extracted from the Rails framework.
+# Rich support for multibyte strings, internationalization, time zones, and testing.
+# http://rubygems.org/gems/activesupport
+gem 'activesupport'
+
+# A gem that provides text processing routines for Twitter Tweets.
+# The major reason for this is to unify the various auto-linking and extraction of usernames, lists, hashtags and URLs.
+# https://github.com/twitter/twitter-text-rb
+gem 'twitter-text'
+
+# For mailing users
+# https://github.com/benprew/pony
+# TODO: need a review
+gem 'pony'
+
+# A simple API for XML processing.
+# http://rubygems.org/gems/xml-simple
+gem 'xml-simple'
+
+# Upload, delete, update, comment on youtube videos all from one gem.
+# http://rubygems.org/gems/youtube_it
+# TODO: need a review
+gem 'youtube_it'
+
+# MailFactory is s simple module for producing RFC compliant mail that can include multiple attachments, multiple body parts, and arbitrary headers
+# http://rubygems.org/gems/mailfactory
+gem 'mailfactory'
+
+group :development do
+  # A generic command line interface for ruby-debug.
+  # http://rubygems.org/gems/ruby-debug19
+  gem 'ruby-debug19'
+end
+
+# Like a modern code version of the mythical beast with 100 serpent heads,
+# Typhoeus runs HTTP requests in parallel while cleanly encapsulating handling logic.
+# http://rubygems.org/gems/typhoeus
+gem 'typhoeus'
+
+# A Ruby wrapper for the Twitter REST and Search APIs
+# https://github.com/jnunemaker/twitter
+gem 'twitter'

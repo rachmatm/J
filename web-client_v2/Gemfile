@@ -1,0 +1,44 @@
+source 'https://rubygems.org'
+
+gem 'rails', '3.2.1'
+
+group :assets do
+  # Ruby on Rails stylesheet engine for Sass
+  # https://github.com/rails/sass-rails
+  gem 'sass-rails',   '~> 3.2.3'
+
+  # Coffee Script adapter for the Rails asset pipeline.
+  # https://github.com/rails/coffee-rails
+  gem 'coffee-rails', '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer'
+
+  # Ruby wrapper for UglifyJS JavaScript compressor
+  # http://rubygems.org/gems/uglifier
+  gem 'uglifier', '>= 1.0.3'
+end
+
+# This gem provides jQuery and the jQuery-ujs driver for your Rails 3 application.
+# http://rubygems.org/gems/jquery-rails
+gem 'jquery-rails'
+
+group :development do
+  # port of ruby-debug to Ruby 1.9
+  # To use debugger
+  # https://github.com/denofevil/ruby-debug19
+  gem 'ruby-debug19', :require => 'ruby-debug'
+end
+
+# Like a modern code version of the mythical beast with 100 serpent heads,
+# Typhoeus runs HTTP requests in parallel while cleanly encapsulating handling logic.
+# http://rubygems.org/gems/typhoeus
+gem 'typhoeus'
+
+# Facebook OAuth2 Strategy for OmniAuth 1.0
+# https://github.com/mkdynamic/omniauth-facebook
+gem 'omniauth-facebook'
+
+# OmniAuth strategy for Twitter
+# https://github.com/arunagw/omniauth-twitter
+gem 'omniauth-twitter'

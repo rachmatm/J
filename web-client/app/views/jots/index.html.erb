@@ -27,6 +27,8 @@
   <%= javascript_include_tag 'view/v2/jot/jot_item' %>
 
   <script>
-    var jotView = new JotView({jot_favorite_ids: <%= @current_user['jot_favorite_ids'].to_s.html_safe || [] %>});
+    var jotView = new JotView({
+      options: [<%= @current_user['jot_favorite_ids'].to_s.html_safe rescue [] %>]
+    });
   </script>
 <% end %>

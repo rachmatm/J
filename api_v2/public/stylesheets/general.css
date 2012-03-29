@@ -1,0 +1,19 @@
+.navbar input{
+margin-top:5px;}
+
+#top-navigation-login form{
+margin:0;}
+
+.container-fluid{
+margin-top: 60px;}
+
+.row{
+margin-left: -20px;}
+
+.btn{
+vertical-align:top;}
+
+.admin-sign-up-link {
+margin-top: 6px;
+display: inline-block;
+vertical-align: middle;}

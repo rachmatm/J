@@ -1,0 +1,61 @@
+<script id="list-jot-template" type="text/template">
+  <div class="search_result_container clearfix">
+    <div class="people_post">
+      <div class="header_post_jot">
+        <img src="/assets/avatar.png" alt="">
+        <span><#= user.username #></span>
+
+        <# if(in_array(current_user._id, user_mentioned_ids)){ #>
+        <div class="header_yellowribon"></div>
+        <# } #>
+        <ul>
+
+          <li>
+            <a href="javascript:void(0);">
+              <abbr class="timeago link-to-detail" title="<#= created_at #>"></abbr>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">
+              <span class="header_thumbup link-to-thumbsup"></span>
+              <span class="thumbsup-counter"><#= user_thumbsup_ids.length #></span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">
+              <span class="header_thumbdown link-to-thumbsdown"></span>
+              <span class="thumbsdown-counter"><#= user_thumbsdown_ids.length #></span>
+            </a>
+          </li>
+          <li><a href="javascript:void(0);"><span class="header_rejot"></span>Text</a></li>
+          <li class="lastli"><a href="javascript:void(0);" class="link-to-fav"><span class="header_fav <# if(in_array(current_user._id, user_favorite_ids)){ #>header_fav_active<# } #>"></span></a></li>
+
+        </ul>
+      </div>
+      <div class="down-sign"></div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="container-result">
+      <h2><#= title #></h2>
+      <p class="hour"><abbr class="timeago" title="<#= created_at #>"><#= created_at #></abbr></p>
+
+      <# if(tags.length > 0){ #>
+      <div class="tag-incognito">
+        <span class="own_tags_icon">&nbsp;</span>
+        <div class="button_tag">
+          <ul>
+            <# _.each(tags, function(tag){ #>
+            <li>
+              <span class="button_tagText"><#= tag.name #></span>
+              <span class="not_activeSearch"></span>
+            </li>
+            <# }) #>
+          </ul>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <# } #>
+    </div>
+  </div>
+</script>

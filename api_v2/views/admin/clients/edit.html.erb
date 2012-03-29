@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <title>Jotky Beta</title>
+  <meta name="description" content="Jotky Beta">
+  <meta name="author" content="Rachmat Maulana">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/apple-touch-icon-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/apple-touch-icon-72x72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/apple-touch-icon-114x114-precomposed.png">
+
+  <link type="text/css" rel="stylesheet" media="screen" href="/assets/stylesheets/twitter.bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" media="screen" href="/assets/stylesheets/twitter.bootstrap-responsive.min.css">
+  <link type="text/css" rel="stylesheet" media="screen" href="/assets/stylesheets/general.css">
+  <link type="text/css" rel="stylesheet" media="screen" href="/assets/stylesheets/helper.css">  
+  <script src="/assets/javascripts/modernizr-2.0.6.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="navbar navbar-fixed-top">
+      
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Jotky API</a>
+		    
+		  <ul class="pull-right nav nav-tabs">
+		  	<li><a href="<%= Server::Application.routes.url(:admin_auth_destroy)%>">Logout</a></li>
+		  </ul>    
+        </div>
+       </div>
+    </div>
+
+    <div class="row">
+      <h1>Client Applications</h1>	
+    </div>
+    <div class="row">
+      <form class="well" method="POST" action="<%= Server::Application.routes.url(:admin_clients_update, :app_id => client.id) %>">
+	    <fieldset>
+		  <legend>Edit Client Application</legend>
+		  <div class="control-group">
+		    <label for="app-name" class="control-label">App Name</label>
+		    <div class="controls">
+		      <input type="text" name="name" value="<%= client.name %>" placeholder="Application Name" id="app-name" class="input-xlarge focused">
+		    </div>
+		    
+		    <label for="app-url" class="control-label">App Url</label>
+		    <div class="controls">
+		      <input type="text" name="url" value="<%= client.reset_password_confirmation_url %>" placeholder="Application Name" id="app-url" class="input-xlarge focused">
+		    </div>
+		    <div class="form-actions">
+			  <button class="btn btn-success" type="submit">Save</button>
+			  <a class="btn btn-danger" href="<%= Server::Application.routes.url(:admin_clients_index) %>">Cancel</a>
+			</div>
+		  </div> 
+		<fieldset>
+	  </form>
+    </div>
+  	
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/assets/javascripts/jquery-1.7.1.min.js"><\/script>');</script>
+  <script src="/assets/javascripts/twitter.bootstrap.min.js"></script>
+  <script src="/assets/javascripts/application.js"></script>
+</body>
+</html>

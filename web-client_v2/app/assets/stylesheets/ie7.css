@@ -1,0 +1,269 @@
+.search_icon {
+  behavior: url("PIE.htc");
+  border-radius: 5px 0 0 0;
+  position: relative;
+}
+
+.jot_icon {
+  behavior: url("PIE.htc");
+  border-radius: 0 5px 0 0;
+  position: relative;
+}
+
+.username input[type="text"], .password input[type="password"] {
+  behavior: url("PIE.htc");
+  border-radius: 5px;
+  position: relative;
+}
+
+.login_button input[type="submit"] {
+  behavior: url("PIE.htc");
+  border-radius: 5px;
+  position: relative;
+}
+
+.box_signinBottom {
+  behavior: url("PIE.htc");
+  border-radius: 0 0 0 8px;
+  position: relative;
+}
+
+.login_path {
+  behavior: url("PIE.htc");
+  border-radius: 0 0 5px 0;
+  position: relative;
+  height: 243px;
+}
+
+.login {
+  behavior: url("PIE.htc");
+  border-radius: 5px 5px 0 0;
+  position: relative;
+}
+
+.login_path span.text,
+.discover {
+  margin-left: -155px;
+}
+
+.sign_up {
+  border-radius: 5px 5px 0 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.search input[type="text"] {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_tosca {
+  border-radius: 5px 5px 0 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_darkBottom {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.tell_jotky {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_BlueSky {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.portlet_favorites {
+  border-radius: 5px 5px 0 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.tell_jotky span.arrow {
+  top: -2px;
+}
+
+.portlet_favBottom {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.green_button {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.reg_username input[type="text"], 
+.reg_realname input[type="text"], 
+.reg_email input[type="text"], 
+.reg_password input[type="password"] {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+  margin-left: 10px;
+}
+
+.search {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.login_button input[type=submit]{
+  top: -25px;
+}
+
+.remember_login input[type=checkbox] {
+  margin-top: -5px;
+}
+
+.box_signinBottom{
+  height: 44px;
+}
+
+.login_separator {
+  height: 263px;
+}
+
+#reg_user,
+#reg_name,
+#reg_email,
+#reg_pass {
+  float: right;
+}
+
+.RegRemember_login input{
+  margin-top: -3px;
+}
+
+.login_path span.text,
+.discover {
+  left: 150px !important;
+}
+
+.choice_text {
+  border-radius: 4px 0 0 4px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.not_active {
+  border-radius: 0 4px 4px 0;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.search_results {
+  border-radius: 0 0 5px 5px;
+  behavior: url("PIE.htc");
+  position: relative;
+}
+
+.level_1  {
+  padding: 27px 110px 0 110px;
+}
+
+.level_2 {
+  padding: 30px 52px 0 52px;
+}
+
+.level_3 {
+  padding: 30px 30px 0 30px;
+}
+
+.level_1 li,
+.level_2 li,
+.level_3 li{
+  display: inline;
+  float: left;
+}
+
+.side-menu-top-left {
+  border-radius: 5px 0 0 0;
+  behavior: url("PIE.htc");
+}
+
+.side-menu-bottom-left {
+  border-radius: 0 0 0 5px;
+  behavior: url("PIE.htc");
+}
+
+.header_result {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+  float: left;
+}
+
+.button_tagText {
+  border-radius: 4px 0 0 4px;
+  behavior: url("PIE.htc");
+}
+
+.not_activeSearch {
+  border-radius: 0 4px 4px 0;
+  behavior: url("PIE.htc");
+}
+
+.more_ResultContent input[type="submit"] {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+}
+
+.down-sign {
+  position: relative;
+  top: -2px;
+}
+
+.side-left ul li a label {
+  margin-right: 25px;
+}
+
+.jots-icon,
+.people-icon,
+.media-icon,
+.places-icon {
+  position: relative;
+  top: -17px;
+}
+
+.comment_pagiantion ul {
+  margin: 0 250px;
+}
+
+.comment_pagiantion ul li {
+  float: left;
+}
+
+.people_postNonLogin {
+  border-radius: 5px 5px 5px 5px;
+  behavior: url("PIE.htc");
+}
+
+.side-left {
+  top: 405px !important;
+}
+
+.down-signNonLogin {
+  left: -300px;
+  position: relative;
+}
+
+.people_postNonLogin {
+  float: left;
+  margin-top: 20px !important;
+}
+
+#registration {
+  width: 300px;
+}

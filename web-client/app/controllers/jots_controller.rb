@@ -9,6 +9,7 @@ class JotsController < ApplicationController
   def create
     respond_to do |format|
       format.html do
+
         if params[:attachments].present?
           uploader = MediaUploader.new
           uploader.store! params[:attachments]

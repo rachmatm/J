@@ -1,6 +1,24 @@
 <script id="main-listing-jot-item-template" type="text/template">
   <div class="search_result_container">
-    <div class="own_people_post">
+    <div class="people_post">
+      <div class="header_post_jot">
+        <img src="/assets/avatar.png" alt="">
+        <span><#= user.username #></span>
+        <div class="header_yellowribon"></div>
+        <ul>
+
+          <li><a href="#"><#= created_at #></a></li>
+          <li><a href=""><span class="header_thumbup"></span> text</a></li>
+          <li><a href=""><span class="header_thumbdown"></span>text</a></li>
+          <li><a href=""><span class="header_rejot"></span>Text</a></li>
+          <li class="lastli"><a href="#" class="link-to-fav <# if(faved){#> link-to-fav-active <# } #>"><span class="header_fav"></span></a></li>
+
+        </ul>
+      </div>
+      <div class="down-sign"></div>
+      <div class="clear"></div>
+    </div>
+    <!-- div class="own_people_post">
       <div class="own_header_result header_result">
         <img src="<#= user.avatar.thumb_small.url #>" alt="<#= user.username #>">
         <span><#= user.username #></span>
@@ -18,23 +36,23 @@
             &nbsp;
           </li>
           <li class="no_padding_left">
-            
+
             <# if(user_rejoters.length > 0){ #>
-              <a href="/jots/<#= _id #>/rejot.json" class="link-to-rejot">rejot | rejotted by : <#= user_rejoters[0].username #></a>
+            <a href="/jots/<#= _id #>/rejot.json" class="link-to-rejot">rejot | rejotted by : <#= user_rejoters[0].username #></a>
             <# }else{ #>
-              <a href="/jots/<#= _id #>/rejot.json" class="link-to-rejot">rejot</a>
+            <a href="/jots/<#= _id #>/rejot.json" class="link-to-rejot">rejot</a>
             <# } #>
 
-            
+
           </li>
           <li class="thumbs_separator">
             &nbsp;
           </li>
           <li class="no_padding_left">
             <# if(faved){ #>
-             <a href="#" class="link-to-fav">faved</a>
+            <a href="#" class="link-to-fav">faved</a>
             <# }else{ #>
-             <a href="#" class="link-to-fav">fav</a>
+            <a href="#" class="link-to-fav">fav</a>
             <# } #>
           </li>
           <li class="thumbs_separator">
@@ -46,7 +64,7 @@
       </div>
       <div class="own-down-sign down-sign"></div>
       <div class="clear"></div>
-    </div>
+    </div -->
     <div class="container-result">
       <h2><#= title #></h2>
       <p class="hour"><#= created_at #> - <a href="/jots/<#= _id #>" class="link-to-detail-jot">detail</a></p>
@@ -105,7 +123,7 @@
         </div>
       </div>
       <# } #>
-      
+
     </div>
     <div class="clear"></div>
   </div>
