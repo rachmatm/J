@@ -17,6 +17,13 @@ module MeAction
     end
   end
 
+  class Search < ActionWithTokenAuth
+    def start
+      render @current_user.search params[:text]
+      finish
+    end
+  end
+
 # Jots
 # ------------------------------------------------------------------------
 

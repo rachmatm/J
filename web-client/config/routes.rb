@@ -112,6 +112,7 @@ WebClient::Application.routes.draw do
 
   resource :searches, :path => 'search' do
     get '/get_tag' => 'searches#get_tag'
+    get '/get_user' => 'searches#get_user'
   end
 
 end

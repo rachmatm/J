@@ -311,6 +311,13 @@ class User
     end
   end
 
+  def search(text)
+    stripped_text = text[1..-1]
+    search_result = ActiveSupport::JSON.encode User.where(:username => /#{stripped_text}/i).only(:username)
+
+    JsonizeHelper.format :content => search_result
+  end
+
   def _current_user_set_locations(parameters)
     parameters_location = []
 
@@ -621,7 +628,7 @@ class User
   end
 
   def current_user_search_tags(text)
-    search_result = ActiveSupport::JSON.encode Tag.where(:name => /#{text}/i)
+    search_result = ActiveSupport::JSON.encode Tag.desc('meta.weight').where(:name => /#{text}/i)
 
     JsonizeHelper.format :content => search_result
   end

@@ -77,6 +77,7 @@ HttpRouter.new do
   # Me
   get('/me(.:format)').to(MeAction::Index)
   post('/me(.:format)').to(MeAction::Update)
+  get('/me/search(.:format)').to(MeAction::Search)
 
   # Me - Jots
   post('/me/jots(.:format)').to(MeAction::CreateJot)

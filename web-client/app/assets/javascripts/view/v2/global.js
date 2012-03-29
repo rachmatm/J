@@ -214,19 +214,72 @@ $('.search_resultsContent').delegate('li', 'click', function(){
   });
 });
 
+function rebindcontent() {
+  $('.r-people-result-dropdwn-item').click(function(){
+    console.log('cool');
+    $('#jot-search-field').val('@' + $($(this).find('.dropdwn_content_text')).html());
+    $('#r-people-result-dropdwn').hide();
+    $('#jot-search-field').focus();
+  });
+}
+
 $('#jot-search-field').each(function() {
+
   // Save current value of element
   $(this).data('oldVal', $(this).val());
 
   // Look for changes in the value
-  $(this).bind("propertychange keyup input paste", function(event){
-  // If value has changed...
+  $(this).bind("propertychange input paste", function(event){
+
+    // If value has changed...
     if ($(this).data('oldVal') != $(this).val() && $(this).val().length > 1) {
+
       // Updated stored value
       $(this).data('oldVal', $(this).val());
 
+      if ($(this).val().match(/^@.*/) && !$(this).val().match(/\s/)) {
+        $('.search_box_from_nest').hide();
+        $('#r-people-result-dropdwn').show();
+
+        // Send the request
+        $.ajax({
+          url: '/search/get_user.json',
+          type: 'GET',
+          dataType: 'json',
+          data: 'text=' + $(this).val(),
+
+          // Action taken if the request is successful
+          success: function (data, textStatus, jqXHR) {
+            if (data.failed === true) {
+              alert(data.error);
+            } else {
+              var new_users = "";
+
+              // Parse each result that comes in and put
+              // it in the appropriate place
+              $.each($.parseJSON(data.content), function(index, value){
+                new_users = new_users +
+                            '<li>' +
+                            '<a class="r-people-result-dropdwn-item" href="#">' +
+                            '<span class="dropdwn_content_photo">' +
+                            '<img alt="" src="/assets/ava-farrukh.png">' +
+                            '</span>' +
+                            '<span class="dropdwn_content_text">'+ value.username +'</span>' +
+                            '</a>' +
+                            '</li>'
+              });
+
+              console.log(new_users);
+              // Appending the tags to its appropriate level
+              $('.result_dropdwn_content > ul').html(new_users);
+              rebindcontent();
+            }
+          }
+        });
+      } else {
       // Do action
       $('.search_box_from_nest').show();
+      $('#r-people-result-dropdwn').hide();
 
       // Send the request
       $.ajax({
@@ -267,8 +320,10 @@ $('#jot-search-field').each(function() {
       });
     }
 
-    if ($(this).val().length < 2) {
+    } 
+    if ($(this).val().length < 2 || $(this).val() == "") {
       $('.search_box_from_nest').hide();
+      $('#r-people-result-dropdwn').hide();
     }
   });
 });
