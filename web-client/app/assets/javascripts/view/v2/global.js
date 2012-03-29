@@ -266,5 +266,9 @@ $('#jot-search-field').each(function() {
         }
       });
     }
+
+    if ($(this).val().length < 2) {
+      $('.search_box_from_nest').hide();
+    }
   });
 });

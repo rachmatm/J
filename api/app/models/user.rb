@@ -315,7 +315,7 @@ class User
     parameters_location = []
 
     parameters.to_a.each do | location |
-      parameters_location << location[1]
+      parameters_location.push location[1]
     end
     
     parameters = parameters_location
@@ -329,7 +329,7 @@ class User
     parameters_location = []
 
     parameters.to_a.each do | location |
-      parameters_location << location[1]
+      parameters_location.push location[1]
     end
 
     parameters = parameters_location
@@ -477,7 +477,7 @@ class User
     jot = Jot.find(jot_id)
 
     unless self.jot_favorites.include?(jot)
-      self.jot_favorites << jot
+      self.jot_favorites.push jot
       JsonizeHelper.format :notice => "Jot is now in favorites", :faved => true
     else
       self.jot_favorites.delete jot
@@ -510,9 +510,9 @@ class User
     jot = Jot.find(jot_id)
 
     jot.user_thumbs_up.delete self
-    
-    jot.user_thumbs_up << self
-    
+
+    jot.user_thumbs_up.push self
+
     jot.user_thumbs_down.delete self
 
     JsonizeHelper.format :notice => "Jot was thumbed up",
@@ -526,7 +526,7 @@ class User
 
     jot.user_thumbs_down.delete self
 
-    jot.user_thumbs_down << self
+    jot.user_thumbs_down.push self
 
     jot.user_thumbs_up.delete self
     
@@ -598,7 +598,7 @@ class User
         tag = self.tags.create :name => tag_name.to_s.downcase
         tag._current_tag_set_meta_subcription self.id
       ensure
-        tag_objs << tag
+        tag_objs.push tag
       end
     end
 
@@ -635,9 +635,9 @@ class User
 
     files.each do |id, file|
       begin
-        file_objs << self.attachments.push(File.find file[:id])
+        file_objs.push self.attachments.push(File.find file[:id])
       rescue
-        file_objs << self.attachments.create(:file => file['file'])
+        file_objs.push self.attachments.create(:file => file['file'])
       end
     end
 
@@ -1106,8 +1106,8 @@ class User
     message_id = params[:id]
     message_array = []
     private_message = Message.any_of({ sender_id: "#{user_id}" }, { recipient_id: "#{user_id}" }).find(message_id)
-    message_array << private_message
-    message_array << private_message.replies
+    message_array.push private_message
+    message_array.push private_message.replies
     message_array.flatten
     return JsonizeHelper.format :content => message_array
   rescue
