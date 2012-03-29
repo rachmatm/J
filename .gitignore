@@ -9,8 +9,5 @@
 # Binary-blob that takes bandwidth
 /web-client/tmp
 
-# Jotky app id and app secret that keeps changing
-web-client/config/initializers/jotky.rb
-
 # Ignoring log because it will always produce different results
 api/log/development.log
