@@ -347,7 +347,7 @@ class User
     
     #set tags
     tag_names = Twitter::Extractor.extract_hashtags(parameters[:title])
-    tag_objs = _current_user_set_tags(tag_names)
+    tag_objs = _current_user_set_tags(parameters[:title])
     jot.tags = tag_objs
     
     #set cross-post upload
@@ -583,7 +583,7 @@ class User
 
     tag_objs = Array.new
 
-    tag_names.uniq.each do |tag_name|
+    tag_arr.uniq.each do |tag_name|
       begin
         tag = self.tags.find tag_name.to_s.downcase
         tag._current_tag_set_meta_subcription self.id
