@@ -1,8 +1,12 @@
 window.CurrentUserModel = Backbone.Model.extend({
 
   initialize: function(){
-    var _this = this;
     
+  },
+
+  setAuth: function(){
+    var _this = this;
+
     $(window).bind('jotky_login', function(event, token){
       _this.setProfileAndLogin(token);
     });

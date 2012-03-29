@@ -319,3 +319,7 @@ padding: 0 68px 0 16px;}
 
 .header_fav_active{
 background-position: -211px -25px !important;}
+
+.jot_detail_left img{
+width:auto;
+height:auto;}

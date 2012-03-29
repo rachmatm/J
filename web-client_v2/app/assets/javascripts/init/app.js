@@ -1,6 +1,6 @@
 window.appRouter = new AppRouter;
 
-window.CurrentUserRouter = CurrentUserModel.extend({
+window.CurrentUser = CurrentUserModel.extend({
 
   after_login: function(data, token){
     appRouter.render({
@@ -20,7 +20,8 @@ window.CurrentUserRouter = CurrentUserModel.extend({
   }
 });
 
-window.currentUser = new CurrentUserRouter;
+window.currentUser = new CurrentUser;
+currentUser.setAuth();
 
 appRouter.render({
   current_user: currentUser.data(),

@@ -11,6 +11,8 @@ WebClientV2::Application.routes.draw do
     get 'favorite'
     get 'thumbsup'
     get 'thumbsdown'
+
+    resources :comments, :only => [:create, :index]
   end
 
   get '/auth/facebook', :as => 'login_with_facebook'

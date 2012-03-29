@@ -7,7 +7,7 @@ module MeAction
     end
   end
 
-  module Jot
+  module JotAction
     class Create < ActionWithTokenAuth
 
       def start
@@ -66,7 +66,25 @@ module MeAction
         end
       end
     end
-  end
 
-  
+    module CommentAction
+
+      class Create < ActionWithTokenAuth
+
+        def start
+          render @current_user.current_user_set_jot_comments params[:jot_id], params
+          finish
+        end
+      end
+
+      class Index < ActionWithTokenAuth
+
+        def start
+          render Comment.get_comments params[:jot_id]
+          finish
+        end
+      end
+    end
+
+  end
 end

@@ -34,6 +34,7 @@ class User
   has_and_belongs_to_many :jot_thumbsup, :class_name => "Jot", :inverse_of => :user_thumbsup
   has_and_belongs_to_many :jot_thumbsdown, :class_name => "Jot", :inverse_of => :user_thumbsdown
   has_and_belongs_to_many :jot_mentioned, :class_name => "Jot", :inverse_of => :user_mentioned
+  has_many :comments
 
   def self.get(parameters = {})
     parameters = parameters.to_hash rescue {}
@@ -190,6 +191,26 @@ class User
     jot.rejots.push rejot
 
     JsonizeHelper.format :content => rejot
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
+
+  def current_user_set_jot_comments(jot_id, parameters)
+
+    parameters.keep_if {|key, value| Comment::UPDATEABLE_FIELDS.include? key }
+
+    data = self.comments.new parameters
+
+    if data.save
+      
+      data.jot = Jot.find(jot_id)
+      data.save
+      data.reload
+
+      JsonizeHelper.format({:content => data}, {:except => Comment::NON_PUBLIC_FIELDS, :include => Comment::RELATION_PUBLIC})
+    else
+      JsonizeHelper.format :failed => true, :error => "Comment was not made", :errors => data.errors.to_a
+    end
   rescue
     JsonizeHelper.format :failed => true, :error => "Jot was not found"
   end
