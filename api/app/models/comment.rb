@@ -78,6 +78,8 @@ class Comment
     user = User.find(jot.user_id)
     same_type_notifications = user.notifications.where(:jot_id => self.jot_id, :type => 'jot').first
 
+    # If the same type of notification is available it will
+    # only update the parameters of the said notification
     if same_type_notifications.present?
       same_type_notifications.update_attributes :content => self.detail, :time => self.created_at
       same_type_notifications.authors << self.user_id unless same_type_notifications.authors.include? self.user_id and self.user_id == jot.user_id
@@ -93,5 +95,8 @@ class Comment
     end
 
     user.save
+
+  # Rescue to nothing, just a fallback in case something happens
+  rescue
   end
 end
