@@ -172,10 +172,7 @@ class Jot
 
     # Then each search term is iterated through basic regex
     # then inserted to 'text_array'
-    search_type.each do |text|
-      text_regex = /#{text}/i
-      text_array.push(text_regex)
-    end
+    search_type.each { |text| text_array.push(/#{text}/i) }
 
     # After that query is directly delegated with previous
     # criteria and the value in 'text_array'

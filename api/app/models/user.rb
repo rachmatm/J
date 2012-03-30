@@ -203,7 +203,7 @@ class User
     :avatar_twitter_normal,
     :avatar_twitter_default
   ]
-  
+
   NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
