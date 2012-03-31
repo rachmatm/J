@@ -7,6 +7,13 @@ module MeAction
     end
   end
 
+  class Update < ActionWithTokenAuth
+    def start
+      render @current_user.set_my_attributes params
+      finish
+    end
+  end
+
   module JotAction
     class Create < ActionWithTokenAuth
 
@@ -86,5 +93,24 @@ module MeAction
       end
     end
 
+  end
+
+  module ConnectionAction
+
+    class Create < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_set_connections params
+        finish
+      end
+    end
+
+    class Destroy < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_unset_connections params[:id]
+        finish
+      end
+    end
   end
 end

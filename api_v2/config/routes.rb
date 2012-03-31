@@ -20,8 +20,11 @@ HttpRouter.new do
   # User > Show
   # get('/users/(:id)(.:format)').to(UserAction::Show)
 
-  # Me > Index
+  # Me > Show
   get('/me(.:format)').to(MeAction::Show)
+
+  # Me > Update
+  post('/me(.:format)').to(MeAction::Update)
 
   # Me > Create Jot
   post('/me/jots(.:format)').to(MeAction::JotAction::Create)
@@ -103,6 +106,13 @@ HttpRouter.new do
 
   # Me > Jot > Create Comment
   post('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Create)
+
+  # Me > Create Connections
+  post('/me/connections(.:format)').to(MeAction::ConnectionAction::Create)
+  
+  # Me > Delete Connections
+  delete('/me/:id/connections(.:format)').to(MeAction::ConnectionAction::Destroy)
+
 
   # Me > Jot > Index Comment
   get('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Index)

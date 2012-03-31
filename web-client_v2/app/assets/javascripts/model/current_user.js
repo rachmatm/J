@@ -8,7 +8,7 @@ window.CurrentUserModel = Backbone.Model.extend({
     var _this = this;
 
     $(window).bind('jotky_login', function(event, token){
-      _this.setProfileAndLogin(token);
+      _this.setProfile(token, true);
     });
 
     $(window).bind('jotky_logout', function(event, token){
@@ -20,11 +20,17 @@ window.CurrentUserModel = Backbone.Model.extend({
   },
 
   data: function(){
-    return JSON.parse(localStorage.jotky_user_session);
+    if(localStorage.jotky_user_session){
+      data = localStorage.jotky_user_session;
+    }
+    else{
+      data = '{}';
+    }
+    return JSON.parse(data);
   } ,
 
   token: function(){
-    return $.cookie("jotky_token")
+    return $.cookie("jotky_token");
   },
 
   setData: function(data){
@@ -48,7 +54,7 @@ window.CurrentUserModel = Backbone.Model.extend({
     $.cookie("jotky_token", null);
   },
 
-  setProfileAndLogin: function(token){
+  setProfile: function(token, with_login){
     var _this = this;
     
     $.ajax({
@@ -59,18 +65,29 @@ window.CurrentUserModel = Backbone.Model.extend({
       error: function(jqXHR, textStatus, errorThrown){
         alert(textStatus);
       },
+      beforeSend: function(jqXHR, settings){
+        $('#process-stat').removeClass('hidden');
+      },
       success: function(data, textStatus, jqXHR){
         if(data.failed === true){
           alert(data.error)
         }
         else{
+
+          $('#process-stat').addClass('hidden');
+          
+
           _this.setData(data.content);
           _this.setToken(token);
 
-          _this.after_login.call(_this, _this.data(), _this.token());
+          if(with_login){_this.setLogin();}
         }
       }
     });
+  },
+
+  setLogin: function(){
+    this.after_login.call(this, this.data(), this.token());
   },
 
   after_login: function(){},

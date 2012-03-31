@@ -22,9 +22,10 @@ class Authentication
   field :password_salt, :type => String
   field :password_hash, :type => String
   field :token, type: String
+  field :avatar, type: String
+
   field :facebook_id, :type => String
   field :twitter_id, :type => String
-  field :avatar, type: String
 
   before_create :before_create_set_avatar
 
@@ -54,7 +55,7 @@ class Authentication
 
     if response.success?
       data = ActiveSupport::JSON.decode(response.body)
-        
+   
       user = self.where(:facebook_id => data['id']).first
 
       unless user.present?

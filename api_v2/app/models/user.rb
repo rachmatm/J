@@ -4,19 +4,23 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  PRIVATE_FIELDS = [:password_salt, :password_hash]
+  PRIVATE_FIELDS = [:password_salt, :password_hash, :token]
 
   PROTECTED_FIELDS = []
 
-  PUBLIC_FIELD = [:username, :realname, :email, :password, :registration_completion]
+  PUBLIC_FIELD = [:username, :realname, :email, :password, :avatar, :bio, :url, :location,
+    :setting_privacy_jot, :setting_privacy_location, :setting_privacy_kudos, :setting_auto_shorten_url,
+    :setting_auto_complete, :connection_facebook_user_id, :connection_facebook_user_name]
 
-  NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
+  NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS 
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
-  RELATION_PUBLIC = [:jot_favorites]
+  RELATION_PUBLIC = [:connections]
 
   RELATION_PUBLIC_DETAIL = []
+
+  attr_accessor :password
 
   field :realname, type: String
   field :username, type: String
@@ -25,6 +29,18 @@ class User
   field :password_hash, :type => String
   field :avatar, :type => String
   field :token, type: String
+  field :bio, type: String, :default => ''
+  field :url, type: String, :default => ''
+  field :location, type: String, :default => ''
+  
+  field :facebook_id, :type => String
+  field :twitter_id, :type => String
+
+  field :setting_privacy_jot, :type => String, :default => 'everyone'
+  field :setting_privacy_location, :type => String, :default => 'everyone'
+  field :setting_privacy_kudos, :type => String, :default => 'everyone'
+  field :setting_auto_shorten_url, :type => String, :default => 'always'
+  field :setting_auto_complete, :type => String, :default => 'always'
   
   mount_uploader :avatar, AvatarUploader, :mount_on => :avatar
 
@@ -35,6 +51,24 @@ class User
   has_and_belongs_to_many :jot_thumbsdown, :class_name => "Jot", :inverse_of => :user_thumbsdown
   has_and_belongs_to_many :jot_mentioned, :class_name => "Jot", :inverse_of => :user_mentioned
   has_many :comments
+  has_many :connections
+
+  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true
+  validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
+  validates_format_of :username, :with => /^[A-Za-z0-9.\d_]+$/, :message => "can only be alphanumeric, dot and number with no spaces"
+  validates_presence_of :realname, :username, :email
+  validates_length_of :username, :minimum => 5
+  validates_length_of :password, :minimum => 6, :allow_nil => true
+  validates_uniqueness_of :username, :email, :case_sensitive => false
+
+  validates_inclusion_of :setting_privacy_jot, :in => ["everyone", "friends", "hide"], :allow_nil => true
+  validates_inclusion_of :setting_privacy_location, :in => ["everyone", "friends", "hide"], :allow_nil => true
+  validates_inclusion_of :setting_privacy_kudos, :in => ["everyone", "friends", "hide"], :allow_nil => true
+  validates_inclusion_of :setting_auto_shorten_url, :in => ["always", "ask", "never"], :allow_nil => true
+  validates_inclusion_of :setting_auto_complete, :in => ["always", "ask", "never"], :allow_nil => true
+
+  before_save :set_secure_password
+  
 
   def self.get(parameters = {})
     parameters = parameters.to_hash rescue {}
@@ -56,6 +90,18 @@ class User
         :except => NON_PUBLIC_FIELDS,
         :include => RELATION_PUBLIC
       })
+  end
+
+  def set_my_attributes(parameters)
+    parameters.keep_if {|key, value| UPDATEABLE_FIELDS.include? key }
+
+    if self.update_attributes parameters
+      self.reload
+      self.get_my_attributes
+    else
+      self.reload
+      return JsonizeHelper.format :failed => true, :error => "Update was not made", :errors => self.errors.to_a
+    end
   end
 
   def current_user_set_jot(parameters)
@@ -213,5 +259,77 @@ class User
     end
   rescue
     JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
+
+  def current_user_set_connections(parameters)
+    parameters.keep_if {|key, value| Connection::UPDATEABLE_FIELDS.include? key }
+
+    if parameters[:connection_name] == 'twitter'
+      begin
+        client = Twitter::Client.new :oauth_token => parameters[:connection_token], :oauth_token_secret => parameters[:connection_secret]
+        data = client.verify_credentials
+
+        parameters.merge!({
+            :connection_user_id => data['id'],
+            :connection_user_name => data['name'],
+            :connection_token => parameters[:connection_token],
+            :connection_secret => parameters[:connection_secret]
+          })
+      rescue
+        return JsonizeHelper.format(:error => "aw hell no, can\'t connect to twitter", :failed => true)
+      end
+    elsif parameters[:connection_name] == 'facebook'
+
+      send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{parameters[:connection_token]}"
+
+      # Run the request via Hydra.
+      hydra = Typhoeus::Hydra.new
+      hydra.queue(send_request)
+      hydra.run
+
+      response = send_request.response
+
+      if response.success?
+        data = ActiveSupport::JSON.decode(response.body)
+
+        parameters.merge!({
+            :connection_user_id => data['id'],
+            :connection_user_name => data['name'],
+            :connection_token => parameters[:connection_token]
+          })
+      else
+        return JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
+      end
+
+    end
+
+    data = self.connections.where({:connection_name => parameters[:connection_name]}).first
+
+    data = self.connections.new parameters
+    data.save
+    data.reload
+
+    if data.errors.any?
+      return JsonizeHelper.format :failed => true, :error => "Connections was not made", :errors => data.errors.to_a
+    else
+      return JsonizeHelper.format({:notice => 'Data Connected', :content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+    end
+  end
+
+  def current_user_unset_connections(id)
+    data = Connection.find(id).destroy
+    JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Connection was not found"
+  end
+
+  protected
+
+  def set_secure_password
+    if self.password.present?
+      encrypted_string_data = EncryptStringHelper.encrypt_string(password)
+      self.password_salt = encrypted_string_data[:salt]
+      self.password_hash = encrypted_string_data[:hash]
+    end
   end
 end

@@ -41,7 +41,7 @@
   line-height: 14px;}
 
 .main-registration-form-field-alert .error, .main-forgot-form-field-alert .error{
-color: #E24C4B;}
+  color: #E24C4B;}
 
 
 .alert-message {
@@ -311,15 +311,51 @@ color: #E24C4B;}
 
 
 .username input[type="text"].error, .password input[type="password"].error, textarea.error{
-background:#E77471}
+  background:#E77471}
 
 
 .magicbox-login-alert{
-padding: 0 68px 0 16px;}
+  padding: 0 68px 0 16px;}
 
 .header_fav_active{
-background-position: -211px -25px !important;}
+  background-position: -211px -25px !important;}
 
 .jot_detail_left img{
-width:auto;
-height:auto;}
+  width:auto;
+  height:auto;}
+
+#process-stat{
+  background: none repeat scroll 0 0 #EBEDEF;
+  color: #007E86;
+  left: 0;
+  opacity: 0.6;
+  padding: 10px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index:9999999;}
+
+.show-hide-edit-panel input, .show-hide-edit-panel textarea{
+  background: none repeat scroll 0 0 #EEEEEE;
+  border: medium none;
+  border-radius: 5px 5px 5px 5px;
+  color: #3B999F;
+  font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-size: 17px;
+  padding-left: 5px;
+  width: 340px;
+  display: block;
+  resize:none;}
+
+.show-hide-edit-panel  label.error{
+  color: #EEEEEE;
+  font-size: 12px;
+  padding-left: 5px;}
+
+.show-hide-edit-panel .user-info{
+  font-size: 14px;
+  font-family: arial}
+
+#magicbox-setting-content input.error{
+  background:#FFB6C1}

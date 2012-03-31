@@ -1,0 +1,23 @@
+<% if error.present? and errors.present? %>
+  <div class="alert-message error">
+    <h1><%= error %></h1>
+
+    <ul>
+      <% errors.each do |error_item| %>
+        <li><%= error_item %></li>
+      <% end %>
+    </ul>
+  </div>
+<% elsif error.present? %>
+  <div class="alert-message error">
+    <h1><%= error %></h1>
+  </div>
+<% elsif notice.present? %>
+  <div class="alert-message info">
+    <h1><%= notice %></h1>
+  </div>
+<% elsif info.present? %>
+  <div class="alert-message info">
+    <h1><%= info %></h1>
+  </div>
+<% end %>

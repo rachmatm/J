@@ -29,4 +29,24 @@ class AuthenticationsController < ApplicationController
     cookies[:jotky_token] = data['content']['token']
     redirect_to root_path
   end
+
+  def facebook_connection
+    oauth = request.env['omniauth.auth']
+
+    @data = api_connect('/me/connections.json',
+      {:connection_token => oauth.credentials.token, :connection_name => 'facebook'}, "post")
+
+    flash[:error] = @data['error']
+    redirect_to '/#!/setting'
+  end
+  
+  def twitter_connection
+    oauth = request.env['omniauth.auth']
+
+    @data = api_connect('/me/connections.json',
+      {:connection_token => oauth.credentials.token, :connection_secret => oauth.credentials.secret, :connection_name => 'twitter'}, "post")
+
+    flash[:error] = @data['error']
+    redirect_to '/#!/setting'
+  end
 end

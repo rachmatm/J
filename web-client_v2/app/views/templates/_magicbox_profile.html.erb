@@ -1,0 +1,111 @@
+<script type="text/template" id="magicbox-profile-template">
+
+  <div class="empty_profile">
+    <div class="about">
+      <div class="about_top">
+        <div class="left">
+          <div class="about_avatar">
+            <# if(avatar){ #>
+            <img alt="<#= username #>" src="<#= avatar.thumb_big.url #>">
+            <# } #>
+          </div>
+        </div>
+        <div class="left">
+          <div class="big_badge">0</div>
+          <div class="nickname_realname">
+
+            <div class="show-hide-edit-panel">
+              <div class="show-hide-edit-panel-display">
+                <span class="nickname"><#= username #></span>
+              </div>
+              <div class="show-hide-edit-panel-input hidden">
+                <%= form_tag profiles_path, :method => 'put', :id => 'profile-form-username' do  %>
+                  <input type="text" name="profile[username]" value="<#= username #>">
+                <% end %>
+              </div>
+            </div>
+
+            <br class="clear">
+
+            <div class="show-hide-edit-panel">
+              <div class="show-hide-edit-panel-display">
+                <span class="realname"><#= realname #></span>
+              </div>
+              <div class="show-hide-edit-panel-input hidden">
+                <%= form_tag profiles_path, :method => 'put', :id => 'profile-form-realname' do  %>
+                  <input type="text" name="profile[realname]" value="<#= realname #>">
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="about_link">
+        <span>0 Tags</span>
+        <span class="no_margin_left">0 Jots</span>
+        <span class="no_margin_left">0 Follows</span>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="bio">
+      <div class="bio_tag">
+        <span>Bio</span>
+
+        <div class="show-hide-edit-panel">
+          <div class="show-hide-edit-panel-display">
+            <span class="user-info"><#= bio || 'click to edit your bio' #></span>
+          </div>
+          <div class="show-hide-edit-panel-input hidden">
+            <%= form_tag profiles_path, :method => 'put', :id => 'profile-form-bio' do  %>
+              <input type="text" name="profile[bio]" value="<#= bio #>">
+            <% end %>
+          </div>
+        </div>
+        
+      </div>
+      <div class="url_tag">
+        <span>URL</span>
+
+        <div class="show-hide-edit-panel">
+          <div class="show-hide-edit-panel-display">
+            <span class="user-info"><#= url || 'click to edit your URL' #></span>
+          </div>
+          <div class="show-hide-edit-panel-input hidden">
+            <%= form_tag profiles_path, :method => 'put', :id => 'profile-form-url' do  %>
+              <input type="text" name="profile[url]" value="<#= url #>">
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="location">
+      <div class="left">
+        <span class="location_text">Location</span>
+
+        <div class="show-hide-edit-panel">
+          <div class="show-hide-edit-panel-display">
+            <span class="user-info"><#= location || 'click to edit your location' #></span>
+          </div>
+          <div class="show-hide-edit-panel-input hidden">
+            <%= form_tag profiles_path, :method => 'put', :id => 'profile-form-location' do  %>
+              <input type="text" name="profile[location]" value="<#= location #>">
+            <% end %>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="right">
+        <div class="map">&nbsp;</div>
+      </div>
+      <span></span>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</script>
