@@ -1,0 +1,136 @@
+html, body {
+	margin:0;
+	padding:0;
+}
+
+#wrapper {
+	margin:0 auto;
+	width:1000px;
+}
+
+/* timer general */
+#timer {
+	position:relative;
+}
+
+hr {
+	position:absolute;
+	top:60px;
+	left:0;
+	width:972px;
+	border:1px solid #ffffff;	
+}
+
+*:first-child+html hr {
+	top:370px;
+}
+
+
+/* timer numbers */
+.timer_numbers {
+	font-size:100px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-align:left;
+	color:#ffffff;
+}
+
+#timer_days {
+	background:url(../images/countdown1.png) #ffffff no-repeat;
+	float:left;
+	width:236px;
+	height:159px;
+	padding:10px 0 0 18px;
+	letter-spacing:60px;
+}
+
+#timer_hours {
+	background:url(../images/countdown1.png) #ffffff no-repeat;
+	float:left;
+	width:236px;
+	height:159px;
+	padding:10px 0 0 18px;
+	letter-spacing:60px;
+}
+
+#timer_mins {
+	background:url(../images/countdown1.png) #ffffff no-repeat;
+	float:left;
+	width:236px;
+	height:159px;
+	padding:10px 0 0 18px;
+	letter-spacing:60px;
+}
+
+#timer_seconds {
+	background:url(../images/countdown2.png) #ffffff no-repeat;
+	float:left;
+	width:210px;
+	height:138px;
+	padding:10px 0 0 22px;
+	letter-spacing:55px;
+}
+
+/* timer labels */
+.timer_labels {
+	font-size:40px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-align:center;
+	color:#666;	
+}
+
+#timer_labels {
+	position:relative;
+}
+
+#timer_days_label {
+	position:absolute;
+	top:150px;
+	left:58px;	
+}
+
+#timer_hours_label {
+	position:absolute;
+	top:150px;
+	left:305px;
+	
+}
+
+#timer_mins_label {
+	position:absolute;
+	top:150px;
+	left:570px;	
+}
+
+#timer_seconds_label {
+	position:absolute;
+	top:150px;
+	left:825px;
+}
+
+
+
+
+
+/* below style not apart of the tutorial */
+p#demoPage {
+	display:inline;
+	padding:5px;
+	background-color:#000000;
+	color:#FFFFFF;
+	margin:20px 0;
+	font-size:18px;
+}
+
+p#demoPage a {
+	color:#FFFFFF;	
+}
+
+#jotky {
+background: url("../images/jotky.png") no-repeat scroll center center transparent;
+height: 445px;}
+
+body, body *{
+background-color:#00C4CE !important;
+color:#fff !important;}
