@@ -28,7 +28,8 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/setting": "setting",
     
-    "!/jots/:id": "jotDetail"
+    "!/jots/:id": "jotDetail",
+    "!/account_setting": "accountSetting"
   },
 
   render: function(parameters){
@@ -108,5 +109,9 @@ window.AppRouter = Backbone.Router.extend({
   jotDetail: function(id){
     this.middleView.closeAll();
     this.magicboxView.openJotDetail(id);
+  },
+  accountSetting: function(id){
+    this.middleView.closeAll();
+    this.middleView.openAccountSetting(id);
   }
 });
