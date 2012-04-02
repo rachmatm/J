@@ -27,8 +27,12 @@
               <span class="thumbsdown-counter"><#= user_thumbsdown_ids.length #></span>
             </a>
           </li>
-          <li><a href="javascript:void(0);"><span class="header_rejot"></span>Text</a></li>
-          <li class="lastli"><a href="javascript:void(0);" class="link-to-fav"><span class="header_fav <# if(in_array(current_user._id, user_favorite_ids)){ #>header_fav_active<# } #>"></span></a></li>
+          <li>
+            <a href="javascript:void(0);"><span class="header_rejot"></span>Text</a>
+          </li>
+          <li class="lastli">
+            <a href="javascript:void(0);" class="link-to-fav"><span class="header_fav <# if(in_array(current_user._id, user_favorite_ids)){ #>header_fav_active<# } #>"></span></a>
+          </li>
 
         </ul>
       </div>

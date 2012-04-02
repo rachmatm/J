@@ -34,10 +34,12 @@
   <div class="magicbox-content-tab" id="magicbox-content-tab">
 
     <div class="magicbox-content-tab-item hidden" id="magicbox-search">
+      <%= form_tag searches_path, :id => 'magic-box-search-form', :method => :get do  %>
       <div class="search jot-search-content clearfix">
-        <input type="text" placeholder="Search everything" id="jot-search-field" value="">
-        <input type="submit" value="" id="gray_search">
+        <%= text_field_tag :keyword, nil, :placeholder => "Search everything", :id => 'magic-box-search-field' %>
+        <%= submit_tag '', :id => 'gray_search'  %>
       </div>
+      <% end %>
     </div>
 
     <div class="magicbox-content-tab-item" id="magicbox-jot">
@@ -73,16 +75,6 @@
                 <a href="#" class="jot_but tags_but jot_buttons_color jot-bar-button" id="jot-bar-tag">
                   <span class="jot_tags_icon">&nbsp;</span>
                   <span class="jot_button_text">Tags</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="jot_buttons_color jot_facebook jot-bar-button" id="jot-bar-facebook">
-                  <span class="jot_fb_icon">&nbsp;</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="jot_buttons_color no_margin_right jot-bar-button" id="jot-bar-twitter">
-                  <span class="jot_twitter_icon">&nbsp;</span>
                 </a>
               </li>
             </ul>
@@ -162,7 +154,7 @@
     <div id="magicbox-profile" class="magicbox-content-tab-item parent_empty_profile main_content clearfix hidden">
       <div id="magicbox-profile-content"></div>
       <div class="profile_bottom_links">
-        <a class="pub_profile_link" href="#!/public">
+        <a class="pub_profile_link" href="#!/profile/public">
           <span class="prof_icon">&nbsp;</span>
           <span class="prof_text">View your public profile</span>
         </a>
@@ -177,7 +169,7 @@
       <div id="magicbox-setting-content"></div>
 
       <div class="profile_bottom_links">
-        <a class="pub_profile_link" href="#!/public">
+        <a class="pub_profile_link" href="#!/profile/public">
           <span class="prof_icon">&nbsp;</span>
           <span class="prof_text">View your public profile</span>
         </a>

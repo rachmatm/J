@@ -16,6 +16,8 @@ class Jot
 
   RELATION_PUBLIC_DETAIL = []
 
+  attr_accessor :user_thumbups_count
+
   field :title, :type => String
 
   validates_presence_of :title
@@ -35,6 +37,8 @@ class Jot
   scope :before_the_time, ->(timestamp, per_page) { where(:updated_at.lt => timestamp).limit(per_page.to_i)}
   scope :find_by_user_tags, ->(user) {any_of({"tag_ids" => {"$in" => user.tags.collect{|tag| tag.id}}}, {'user_id' => user.id})}
 
+  after_create :current_jot_set_crosspost
+
   def current_jot_set_mention_users
     self.save
 
@@ -47,5 +51,48 @@ class Jot
     end
 
     self.reload
+  end
+
+  protected
+
+  def current_jot_set_crosspost
+    self.user.connections.where(:permission => 'always').each do |conn|
+      if conn.provider == 'facebook'
+        current_jot_set_crosspost_facebook conn, self
+      elsif conn.provider == 'twitter'
+        current_jot_set_crosspost_twitter conn, self
+      end
+    end
+
+    if m = /F\/(\S*)\//.match(self.title) and 
+        conn = self.user.connections.where(:permission => 'allow', :provider_user_name => m[1].downcase, :provider => 'facebook').first
+
+      current_jot_set_crosspost_facebook conn, self
+    end
+
+    if m = /T\/(\S*)\//.match(self.title) and
+        conn = self.user.connections.where(:permission => 'allow', :provider_user_name => m[1].downcase, :provider => 'twitter').first
+
+      current_jot_set_crosspost_twitter conn, self
+    end
+  end
+
+  def current_jot_set_crosspost_facebook(conn, jot)
+    t = Thread.new do
+      fc = FacebookConnect.new
+      fc.user_id = conn.provider_user_id
+      fc.token = conn.provider_user_token
+      fc.post_wall :message => jot.title
+    end
+    t.join
+  end
+
+  def current_jot_set_crosspost_twitter(conn, jot)
+    t = Thread.new do
+      client = Twitter::Client.new :oauth_token => conn.provider_user_token, :oauth_token_secret => conn.provider_user_secret
+
+      client.update jot.title
+    end
+    t.join
   end
 end

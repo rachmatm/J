@@ -25,7 +25,9 @@ WebClientV2::Application.routes.draw do
   get '/auth/twitter_connection', :as => 'twitter_connection'
   get '/auth/twitter_connection/callback' => 'authentications#twitter_connection'
 
-  resource :connections, :only => [] do
-    get 'remove/:id' => 'connections#remove', :as => 'remove'
+  resources :connections, :only => [:index, :create] do
+    get 'destroy'
   end
+
+  resources :searches, :only => [:index]
 end

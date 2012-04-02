@@ -10,6 +10,9 @@ window.MiddleView = Backbone.View.extend({
     this.middleLoginCompletionView = new MiddleLoginCompletionView;
 
     this.middleJotDetailView = new MiddleJotDetailView;
+    this.middleProfileView = new MiddleProfileView;
+    this.middleSearchResultView = new MiddleSearchResultView;
+    this.middleSearchResultJotView = new MiddleSearchResultJotView;
   },
 
 
@@ -61,5 +64,26 @@ window.MiddleView = Backbone.View.extend({
     this.middleJotDetailView.remove();
     this.middleJotDetailView.setElement(this.createHolder('main-middle-jot-detail'));
     this.middleJotDetailView.render(data);
+  },
+
+  openProfile: function(data){
+    this.closeAll();
+    this.middleProfileView.remove();
+    this.middleProfileView.setElement(this.createHolder('main-middle-profile'));
+    this.middleProfileView.render();
+  },
+
+  openSearchResult: function(data){
+    this.closeAll();
+    this.middleSearchResultView.remove();
+    this.middleSearchResultView.setElement(this.createHolder('main-middle-search-result'));
+    this.middleSearchResultView.render(data);
+  },
+
+  openSearchResultJot: function(data){
+    this.closeAll();
+    this.middleSearchResultJotView.remove();
+    this.middleSearchResultJotView.setElement(this.createHolder('main-middle-search-result-jot'));
+    this.middleSearchResultJotView.render(data);
   }
 });

@@ -28,7 +28,9 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/setting": "setting",
     
-    "!/jots/:id": "jotDetail"
+    "!/jots/:id": "jotDetail",
+    
+    "!/profile/public": "profilePublic"
   },
 
   render: function(parameters){
@@ -108,5 +110,11 @@ window.AppRouter = Backbone.Router.extend({
   jotDetail: function(id){
     this.middleView.closeAll();
     this.magicboxView.openJotDetail(id);
+  },
+
+  profilePublic: function(){
+    this.magicboxView.openSearch();
+    this.middleView.closeAll();
+    this.middleView.openProfile();
   }
 });

@@ -168,10 +168,10 @@
   </div>
   <div class="privacy">
     <span class="privacy_text">Connections and Cross-posts<a class="connect_cross" href="">(what is this?)</a></span>
-    <form method="post" id="setting-crosspost" action="/profiles" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="put" name="_method"><input type="hidden" value="KfgFn61Z+9xeoxstJiNE/6QMyTYa03uamjJKguh3Ibk=" name="authenticity_token"></div>
+    <%= form_tag connections_path, :id => 'setting-form-conn' do  %>
       <div>
-        <table class="account_setting_table">
-          <tbody>
+        <table class="account_setting_table" id="setting-crosspost-table">
+          <thead>
             <tr>
               <td class="td_tittle">&nbsp;</td>
               <td class="td_radio">Allow</td>
@@ -179,110 +179,29 @@
               <td class="td_radio">Always Cross-post</td>
               <td>&nbsp;</td>
             </tr>
-
-            <# _.each(connections, function(connection){ #>
-            <# if(connection.connection_name == 'facebook'){ #>
-            <tr>
-              <td class="border_bottom_table td_tittle">
-                <a href="" class="no_margin_left no_margin_right FB">&nbsp;</a>
-                <span class="name_cross_post"><#= connection.connection_user_name #></span>
-                <a href="" class="unlink">(Unlink)</a>
-              </td>
-              <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="shorten"></td>
-              <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="shorten"></td>
-              <td class="border_bottom_table td_radio"><input type="checkbox" value="jots_1" name="shorten"></td>
-              <td class="border_bottom_table"></td>
-            </tr>
-            <# }else if(connection.connection_name == 'twitter'){ #>
-            <tr>
-              <td class="border_bottom_table td_tittle">
-                <a href="" class="no_margin_left twitter"></a>
-                <span class="name_cross_post"><#= connection.connection_user_name #></span>
-                <a class="ajax-transport" href="/connections/remove/<#= connection._id #>.json" class="unlink">(Unlink)</a>
-              </td>
-              <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="complete"></td>
-              <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="complete"></td>
-              <td class="border_bottom_table td_radio"><input type="checkbox" value="jots_1" name="complete"></td>
-              <td class="border_bottom_table"></td>
-            </tr>
-            <# } #>
-            <# }); #>
-
-            <tr>
-              <td class="td_tittle">
-                <p class="p_information">
-
-                  <span class="connect_cross">add: &nbsp;</span>
-                  <select name="connect-cross-options" id="connect-cross-options" onchange="if(this.value){location.href=this.value;}">
-                    <option value="">Choose Provider</option>
-                    <option value="/auth/facebook_connection">Facebook</option>
-                    <option value="/auth/twitter_connection">Twitter</option>
-                  </select>
-                  <!-- a class="no_padding_left connect_cross link-to-facebook-connection" href="/auth/facebook_connection">add facebook</a>
-                  <a class="no_padding_left connect_cross link-to-twitter-connection" href="/auth/twitter_connection">add twitter</a -->
-                </p>
-              </td>
-              <td class="td_radio">&nbsp;</td>
-              <td class="td_radio">&nbsp;</td>
-              <td class="td_radio">&nbsp;</td>
-              <td>
-                <input type="submit" value="Save" class="save_style but_save_popup">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </form>      </div>
-  <div class="privacy">
-    <span class="privacy_text">Media Upload</span>
-    <form action="">
-      <div>
-        <table class="account_setting_table">
+          </thead>
+          <!--- Connection -->
           <tbody>
-            <tr>
-              <td colspan="5"><p class="border_bottom_table p_information">If you choose to upload media from your computer, they will be stored either on your Facebook account, your youtube account, or both*</p></td>
-            </tr>
-            <tr>
-              <td class="td_tittle">
-                <span class="upload_videos">&nbsp;</span>
-                <span class="upload_videos_text">Upload videos to</span>
-              </td>
-              <td class="td_radio">
-                <label for="first_fb_label" class="fb_label"></label>
-                <input type="checkbox" name="complete" id="first_fb_label">
-              </td>
-              <td class="td_radio">
-                <label for="youtube_label" class="youtube_label"></label>
-                <input type="checkbox" name="complete" id="youtube_label">
-              </td>
-              <td class="td_radio">&nbsp;</td>
-              <td class="">&nbsp;</td>
-            </tr>
-            <tr>
-              <td class="td_tittle">
-                <span class="upload_picture">&nbsp;</span>
-                <span class="upload_videos_text">Upload pictures to</span>
-              </td>
-              <td class="td_radio">
-                <label for="second_fb_label" class="fb_label"></label>
-                <input type="checkbox" name="complete" id="second_fb_label">
-              </td>
-              <td class="td_radio">&nbsp;</td>
-              <td class="td_radio">&nbsp;</td>
-              <td class="">&nbsp;</td>
-            </tr>
-            <tr>
-              <td class="td_tittle">&nbsp;</td>
-              <td class="td_radio">&nbsp;</td>
-              <td class="td_radio">&nbsp;</td>
-              <td class="td_radio">&nbsp;</td>
-              <td>
-                <input type="submit" value="Save" class="save_style but_save_popup">
-              </td>
-            </tr>
+
           </tbody>
+
+          <tfoot>
+            <tr>
+              <td class="td_tittle" colspan="4">
+                <span class="connect_cross">Add Connection</span>
+                <select name="connect-cross-options" id="connect-cross-options" onchange="if(this.value){location.href=this.value;}">
+                  <option value="">Choose Provider</option>
+                  <option value="/auth/facebook_connection">Facebook</option>
+                  <option value="/auth/twitter_connection">Twitter</option>
+                </select>
+              </td>
+              <td>
+                 <%= submit_tag 'Save', :class => 'save_style but_save_popup' %>
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
-    </form>
+    <% end %>
   </div>
 </script>

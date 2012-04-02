@@ -108,7 +108,23 @@ module MeAction
     class Destroy < ActionWithTokenAuth
 
       def start
-        render @current_user.current_user_unset_connections params[:id]
+        render @current_user.current_user_unset_connections params[:connection_id]
+        finish
+      end
+    end
+
+    class Index < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_connections params
+        finish
+      end
+    end
+
+    class Update < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_reset_connections params[:connection_id], params
         finish
       end
     end
