@@ -4,6 +4,7 @@ class Client
   
   field :name, :type => String
   field :secret_key, :type => String
+  field :reset_password_confirmation_url, :type => String
 
   before_save :before_save_set_name
   before_create :before_create_set_secret_key

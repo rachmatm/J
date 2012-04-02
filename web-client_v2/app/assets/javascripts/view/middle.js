@@ -65,17 +65,17 @@ window.MiddleView = Backbone.View.extend({
     this.middleJotDetailView.render(data);
   },
 
-  openForgotPassword: function(data){
+  openForgotPassword: function(){
     this.closeAll();
     this.middleForgotPasswordView.remove();
     this.middleForgotPasswordView.setElement(this.createHolder('main-middle-forgot-password'));
     this.middleForgotPasswordView.render();
   },
 
-  openChangePassword: function(data){
+  openChangePassword: function(token){
     this.closeAll();
     this.middleChangePasswordView.remove();
     this.middleChangePasswordView.setElement(this.createHolder('main-middle-change-password'));
-    this.middleChangePasswordView.render();
+    this.middleChangePasswordView.render(token);
   }
 });

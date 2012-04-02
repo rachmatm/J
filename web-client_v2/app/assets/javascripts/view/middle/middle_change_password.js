@@ -7,10 +7,10 @@ window.MiddleChangePasswordView = Backbone.View.extend ({
     this.holderAlertView = new HolderView;
   },
 
-  render: function(data){
+  render: function(token){
     var _this = this;
 
-    $(this.el).html(this.template(data));
+    $(this.el).html(this.template({token: token}));
 
     this.validates();
 

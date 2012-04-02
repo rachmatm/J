@@ -120,8 +120,7 @@ window.AppRouter = Backbone.Router.extend({
   },
 
   changePassword: function(token){
-    if (token) { $(window).trigger('jotky_login', token); }
-    this.middleView.openChangePassword();
+    this.middleView.openChangePassword(token);
     return false;
   }
 });

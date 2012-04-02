@@ -34,7 +34,7 @@ class Authentication
     data = self.where(:username => username).first
 
     if data.present? and
-        EncryptStringHelper.encrypt_string(password, data.password_salt)[:hash] == data.password_hash
+      EncryptStringHelper.encrypt_string(password, data.password_salt)[:hash] == data.password_hash
 
       data.update_attribute :token, ActiveSupport::SecureRandom.hex(9)
       JsonizeHelper.format({:content => {:token => data.token}});
@@ -47,10 +47,12 @@ class Authentication
     user = self.where(:email => email).first
     
     if user.present?
-      reset_password_token = ActiveSupport::SecureRandom.hex(11)
-      user.update_attributes :forgot_password_token => reset_password_token
-      user_mail = Mailer.new({:to => 'bimozx@gmail.com'})
-      user_mail.reset_password_notification({}, {:reset_password_url => "http://localhost:5000/#!/change_password/#{reset_password_token}"})
+      reset_forgot_password_token = ActiveSupport::SecureRandom.hex(11)
+      user.update_attributes :reset_forgot_password_token => reset_forgot_password_token
+
+      user_mail = Mailer.new({:to => email})
+      user_mail.reset_password_notification({}, {:reset_password_url => base_url + reset_forgot_password_token})
+
       JsonizeHelper.format({:notice => 'Your confirmation letter have been sent, please check your email'})
     else
       JsonizeHelper.format({:failed => true, :error => 'Email is not registered, please try again'})
@@ -60,11 +62,17 @@ class Authentication
   def self.reset_forgot_password(password, reset_forgot_password_token)
     user = self.where(:reset_forgot_password_token => reset_forgot_password_token).first
 
-    if user.present?
-      user.set_secure_password(password)
+    if user.present? and password.length >= 6
+      encrypted_string_data = EncryptStringHelper.encrypt_string(password)
+      user.password_salt = encrypted_string_data[:salt]
+      user.password_hash = encrypted_string_data[:hash]
+
+      user.reset_forgot_password_token = nil
+
+      user.save
       JsonizeHelper.format({:notice => 'You have updated your password'})
     else
-      JsonizeHelper.format({:failed => true, :error => 'Your token does not match, please try again' })
+      JsonizeHelper.format({:failed => true, :error => 'Your token does not match or your password is not long enough, please try again' })
     end
   end
 
@@ -118,12 +126,6 @@ class Authentication
   end
 
   protected
-
-  def set_secure_password
-    encrypted_string_data = EncryptStringHelper.encrypt_string(password)
-    self.password_salt = encrypted_string_data[:salt]
-    self.password_hash = encrypted_string_data[:hash]
-  end
 
   def before_create_set_avatar
     self.avatar = nil
