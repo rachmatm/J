@@ -242,3 +242,48 @@ padding-right:0;}
     margin-right: 10px;
     width: 22px;
 }
+.about_link a:hover { text-decoration: none;}
+.about_link {
+    background: none repeat scroll 0 0 #999999;
+    border-radius: 8px ;
+     -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+    float: right;
+    height: 55px;
+    margin-right: 25px;
+    padding-left: 1px;
+    position: relative;
+    width: 495px;
+}
+
+.about_link span, .about_link_profile span {
+    background: none repeat scroll 0 0 #E7F7F7;
+    border-radius: 8px 8px 8px 8px;
+    color: #696468;
+    float: left;
+    font-size: 14px;
+    line-height: 28px;
+    margin: 1px;
+    padding: 5px 5px 10px 20px;
+    width: 80px;
+}
+
+.about_link span p, .about_link_profile span p {
+    line-height: 10px;
+}
+
+.badge_about {
+    background: url("/assets/sprite.png") no-repeat scroll -2px -276px transparent;
+    color: #FFFFFF;
+    font-size: 25px;
+    font-weight: bold;
+    height: 57px;
+    line-height: 50px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    top: -10px;
+    width: 50px;
+}
+
+.jot-tab-content a:hover { text-decoration: none;}
