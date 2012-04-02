@@ -226,7 +226,7 @@
 }
 
 .jot_icon span.img_1{
- 
+
  background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;
 
   border: medium none;
@@ -323,7 +323,8 @@ span.img_2{
 }
 
 .search input[type=submit] {
-  background: url("/assets/sprite.png") no-repeat scroll -344px -1px transparent;
+ /* background: url("/assets/sprite.png") no-repeat scroll -344px -1px transparent;*/
+  background:url("/assets/search_btn.png") no-repeat scroll 0 0 transparent;
   border: medium none;
   cursor: pointer;
   float: right;
@@ -332,7 +333,8 @@ span.img_2{
 }
 
 .search input[type=submit]:hover {
-  background: url("/assets/sprite.png") no-repeat scroll -424px -1px transparent;
+  /*background: url("/assets/sprite.png") no-repeat scroll -424px -1px transparent;*/
+  background:url("/assets/search_btn.png") no-repeat scroll -74px 0px transparent;
   border: medium none;
   cursor: pointer;
   float: right;
@@ -987,7 +989,7 @@ a.twitter{
   text-align: center;
   text-decoration: none;
   width: 170px; text-shadow:0 1px 0 #E2E1E1;
-  
+
 }
 
 .login_path {
@@ -1303,12 +1305,23 @@ a.twitter{
   border-right: 1px solid #030303;
   color: #666666;
   float: left;
-  font-family: "HelveticaNeue Light","HelveticaCE55RomanRegular",Arial,sans serif;
-  font-size: 14px;
+  font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-size: 12px;
   font-weight: bold;
   height: 23px;
   line-height: 23px;
   padding: 0 15px;
+}
+.choice_text:hover {
+color:#cccccc;
+background: #414141; /* Old browsers */
+background: -moz-linear-gradient(top, #414141 0%, #0c0c0c 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#414141), color-stop(100%,#0c0c0c)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #414141 0%,#0c0c0c 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #414141 0%,#0c0c0c 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #414141 0%,#0c0c0c 100%); /* IE10+ */
+background: linear-gradient(top, #414141 0%,#0c0c0c 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#414141', endColorstr='#0c0c0c',GradientType=0 ); /* IE6-9 */
 }
 
 .active_choiceText {
@@ -1317,15 +1330,35 @@ a.twitter{
 }
 
 .active_choiceTexts {
-  background: none repeat scroll 0 0 #e0982b;
-  color: #333333;
-}
 
+  color: #333333;
+  text-shadow:0 1px 0 #f9cc2e;
+  background: one repeat scroll 0 0 #f1b031; /* Old browsers */
+background: -moz-linear-gradient(top, #f1b031 0%, #d08125 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f1b031), color-stop(100%,#d08125)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #f1b031 0%,#d08125 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #f1b031 0%,#d08125 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #f1b031 0%,#d08125 100%); /* IE10+ */
+background: linear-gradient(top, #f1b031 0%,#d08125 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b031', endColorstr='#d08125',GradientType=0 );
+}
+.active_choiceTexts:hover {
+ color: #333333;
+  text-shadow:0 1px 0 #f9cc2e;
+background: #ffd40d; /* Old browsers */
+background: -moz-linear-gradient(top, #ffd40d 0%, #ee8f29 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffd40d), color-stop(100%,#ee8f29)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* IE10+ */
+background: linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd40d', endColorstr='#ee8f29',GradientType=0 );
+}
 .not_active {
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
-  background: url("/assets/sprite.png") no-repeat scroll -46px -177px #2A2A2A;
+  background: url("/assets/plus_black.png") no-repeat scroll 6px 0 #2A2A2A;
   border-left: 1px solid #4C4A4A;
   cursor: pointer;
   display: block;
@@ -1334,6 +1367,7 @@ a.twitter{
   padding: 0 7px;
   width: 10px;
 }
+.not_active:hover { background: url("/assets/plusblack_hov.png") no-repeat scroll 6px 0px #171717; }
 .icon_notActive {
   background: url("/assets/sprite.png") no-repeat scroll -46px -210px #2A2A2A;
   cursor: pointer;
@@ -1817,7 +1851,7 @@ a.twitter{
 
 #video-detail {
   float: left;
-  
+
 }
 
 .video-title {
@@ -1887,7 +1921,8 @@ a.twitter{
 
 .button_tag {
   float: left;
-  margin: 10px 10px 0;
+  margin: 0px 10px 0;
+    width: 560px;
 }
 
 .button_tag ul li {
@@ -1895,6 +1930,7 @@ a.twitter{
   float: left;
   height: 23px;
   margin-right: 10px;
+  margin-top: 10px;
 }
 
 .button_tagText {
@@ -1906,14 +1942,25 @@ a.twitter{
   color: #666666;
   cursor: pointer;
   float: left;
-  font-family: "HelveticaNeue Light","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 11px;
   font-weight: bold;
   height: 23px;
   line-height: 23px;
   padding: 0 15px;
-  text-shadow: 0 1px 0 #f1f3f2;
+  text-shadow: 0 1px 0 #FFFFFF;
 }
+
+.button_tagText:hover {
+background: #dcdfdf; /* Old browsers */
+background: -moz-linear-gradient(top, #dcdfdf 0%, #b6b9b9 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dcdfdf), color-stop(100%,#b6b9b9)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* IE10+ */
+background: linear-gradient(top, #dcdfdf 0%,#b6b9b9 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdfdf', endColorstr='#b6b9b9',GradientType=0 );
+text-decoration:none; color:#333333;}
 
 .active_tagResult {
    background: none repeat scroll 0 0 #E0982B;
@@ -1925,7 +1972,7 @@ a.twitter{
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
-  background: url("/assets/sprite.png") no-repeat scroll -46px -177px #dcdfdf;
+  background: url("/assets/plus.png") no-repeat scroll 6px 0px #DCDFDF;
   border-left: 1px solid #d3ebec;
   cursor: pointer;
   display: block;
@@ -1934,13 +1981,16 @@ a.twitter{
   padding: 0 7px;
   width: 10px;
 }
+.not_activeSearch:hover {
 
+background: url("/assets/plushov.png") no-repeat scroll 6px 0px #b6b9b9;
+}
 .activeSearch {
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
-  background: url("/assets/sprite.png") no-repeat scroll -75px -209px #DBDFE0;
-  border-left: 1px solid #f2f5ec;
+  background: url("/assets/min_black.png") no-repeat scroll 6px 0px #2A2A2A;
+  border-left: 1px solid #4C4A4A;
   cursor: pointer;
   display: block;
   float: left;
@@ -1948,7 +1998,9 @@ a.twitter{
   padding: 0 7px;
   width: 10px;
 }
-
+.activeSearch:hover {
+background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
+}
 .comment {
   overflow: hidden;
   padding-top: 10px;
@@ -1988,7 +2040,8 @@ a.twitter{
 }
 
 .comment ul li a:hover {
-  text-shadow: -1px -1px #CCCCCC;
+
+  text-decoration:underline
 }
 
 .people_comments {
@@ -2569,25 +2622,26 @@ a.twitter{
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   background: none repeat scroll 0 0 #999999;
-  float: right;
-  height: 30px;
-  margin-right: 37px;
-  width: 484px;
+ padding-left:1px;
+    float: right;
+    height: 55px;
+    margin-right: 25px;
+    position: relative;
+    width: 495px;
 }
 
-.about_link span{
+.about_link span, .about_link_profile span{
   border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   background: none repeat scroll 0 0 #E7F7F7;
-  color: #666666;
+  color: #696468;
   float: left;
-  height: 28px;
   margin: 1px;
-  width: 160px;
+  width: 80px;
   font-size: 14px;
-  text-align: center;
   line-height: 28px;
+  padding:5px 5px 10px 20px;
 }
 
 .bio {
@@ -4217,7 +4271,7 @@ a.connect_cross{
   float: left;
   font-size: 18px;
   margin-top: 10px;
- 
+
 }
 
 .faq_description {
@@ -4260,7 +4314,7 @@ a.connect_cross{
   font-size: 24px;
 }
 
- 
+
 .compose_new_message {
   border-radius: 5px;
   -moz-border-radius: 5px;
@@ -4276,7 +4330,7 @@ a.connect_cross{
   margin: 15px 12px 0;
   padding: 0px 10px;
   text-shadow:0 1px 0 #e8ecec;
-  
+
 }
 
 .compose_new_message:hover {
@@ -4286,7 +4340,7 @@ a.connect_cross{
 .compose_new_message a:hover {text-decoration:none;}
 .compose_new_message_active {
   background: url("/assets/basic-gray-click.png") repeat-x;
-  
+
 }
 
 .compose_new_message span {
@@ -4430,7 +4484,7 @@ a.connect_cross{
   height: 5px;
   margin: 6px 0 0 10px;
   width: 10px;
-  
+
 }
 
 .messages_up_arrow {
@@ -4856,7 +4910,7 @@ a.connect_cross{
   color: #999999;
   float: right;
   font-size: 12px;
-  
+
   line-height: 33px;
   padding-left: 5px;
 }
@@ -5010,7 +5064,7 @@ a.connect_cross{
 }
 
 .hot_jot_comment {
-  
+
   float: left;
   margin: 0 10px 10px;
   padding: 8px 0;
@@ -5269,7 +5323,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
-  
+
 }
 .pad_core {padding-left: 9px;}
 .win.chrome .first_badge,
@@ -5308,7 +5362,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
-  
+
 }
 
 .third_badge {
@@ -5326,7 +5380,7 @@ a.connect_cross{
   position: absolute;
   width: 33px;
   z-index: 100;
-  
+
 }
 
 .stuff_hover .hot_jot_hover{
@@ -5356,7 +5410,7 @@ a.connect_cross{
   color: #FFFFFF;
   font-size: 20px;
   font-weight: bold;
-  text-align: center; 
+  text-align: center;
 }
 
 
@@ -5423,7 +5477,7 @@ a.connect_cross{
    .next_icon2  {float: left;
   height: 265px;
   width: 25px;}
-  
+
 .previous_icon2 a{
  background: url("/assets/sprite.png") no-repeat scroll -310px -550px  transparent;
     cursor: pointer;
@@ -5453,13 +5507,59 @@ background: url("/assets/sprite.png") no-repeat scroll  -270px -550px transparen
 .next_icon2 a:hover { background: url("/assets/sprite.png") no-repeat scroll -292px -550px transparent;}
 .previous_people2 {
   height: 100px;
-  width: 25px; 
+  width: 25px;
 }
 .nexticon2 { float:left;}
 
 /* END OF HOT STUFF
 ----------------------------------------------------------------------------------------------------*/
 
+/* COLORBOX CSS
+----------------------------------------------------------------------------------------------------*/
+
+/*
+    ColorBox Core Style:
+    The following CSS is consistent between example themes and should not be altered.
+*/
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block;}
+.cboxIframe{width:100%; height:100%; display:block; border:0;}
+
+/*
+    User Style:
+    Change the following styles to modify the appearance of ColorBox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#cboxOverlay{background:#000;}
+#colorbox{}
+    #cboxContent{margin-top:20px;}
+        #cboxError{padding:50px; border:1px solid #ccc;}
+        #cboxLoadedContent{border:5px solid #000; background:#fff;}
+        #cboxTitle{position:absolute; top:-20px; left:0; color:#ccc;}
+        #cboxCurrent{position:absolute; top:-20px; right:0px; color:#ccc;}
+        #cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}
+        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(/assets/controls.png) no-repeat top left; width:28px; height:65px; text-indent:-9999px;}
+        #cboxPrevious.hover{background-position:bottom left;}
+        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(/assets/controls.png) no-repeat top right; width:28px; height:65px; text-indent:-9999px;}
+        #cboxNext.hover{background-position:bottom right;}
+        #cboxLoadingOverlay{background:#000;}
+        #cboxLoadingGraphic{background:url(/assets/loading.gif) no-repeat center center;}
+        #cboxClose{position:absolute; top:5px; right:5px; display:block; background:url(/assets/controls.png) no-repeat top center; width:38px; height:19px; text-indent:-9999px;}
+        #cboxClose.hover{background-position:bottom center;}
+
+#cboxCurrent {
+  display: none !important;
+}
+
+/* END OF COLORBOX CSS
+----------------------------------------------------------------------------------------------------*/
 
 /* JOT MODE
 ----------------------------------------------------------------------------------------------------*/
@@ -7458,16 +7558,16 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
 }
 
 .jot_detail_nickname {
-  color: #666666;
-  display: block;
-  font-size: 12px;
-  font-weight: bold;
+    color: #666666;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .jot_detail_realname {
-  color: #666666;
-  display: block;
-  font-size: 14px;
+    color: #666666;
+    display: block;
+    font-size: 14px;
 }
 
 .jot_detail_upper_pannel {
@@ -8624,7 +8724,7 @@ span.privacy_text {
   border-radius: 5px;
   background: #edf1f2;
   float: left;
-  padding: 10px;
+  padding: 0px;
   width: 100%;
 }
 
@@ -8632,10 +8732,11 @@ span.privacy_text {
   color: #616262;
   font-size: 13px;
   line-height: 20px;
+  padding:8px;
 }
 
 td.td_tittle {
-  padding-top: 2px;
+
   width: 200px;
 }
 
@@ -8732,15 +8833,15 @@ a.connect_cross{
 .info_box {
     display: block;
     border-radius:8px;
-    
-   
+
+
   background: #DCDFDF;
-    
+
     color: #666666;
-   
-    font-size: 12px;padding: 10px; 
+
+    font-size: 12px;padding: 10px;
 	margin-bottom:10px
-    
+
 
 }
 .info_box p {line-height: 30px;}

@@ -32,7 +32,7 @@
 <div id="main-magicbox-jot-input" class="magicbox-content-tab">
 
   <%= form_tag jots_path(:format => 'json'), :id => 'main-magicbox-jot-input-form' do %>
-    <div class="jot_search search jot-tab-content clearfix">
+    <div class="jot_search search jots jot-tab-content clearfix">
       <%= text_field_tag 'jot[title]', nil, :placeholder => 'Tags, places, users, search from them here!',
         :id => 'jot-search-field', :autocomplete => :off %>
       <%= submit_tag '' %>

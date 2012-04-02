@@ -1,48 +1,99 @@
 <script id="list-jot-template" type="text/template">
-  <div class="search_result_container clearfix">
-    <div class="people_post">
-      <div class="header_post_jot">
-        <img src="/assets/avatar.png" alt="">
-        <span><#= user.username #></span>
 
-        <# if(in_array(current_user._id, user_mentioned_ids)){ #>
+
+
+
+
+
+
+
+
+  <div class="search_result_container clearfix">
+
+     <div class="people_post">
+                <div class="header_post_jot">
+                  <img alt="" src="/assets/avatar.png">
+                  <span><#= user.username #></span>
+
+                   <# if(in_array(current_user._id, user_mentioned_ids)){ #>
         <div class="header_yellowribon"></div>
         <# } #>
-        <ul>
-
-          <li>
-            <a href="javascript:void(0);">
-              <abbr class="timeago link-to-detail" title="<#= created_at #>"></abbr>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">
+        
+          <ul class="jot_post_header">
+          <li><a href="javascript:void(0);"><abbr class="timeago link-to-detail" title="<#= created_at #>"></abbr></a></li>
+          <li><a href="javascript:void(0);">
               <span class="header_thumbup link-to-thumbsup"></span>
               <span class="thumbsup-counter"><#= user_thumbsup_ids.length #></span>
             </a>
           </li>
-          <li>
-            <a href="javascript:void(0);">
+          <li><a href="javascript:void(0);">
               <span class="header_thumbdown link-to-thumbsdown"></span>
               <span class="thumbsdown-counter"><#= user_thumbsdown_ids.length #></span>
-            </a>
-          </li>
+          </a></li>
+           <li class="stretch">.</li>
           <li><a href="javascript:void(0);"><span class="header_rejot"></span>Text</a></li>
           <li class="lastli"><a href="javascript:void(0);" class="link-to-fav"><span class="header_fav <# if(in_array(current_user._id, user_favorite_ids)){ #>header_fav_active<# } #>"></span></a></li>
 
-        </ul>
+
+
+                  
+
+
+                  </ul>
+                </div>
+                <div class="down-sign"></div>
+                <div class="clear"></div>
       </div>
-      <div class="down-sign"></div>
-      <div class="clear"></div>
-    </div>
+
 
     <div class="container-result">
-      <h2><#= title #></h2>
-      <p class="hour"><abbr class="timeago" title="<#= created_at #>"><#= created_at #></abbr></p>
+
+      <!-- TITLE JOT -->
+     <div class="jot-title-heading padzero padbot_ten clearfix">
+     <h2><#= title #></h2>
+     </div>
+
+
+     <!-- WRITE MORE LIST -->
+      <div class="post bordertop_post">
+                <span class="post-icon" >&nbsp;</span>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.......
+                </p>
+                <a class="more" href="#">More</a>
+      </div>
+
+      <!-- ATTACHMENT LIST -->
+      <div class="attach pad_ten">
+                <span class="attach-icon">&nbsp;</span>
+                <div class="jot_asset_left left">
+                  <img alt="video" src="/assets/video.jpg">
+                </div>
+                <div id="video-detail" class="right">
+
+                  <span class="multimedia padzero">&nbsp;</span>
+                  <p class="video-title padzero">This is Dummie Video (live)</p>
+                  <div class="clear"></div>
+                  <p class="video-detail">A <strong>Jazz </strong>Evening of Fourplay <br>(Bob James, Lee Ritenour, </p>
+                  <a class="link" href="#">http://youtube.com/watch?wjfi2i</a>
+                  <div class="clear"></div>
+                  <p class="uploaded">uploaded via youtube</p>
+                  <a class="more" href="#">2 More attachment</a>
+                </div>
+      </div>
+
+
+
+
+      
 
       <# if(tags.length > 0){ #>
       <div class="tag-incognito">
-        <span class="own_tags_icon">&nbsp;</span>
+      <span class="hot_jot_incognito_icon">&nbsp;</span>
+     
         <div class="button_tag">
           <ul>
             <# _.each(tags, function(tag){ #>
@@ -50,12 +101,177 @@
               <span class="button_tagText"><#= tag.name #></span>
               <span class="not_activeSearch"></span>
             </li>
+          
+                       
             <# }) #>
+
+             <li>
+             <span class="choice_text active_choiceTexts">Dummie</span>
+             <span class="activeSearch"></span>
+            </li>
           </ul>
           <div class="clear"></div>
         </div>
       </div>
       <# } #>
+
+      <!-- IF NO COMMENT 
+      <div class="comment">
+         <span class="comment-icon">&nbsp;</span>
+         <div class="comment_line">
+            <div class="left">
+            <ul>
+            <li class="left"><a href="#">0 comments</a></li>
+            <li class="left">.</li>
+            <li class="left"></li>
+            </ul>
+             </div>                     
+           <div class="clear"></div>
+           </div>
+      <div class="clear"></div>
+      </div> -->
+
+
+
+      <!-- IF HAS COMMENT -->
+      <div class="comment">
+                    <span class="comment-icon">&nbsp;</span>
+                    <div class="comment_line">
+                      <div class="left">
+                      <ul>
+                        <li class="left"><a href="#">16 comments</a></li>
+                        <li class="left">.</li>
+                        <li class="left"><a href="#">View all</a></li>
+                      </ul>
+                      </div>
+                      <div class="right">
+                        <ul>
+
+                        <li class="left"><a href="#">Newest</a></li>
+                        <li class="left">.</li>
+                        <li class="no_margin_right left"><a href="">oldest</a></li>
+                      </ul>
+                      </div>
+                      <div class="clear"></div>
+                    </div>
+                    <div id="scrollbar1" class="comment-content">
+                      <div class="scrollbar" style="height: 255px;"><div class="track" style="height: 255px;"><div class="thumb" style="top: 0px; height: 80.9776px;"><div class="end"></div></div></div></div>
+                      <div class="viewport clearfix">
+                        <div class="overview" style="top: 0px;">
+                          <ul>
+                            <li class="people_comments">
+                              <div class="left">
+                                <img alt="" src="/assets/abdu-avatar.png">
+                              </div>
+                              <div class="content-text">
+                                <span class="name">Me</span><span class="right time">3 hour ago</span>
+                                <div class="clear"></div>
+                                <p>man, please re-up the link. seems it was deleted :( </p>
+                              </div>
+                              <div class="clear"></div>
+                            </li>
+                            <li class="people_comments">
+                              <div class="left">
+                                <img alt="" src="/assets/avatar-metrofx.png">
+                              </div>
+                              <div class="content-text">
+                                <span class="name_blue">Metrofx</span><span class="right time">2 hour ago</span>
+                                <div class="clear"></div>
+                                <p><a class="mail" href="#">@Abduzeedo </a>re-uploaded, enjoy! :)</p>
+                              </div>
+                              <div class="clear"></div>
+                            </li>
+                            <li class="people_comments">
+                              <div class="left">
+                                <img alt="" src="/assets/avata-calichan.png">
+                              </div>
+                              <div class="content-text">
+                                <span class="name_blue">Calichan2</span><span class="right time">45 minutes ago</span>
+                                <div class="clear"></div>
+                                <p><a class="mail" href="#">@MetroFx </a>Sweet, this is just what i needed, thanks!	</p>
+                              </div>
+                              <div class="clear"></div>
+                            </li>
+                            <li class="people_comments">
+                              <div class="left">
+                                <img alt="avatar" src="/assets/avatar-metrofx.png">
+                              </div>
+                              <div class="content-text">
+                                <span class="name_blue">Metrofx</span><span class="right time">14 minutes ago</span>
+                                <div class="clear"></div>
+                                <p><a class="mail" href="#">@calichan2 </a>u welcome! :)</p>
+                              </div>
+                              <div class="clear"></div>
+                            </li>
+                            <li class="people_comments">
+                              <div class="left">
+                                <img alt="avatar" src="/assets/avatar-metrofx.png">
+                              </div>
+                              <div class="content-text">
+                                <span class="name_blue">Metrofx</span><span class="right time">14 minutes ago</span>
+                                <div class="clear"></div>
+                                <p><a class="mail" href="#">@calichan2 </a>u welcome! :)</p>
+                              </div>
+                              <div class="clear"></div>
+                            </li>
+                            <li class="people_comments">
+                              <div class="left">
+                                <img alt="avatar" src="/assets/abdu-avatar.png">
+                              </div>
+                              <div class="content-text">
+                                <span class="name_blue">Abduzeedo</span><span class="right time">5 seconds ago</span>
+                                <div class="clear"></div>
+                                <p>it works! thanks! :D </p>
+                              </div>
+                              <div class="clear"></div>
+                            </li>
+                            <li class="people_comments">
+                              <div class="left">
+                                <img alt="" src="/assets/avata-calichan.png">
+                              </div>
+                              <div class="content-text">
+                                <span class="name_blue">Calichan2</span><span class="right time">45 minutes ago</span>
+                                <div class="clear"></div>
+                                <p><a class="mail" href="#">@MetroFx </a>Sweet, this is just what i needed, thanks!	</p>
+                              </div>
+                              <div class="clear"></div>
+                            </li>
+
+                          </ul>
+                        </div>
+
+
+
+
+
+                      </div>
+
+                    </div>
+                    <div class="clear"></div>
+
+
+                    <div  class="overview_comment">
+                <div class="photo_reply_message">
+                        <span class="reply_text">Reply</span>
+                        <span class="input_replay clarfix">
+                          <span class="reply_message_photo no_margin_left messages_left_path">
+                            <img alt="" src="/assets/avatar-metrofx.png">
+                          </span>
+                          <span class="textarea_reply widefive">
+                            <span class="triangle_inbox">&nbsp;</span>
+                            <textarea cols="" rows="" class="widefive"></textarea>
+                          </span>
+                        </span>
+                        <a class="replay_button" href="">Reply</a>
+                      </div>
+
+                </div>
+
+
+                  </div>
+
+
+      
     </div>
   </div>
 </script>
