@@ -23,12 +23,16 @@ window.AppRouter = Backbone.Router.extend({
     "!/signup": "signup",
 
     "!/signout": "signout",
-    
+
     "!/profile": "profile",
 
     "!/setting": "setting",
-    
-    "!/jots/:id": "jotDetail"
+
+    "!/jots/:id": "jotDetail",
+
+    "!/forgot_password": "forgotPassword",
+
+    "!/change_password/*token": "changePassword"
   },
 
   render: function(parameters){
@@ -108,5 +112,16 @@ window.AppRouter = Backbone.Router.extend({
   jotDetail: function(id){
     this.middleView.closeAll();
     this.magicboxView.openJotDetail(id);
+  },
+
+  forgotPassword: function(){
+    this.middleView.openForgotPassword();
+    return false;
+  },
+
+  changePassword: function(token){
+    if (token) { $(window).trigger('jotky_login', token); }
+    this.middleView.openChangePassword();
+    return false;
   }
 });

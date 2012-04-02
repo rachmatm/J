@@ -7,6 +7,20 @@ module AuthenticationAction
       finish
     end
   end
+  
+  class NotifyForgotPassword < ActionWithAppAuth
+    def start
+      render Authentication.notify_forgot_password params[:email], @client.reset_password_confirmation_url
+      finish
+    end
+  end
+
+  class ResetForgotPassword < ActionWithAppAuth
+    def start
+      render Authentication.reset_forgot_password params[:password], params[:reset_forgot_password_token]
+      finish
+    end
+  end
 
   module Facebook
     class Create < ActionWithAppAuth
