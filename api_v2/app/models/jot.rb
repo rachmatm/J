@@ -28,6 +28,7 @@ class Jot
   has_and_belongs_to_many :user_thumbsdown, :class_name => "User", :inverse_of => :jot_thumbsdown
   has_and_belongs_to_many :rejots, :class_name => "Jot"
   has_and_belongs_to_many :user_mentioned, :class_name => "User", :inverse_of => :jot_mentioned
+  has_many :comments
 
   scope :page, ->(page, per_page) { skip(per_page.to_i * (page.to_i - 1)).limit(per_page.to_i)}
   scope :order_by_default, order_by([[:updated_at, :desc]])
@@ -41,7 +42,7 @@ class Jot
       user = User.where(:username => /#{username}/i).first
 
       if user.present?
-         self.user_mentioned.push user
+        self.user_mentioned.push user
       end
     end
 

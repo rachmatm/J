@@ -26,7 +26,8 @@ class Registration
   field :password_hash, :type => String
   field :token, type: String
   field :avatar, type: String
-  field :facebook_id, type: String
+
+  field :facebook_id, :type => String
   field :twitter_id, :type => String
 
   validates_format_of :username, :with => /^[A-Za-z0-9.\d_]+$/, :message => "can only be alphanumeric, dot and number with no spaces"

@@ -1,0 +1,7 @@
+<script type="text/template" id="user-bar-template">
+  <# if(current_user.avatar){ #>
+  <img class="template-avatar-small" alt="<#= current_user.username #>" src="<#= current_user.avatar.thumb_small.url #>">
+  <# } #>
+  <span class="nickname_logged template-username"><#= current_user.username #></span>
+  <span class="user_little_badge">0</span>
+</script>

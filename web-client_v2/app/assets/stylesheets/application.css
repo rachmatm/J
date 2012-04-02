@@ -1,7 +1,8 @@
 /*
  *= require main
- *= require style
+ *= require colorbox
  *= require_tree ./jquery-carousel
+ *= require style
  *= require patch
  *= require byawax
 */

@@ -108,7 +108,7 @@ html, body{
 
 body {
   background: #FFFFFF;
-  font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-family: "HelveticaNeue, HelveticaCE55RomanRegular, Arial,sans serif";
   margin: 0 auto;
 }
 

@@ -17,8 +17,21 @@ window.ListView = Backbone.View.extend({
   openJot: function(reverse){
     var data = this.model.toJSON();
 
-    this.listJotView = new ListJotView({model: this.model});
+    this.listJotView = new ListJotView({
+      model: this.model
+    });
     this.listJotView.setElement(this.createHolder('list-jot-' + data._id, reverse));
     this.listJotView.render();
+  },
+
+  openComment: function(reverse){
+    var data = this.model.toJSON();
+
+    this.listCommentView = new ListCommentView({
+      model: this.model
+    });
+    
+    this.listCommentView.setElement(this.createHolder('list-comment-' + data._id, reverse));
+    this.listCommentView.render();
   }
 })

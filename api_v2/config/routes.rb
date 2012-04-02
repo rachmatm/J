@@ -20,20 +20,23 @@ HttpRouter.new do
   # User > Show
   # get('/users/(:id)(.:format)').to(UserAction::Show)
 
-  # Me > Index
+  # Me > Show
   get('/me(.:format)').to(MeAction::Show)
 
+  # Me > Update
+  post('/me(.:format)').to(MeAction::Update)
+
   # Me > Create Jot
-  post('/me/jots(.:format)').to(MeAction::Jot::Create)
+  post('/me/jots(.:format)').to(MeAction::JotAction::Create)
 
   # Me > Delete Jot
-  # delete('/me/jots/(:id).(.:format)').to(MeAction::Jot::Delete)
+  # delete('/me/jots/(:id).(.:format)').to(MeAction::JotAction::Delete)
 
   # Me > Show Jot
-  # get('/me/jots/(:jot_id)(.:format)').to(MeAction::Jot::Show)
+  # get('/me/jots/(:jot_id)(.:format)').to(MeAction::JotAction::Show)
 
   # Me > Index Jot
-  get('/me/jots(.:format)').to(MeAction::Jot::Index)
+  get('/me/jots(.:format)').to(MeAction::JotAction::Index)
 
   # Me > Create Nest
   # get('/me/nests.json').to(MeAction::Nest::Create)
@@ -75,25 +78,25 @@ HttpRouter.new do
   # post('/me/messages/(:message_id)/reply(.:format)').to(MeAction::Message::Reply::Create)
 
   # Me > Jot > Create Thumbsup
-  post('/me/jots/(:jot_id)/thumbsup(.:format)').to(MeAction::Jot::Thumbsup::Create)
+  post('/me/jots/(:jot_id)/thumbsup(.:format)').to(MeAction::JotAction::Thumbsup::Create)
 
   # Me > Jot > Create Thumbsdown
-  post('/me/jots/(:jot_id)/thumbsdown(.:format)').to(MeAction::Jot::Thumbsdown::Create)
+  post('/me/jots/(:jot_id)/thumbsdown(.:format)').to(MeAction::JotAction::Thumbsdown::Create)
 
   # Me > Jot > Create Rejot
-  post('/me/jots/(:jot_id)/rejot(.:format)').to(MeAction::Jot::Rejot::Create)
+  post('/me/jots/(:jot_id)/rejot(.:format)').to(MeAction::JotAction::Rejot::Create)
 
   # Me > Jot > Index Thumbsup
-  # get('/me/jots/thumbsup(.:format)').to(MeAction::Jot::Thumbsup::Index)
+  # get('/me/jots/thumbsup(.:format)').to(MeAction::JotAction::Thumbsup::Index)
 
   # Me > Jot > Index Thumbsdown
   # get('/me/jots/thumbsdown(.:format)').to(MeAction::Thumbsdown::Index)
   
   # Me > Jot > Create Favorite
-  post('/me/jots/(:jot_id)/favorites(.:format)').to(MeAction::Jot::Favorite::Create)
+  post('/me/jots/(:jot_id)/favorites(.:format)').to(MeAction::JotAction::Favorite::Create)
 
   # Me > Jot > Index Favorite
-  # get('/me/jots/favorites(.:format)').to(MeAction::Jot::Favorite::Index)
+  # get('/me/jots/favorites(.:format)').to(MeAction::JotAction::Favorite::Index)
 
   # Me > Index Notification
   # get('/me/notifications(.:format)').to(MeAction::Notification::Index)
@@ -101,6 +104,18 @@ HttpRouter.new do
   # Tag > Index
   # get('/tags(.:format)').to(MeAction::Tag::Index)
 
+  # Me > Jot > Create Comment
+  post('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Create)
+
+  # Me > Create Connections
+  post('/me/connections(.:format)').to(MeAction::ConnectionAction::Create)
+  
+  # Me > Delete Connections
+  delete('/me/:id/connections(.:format)').to(MeAction::ConnectionAction::Destroy)
+
+
+  # Me > Jot > Index Comment
+  get('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Index)
 
   # Admin > Auth > New
   get('/lord/login(.:format)').to(AdminAction::Auth::New).name(:admin_auth_new)

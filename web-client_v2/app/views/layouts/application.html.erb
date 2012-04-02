@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html>
   <head>
     <title>Jotky - Landing Page (Not Logged)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -24,9 +24,7 @@
   <body>
     <div class="wraper container_16 clearfix">
 
-      <div class="header clearfix" id="header-holder">
-
-      </div>
+      <div class="header clearfix" id="header-holder"></div>
 
       <div class="container">
         <div class="clearfix">
@@ -49,6 +47,7 @@
     </div>
 
     <div class="footer clearfix" id="footer-holder"></div>
+    <div id="process-stat" class="hidden">Loading ...</div>
 
     <%= render 'templates/alert' %>
     <%= render 'templates/header'  %>
@@ -61,7 +60,15 @@
     <%= render 'templates/jot_list' %>
     <%= render 'templates/login_completion' %>
     <%= render 'templates/jot_detail' %>
+    <%= render 'templates/list_comment' %>
+    <%= render 'templates/user_bar' %>
+    <%= render 'templates/magicbox_profile' %>
+    <%= render 'templates/magicbox_setting' %>
 
     <%= javascript_include_tag 'application' %>
+
+    <% if flash[:error].present? %>
+      <script type="text/javscript">alert("<%= flash[:error] %>");</script>
+    <% end %>
   </body>
 </html>
