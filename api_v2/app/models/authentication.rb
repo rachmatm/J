@@ -23,6 +23,7 @@ class Authentication
   field :password_hash, :type => String
   field :token, type: String
   field :avatar, type: String
+  field :reset_forgot_password_token, type: String
 
   field :facebook_id, :type => String
   field :twitter_id, :type => String
@@ -33,12 +34,45 @@ class Authentication
     data = self.where(:username => username).first
 
     if data.present? and
-        EncryptStringHelper.encrypt_string(password, data.password_salt)[:hash] == data.password_hash
+      EncryptStringHelper.encrypt_string(password, data.password_salt)[:hash] == data.password_hash
 
       data.update_attribute :token, ActiveSupport::SecureRandom.hex(9)
       JsonizeHelper.format({:content => {:token => data.token}});
     else
       JsonizeHelper.format(:error => "Invalid Username or Password", :failed => true)
+    end
+  end
+
+  def self.notify_forgot_password(email, base_url)
+    user = self.where(:email => email).first
+    
+    if user.present?
+      reset_forgot_password_token = ActiveSupport::SecureRandom.hex(11)
+      user.update_attributes :reset_forgot_password_token => reset_forgot_password_token
+
+      user_mail = Mailer.new({:to => email})
+      user_mail.reset_password_notification({}, {:reset_password_url => base_url + reset_forgot_password_token})
+
+      JsonizeHelper.format({:notice => 'Your confirmation letter have been sent, please check your email'})
+    else
+      JsonizeHelper.format({:failed => true, :error => 'Email is not registered, please try again'})
+    end
+  end
+
+  def self.reset_forgot_password(password, reset_forgot_password_token)
+    user = self.where(:reset_forgot_password_token => reset_forgot_password_token).first
+
+    if user.present? and password.length >= 6
+      encrypted_string_data = EncryptStringHelper.encrypt_string(password)
+      user.password_salt = encrypted_string_data[:salt]
+      user.password_hash = encrypted_string_data[:hash]
+
+      user.reset_forgot_password_token = nil
+
+      user.save
+      JsonizeHelper.format({:notice => 'You have updated your password'})
+    else
+      JsonizeHelper.format({:failed => true, :error => 'Your token does not match or your password is not long enough, please try again' })
     end
   end
 

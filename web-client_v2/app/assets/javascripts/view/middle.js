@@ -4,6 +4,7 @@ window.MiddleView = Backbone.View.extend({
     this.holderView = new HolderView;
     this.middleSignupView = new MiddleSignupView;
     this.middleWelcomeView = new MiddleWelcomeView;
+    this.middleAccountSettingView = new MiddleAccountSettingView;
     this.middleJotView = new MiddleJotView({
       model: this.model
     });
@@ -14,6 +15,8 @@ window.MiddleView = Backbone.View.extend({
     this.middleSearchResultView = new MiddleSearchResultView;
     this.middleSearchResultJotView = new MiddleSearchResultJotView;
     this.middleNestTemplate = new MiddleNestTemplate;
+    this.middleForgotPasswordView = new MiddleForgotPasswordView;
+    this.middleChangePasswordView = new MiddleChangePasswordView;
   },
 
 
@@ -93,5 +96,26 @@ window.MiddleView = Backbone.View.extend({
     this.middleNestTemplate.remove();
     this.middleNestTemplate.setElement(this.createHolder('main-middle-nest'));
     this.middleNestTemplate.render(data);
+  },
+  
+  openForgotPassword: function(){
+    this.closeAll();
+    this.middleForgotPasswordView.remove();
+    this.middleForgotPasswordView.setElement(this.createHolder('main-middle-forgot-password'));
+    this.middleForgotPasswordView.render();
+  },
+
+  openChangePassword: function(token){
+    this.closeAll();
+    this.middleChangePasswordView.remove();
+    this.middleChangePasswordView.setElement(this.createHolder('main-middle-change-password'));
+    this.middleChangePasswordView.render(token);
+  },
+
+  openAccountSetting: function(data){
+    this.closeAll();
+    this.middleAccountSettingView.remove();
+    this.middleAccountSettingView.setElement(this.createHolder('main-middle-account-setting'));
+    this.middleAccountSettingView.render(data);
   }
 });

@@ -152,22 +152,30 @@ class Jot
   end
 
   def self.get_search(texts)
+    # Search for any '@' symbols or '#' to determine what
+    # type of searching it is
     users = Twitter::Extractor.extract_mentioned_screen_names(texts)
     hashtags = Twitter::Extractor.extract_hashtags(texts)
 
-    text_array = []
+    text_array = [] # Instantiate an array to put the search terms in
 
+    # Determining what piece of information to extract
+    # from the text and use ternary operator to reduce
+    # if else
     search_type = users.present? ? users : hashtags
-    search_type = search_type.present? ? search_type : texts.split(/\s|,\s|,/)
+    search_type = search_type.present? ? search_type : texts.split(/\s|,\s|,|\s,/)
 
+    # Determining what criteria to be used when searching
+    # again ternary operator is used to reduce if else operation
     search_criteria = users.present? ? {:user_id.in => text_array} : {:tag_ids.all => text_array}
     search_criteria = (users.present? or hashtags.present?) ? search_criteria : {:title.all => text_array}
 
-    search_type.each do |text|
-      text_regex = /#{text}/i
-      text_array.push(text_regex)
-    end
+    # Then each search term is iterated through basic regex
+    # then inserted to 'text_array'
+    search_type.each { |text| text_array.push(/#{text}/i) }
 
+    # After that query is directly delegated with previous
+    # criteria and the value in 'text_array'
     search_result = ActiveSupport::JSON.encode Jot.where(search_criteria)
 
     JsonizeHelper.format :content => search_result
@@ -293,7 +301,11 @@ class Jot
   end
 
   def after_create_append_notification
+    # Detect any mentions with the 'twitter-text' libraries
     mentions = Twitter::Extractor.extract_mentioned_screen_names(self.title)
+
+    # Then for each mention, the notification is made to the
+    # intended user if he/she is available and not self-referring
     mentions.each do |mention|
       user = User.where(:username => mention).first
       parameters = {:type => 'user',

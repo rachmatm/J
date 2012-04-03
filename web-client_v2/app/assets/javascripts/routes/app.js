@@ -23,16 +23,24 @@ window.AppRouter = Backbone.Router.extend({
     "!/signup": "signup",
 
     "!/signout": "signout",
-    
+
     "!/profile": "profile",
 
     "!/setting": "setting",
-    
+
     "!/jots/:id": "jotDetail",
     
     "!/profile/public": "profilePublic",
 
-    "!/nest": "nest"
+    "!/nest": "nest",
+
+    "!/jots/:id": "jotDetail",
+
+    "!/forgot_password": "forgotPassword",
+
+    "!/change_password/*token": "changePassword",
+
+    "!/account_setting": "accountSetting"
   },
 
   render: function(parameters){
@@ -125,6 +133,20 @@ window.AppRouter = Backbone.Router.extend({
   nest: function(){
     this.middleView.closeAll();
     this.middleView.openNest();
+  },
+
+    forgotPassword: function(){
+    this.middleView.openForgotPassword();
+    return false;
+  },
+
+  changePassword: function(token){
+    this.middleView.openChangePassword(token);
+    return false;
+  },
+
+  accountSetting: function(id){
+    this.middleView.closeAll();
+    this.middleView.openAccountSetting(id);
   }
 });
-

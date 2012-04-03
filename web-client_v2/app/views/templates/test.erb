@@ -1,0 +1,356 @@
+<script type="text/template" id="magicbox-setting-template">
+  <div class="about">
+    <div class="about_top">
+      <div class="left">
+        <div class="about_avatar">
+
+          <img alt="rachmatm" src="http://localhost:3000/assets/images/fallback/thumb_big_default.png">
+
+        </div>
+      </div>
+      <div class="left">
+        <div class="big_badge">0</div>
+        <div class="nickname_realname">
+
+          <div class="show-hide-edit-panel">
+            <div class="show-hide-edit-panel-display">
+              <span class="nickname"><#= username #></span>
+            </div>
+            <div class="show-hide-edit-panel-input hidden">
+              <%= form_tag profiles_path, :method => 'put', :id => 'setting-form-username' do  %>
+                <input type="text" name="profile[username]" value="<#= username #>">
+              <% end %>
+            </div>
+          </div>
+
+          <br class="clear">
+
+          <div class="show-hide-edit-panel">
+            <div class="show-hide-edit-panel-display">
+              <span class="realname"><#= realname #></span>
+            </div>
+            <div class="show-hide-edit-panel-input hidden">
+              <%= form_tag profiles_path, :method => 'put', :id => 'setting-form-realname' do  %>
+                <input type="text" name="profile[realname]" value="<#= realname #>">
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="about_link">
+      <span>0 Tags</span>
+      <span class="no_margin_left">0 Jots</span>
+      <span class="no_margin_left">0 Follows</span>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="email_password">
+    <div class="left_path">
+      <span class="email_text">Email</span>
+      <div class="email_path">
+        <%= form_tag profiles_path, :method => 'put', :id => 'setting-form-email' do  %>
+          <div>
+            <input type="text" value="<#= email #>" name="profile[email]">
+            <input type="submit" class="but_save_popup" value="Save">
+          </div>
+        <% end %>
+        <span class="email_information">your email wil not shown to public and it will be used for password recovery</span>
+      </div>
+    </div>
+    <div class="right_path">
+      <span class="pass_text">Password</span>
+      <div class="pass_path">
+        <%= form_tag profiles_path, :method => 'put', :id => 'setting-form-password' do  %>
+          <div>
+            <input type="password" value="" class="no_margin_top" name="profile[password]">
+            <input type="password" value="" name="profile[password_confirmation]" id="profile_password_confirmation">
+            <input type="submit" class="save_style but_save_popup" value="Save">
+          </div>
+        <% end %>
+        <span class="pass_information">6-30 characters</span>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="privacy">
+    <span class="privacy_text">Privacy</span>
+    <%= form_tag profiles_path, :method => 'put', :id => 'setting-form-privacy' do  %>
+
+      <div>
+        <table class="account_setting_table">
+          <tbody>
+            <tr>
+              <td class="td_tittle">&nbsp;</td>
+              <td class="td_radio">Everyone</td>
+              <td class="td_radio">Friends</td>
+              <td class="td_radio">Hide</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">Jots</td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_jot]" value="everyone" <# if(setting_privacy_jot == 'everyone'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_jot]" value="friends" <# if(setting_privacy_jot == 'friends'){ #> checked="friends" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_jot]" value="hide"  <# if(setting_privacy_jot == 'hide'){ #> checked="hide" <# } #> ></td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">Show Location</td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_location]" value="everyone" <# if(setting_privacy_location == 'everyone'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_location]" value="friends" <# if(setting_privacy_location == 'friends'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_location]" value="hide" <# if(setting_privacy_location == 'hide'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">Show Kudos</td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_kudos]" value="everyone" <# if(setting_privacy_kudos == 'everyone'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_kudos]" value="friends" <# if(setting_privacy_kudos == 'friends'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_privacy_kudos]" value="hide" <# if(setting_privacy_kudos == 'hide'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="td_tittle">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td>
+                <input type="submit" value="Save" class="save_style but_save_popup">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+  <div class="privacy">
+    <span class="privacy_text">Deafult Post</span>
+    <%= form_tag profiles_path, :method => 'put', :id => 'setting-form-auto' do  %>
+      <div>
+        <table class="account_setting_table">
+          <tbody>
+            <tr>
+              <td class="td_tittle">&nbsp;</td>
+              <td class="td_radio">Always</td>
+              <td class="td_radio">Ask</td>
+              <td class="td_radio">Never</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">Auto-shorten URL</td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_auto_shorten_url]" value="always" <# if(setting_auto_shorten_url == 'always'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_auto_shorten_url]" value="ask" <# if(setting_auto_shorten_url == 'ask'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_auto_shorten_url]" value="never" <# if(setting_auto_shorten_url == 'never'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="border_bottom_table td_tittle">Auto Complete</td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_auto_complete]" value="always" <# if(setting_auto_complete == 'always'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_auto_complete]" value="ask" <# if(setting_auto_complete == 'ask'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table td_radio"><input type="radio" name="profile[setting_auto_complete]" value="never" <# if(setting_auto_complete == 'never'){ #> checked="checked" <# } #> ></td>
+              <td class="border_bottom_table">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="td_tittle">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td>
+                <input type="submit" value="Save" class="save_style but_save_popup">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+  <div class="privacy">
+    <span class="privacy_text">Connections and Cross-posts<a class="connect_cross" href="">(what is this?)</a></span>
+    <form method="post" id="setting-crosspost" action="/profiles" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="put" name="_method"><input type="hidden" value="KfgFn61Z+9xeoxstJiNE/6QMyTYa03uamjJKguh3Ibk=" name="authenticity_token"></div>
+      <div>
+        <table class="account_setting_table">
+          <tbody>
+            <tr>
+              <td class="td_tittle">&nbsp;</td>
+              <td class="td_radio">Allow</td>
+              <td class="td_radio">Deny</td>
+              <td class="td_radio">Always Cross-post</td>
+              <td>&nbsp;</td>
+            </tr>
+
+            <# _.each(connections, function(connection){ #>
+            <# if(connection.connection_name == 'facebook'){ #>
+            <tr>
+              <td class="border_bottom_table td_tittle">
+                <a href="" class="no_margin_left no_margin_right FB">&nbsp;</a>
+                <span class="name_cross_post"><#= connection.connection_user_name #></span>
+                <a href="" class="unlink">(Unlink)</a>
+              </td>
+              <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="shorten"></td>
+              <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="shorten"></td>
+              <td class="border_bottom_table td_radio"><input type="checkbox" value="jots_1" name="shorten"></td>
+              <td class="border_bottom_table"></td>
+            </tr>
+            <# }else if(connection.connection_name == 'twitter'){ #>
+            <tr>
+              <td class="border_bottom_table td_tittle">
+                <a href="" class="no_margin_left twitter"></a>
+                <span class="name_cross_post"><#= connection.connection_user_name #></span>
+                <a class="ajax-transport" href="/connections/remove/<#= connection._id #>.json" class="unlink">(Unlink)</a>
+              </td>
+              <td class="border_bottom_table td_radio"><input type="radio" checked="checked" value="jots_1" name="complete"></td>
+              <td class="border_bottom_table td_radio"><input type="radio" value="jots_1" name="complete"></td>
+              <td class="border_bottom_table td_radio"><input type="checkbox" value="jots_1" name="complete"></td>
+              <td class="border_bottom_table"></td>
+            </tr>
+            <# } #>
+            <# }); #>
+
+            <tr>
+              <td class="td_tittle">
+                <p class="p_information">
+
+                  <span class="connect_cross">add: &nbsp;</span>
+                  <select name="connect-cross-options" id="connect-cross-options" onchange="if(this.value){location.href=this.value;}">
+                    <option value="">Choose Provider</option>
+                    <option value="/auth/facebook_connection">Facebook</option>
+                    <option value="/auth/twitter_connection">Twitter</option>
+                  </select>
+                  <!-- a class="no_padding_left connect_cross link-to-facebook-connection" href="/auth/facebook_connection">add facebook</a>
+                  <a class="no_padding_left connect_cross link-to-twitter-connection" href="/auth/twitter_connection">add twitter</a -->
+                </p>
+              </td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td>
+                <input type="submit" value="Save" class="save_style but_save_popup">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>      </div>
+  <div class="privacy">
+    <span class="privacy_text">Media Upload</span>
+    <form action="">
+      <div>
+        <table class="account_setting_table">
+          <tbody>
+            <tr>
+              <td colspan="5"><p class="border_bottom_table p_information">If you choose to upload media from your computer, they will be stored either on your Facebook account, your youtube account, or both*</p></td>
+            </tr>
+            <tr>
+              <td class="td_tittle">
+                <span class="upload_videos">&nbsp;</span>
+                <span class="upload_videos_text">Upload videos to</span>
+              </td>
+              <td class="td_radio">
+                <label for="first_fb_label" class="fb_label"></label>
+                <input type="checkbox" name="complete" id="first_fb_label">
+              </td>
+              <td class="td_radio">
+                <label for="youtube_label" class="youtube_label"></label>
+                <input type="checkbox" name="complete" id="youtube_label">
+              </td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="td_tittle">
+                <span class="upload_picture">&nbsp;</span>
+                <span class="upload_videos_text">Upload pictures to</span>
+              </td>
+              <td class="td_radio">
+                <label for="second_fb_label" class="fb_label"></label>
+                <input type="checkbox" name="complete" id="second_fb_label">
+              </td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="">&nbsp;</td>
+            </tr>
+            <tr>
+              <td class="td_tittle">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td class="td_radio">&nbsp;</td>
+              <td>
+                <input type="submit" value="Save" class="save_style but_save_popup">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+</script>
+
+
+
+
+
+// JOT
+
+<script id="list-jot-template" type="text/template">
+  <div class="search_result_container clearfix">
+    <div class="people_post">
+      <div class="header_post_jot">
+        <img src="/assets/avatar.png" alt="">
+        <span><#= user.username #></span>
+
+        <# if(in_array(current_user._id, user_mentioned_ids)){ #>
+        <div class="header_yellowribon"></div>
+        <# } #>
+        <ul>
+
+          <li>
+            <a href="javascript:void(0);">
+              <abbr class="timeago link-to-detail" title="<#= created_at #>"></abbr>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">
+              <span class="header_thumbup link-to-thumbsup"></span>
+              <span class="thumbsup-counter"><#= user_thumbsup_ids.length #></span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">
+              <span class="header_thumbdown link-to-thumbsdown"></span>
+              <span class="thumbsdown-counter"><#= user_thumbsdown_ids.length #></span>
+            </a>
+          </li>
+          <li><a href="javascript:void(0);"><span class="header_rejot"></span>Text</a></li>
+          <li class="lastli"><a href="javascript:void(0);" class="link-to-fav"><span class="header_fav <# if(in_array(current_user._id, user_favorite_ids)){ #>header_fav_active<# } #>"></span></a></li>
+
+        </ul>
+      </div>
+      <div class="down-sign"></div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="container-result">
+      <h2><#= title #></h2>
+
+
+      <# if(tags.length > 0){ #>
+      <div class="tag-incognito">
+        <span class="own_tags_icon">&nbsp;</span>
+        <div class="button_tag">
+          <ul>
+            <# _.each(tags, function(tag){ #>
+            <li>
+              <span class="button_tagText"><#= tag.name #></span>
+              <span class="not_activeSearch"></span>
+            </li>
+            <# }) #>
+          </ul>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <# } #>
+    </div>
+  </div>
+</script>

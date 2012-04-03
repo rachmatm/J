@@ -203,7 +203,7 @@ class User
     :avatar_twitter_normal,
     :avatar_twitter_default
   ]
-  
+
   NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
@@ -311,11 +311,18 @@ class User
     end
   end
 
+  def search(text)
+    stripped_text = text[1..-1]
+    search_result = ActiveSupport::JSON.encode User.where(:username => /#{stripped_text}/i).only(:username)
+
+    JsonizeHelper.format :content => search_result
+  end
+
   def _current_user_set_locations(parameters)
     parameters_location = []
 
     parameters.to_a.each do | location |
-      parameters_location << location[1]
+      parameters_location.push location[1]
     end
     
     parameters = parameters_location
@@ -329,7 +336,7 @@ class User
     parameters_location = []
 
     parameters.to_a.each do | location |
-      parameters_location << location[1]
+      parameters_location.push location[1]
     end
 
     parameters = parameters_location
@@ -347,7 +354,7 @@ class User
     
     #set tags
     tag_names = Twitter::Extractor.extract_hashtags(parameters[:title])
-    tag_objs = _current_user_set_tags(tag_names)
+    tag_objs = _current_user_set_tags(parameters[:title])
     jot.tags = tag_objs
     
     #set cross-post upload
@@ -477,7 +484,7 @@ class User
     jot = Jot.find(jot_id)
 
     unless self.jot_favorites.include?(jot)
-      self.jot_favorites << jot
+      self.jot_favorites.push jot
       JsonizeHelper.format :notice => "Jot is now in favorites", :faved => true
     else
       self.jot_favorites.delete jot
@@ -510,9 +517,9 @@ class User
     jot = Jot.find(jot_id)
 
     jot.user_thumbs_up.delete self
-    
-    jot.user_thumbs_up << self
-    
+
+    jot.user_thumbs_up.push self
+
     jot.user_thumbs_down.delete self
 
     JsonizeHelper.format :notice => "Jot was thumbed up",
@@ -526,7 +533,7 @@ class User
 
     jot.user_thumbs_down.delete self
 
-    jot.user_thumbs_down << self
+    jot.user_thumbs_down.push self
 
     jot.user_thumbs_up.delete self
     
@@ -583,7 +590,7 @@ class User
 
     tag_objs = Array.new
 
-    tag_names.uniq.each do |tag_name|
+    tag_arr.uniq.each do |tag_name|
       begin
         tag = self.tags.find tag_name.to_s.downcase
         tag._current_tag_set_meta_subcription self.id
@@ -597,7 +604,7 @@ class User
         tag = self.tags.create :name => tag_name.to_s.downcase
         tag._current_tag_set_meta_subcription self.id
       ensure
-        tag_objs << tag
+        tag_objs.push tag
       end
     end
 
@@ -620,6 +627,12 @@ class User
     self.save
   end
 
+  def current_user_search_tags(text)
+    search_result = ActiveSupport::JSON.encode Tag.desc('meta.weight').where(:name => /#{text}/i)
+
+    JsonizeHelper.format :content => search_result
+  end
+
   # Relation: Files
   def _current_user_set_files(files = [])
     raise 'User#_current_user_set_files Wrong Parameters' unless files.is_a? Array
@@ -628,9 +641,9 @@ class User
 
     files.each do |id, file|
       begin
-        file_objs << self.attachments.push(File.find file[:id])
+        file_objs.push self.attachments.push(File.find file[:id])
       rescue
-        file_objs << self.attachments.create(:file => file['file'])
+        file_objs.push self.attachments.create(:file => file['file'])
       end
     end
 
@@ -1099,8 +1112,8 @@ class User
     message_id = params[:id]
     message_array = []
     private_message = Message.any_of({ sender_id: "#{user_id}" }, { recipient_id: "#{user_id}" }).find(message_id)
-    message_array << private_message
-    message_array << private_message.replies
+    message_array.push private_message
+    message_array.push private_message.replies
     message_array.flatten
     return JsonizeHelper.format :content => message_array
   rescue

@@ -3,7 +3,8 @@ WebClientV2::Application.routes.draw do
 
   resource :registrations, :only => [:create]
 
-  resources :authentications, :only => [:create]
+  resources :authentications, :only => [:create, :notify_forgot_password] do
+  end
 
   resource :profiles, :only => [:show, :update]
 
@@ -25,6 +26,7 @@ WebClientV2::Application.routes.draw do
   get '/auth/twitter_connection', :as => 'twitter_connection'
   get '/auth/twitter_connection/callback' => 'authentications#twitter_connection'
 
+
   resources :connections, :only => [:index, :create] do
     get 'destroy'
   end
@@ -33,5 +35,12 @@ WebClientV2::Application.routes.draw do
 
   resources :nests do
     get 'update'
+  end
+
+  post '/notify_forgot_password' => 'authentications#notify_forgot_password', :as => 'notify_forgot_password'
+  post '/reset_forgot_password' => 'authentications#reset_forgot_password', :as => 'reset_forgot_password'
+
+  resource :connections, :only => [] do
+    get 'remove/:id' => 'connections#remove', :as => 'remove'
   end
 end

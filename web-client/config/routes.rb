@@ -1,5 +1,5 @@
 WebClient::Application.routes.draw do
-  root :to => 'searches#index'
+  root :to => 'searches#show'
 
   resource :dashboards, :only => [:show], :path => 'dashboard'
 
@@ -110,5 +110,9 @@ WebClient::Application.routes.draw do
   get 'hot_stuff'     => 'hotstuffs#show'
   get 'jotpost' => 'jotposts#show'
 
-  resources :searches, :path => 'search'
+  resource :searches, :path => 'search' do
+    get '/get_tag' => 'searches#get_tag'
+    get '/get_user' => 'searches#get_user'
+  end
+
 end

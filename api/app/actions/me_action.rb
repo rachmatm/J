@@ -17,6 +17,13 @@ module MeAction
     end
   end
 
+  class Search < ActionWithTokenAuth
+    def start
+      render @current_user.search params[:text]
+      finish
+    end
+  end
+
 # Jots
 # ------------------------------------------------------------------------
 
@@ -127,6 +134,13 @@ module MeAction
   class IndexTags < ActionWithTokenAuth
     def start
       render @current_user.current_user_get_tags :per_page => params[:per_page], :page => params[:page]
+      finish
+    end
+  end
+
+  class SearchTags < ActionWithTokenAuth
+    def start
+      render @current_user.current_user_search_tags params[:text]
       finish
     end
   end

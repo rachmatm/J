@@ -34,8 +34,8 @@ class Mailer
 
     @mail.to = @options[:to]
     @mail.from = @options[:form]
-    @mail.subject = "Here are some files for you!"
-    @mail.text = "asd"
+    @mail.subject = "Password Recovery"
+    @mail.text = ""
     @mail.html = template(Server::Application.root('views/mailer/reset_password_confirmation.html.erb'), @locals.merge(locals))
     
     email = EM::Protocols::SmtpClient.send @options.merge(:content => "#{@mail.to_s}\r\n.\r\n")

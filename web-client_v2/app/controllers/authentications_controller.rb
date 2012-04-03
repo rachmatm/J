@@ -12,6 +12,28 @@ class AuthenticationsController < ApplicationController
     end
   end
   
+  def notify_forgot_password
+    respond_to do |format|
+
+      format.json do
+        render :json => api_connect('/authentications/notify_forgot_password.json', params[:forgot_password], "post")
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
+  def reset_forgot_password
+    respond_to do |format|
+
+      format.json do
+        render :json => api_connect('/authentications/reset_forgot_password.json', params[:change_password], "post")
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
   def facebook
     
     oauth = request.env['omniauth.auth']

@@ -8,6 +8,12 @@ HttpRouter.new do
   # Authentication > Create
   post('/authentications(.:format)').to(AuthenticationAction::Create)
 
+  # Authentication > NotifyForgotPassword
+  post('/authentications/notify_forgot_password(.:format)').to(AuthenticationAction::NotifyForgotPassword)
+
+  # Authentication > ChangePassword
+  post('/authentications/reset_forgot_password(.:format)').to(AuthenticationAction::ResetForgotPassword)
+
   # Authentication > Create Facebook
   post('/authentications/facebook(.:format)').to(AuthenticationAction::Facebook::Create)
 

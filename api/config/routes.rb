@@ -77,6 +77,7 @@ HttpRouter.new do
   # Me
   get('/me(.:format)').to(MeAction::Index)
   post('/me(.:format)').to(MeAction::Update)
+  get('/me/search(.:format)').to(MeAction::Search)
 
   # Me - Jots
   post('/me/jots(.:format)').to(MeAction::CreateJot)
@@ -96,6 +97,7 @@ HttpRouter.new do
   # Me - Tags
   post('/me/tags/subscribe(.:format)').to(MeAction::SubscribeTags)
   post('/me/tags/unsubscribe(.:format)').to(MeAction::UnsubscribeTags)
+  get('/me/tags/search(.:format)').to(MeAction::SearchTags)
   get('/me/tags(.:format)').to(MeAction::IndexTags)
 
   # Me - Private Messages
