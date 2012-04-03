@@ -359,3 +359,12 @@
 
 #magicbox-setting-content input.error{
   background:#FFB6C1}
+
+.portlet_tosca .img_right{
+cursor:pointer;}
+
+.rename_popup, .delete_popup, .add_group_popup{
+position:static;}
+
+form input.error{
+background:#FFB6C1;}

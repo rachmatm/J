@@ -1,0 +1,131 @@
+<script type="text/template" id="search-result-template">
+  <div class="people_search_result">
+    <div class="people_search_header">
+      <ul>
+        <li>
+          <a class="people_notactive" href="">
+            <span class="people_notactive_icon">&nbsp;</span>
+            <span class="notactive_text">People</span>
+          </a>
+          <a class="people_active" href="" style="display: none;">
+            <span class="people_active_icon">&nbsp;</span>
+            <span class="active_text">People</span>
+          </a>
+        </li>
+        <li>
+          <span class="people_dot_separator">&nbsp;</span>
+        </li>
+        <li>
+          <a class="search_notactive" href="">
+            <span class="search_notactive_icon">&nbsp;</span>
+            <span class="notactive_text">Search <#= keywords #></span>
+          </a>
+          <a class="search_active" href="" style="display: none;">
+            <span class="search_active_icon">&nbsp;</span>
+            <span class="active_text">Search <#= keywords #></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="people_search_middle">
+      <ul>
+        <li>
+          <a class="notactive_by_name" href="">
+            <span class="notactive_by_name_icon">&nbsp;</span>
+            <span class="search_middle_notactive_text">by name</span>
+          </a>
+          <a class="active_by_name" href="" style="display: none;">
+            <span class="active_by_name_icon">&nbsp;</span>
+            <span class="search_middle_active_text">by name</span>
+          </a>
+        </li>
+        <li>
+          <a class="notactive_by_kudos" href="">
+            <span class="notactive_by_kudos_icon">&nbsp;</span>
+            <span class="search_middle_notactive_text">by kudos</span>
+          </a>
+          <a class="active_by_kudos" href="" style="display: none;">
+            <span class="active_by_kudos_icon">&nbsp;</span>
+            <span class="search_middle_active_text">by kudos</span>
+          </a>
+        </li>
+        <li>
+          <a class="notactive_by_location" href="">
+            <span class="notactive_by_location_icon">&nbsp;</span>
+            <span class="search_middle_notactive_text">by location</span>
+          </a>
+          <a class="active_by_location" href="" style="display: none;">
+            <span class="active_by_location_icon">&nbsp;</span>
+            <span class="search_middle_active_text">by location</span>
+          </a>
+        </li>
+        <li>
+          <a class="notactive_by_tags" href="">
+            <span class="notactive_by_tags_icon">&nbsp;</span>
+            <span class="search_middle_notactive_text">by tags</span>
+          </a>
+          <a class="active_by_tags" href="" style="display: none;">
+            <span class="active_by_tags_icon">&nbsp;</span>
+            <span class="search_middle_active_text">by tags</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="people_search_content">
+      <ul>
+        <# _.each(users, function(user){ #>
+        <li>
+          <span class="first_badge">97</span>
+          <div class="people_content_left">
+            <img alt="<#= user.username #>" src="<#= user.avatar.thumb_medium.url #>">
+            <div class="people_action_icon">
+              <div class="people_message">
+                <a href="">&nbsp;</a>
+              </div>
+              <div class="people_write">
+                <a href="">&nbsp;</a>
+              </div>
+              <div class="people_view">
+                <a href="">&nbsp;</a>
+              </div>
+            </div>
+          </div>
+          <div class="people_content_right">
+            <div class="people_content_top">
+              <div class="content_top_left_side">
+                <a href="#"><#= user.username #></a>
+                <span><#= user.location #></span>
+              </div>
+              <div class="content_top_right_side">
+                <span><#= user.realname #></span>
+                <p><#= user.bio #></p>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="people_content_bottom">
+              <div class="content_bottom_left_side">
+                <a href="">120 Jots</a>
+              </div>
+              <div class="content_bottom_right_side">
+                <ul>
+                  <# _.each(_.uniq(user.tag_ids), function(tag){ #>
+                  <li class="li_serach_style">
+                    <span class="button_tagText"><#= tag #></span>
+                    <span class="not_activeSearch"></span>
+                  </li>
+                  <# }) #>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <# }) #>
+      </ul>
+
+    </div>
+
+
+    <div class="clear"></div>
+  </div>
+</script>

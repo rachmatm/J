@@ -13,10 +13,15 @@ window.MagicboxJotView = Backbone.View.extend({
     this.jots.bind('all', this.renderItem, this);
     this.jots.bind('reset', this.resetItem, this);
 
-    this.middleView = new MiddleView({model: this.jots});
+    this.middleView = new MiddleView({
+      model: this.jots
+    });
     this.middleView.setElement('#main-middle');
 
     this.validates();
+
+    this.connections = new ConnectionCollection;
+    this.setButtonAnimation();
   },
 
   validates: function(){
@@ -81,6 +86,89 @@ window.MagicboxJotView = Backbone.View.extend({
    
     this.jots.each(function(data){
       _this.item(data);
+    });
+  },
+
+  xhrMagicField: null,
+
+  keywordMagicField: null,
+
+  renderMagicField: function(){
+    var _this = this;
+
+    $('#jot-form-title-field').bind('keyup', function(){
+      var regex_f = new RegExp(/\/[F|f]\/(\S*)/);
+      var regex_f_data = regex_f.exec(this.value);
+
+      if(regex_f_data && regex_f_data[1] && _this.keywordMagicField != regex_f_data[1]){
+        
+        if(_this.xhrMagicField){
+          _this.xhrMagicField.abort();
+        }
+
+        _this.keywordMagicField = regex_f_data[1];
+        
+        _this.xhrMagicField = _this.connections.fetch({
+          data: {
+            provider: 'facebook',
+            allowed: true,
+            keyword: _this.keywordMagicField
+          },
+          beforeSend: function(){
+          },
+          success: function(data, textStatus, jqXHR){
+            alert(JSON.stringify(data));
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+            alert(textStatus);
+          }
+        });
+      }
+      else if(/(\/T)|(\/t)/.test(this.value)){
+        
+    }
+    });
+  },
+
+  events:{
+    'click #jot-bar-write-more': 'jotBarWriteMore',
+    
+    'click #jot-bar-clip': 'jotBarClip',
+
+    'click #jot-bar-location': 'jotBarLocation',
+
+    'click #jot-bar-tag': 'jotBarTag'
+  },
+
+  jotBarWriteMore: function(){
+    $('#jot-write-more-panel').toggleClass('hidden');
+  },
+
+  jotBarClip: function(){
+    $('#jot-clip-panel').toggleClass('hidden');
+  },
+
+  jotBarLocation: function(){
+    $('#jot-location-panel').toggleClass('hidden');
+  },
+
+  jotBarTag: function(){
+    $('#jot-tag-more').toggleClass('hidden');
+  },
+
+  setButtonAnimation: function(){
+    var buttons = $(this.el).find('.jot-bar-button');
+
+    buttons.hover(
+      function(){
+        $(this).addClass('jot_hover');
+      },
+      function(){
+        $(this).removeClass('jot_hover');
+      });
+
+    buttons.bind('click', function(){
+      $(this).toggleClass('jot_click jot_click_active');
     });
   }
 })

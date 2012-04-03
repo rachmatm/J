@@ -19,7 +19,11 @@
     ordered & tabbed in a way that represents the nesting of the generated HTML.
 */
 #cboxOverlay{background:#fff;}
-#colorbox{}
+#cboxClose{display:none;}
+#cboxContent{background:#fff; overflow:hidden;}
+.cboxIframe{background:#fff;}
+#cboxLoadingOverlay{background:#fff url(/assets/colorbox/loading.gif) no-repeat 5px 5px;}
+/*#colorbox{}
     #cboxTopLeft{width:25px; height:25px; background:url(/assets/colorbox/border1.png) no-repeat 0 0;}
     #cboxTopCenter{height:25px; background:url(/assets/colorbox/border1.png) repeat-x 0 -50px;}
     #cboxTopRight{width:25px; height:25px; background:url(/assets/colorbox/border1.png) no-repeat -25px 0;}
@@ -37,14 +41,14 @@
         #cboxSlideshow{position:absolute; bottom:0px; right:42px; color:#444;}
         #cboxPrevious{position:absolute; bottom:0px; left:0; color:#444;}
         #cboxNext{position:absolute; bottom:0px; left:63px; color:#444;}
-        #cboxLoadingOverlay{background:#fff url(/assets/colorbox/loading.gif) no-repeat 5px 5px;}
+        
         #cboxClose{position:absolute; bottom:0; right:0; display:block; color:#444;}
 
-/*
+
   The following fixes a problem where IE7 and IE8 replace a PNG's alpha transparency with a black fill
   when an alpha filter (opacity change) is set on the element or ancestor element.  This style is not applied to or needed in IE9.
   See: http://jacklmoore.com/notes/ie-transparency-problems/
-*/
+
 .cboxIE #cboxTopLeft,
 .cboxIE #cboxTopCenter,
 .cboxIE #cboxTopRight,
@@ -56,10 +60,10 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);
 }
 
-/*
+
   The following provides PNG transparency support for IE6
   Feel free to remove this and the /ie6/ directory if you have dropped IE6 support.
-*/
+
 .cboxIE6 #cboxTopLeft{background:url(/assets/colorbox/ie6/borderTopLeft.png);}
 .cboxIE6 #cboxTopCenter{background:url(/assets/colorbox/ie6/borderTopCenter.png);}
 .cboxIE6 #cboxTopRight{background:url(/assets/colorbox/ie6/borderTopRight.png);}
@@ -78,4 +82,4 @@
 .cboxIE6 #cboxMiddleLeft,
 .cboxIE6 #cboxMiddleRight {
     _behavior: expression(this.src = this.src ? this.src : this.currentStyle.backgroundImage.split('"')[1], this.style.background = "none", this.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + this.src + ", sizingMethod='scale')");
-}
+}*/

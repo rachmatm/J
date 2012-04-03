@@ -11,6 +11,10 @@ window.MiddleView = Backbone.View.extend({
     this.middleLoginCompletionView = new MiddleLoginCompletionView;
 
     this.middleJotDetailView = new MiddleJotDetailView;
+    this.middleProfileView = new MiddleProfileView;
+    this.middleSearchResultView = new MiddleSearchResultView;
+    this.middleSearchResultJotView = new MiddleSearchResultJotView;
+    this.middleNestTemplate = new MiddleNestTemplate;
     this.middleForgotPasswordView = new MiddleForgotPasswordView;
     this.middleChangePasswordView = new MiddleChangePasswordView;
     this.middleAboutView = new MiddleAboutView;
@@ -66,6 +70,34 @@ window.MiddleView = Backbone.View.extend({
     this.middleJotDetailView.render(data);
   },
 
+  openProfile: function(data){
+    this.closeAll();
+    this.middleProfileView.remove();
+    this.middleProfileView.setElement(this.createHolder('main-middle-profile'));
+    this.middleProfileView.render();
+  },
+
+  openSearchResult: function(data){
+    this.closeAll();
+    this.middleSearchResultView.remove();
+    this.middleSearchResultView.setElement(this.createHolder('main-middle-search-result'));
+    this.middleSearchResultView.render(data);
+  },
+
+  openSearchResultJot: function(data){
+    this.closeAll();
+    this.middleSearchResultJotView.remove();
+    this.middleSearchResultJotView.setElement(this.createHolder('main-middle-search-result-jot'));
+    this.middleSearchResultJotView.render(data);
+  },
+
+  openNest: function(data){
+    this.closeAll();
+    this.middleNestTemplate.remove();
+    this.middleNestTemplate.setElement(this.createHolder('main-middle-nest'));
+    this.middleNestTemplate.render(data);
+  },
+  
   openForgotPassword: function(){
     this.closeAll();
     this.middleForgotPasswordView.remove();

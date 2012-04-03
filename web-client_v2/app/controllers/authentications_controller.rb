@@ -54,9 +54,9 @@ class AuthenticationsController < ApplicationController
 
   def facebook_connection
     oauth = request.env['omniauth.auth']
-
+    
     @data = api_connect('/me/connections.json',
-      {:connection_token => oauth.credentials.token, :connection_name => 'facebook'}, "post")
+      {:provider_user_token => oauth.credentials.token, :provider => 'facebook'}, "post")
 
     flash[:error] = @data['error']
     redirect_to '/#!/setting'
@@ -66,7 +66,7 @@ class AuthenticationsController < ApplicationController
     oauth = request.env['omniauth.auth']
 
     @data = api_connect('/me/connections.json',
-      {:connection_token => oauth.credentials.token, :connection_secret => oauth.credentials.secret, :connection_name => 'twitter'}, "post")
+      {:provider_user_token => oauth.credentials.token, :provider_user_secret => oauth.credentials.secret, :provider => 'twitter'}, "post")
 
     flash[:error] = @data['error']
     redirect_to '/#!/setting'

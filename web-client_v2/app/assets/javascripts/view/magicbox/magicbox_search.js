@@ -6,7 +6,43 @@ window.MagicboxSearchView = Backbone.View.extend({
   },
 
   initialize: function(options){
+    var _this = this;
+    
     this.options = $.extend({}, this.default_options, options);
+
+    this.middleView = new MiddleView;
+    this.middleView.setElement('#main-middle');
+
+    $('#magic-box-search-form').validate({
+      rules: {
+        'jot[title]': {
+          required: true
+        }
+      },
+
+      errorPlacement: function(){},
+
+      submitHandler: function(form){
+        $(form).ajaxSubmit({
+          error: function(jqXHR, textStatus, errorThrown){
+            alert(textStatus);
+          },
+          success: function(data, textStatus, jqXHR){
+            if(data.failed === true){
+              alert(data.error);
+            }
+            else if(data.content.users){
+              _this.middleView.openSearchResult(data.content);
+            }
+            else if(data.content.jots){
+              _this.middleView. openSearchResultJot(data.content);
+            }
+          }
+        });
+
+        return false;
+      }
+    });
   },
 
   open: function(){

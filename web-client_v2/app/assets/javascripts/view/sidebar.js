@@ -22,5 +22,13 @@ window.SidebarView = Backbone.View.extend({
     });
 
     return this;
+  },
+
+  events: {
+    'click .link-to-nest': 'nest'
+  },
+
+  nest: function(){
+    location.href = '#!/nest'
   }
 })

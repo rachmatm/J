@@ -16,7 +16,7 @@ class User
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
-  RELATION_PUBLIC = [:connections]
+  RELATION_PUBLIC = []
 
   RELATION_PUBLIC_DETAIL = []
 
@@ -52,6 +52,7 @@ class User
   has_and_belongs_to_many :jot_mentioned, :class_name => "Jot", :inverse_of => :user_mentioned
   has_many :comments
   has_many :connections
+  has_many :nests
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
@@ -86,6 +87,7 @@ class User
   end
 
   def get_my_attributes
+
     JsonizeHelper.format({:content => self}, {
         :except => NON_PUBLIC_FIELDS,
         :include => RELATION_PUBLIC
@@ -182,8 +184,16 @@ class User
 
     unless jot.user_favorites.include? self
       jot.user_favorites.push self
+
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_favorites', tag.meta_favorites + 1
+      end
     else
       jot.user_favorites.delete self
+
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_favorites', tag.meta_favorites - 1
+      end
     end
 
     jot.reload
@@ -199,12 +209,22 @@ class User
   def current_user_set_thumbs_up_jot(jot_id)
     jot = Jot.find(jot_id)
 
-    jot.user_thumbsup.delete self
+    unless jot.user_thumbsup.include? self
+      jot.user_thumbsup.push self
 
-    jot.user_thumbsup.push self
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbups', tag.meta_thumbups + 1
+      end
+    end
 
-    jot.user_thumbsdown.delete self
+    if jot.user_thumbsdown.include? self
+      jot.user_thumbsdown.delete self
 
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbdowns', tag.meta_thumbdowns - 1
+      end
+    end
+    
     jot.reload
 
     JsonizeHelper.format(
@@ -219,13 +239,23 @@ class User
   end
 
   def current_user_set_thumbs_down_jot(jot_id)
-    jot = Jot.find(jot_id)
+    jot = Jot.find(jot_id)  
 
-    jot.user_thumbsdown.delete self
+    unless  jot.user_thumbsdown.include? self
+      jot.user_thumbsdown.push self
+      
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbdowns', tag.meta_thumbdowns + 1
+      end
+    end
 
-    jot.user_thumbsdown.push self
+    if jot.user_thumbsup.include? self
+      jot.user_thumbsup.delete self
 
-    jot.user_thumbsup.delete self
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbups', tag.meta_thumbups - 1
+      end
+    end
 
     jot.reload
 
@@ -277,23 +307,23 @@ class User
   def current_user_set_connections(parameters)
     parameters.keep_if {|key, value| Connection::UPDATEABLE_FIELDS.include? key }
 
-    if parameters[:connection_name] == 'twitter'
+    if parameters[:provider] == 'twitter'
       begin
-        client = Twitter::Client.new :oauth_token => parameters[:connection_token], :oauth_token_secret => parameters[:connection_secret]
+        client = Twitter::Client.new :oauth_token => parameters[:provider_user_token], :oauth_token_secret => parameters[:provider_user_secret]
         data = client.verify_credentials
 
         parameters.merge!({
-            :connection_user_id => data['id'],
-            :connection_user_name => data['name'],
-            :connection_token => parameters[:connection_token],
-            :connection_secret => parameters[:connection_secret]
+            :provider_user_id => data['id'],
+            :provider_user_name => data['screen_name'] || data['id'],
+            :provider_user_token => parameters[:provider_user_token],
+            :provider_user_secret => parameters[:provider_user_secret]
           })
       rescue
         return JsonizeHelper.format(:error => "aw hell no, can\'t connect to twitter", :failed => true)
       end
-    elsif parameters[:connection_name] == 'facebook'
+    elsif parameters[:provider] == 'facebook'
 
-      send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{parameters[:connection_token]}"
+      send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{parameters[:provider_user_token]}"
 
       # Run the request via Hydra.
       hydra = Typhoeus::Hydra.new
@@ -306,9 +336,9 @@ class User
         data = ActiveSupport::JSON.decode(response.body)
 
         parameters.merge!({
-            :connection_user_id => data['id'],
-            :connection_user_name => data['name'],
-            :connection_token => parameters[:connection_token]
+            :provider_user_id => data['id'],
+            :provider_user_name => data['username'] || data['id'],
+            :provider_user_token => parameters[:provider_user_token]
           })
       else
         return JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
@@ -316,16 +346,21 @@ class User
 
     end
 
-    data = self.connections.where({:connection_name => parameters[:connection_name]}).first
+    conn = self.connections.where({:provider => parameters[:provider], :provider_user_id => parameters[:provider_user_id]}).first
 
-    data = self.connections.new parameters
-    data.save
-    data.reload
-
-    if data.errors.any?
-      return JsonizeHelper.format :failed => true, :error => "Connections was not made", :errors => data.errors.to_a
+    if conn.present?
+      conn.update_attributes parameters
     else
-      return JsonizeHelper.format({:notice => 'Data Connected', :content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+      conn = self.connections.new parameters
+      conn.save
+    end
+
+    #data.reload
+
+    if conn.errors.any?
+      return JsonizeHelper.format :failed => true, :error => "Connections was not made", :errors => conn.errors.to_a
+    else
+      return JsonizeHelper.format({:notice => 'Data Connected', :content => conn}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
     end
   end
 
@@ -334,6 +369,80 @@ class User
     JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
   rescue
     JsonizeHelper.format :failed => true, :error => "Connection was not found"
+  end
+
+  def current_user_connections(parameters)
+    data = self.connections.order_by_default
+    
+    if parameters[:provider].present? and parameters[:allowed].present?
+      data = data.find_by_provider(parameters[:provider]).find_allowed
+    elsif parameters[:provider].present?
+      data = data.find_by_provider(parameters[:provider])
+    end
+
+    JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+  end
+
+  def current_user_reset_connections(id, parameters)
+    parameters.keep_if {|key, value| Connection::UPDATEABLE_FIELDS.include? key }
+
+    data = Connection.find id
+
+    data.update_attributes parameters
+    data.reload
+    JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Connection was not found"
+  end
+
+  def set_nest(parameters)
+    parameters.keep_if {|key, value| Nest::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.new parameters
+
+    if data.save
+      return JsonizeHelper.format({:notice => "Nest Successfully Made", :content => data}, {
+          :except => Nest::NON_PUBLIC_FIELDS,
+          :include => Nest::RELATION_PUBLIC
+        })
+    else
+      return JsonizeHelper.format :failed => true, :error => "Nest was not made", :errors => data.errors.to_a
+    end
+  end
+
+  def get_nest(parameters)
+    data = self.nests.order_by_default
+
+    return JsonizeHelper.format({:content => data}, {
+        :except => Nest::NON_PUBLIC_FIELDS,
+        :include => Nest::RELATION_PUBLIC
+      })
+  end
+
+  def unset_nest(nest_id)
+    data = self.nests.find(nest_id).destroy
+
+    return JsonizeHelper.format :notice => "Nest Successfully Deleted"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+  def reset_nest(nest_id, parameters)
+    parameters.keep_if {|key, value| Nest::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.find nest_id
+
+    data.update_attributes parameters
+
+    if data.errors.any?
+      JsonizeHelper.format :failed => true, :error => "Nest was not made", :errors => data.errors.to_a
+    else
+      data.reload
+      JsonizeHelper.format :content => data
+    end
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
   end
 
   protected

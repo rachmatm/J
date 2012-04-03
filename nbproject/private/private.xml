@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1">
         <file>
             <url>web-client_v2/app/views/layouts/application.html.erb</url>
-            <line>46</line>
+            <line>42</line>
         </file>
         <file>
             <url>api_v2/app/models/authentication.rb</url>
             <line>42</line>
+        </file>
+        <file>
+            <url>web-client_v2/app/assets/javascripts/view/middle/middle_profile.js</url>
+            <line>2</line>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">

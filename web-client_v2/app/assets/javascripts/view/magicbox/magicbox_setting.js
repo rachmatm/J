@@ -6,6 +6,11 @@ window.MagicboxSettingView = Backbone.View.extend({
     this.profiles = new ProfileCollection;
     this.profiles.bind('reset', this.setData, this);
     this.profiles.bind('change', this.setTemplate, this);
+
+    this.connections = new ConnectionCollection;
+    this.connections.bind('add', this.addConnection, this);
+    this.connections.bind('all', this.renderConnection, this);
+    this.connections.bind('reset', this.resetConnection, this);
   },
 
   render: function(){
@@ -25,6 +30,8 @@ window.MagicboxSettingView = Backbone.View.extend({
     var _this = this;
 
     $('#magicbox-setting-content').html(this.template(data.toJSON()));
+
+    this.connections.fetch();
 
     $('.show-hide-edit-panel-display').bind('click', function(){
       $(this).addClass('hidden').
@@ -131,6 +138,7 @@ window.MagicboxSettingView = Backbone.View.extend({
         }
       },
       errorPlacement: function(){},
+      
       submitHandler: function(form){
 
         $(form).ajaxSubmit({
@@ -168,6 +176,23 @@ window.MagicboxSettingView = Backbone.View.extend({
         return false;
       }
     });
+
+    $('#setting-form-conn').validate({
+      rules: {},
+      errorPlacement: function(){},
+      submitHandler: function(form){
+
+        $(form).ajaxSubmit({
+          error: function(jqXHR, textStatus, errorThrown){
+            _this.submitError.call(jqXHR, textStatus, errorThrown);
+          },
+          success: function(xhrData, textStatus, jqXHR){
+            _this.connections.fetch();
+          }
+        });
+        return false;
+      }
+    });
   },
 
   submitError: function(jqXHR, textStatus, errorThrown){
@@ -188,5 +213,31 @@ window.MagicboxSettingView = Backbone.View.extend({
         }));
       }
     }
+  },
+
+  addConnection: function(data){
+    this.connection(data, true)
+  },
+
+  connection: function(data, reverse){
+    this.listView = new ListView({
+      model: data
+    });
+    this.listView.setElement('#setting-crosspost-table tbody')
+    this.listView.openConnection(reverse);
+  },
+
+  resetConnection: function(){
+    var _this = this;
+
+    $('#setting-crosspost-table tbody').children().remove();
+
+    this.connections.each(function(data){
+      _this.connection(data);
+    });
+  },
+
+  renderConnection: function(data){
+    
   }
 })

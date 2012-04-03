@@ -26,6 +26,9 @@ HttpRouter.new do
   # User > Show
   # get('/users/(:id)(.:format)').to(UserAction::Show)
 
+  # Search > Index
+  get('/search(.:format)').to(SearchAction::Index)
+
   # Me > Show
   get('/me(.:format)').to(MeAction::Show)
 
@@ -118,13 +121,30 @@ HttpRouter.new do
 
   # Me > Create Connections
   post('/me/connections(.:format)').to(MeAction::ConnectionAction::Create)
+
+  # Me > Index Connections
+  get('/me/connections(.:format)').to(MeAction::ConnectionAction::Index)
+
+  # Me > Update Connections
+  put('/me/(:connection_id)/connections(.:format)').to(MeAction::ConnectionAction::Update)
   
   # Me > Delete Connections
-  delete('/me/:id/connections(.:format)').to(MeAction::ConnectionAction::Destroy)
-
+  delete('/me/(:connection_id)/connections(.:format)').to(MeAction::ConnectionAction::Destroy)
 
   # Me > Jot > Index Comment
   get('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Index)
+
+  # Me > Index Nest
+  get('/me/nests(.:format)').to(MeAction::NestAction::Index)
+
+  # Me > Create Nest
+  post('/me/nests(.:format)').to(MeAction::NestAction::Create)
+
+  # Me > Update Nest
+  put('/me/(:nest_id)/nests(.:format)').to(MeAction::NestAction::Update)
+
+  # Me > Delete Nest
+  delete('/me/(:nest_id)/nests(.:format)').to(MeAction::NestAction::Destroy)
 
   # Admin > Auth > New
   get('/lord/login(.:format)').to(AdminAction::Auth::New).name(:admin_auth_new)

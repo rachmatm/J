@@ -28,6 +28,16 @@ WebClientV2::Application.routes.draw do
 
   get '/favorites' => 'jots#index_favorites'
 
+  resources :connections, :only => [:index, :create] do
+    get 'destroy'
+  end
+
+  resources :searches, :only => [:index]
+
+  resources :nests do
+    get 'update'
+  end
+
   post '/notify_forgot_password' => 'authentications#notify_forgot_password', :as => 'notify_forgot_password'
   post '/reset_forgot_password' => 'authentications#reset_forgot_password', :as => 'reset_forgot_password'
 

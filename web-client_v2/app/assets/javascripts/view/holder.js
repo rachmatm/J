@@ -7,11 +7,17 @@ window.HolderView = Backbone.View.extend({
     'className': 'holder-view'
   },
 
-  render: function(variables, reverse){
+  render: function(variables, reverse, table){
 
     this.default_variables = $.extend({}, this.default_variables, variables);
 
-    if(reverse){
+    if(table && reverse){
+      this.holder_el = $('<tr id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></tr>').prependTo(this.el);
+    }
+    else if(table){
+     this.holder_el = $('<tr id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></tr>').appendTo(this.el);
+    }
+    else if(reverse){
       this.holder_el = $('<div id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></div>').prependTo(this.el);
     }
     else{

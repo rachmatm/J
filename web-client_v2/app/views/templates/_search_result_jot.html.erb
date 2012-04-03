@@ -1,0 +1,77 @@
+<script type="text/template" id="search-result-jot-template">
+  <div class="jot_result middle_content">
+    <div class="clearfix">
+      <div class="search_result_heading clearfix">
+        <span class="blue_stream">&nbsp;</span>
+        <h2>Jots - <#= keywords #></h2>
+      </div>
+    </div>
+
+    <div id="main-middle-jot-list" class="clearfix">
+      <# _.each(jots, function(jot){ #>
+      <div class="search_result_container clearfix">
+        <div class="people_post">
+          <div class="header_post_jot">
+            <img src="<#= jot.user.avatar.thumb_small.url #>" alt="<#= jot.user.username #>">
+            <span><#= jot.user.username #></span>
+
+            
+            <!-- div class="header_yellowribon"></div -->
+            <ul>
+
+              <li>
+                <a href="javascript:void(0);">
+                  <abbr class="timeago link-to-detail" title="<#= jot.created_at #>"><#= jot.created_at #></abbr>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="header_thumbup link-to-thumbsup"></span>
+                  <span class="thumbsup-counter"><#= jot.user_thumbsup_ids.length #></span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="header_thumbdown link-to-thumbsdown"></span>
+                  <span class="thumbsdown-counter"><#= jot.user_thumbsdown_ids.length #></span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);"><span class="header_rejot"></span>Text</a>
+              </li>
+              <li class="lastli">
+                <a href="javascript:void(0);" class="link-to-fav"><span class="header_fav"></span></a>
+              </li>
+
+            </ul>
+          </div>
+          <div class="down-sign"></div>
+          <div class="clear"></div>
+        </div>
+
+        <div class="container-result">
+          <h2><#= jot.title #></h2>
+          <p class="hour"><abbr class="timeago" title="<#= jot.created_at #>"><#= jot.created_at #></abbr></p>
+
+          <# if(jot.tags.length > 0){ #>
+          <div class="tag-incognito">
+            <span class="own_tags_icon">&nbsp;</span>
+            <div class="button_tag">
+              <ul>
+                <# _.each(jot.tags, function(tag){ #>
+                <li>
+                  <span class="button_tagText"><#= tag.name #></span>
+                  <span class="not_activeSearch"></span>
+                </li>
+                <# }) #>
+              </ul>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <# } #>
+        </div>
+      </div>
+      <# }) #>
+    </div>
+  </div>
+</script>

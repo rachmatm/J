@@ -1,0 +1,57 @@
+<script type="type/template" id="list-nest-template">
+
+  <div class="nest_movies_path">
+    <div class="movies_path_left">
+      <div class="movies_path_top"><#= name #></div>
+      <div class="movies_path_middle">
+        <span class="nest_group_middle_icon on_off">&nbsp;</span>
+        <span class="nest_group_middle_notactive">Nest OFF</span>
+        <span style="display: none;" class="nest_group_middle_active">Nest ON</span>
+      </div>
+      <div class="movies_path_bottom">
+        <ul>
+          <li class="renames">
+            <a href="javascript:void(0)" class="rename_idle link-to-rename">Aa</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="delete link-to-delete">
+              <span>&nbsp;</span>
+            </a>
+          </li>
+          <li class="no_border_right">
+            <a href="" class="magnifier">
+              <span class="">&nbsp;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="movies_path_right empty_nest_bg movies_path_right">
+
+      <a href="javascript:void(0)">
+        <span class="empty_nest_info">your nest is empty, start searching for contents</span>
+        <span class="white_big_magnifier">&nbsp;</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hidden">
+    <div class="rename_popup" id="rename-nest-<#=_id #>">
+      <form action="/nests/<#= _id #>/update" method="GET" id="this-nest-rename-<#= _id #>-form">
+
+        <div class="want_delete_white">
+          <a class="top_blue_popup" href="javascript:void(0)"><#= name #></a>
+          <p>Rename this group as:</p>
+          <%= text_field_tag 'nest[name]', nil, :class => 'rename_nest'  %>
+          <span class="ok_no_button">
+            <a href="javascript:void(0)" class="cancel_tab colorbox-close">Cancel</a>
+            <a class="but_save_popup this-nest-rename-submit-<#= _id #>" href="javascript:void(0)">Save</a>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</script>

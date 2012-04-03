@@ -29,6 +29,12 @@ window.AppRouter = Backbone.Router.extend({
     "!/setting": "setting",
 
     "!/jots/:id": "jotDetail",
+    
+    "!/profile/public": "profilePublic",
+
+    "!/nest": "nest",
+
+    "!/jots/:id": "jotDetail",
 
     "!/forgot_password": "forgotPassword",
 
@@ -46,6 +52,8 @@ window.AppRouter = Backbone.Router.extend({
   },
 
   drawMainLayout: function(current_user, current_user_token){
+    this.current_user = current_user;
+
     this.headerView.setElement('#header-holder');
     this.headerView.render({
       current_user: current_user
@@ -116,6 +124,17 @@ window.AppRouter = Backbone.Router.extend({
   jotDetail: function(id){
     this.middleView.closeAll();
     this.magicboxView.openJotDetail(id);
+  },
+
+  profilePublic: function(){
+    this.magicboxView.openSearch();
+    this.middleView.closeAll();
+    this.middleView.openProfile();
+  },
+
+  nest: function(){
+    this.middleView.closeAll();
+    this.middleView.openNest();
   },
 
   forgotPassword: function(){
