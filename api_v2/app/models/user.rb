@@ -163,9 +163,14 @@ class User
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
 
-  def current_user_get_favorite_jot
+  def current_user_get_favorite_jot(limit)
+    jot = self.jot_favorites
+    jot = jot.limit(limit.to_i) if limit.present?
+
+    debugger
+
     JsonizeHelper.format(
-      {:content => self.jot_favorites},
+      {:content => jot},
       {:except => Jot::NON_PUBLIC_FIELDS, :include => Jot::RELATION_PUBLIC}
     )
   rescue

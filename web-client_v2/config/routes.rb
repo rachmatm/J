@@ -26,6 +26,8 @@ WebClientV2::Application.routes.draw do
   get '/auth/twitter_connection', :as => 'twitter_connection'
   get '/auth/twitter_connection/callback' => 'authentications#twitter_connection'
 
+  get '/favorites' => 'jots#index_favorites'
+
   post '/notify_forgot_password' => 'authentications#notify_forgot_password', :as => 'notify_forgot_password'
   post '/reset_forgot_password' => 'authentications#reset_forgot_password', :as => 'reset_forgot_password'
 

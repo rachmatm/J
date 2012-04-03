@@ -58,8 +58,7 @@ module MeAction
       class Index < ActionWithTokenAuth
 
         def start
-          debugger
-          render @current_user.current_user_get_favorite_jot
+          render @current_user.current_user_get_favorite_jot params[:limit]
           finish
         end
       end
