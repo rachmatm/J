@@ -1,5 +1,5 @@
 window.MiddleView = Backbone.View.extend({
-  
+
   initialize: function(){
     this.holderView = new HolderView;
     this.middleSignupView = new MiddleSignupView;
@@ -13,8 +13,8 @@ window.MiddleView = Backbone.View.extend({
     this.middleJotDetailView = new MiddleJotDetailView;
     this.middleForgotPasswordView = new MiddleForgotPasswordView;
     this.middleChangePasswordView = new MiddleChangePasswordView;
+    this.middleAboutView = new MiddleAboutView;
   },
-
 
   createHolder: function(id){
     this.holderView.setElement(this.el);
@@ -85,5 +85,12 @@ window.MiddleView = Backbone.View.extend({
     this.middleAccountSettingView.remove();
     this.middleAccountSettingView.setElement(this.createHolder('main-middle-account-setting'));
     this.middleAccountSettingView.render(data);
+  },
+
+  openAbout: function(){
+    this.closeAll();
+    this.middleAboutView.remove();
+    this.middleAboutView.setElement(this.createHolder('main-middle-about'));
+    this.middleAboutView.render(data);
   }
 });

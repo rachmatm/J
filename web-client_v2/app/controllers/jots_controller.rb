@@ -15,7 +15,19 @@ class JotsController < ApplicationController
     respond_to do |format|
 
       format.json do
+        debugger
         render :json => api_connect('/me/jots.json', params[:jot], "get")
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
+  def index_favorite
+    respond_to do |format|
+
+      format.json do
+        render :json => api_connect("/me/jots/favorites", {}, "get")
       end
 
       format.all { respond_not_found }

@@ -97,7 +97,10 @@ HttpRouter.new do
 
   # Me > Jot > Index Thumbsdown
   # get('/me/jots/thumbsdown(.:format)').to(MeAction::Thumbsdown::Index)
-  
+
+  # Me > Jot > Index Favorite
+  get('/me/jots/favorites(.:format)').to(MeAction::JotAction::Favorite::Index)
+
   # Me > Jot > Create Favorite
   post('/me/jots/(:jot_id)/favorites(.:format)').to(MeAction::JotAction::Favorite::Create)
 

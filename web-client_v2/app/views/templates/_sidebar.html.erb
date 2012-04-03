@@ -55,6 +55,9 @@
     </div>
     <div class="clear"></div>
   </div>
+
+  <# if(_.isEmpty(current_user)){ #>
+
   <div class="favorites">
     <div class="portlet_favorites">
       <span class="star"></span>
@@ -66,4 +69,51 @@
     <div class="portlet_favBottom"></div>
     <div class="clear"></div>
   </div>
+
+  <# }else{ #>
+
+  <div class="favorites_logged">
+    <div class="portlet_favorites_logged_first">
+      <span class="star_logged">&nbsp;</span>
+      <span class="fav_text_logged">Favorites</span>
+    </div>
+    <div class="portlet_favValue_logged">
+      <span class="title_fav_logged">Metallica</span>
+      <span class="text_logged">check out our new videos featuring limpbizkit dem...</span>
+      <a href="" class="fav_hover">
+        <span class="fav_hover_icon">&nbsp;</span>
+        <span class="go_to_jot_text">Go to Jot</span>
+      </a>
+    </div>
+    <div class="portlet_favValue_logged">
+      <span class="title_fav_logged">Madonna</span>
+      <span class="text_logged">all of them must pay for this mess > http://bit.ly/...</span>
+      <a href="" class="fav_hover">
+        <span class="fav_hover_icon">&nbsp;</span>
+        <span class="go_to_jot_text">Go to Jot</span>
+      </a>
+    </div>
+    <div class="portlet_favValue_logged">
+      <span class="title_fav_logged">TechCrunch</span>
+      <span class="text_logged">new iPad glitch http://bit.ly/12asfa</span>
+      <a href="" class="fav_hover">
+        <span class="fav_hover_icon">&nbsp;</span>
+        <span class="go_to_jot_text">Go to Jot</span>
+      </a>
+    </div>
+    <div class="portlet_favValue_logged">
+      <span class="title_fav_logged">Metrofx</span>
+      <span class="text_logged">simple yet complicated</span>
+      <a href="" class="fav_hover">
+        <span class="fav_hover_icon">&nbsp;</span>
+        <span class="go_to_jot_text">Go to Jot</span>
+      </a>
+    </div>
+    <div class="portlet_favBottom_last">
+      <a href="">see all faved</a>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <# } #>
 </script>

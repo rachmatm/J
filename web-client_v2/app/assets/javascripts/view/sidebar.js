@@ -13,6 +13,14 @@ window.SidebarView = Backbone.View.extend({
   render: function(vars){
     $(this.el).html(this.template( $.extend(this.default_vars, vars) ));
 
+    $('.fav_hover').hide();
+
+    $('.portlet_favValue_logged').mouseover(function(){
+      $(this).addClass('onhover');
+    }).mouseout(function(){
+      $(this).removeClass('onhover');
+    });
+
     return this;
   }
 })

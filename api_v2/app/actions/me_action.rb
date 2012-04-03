@@ -55,6 +55,15 @@ module MeAction
 
     module Favorite
 
+      class Index < ActionWithTokenAuth
+
+        def start
+          debugger
+          render @current_user.current_user_get_favorite_jot
+          finish
+        end
+      end
+
       class Create < ActionWithTokenAuth
 
         def start

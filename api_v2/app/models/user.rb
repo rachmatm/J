@@ -163,10 +163,18 @@ class User
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
 
+  def current_user_get_favorite_jot
+    JsonizeHelper.format(
+      {:content => self.jot_favorites},
+      {:except => Jot::NON_PUBLIC_FIELDS, :include => Jot::RELATION_PUBLIC}
+    )
+  rescue
+    return JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
 
   def current_user_set_favorite_jot(jot_id)
     jot = Jot.find(jot_id)
-   
+
     unless jot.user_favorites.include? self
       jot.user_favorites.push self
     else
