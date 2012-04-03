@@ -1,7 +1,7 @@
 window.RecaptchaView = Backbone.View.extend({
 
   default_options: {
-    your_public_key: '6Lfvs88SAAAAAGa198oiiS6gO-GDkLCdVMjLKksZ',
+    your_public_key: '6Lc3tM8SAAAAAGwjoAKevUEYnbPMZ0dZhUi2CUoI',
     theme: "clean"
   },
 

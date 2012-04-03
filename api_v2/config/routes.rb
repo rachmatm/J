@@ -125,6 +125,18 @@ HttpRouter.new do
   # Me > Jot > Index Comment
   get('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Index)
 
+  # Me > Index Nest
+  get('/me/nests(.:format)').to(MeAction::NestAction::Index)
+
+  # Me > Create Nest
+  post('/me/nests(.:format)').to(MeAction::NestAction::Create)
+
+  # Me > Update Nest
+  put('/me/(:nest_id)/nests(.:format)').to(MeAction::NestAction::Update)
+
+  # Me > Delete Nest
+  delete('/me/(:nest_id)/nests(.:format)').to(MeAction::NestAction::Destroy)
+
   # Admin > Auth > New
   get('/lord/login(.:format)').to(AdminAction::Auth::New).name(:admin_auth_new)
 

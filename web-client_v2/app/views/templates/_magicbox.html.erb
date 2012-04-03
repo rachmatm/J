@@ -35,10 +35,10 @@
 
     <div class="magicbox-content-tab-item hidden" id="magicbox-search">
       <%= form_tag searches_path, :id => 'magic-box-search-form', :method => :get do  %>
-      <div class="search jot-search-content clearfix">
-        <%= text_field_tag :keyword, nil, :placeholder => "Search everything", :id => 'magic-box-search-field' %>
-        <%= submit_tag '', :id => 'gray_search'  %>
-      </div>
+        <div class="search jot-search-content clearfix">
+          <%= text_field_tag :keyword, nil, :placeholder => "Search everything", :id => 'magic-box-search-field' %>
+          <%= submit_tag '', :id => 'gray_search'  %>
+        </div>
       <% end %>
     </div>
 
@@ -54,25 +54,25 @@
           <div class="left">
             <ul>
               <li>
-                <a href="#" class="write_more_but jot_buttons_color jot-bar-button" id="jot-bar-write-more">
+                <a href="javascript:void(0)" class="write_more_but jot_buttons_color jot-bar-button" id="jot-bar-write-more">
                   <span class="jot_write_icon">&nbsp;</span>
                   <span class="jot_button_text">Write more</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="clip_but jot_but jot_buttons_color jot-bar-button" id="jot-bar-clip">
+                <a href="javascript:void(0)" class="clip_but jot_but jot_buttons_color jot-bar-button" id="jot-bar-clip">
                   <span class="jot_clip_icon">&nbsp;</span>
                   <span class="jot_button_text">Clip</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="jot_but loc_but jot_buttons_color jot-bar-button" id="jot-bar-location">
+                <a href="javascript:void(0)" class="jot_but loc_but jot_buttons_color jot-bar-button" id="jot-bar-location">
                   <span class="jot_location_icon">&nbsp;</span>
                   <span class="jot_button_text">Location</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="jot_but tags_but jot_buttons_color jot-bar-button" id="jot-bar-tag">
+                <a href="javascript:void(0)" class="jot_but tags_but jot_buttons_color jot-bar-button" id="jot-bar-tag">
                   <span class="jot_tags_icon">&nbsp;</span>
                   <span class="jot_button_text">Tags</span>
                 </a>
@@ -84,12 +84,165 @@
             <a href="" class="jot_down_arrow">&nbsp;</a>
           </div>
         </div>
-        <div class="jot_mode_hide" id="jot-input-more">
 
+        <div class="jot_mode_hide clearfix" id="jot-input-more">
+          <div id="jot-input-more-holder">
+
+            <div class="jot_more_content hidden" id="jot-write-more-panel">
+              <div class="more_content_top">
+                <span class="add_more_icon">&nbsp;</span>
+                <span class="add_more_text">Add more content</span>
+              </div>
+              <div class="more_content_bottom">
+                <textarea rows="" cols=""></textarea>
+                <span class="more_content_count jot_count">512</span>
+              </div>
+              <div class="clear"></div>
+            </div>
+
+            <div class="jot_upload_media hidden clearfix" id="jot-clip-panel">
+              <div class="upload_media_top">
+                <span class="upload_media">&nbsp;</span>
+                <span class="add_more_text">Upload Media or Add URL</span>
+                <a class="attach_more_things" href="">Attach more things</a>
+              </div>
+              <div class="upload_media_bottom">
+
+                <div>
+                  <div class="submit_upload_media">
+                    <input type="text">
+                    <input type="submit" value="Clip">
+                  </div>
+                  <div class="submit_upload_media">
+                    <img class="avatar_loading" src="/assets/loading-avatar.png" alt="">
+                    <span class="up_img_info">Attaching pretty.jpg..</span>
+                  </div>
+                  <div class="image_upload_path_style">
+                    <div class="image_upload_path">
+                      <img class="attach_image" src="/assets/img-up.png" alt="">
+                      <span class="left">
+                        <a class="img_tittle" href="">pretty.jpg</a>
+                        <input type="text" class="image_upload_input" style="display: none;">
+                        <br class="clear">
+                        <span class="img_resolution">original size 1068 x 1600</span>
+                      </span>
+                      <a class="close_img_path" href="" style="display: none;">x</a>
+                    </div>
+                    <div class="want_delete_popup" style="display: none;">
+                      <div class="want_delete_white">
+                        <p>Do you want to delete this?</p>
+                        <span class="ok_no_button">
+                          <a class="but_ok_up" href="">Ok</a>
+                          <a class="no_button" href="">No</a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="jot_add_location clearfix hidden" id="jot-location-panel">
+              <div class="add_location_top">
+                <span class="add_location_media">&nbsp;</span>
+                <span class="add_more_text">Add location</span>
+                <a class="attach_more_location" href="">Attach more location</a>
+              </div>
+              <div class="up_media_top">
+                <div class="upload_media_bottom">
+                  <form action="">
+                    <div>
+                      <input type="text" class="add_own_location" value="Jakarta">
+                      <input type="submit" value="Insert">
+                    </div>
+                  </form>
+                  <div class="no_margin_left map_area" style="display: none;">
+                    <ul>
+                      <li>
+                        <a class="map_location" href="">
+                          <span class="left">
+                            <img alt="" src="images/first-map.png">
+                          </span>
+                          <span class="place">
+                            <span>&nbsp;</span>
+                            <span>Jakarta Capital Region,</span>
+                            <span>Indonesia</span>
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="map_location" href="">
+                          <span class="left">
+                            <img alt="" src="images/second-map.png">
+                          </span>
+                          <span class="place">
+                            <span>Jakarta,</span>
+                            <span>Jakarta Capital Region,</span>
+                            <span>Indonesia</span>
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="right">
+                  <p class="add_location_info">type an area or use google maps coordinate to add location to your jot</p>
+                </div>
+              </div>
+              <div class="up_media_loc">
+                <div class="loc_style own_jot">
+                  <a class="own_location" href=""><img alt="" src="images/own-location.png"></a>
+                  <span class="location_info">
+                    <a class="tittle_location" href="">Party's Groove</a>
+                    <input type="text" class="no_margin_left image_upload_input" style="display: none;">
+                    <span class="road_location">Jl. Warung Buncit 09A,</span>
+                    <span class="no_padding_top country_location">Jakarta Selatan, Indonesia</span>
+                  </span>
+                  <a class="close_img_path" href="" style="display: none;">x</a>
+                </div>
+                <div class="want_delete_popup" style="display: none;">
+                  <div class="want_delete_white">
+                    <p>Do you want to delete this?</p>
+                    <span class="ok_no_button">
+                      <a class="but_ok_up" href="">Ok</a>
+                      <a class="no_button" href="">No</a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+
+            <div class="jot_tags_post hidden clearfix" id="jot-tag-more">
+              <div class="jot_top_tags">
+                <span class="top_tags_style jot_tags_icon">&nbsp;</span>
+                <span class="top_tags_text">Tags of this post</span>
+              </div>
+              <div class="jot_middle_tags">
+                <ul>
+                  <li class="Lev_1">
+                    <span class="active_choiceTexts choice_text">MusicVid</span>
+                    <span class="jot_middle_tags_active"></span>
+                  </li>
+                  <li class="Lev_1">
+                    <span class="active_choiceTexts choice_text">8Bit</span>
+                    <span class="jot_middle_tags_active"></span>
+                  </li>
+                  <li class="Lev_1 no_padding_right">
+                    <span class="active_choiceTexts choice_text">Cartoon</span>
+                    <span class="jot_middle_tags_active"></span>
+                  </li>
+                </ul>
+                <div class="clear"></div>
+              </div>
+              <div class="jot_bottom_tags"></div>
+              <div class="clear"></div>
+            </div>
+          </div>
           <input type="submit" class="jot_green_bg" value="Jot">
-          <div class="clear"></div>
         </div>
-      </form>  </div>
+      </form>
+    </div>
 
     <div class="middle-content magicbox-content-tab-item hidden" id="magicbox-login">
       <div class="login_content clearfix">

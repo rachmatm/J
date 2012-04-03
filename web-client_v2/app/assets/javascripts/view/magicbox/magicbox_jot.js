@@ -21,6 +21,7 @@ window.MagicboxJotView = Backbone.View.extend({
     this.validates();
 
     this.connections = new ConnectionCollection;
+    this.setButtonAnimation();
   },
 
   validates: function(){
@@ -126,6 +127,48 @@ window.MagicboxJotView = Backbone.View.extend({
       else if(/(\/T)|(\/t)/.test(this.value)){
         
     }
+    });
+  },
+
+  events:{
+    'click #jot-bar-write-more': 'jotBarWriteMore',
+    
+    'click #jot-bar-clip': 'jotBarClip',
+
+    'click #jot-bar-location': 'jotBarLocation',
+
+    'click #jot-bar-tag': 'jotBarTag'
+  },
+
+  jotBarWriteMore: function(){
+    $('#jot-write-more-panel').toggleClass('hidden');
+  },
+
+  jotBarClip: function(){
+    $('#jot-clip-panel').toggleClass('hidden');
+  },
+
+  jotBarLocation: function(){
+    $('#jot-location-panel').toggleClass('hidden');
+  },
+
+  jotBarTag: function(){
+    $('#jot-tag-more').toggleClass('hidden');
+  },
+
+  setButtonAnimation: function(){
+    var buttons = $(this.el).find('.jot-bar-button');
+
+    buttons.hover(
+      function(){
+        $(this).addClass('jot_hover');
+      },
+      function(){
+        $(this).removeClass('jot_hover');
+      });
+
+    buttons.bind('click', function(){
+      $(this).toggleClass('jot_click jot_click_active');
     });
   }
 })

@@ -14,5 +14,13 @@ window.SidebarView = Backbone.View.extend({
     $(this.el).html(this.template( $.extend(this.default_vars, vars) ));
 
     return this;
+  },
+
+  events: {
+    'click .link-to-nest': 'nest'
+  },
+
+  nest: function(){
+    location.href = '#!/nest'
   }
 })

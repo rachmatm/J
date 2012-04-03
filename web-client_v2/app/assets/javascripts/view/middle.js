@@ -13,6 +13,7 @@ window.MiddleView = Backbone.View.extend({
     this.middleProfileView = new MiddleProfileView;
     this.middleSearchResultView = new MiddleSearchResultView;
     this.middleSearchResultJotView = new MiddleSearchResultJotView;
+    this.middleNestTemplate = new MiddleNestTemplate;
   },
 
 
@@ -85,5 +86,12 @@ window.MiddleView = Backbone.View.extend({
     this.middleSearchResultJotView.remove();
     this.middleSearchResultJotView.setElement(this.createHolder('main-middle-search-result-jot'));
     this.middleSearchResultJotView.render(data);
+  },
+
+  openNest: function(data){
+    this.closeAll();
+    this.middleNestTemplate.remove();
+    this.middleNestTemplate.setElement(this.createHolder('main-middle-nest'));
+    this.middleNestTemplate.render(data);
   }
 });

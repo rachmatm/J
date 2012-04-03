@@ -44,5 +44,16 @@ window.ListView = Backbone.View.extend({
 
     this.listConnectionView.setElement(this.createHolder('list-connection-' + data._id, reverse, true));
     this.listConnectionView.render();
+  },
+
+  openNest: function(reverse){
+    var data = this.model.toJSON();
+
+    this.listNestView = new ListNestView({
+      model: this.model
+    });
+
+    this.listNestView.setElement(this.createHolder('list-nest-' + data._id, reverse));
+    this.listNestView.render();
   }
 })

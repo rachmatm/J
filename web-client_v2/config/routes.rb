@@ -30,4 +30,8 @@ WebClientV2::Application.routes.draw do
   end
 
   resources :searches, :only => [:index]
+
+  resources :nests do
+    get 'update'
+  end
 end

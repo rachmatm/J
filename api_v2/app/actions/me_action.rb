@@ -129,4 +129,39 @@ module MeAction
       end
     end
   end
+
+  module NestAction
+    
+    class Index < ActionWithTokenAuth
+
+      def start
+        render @current_user.get_nest params
+        finish
+      end
+    end
+
+    class Create < ActionWithTokenAuth
+
+      def start
+        render @current_user.set_nest params
+        finish
+      end
+    end
+
+    class Destroy < ActionWithTokenAuth
+
+      def start
+        render @current_user.unset_nest params[:nest_id]
+        finish
+      end
+    end
+
+    class Update < ActionWithTokenAuth
+
+      def start
+        render @current_user.reset_nest params[:nest_id], params
+        finish
+      end
+    end
+  end
 end

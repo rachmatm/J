@@ -52,6 +52,7 @@ class User
   has_and_belongs_to_many :jot_mentioned, :class_name => "Jot", :inverse_of => :user_mentioned
   has_many :comments
   has_many :connections
+  has_many :nests
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
@@ -379,6 +380,56 @@ class User
     JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
   rescue
     JsonizeHelper.format :failed => true, :error => "Connection was not found"
+  end
+
+  def set_nest(parameters)
+    parameters.keep_if {|key, value| Nest::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.new parameters
+
+    if data.save
+      return JsonizeHelper.format({:notice => "Nest Successfully Made", :content => data}, {
+          :except => Nest::NON_PUBLIC_FIELDS,
+          :include => Nest::RELATION_PUBLIC
+        })
+    else
+      return JsonizeHelper.format :failed => true, :error => "Nest was not made", :errors => data.errors.to_a
+    end
+  end
+
+  def get_nest(parameters)
+    data = self.nests.order_by_default
+
+    return JsonizeHelper.format({:content => data}, {
+        :except => Nest::NON_PUBLIC_FIELDS,
+        :include => Nest::RELATION_PUBLIC
+      })
+  end
+
+  def unset_nest(nest_id)
+    data = self.nests.find(nest_id).destroy
+
+    return JsonizeHelper.format :notice => "Nest Successfully Deleted"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+  def reset_nest(nest_id, parameters)
+    parameters.keep_if {|key, value| Nest::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.find nest_id
+
+    data.update_attributes parameters
+
+    if data.errors.any?
+      JsonizeHelper.format :failed => true, :error => "Nest was not made", :errors => data.errors.to_a
+    else
+      data.reload
+      JsonizeHelper.format :content => data
+    end
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
   end
 
   protected
