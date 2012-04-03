@@ -55,5 +55,17 @@ window.ListView = Backbone.View.extend({
 
     this.listNestView.setElement(this.createHolder('list-nest-' + data._id, reverse));
     this.listNestView.render();
+  },
+
+  openFavorite: function(reverse){
+    console.log(this.model);
+    var data = this.model.toJSON();
+
+    this.listSidebarFavoriteView = new ListSidebarFavoriteView({
+      model: this.model
+    });
+
+    this.listSidebarFavoriteView.setElement(this.createHolder('list-sidebar-favorite' + data._id, reverse));
+    this.listSidebarFavoriteView.render();
   }
-})
+});

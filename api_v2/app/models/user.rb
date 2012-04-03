@@ -54,7 +54,7 @@ class User
   has_many :connections
   has_many :nests
 
-  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true
+  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true, :allow_blank => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
   validates_format_of :username, :with => /^[A-Za-z0-9.\d_]+$/, :message => "can only be alphanumeric, dot and number with no spaces"
   validates_presence_of :realname, :username, :email
@@ -168,8 +168,6 @@ class User
   def current_user_get_favorite_jot(limit)
     jot = self.jot_favorites
     jot = jot.limit(limit.to_i) if limit.present?
-
-    debugger
 
     JsonizeHelper.format(
       {:content => jot},

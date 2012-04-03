@@ -19,6 +19,14 @@ window.ListSidebarFavoriteView = Backbone.View.extend({
     });
 
     $(this.el).html(this.template( this.data ));
+
+    $('.fav_hover').hide();
+
+    $('.portlet_favValue_logged').mouseover(function(){
+      $(this).addClass('onhover');
+    }).mouseout(function(){
+      $(this).removeClass('onhover');
+    });
   },
 
   error: function(jqXHR, textStatus, errorThrown){
@@ -36,6 +44,6 @@ window.ListSidebarFavoriteView = Backbone.View.extend({
   },
 
   detail: function(){
-    this.middleView.openJotDetail(this.data)
+    //this.middleView.openJotDetail(this.data)
   }
 });

@@ -6,6 +6,7 @@ window.ListJotView = Backbone.View.extend({
     this.currentUserModel = new CurrentUserModel;
     this.middleView = new MiddleView;
     this.middleView.setElement('#main-middle');
+    this.sidebarView = new SidebarView;
   },
 
   events: {
@@ -64,7 +65,7 @@ window.ListJotView = Backbone.View.extend({
         _this.error.call(_this, jqXHR, textStatus, errorThrown);
       },
       success: function(data, textStatus, jqXHR){
-        _this.success.call(_this, data, textStatus, jqXHR)
+        _this.success.call(_this, data, textStatus, jqXHR);
       }
     });
   },
@@ -78,6 +79,8 @@ window.ListJotView = Backbone.View.extend({
       alert(data.error);
     }
     else{
+      console.log(data.content);
+      this.sidebarView.sidebarFavorites.fetch();
       this.model.set(data.content);
       this.render();
     }

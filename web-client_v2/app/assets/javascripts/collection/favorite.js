@@ -1,6 +1,6 @@
 window.FavoriteCollection = Backbone.Collection.extend({
 
-  model: JotModel,
+  model: FavoriteModel,
 
   url: '/favorites',
 
