@@ -1,0 +1,369 @@
+<script type="text/template" id="messages-template">
+  <div class="inbox_message middle_content">
+    <div class="inbox_text_icon">
+      <span class="inbox_icon">&nbsp;</span>
+      <span class="inbox_text">Inbox</span>
+    </div>
+    <div class="compose_new_message">
+      <a href="javascript:void(0)">
+        <span>&nbsp;</span>
+        Write a new message
+      </a>
+    </div>
+    <div class="compose_message_form">
+      <form action="/messages" method="post" id="message-form">
+        <div>
+          <div class="to">
+            <span class="to_text">to :</span>
+            <input name="message[receiver]" type="text" />
+            <div class="clear"></div>
+          </div>
+          <div class="subject">
+            <span class="to_text">subject :</span>
+            <input name="message[subject]" type="text" />
+            <div class="clear"></div>
+          </div>
+          <div class="compose_textarea input_replay">
+            <span class="compose_message_propic reply_message_photo messages_left_path">
+              <img src="images/avatar-metrofx.png" alt="" />
+            </span>
+            <span class="textarea_reply">
+              <span class="triangle_inbox">&nbsp;</span>
+              <textarea name="message[content]" class="compose_message_textarea" rows="" cols=""></textarea>
+            </span>
+          </div>
+          <input type="submit" value="Reply" class="replay_button" />
+        </div>
+      </form>
+      <div class="clear"></div>
+    </div>
+    <div class="messages_inbox">
+      <ul>
+        <li class="no_padding_bottom no_padding_top">
+          <span class="date_user">
+            <span>Date</span>
+            <span>.</span>
+            <span>User</span>
+          </span>
+        </li>
+        <div id="main-middle-messages-list"></div>
+        <li>
+          <div class="message_path">
+            <span class="messages_left_path">
+              <img src="images/sarah-avatar.png" alt="" />
+            </span>
+            <span class="messages_middle_path">
+              <a href="">Sarah</a>
+              <span class="read_message">How are you?</span>
+            </span>
+            <div class="messages_right_path">
+              <a href="" class="count_read_message">2 Messages</a>
+              <span>.</span>
+              <span class="count_read_message">7 hours ago</span>
+              <div class="action_menu_hide">
+                <ul>
+                  <li>
+                    <a href="" class="reply_hide">
+                      <label>reply</label>
+                      <span class="reply_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" class="delete_hide">
+                      <label>delete</label>
+                      <span class="delete_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" class="mark_read_hide">
+                      <label>mark as read</label>
+                      <span class="mark_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a href="" class="no_padding_right messages_down_arrow">&nbsp;</a>
+            </div>
+          </div>
+          <div class="reply_message_path">
+            <p class="greeting">Hello,</p>
+            <p>How can I define a message with a string field longer than 512 characters?</p>
+            <p>
+              When defining a field as a String in a Message Definition, I am finding that the resulting type in 
+              Oracle is an nvarchar(255) which is too small for my application needs. According to the Tracking Server documentation, the "element may be any ASCII string." 
+              I see options in Tracking Server for "String64", "String256" and "String512", 
+              so it would seem that "String" would be unbounded or at least larger than 512 characters.
+            </p>
+            <p>Thanks,</p>
+            <ul class="reply_message">
+              <li>
+                <div class="photo_reply_message">
+                  <span class="no_margin_left messages_left_path">
+                    <img src="images/avatar-metrofx.png" alt="" />
+                  </span>
+                </div>
+                <div class="contents_reply_message">
+                  <span class="messages_middle_path">
+                    <a href="" class="me">You</a>
+                    <span class="read_message">Re: How are you?</span>
+                  </span>
+                  <span class="messages_right_path">
+                    <a href="" class="count_read_message">replied 6 hours ago</a>
+                  </span>
+                  <p>
+                    It appears that *all* string types (String, String64, String256, String512) are being created as nvarchar2(255) in Oracle. (?!) In other words, apparently it's not possible to log a message with a string field longer than 255 characters using the Tracking Server feature loggers.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="photo_reply_message">
+                  <span class="no_margin_left messages_left_path">
+                    <img src="images/sarah-avatar.png" alt="" />
+                  </span>
+                </div>
+                <div class="contents_reply_message">
+                  <span class="messages_middle_path">
+                    <a href="">Sarah</a>
+                    <span class="read_message">Re: How are you?</span>
+                  </span>
+                  <span class="messages_right_path">
+                    <a href="" class="count_read_message">replied 3 minutes ago</a>
+                  </span>
+                  <p>
+                    This has been confirmed as a defect. The Tracking Team is working on releasing the fix to be part of Tracking Server 10 SP1. I'll have to check with the team if they will also release
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <div class="replay_path">
+              <div class="photo_reply_message">
+                <span class="reply_text">Reply</span>
+                <span class="input_replay">
+                  <span class="reply_message_photo no_margin_left messages_left_path">
+                    <img src="images/avatar-metrofx.png" alt="" />
+                  </span>
+                  <span class="textarea_reply">
+                    <span class="triangle_inbox">&nbsp;</span>
+                    <textarea rows="" cols=""></textarea>
+                  </span>
+                </span>
+                <a href="" class="replay_button">Reply</a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="message_path">
+            <span class="messages_left_path">
+              <img src="images/gisele-avatar.png" alt="" />
+            </span>
+            <span class="messages_middle_path">
+              <a href="">Gisele</a>
+              <span class="read_message">how've you been?</span>
+            </span>
+            <div class="messages_right_path">
+              <a href="" class="count_read_message">2 Messages</a>
+              <span>.</span>
+              <span class="count_read_message">2 days ago</span>
+              <div class="action_menu_hide">
+                <ul>
+                  <li>
+                    <a href="" class="reply_hide">
+                      <label>reply</label>
+                      <span class="reply_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" class="delete_hide">
+                      <label>delete</label>
+                      <span class="delete_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" class="mark_read_hide">
+                      <label>mark as read</label>
+                      <span class="mark_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a href="" class="no_padding_right messages_down_arrow">&nbsp;</a>
+            </div>
+          </div>
+          <div class="reply_message_path">
+            <p class="greeting">Hello,</p>
+            <p>How can I define a message with a string field longer than 512 characters?</p>
+            <p>
+              When defining a field as a String in a Message Definition, I am finding that the resulting type in 
+              Oracle is an nvarchar(255) which is too small for my application needs. According to the Tracking Server documentation, the "element may be any ASCII string." 
+              I see options in Tracking Server for "String64", "String256" and "String512", 
+              so it would seem that "String" would be unbounded or at least larger than 512 characters.
+            </p>
+            <p>Thanks,</p>
+            <ul class="reply_message">
+              <li>
+                <div class="photo_reply_message">
+                  <span class="no_margin_left messages_left_path">
+                    <img src="images/avatar-metrofx.png" alt="" />
+                  </span>
+                </div>
+                <div class="contents_reply_message">
+                  <span class="messages_middle_path">
+                    <a href="" class="me">You</a>
+                    <span class="read_message">Re: how've you been?</span>
+                  </span>
+                  <span class="messages_right_path">
+                    <a href="" class="count_read_message">replied 6 hours ago</a>
+                  </span>
+                  <p>
+                    It appears that *all* string types (String, String64, String256, String512) are being created as nvarchar2(255) in Oracle. (?!) In other words, apparently it's not possible to log a message with a string field longer than 255 characters using the Tracking Server feature loggers.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="photo_reply_message">
+                  <span class="no_margin_left messages_left_path">
+                    <img src="images/gisele-avatar.png" alt="" />
+                  </span>
+                </div>
+                <div class="contents_reply_message">
+                  <span class="messages_middle_path">
+                    <a href="">Gisele</a>
+                    <span class="read_message">Re: how've you been?</span>
+                  </span>
+                  <span class="messages_right_path">
+                    <a href="" class="count_read_message">replied 3 minutes ago</a>
+                  </span>
+                  <p>
+                    This has been confirmed as a defect. The Tracking Team is working on releasing the fix to be part of Tracking Server 10 SP1. I'll have to check with the team if they will also release
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <div class="replay_path">
+              <div class="photo_reply_message">
+                <span class="reply_text">Reply</span>
+                <span class="input_replay">
+                  <span class="reply_message_photo no_margin_left messages_left_path">
+                    <img src="images/avatar-metrofx.png" alt="" />
+                  </span>
+                  <span class="textarea_reply">
+                    <span class="triangle_inbox">&nbsp;</span>
+                    <textarea rows="" cols=""></textarea>
+                  </span>
+                </span>
+                <a href="" class="replay_button">Reply</a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="message_path">
+            <span class="messages_left_path">
+              <img src="images/crazy-avatar.png" alt="" />
+            </span>
+            <span class="messages_middle_path">
+              <a href="">Crazy Dom</a>
+              <span class="read_message">New Cars!</span>
+            </span>
+            <div class="messages_right_path">
+              <a href="" class="count_read_message">1 Message</a>
+              <span>.</span>
+              <span class="count_read_message">Feb 5th 2011</span>
+              <div class="action_menu_hide">
+                <ul>
+                  <li>
+                    <a href="" class="reply_hide">
+                      <label>reply</label>
+                      <span class="reply_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" class="delete_hide">
+                      <label>delete</label>
+                      <span class="delete_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" class="mark_read_hide">
+                      <label>mark as read</label>
+                      <span class="mark_icon">&nbsp;</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a href="" class="no_padding_right messages_down_arrow">&nbsp;</a>
+            </div>
+          </div>
+          <div class="reply_message_path">
+            <p class="greeting">Hello,</p>
+            <p>How can I define a message with a string field longer than 512 characters?</p>
+            <p>
+              When defining a field as a String in a Message Definition, I am finding that the resulting type in 
+              Oracle is an nvarchar(255) which is too small for my application needs. According to the Tracking Server documentation, the "element may be any ASCII string." 
+              I see options in Tracking Server for "String64", "String256" and "String512", 
+              so it would seem that "String" would be unbounded or at least larger than 512 characters.
+            </p>
+            <p>Thanks,</p>
+            <ul class="reply_message">
+              <li>
+                <div class="photo_reply_message">
+                  <span class="no_margin_left messages_left_path">
+                    <img src="images/avatar-metrofx.png" alt="" />
+                  </span>
+                </div>
+                <div class="contents_reply_message">
+                  <span class="messages_middle_path">
+                    <a href="" class="me">You</a>
+                    <span class="read_message">Re: New Cars!</span>
+                  </span>
+                  <span class="messages_right_path">
+                    <a href="" class="count_read_message">replied 6 hours ago</a>
+                  </span>
+                  <p>
+                    It appears that *all* string types (String, String64, String256, String512) are being created as nvarchar2(255) in Oracle. (?!) In other words, apparently it's not possible to log a message with a string field longer than 255 characters using the Tracking Server feature loggers.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="photo_reply_message">
+                  <span class="no_margin_left messages_left_path">
+                    <img src="images/crazy-avatar.png" alt="" />
+                  </span>
+                </div>
+                <div class="contents_reply_message">
+                  <span class="messages_middle_path">
+                    <a href="">Crazy Dom</a>
+                    <span class="read_message">Re: New Cars!</span>
+                  </span>
+                  <span class="messages_right_path">
+                    <a href="" class="count_read_message">replied 3 minutes ago</a>
+                  </span>
+                  <p>
+                    This has been confirmed as a defect. The Tracking Team is working on releasing the fix to be part of Tracking Server 10 SP1. I'll have to check with the team if they will also release
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <div class="replay_path">
+              <div class="photo_reply_message">
+                <span class="reply_text">Reply</span>
+                <span class="input_replay">
+                  <span class="reply_message_photo no_margin_left messages_left_path">
+                    <img src="images/avatar-metrofx.png" alt="" />
+                  </span>
+                  <span class="textarea_reply">
+                    <span class="triangle_inbox">&nbsp;</span>
+                    <textarea rows="" cols=""></textarea>
+                  </span>
+                </span>
+                <a href="" class="replay_button">Reply</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+</script>

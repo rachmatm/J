@@ -57,8 +57,19 @@ window.ListView = Backbone.View.extend({
     this.listNestView.render();
   },
 
-  openFavorite: function(reverse){
-    console.log(this.model);
+  openFavorites: function(reverse){
+    var data = this.model.toJSON();
+
+    console.log(this.model.toJSON());
+    this.listFavoritesView = new ListFavoritesView({
+      model: this.model
+    });
+
+    this.listFavoritesView.setElement(this.createHolder('list-favorite' + data._id, reverse));
+    this.listFavoritesView.render();
+  },
+
+  openSidebarFavorite: function(reverse){
     var data = this.model.toJSON();
 
     this.listSidebarFavoriteView = new ListSidebarFavoriteView({
@@ -67,5 +78,27 @@ window.ListView = Backbone.View.extend({
 
     this.listSidebarFavoriteView.setElement(this.createHolder('list-sidebar-favorite' + data._id, reverse));
     this.listSidebarFavoriteView.render();
+  },
+
+  openMessages: function(reverse){
+    var data = this.model.toJSON();
+
+    this.listMessagesView = new ListMessagesView({
+      model: this.model
+    });
+
+    this.listMessagesView.setElement(this.createHolder('list-messages' + data._id, reverse));
+    this.listMessagesView.render();
+  },
+
+  openMessageReplies: function(reverse){
+    var data = this.model.toJSON();
+
+    this.listMessageRepliesView = new ListMessageRepliesView({
+      model: this.model
+    });
+
+    this.listMessageRepliesView.setElement(this.createHolder('list-message-replies' + data._id, reverse));
+    this.listMessageRepliesView.render();
   }
 });

@@ -53,6 +53,6 @@ window.SidebarView = Backbone.View.extend({
     });
 
     this.listView.setElement('#main-sidebar-favorites');
-    this.listView.openFavorite(reverse);
+    this.listView.openSidebarFavorite(reverse);
   }
 })

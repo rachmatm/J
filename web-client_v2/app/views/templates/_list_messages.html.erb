@@ -1,0 +1,119 @@
+<script type="text/template" id="list-messages-template">
+  <li>
+    <div class="message_path">
+      <span class="messages_left_path">
+        <img src="images/abdu-avatar.png" alt="" />
+      </span>
+      <span class="messages_middle_path">
+        <# if (current_user.username == from){ #>
+
+        <a href=""><#= to #></a>
+
+        <# } else { #>
+
+        <a href=""><#= from #></a>
+
+        <# } #>
+        <span class="new_message"><#= subject #></span>
+      </span>
+      <div class="messages_right_path">
+        <a href="" class="count_read_message_new">3 Messages</a>
+        <span>.</span>
+        <span class="count_read_message"><abbr class="timeago" title="<#= created_at #>"></abbr></span>
+        <div class="action_menu_hide">
+          <ul>
+            <li>
+              <a href="javascript:void(0)" class="reply_hide">
+                <label>reply</label>
+                <span class="reply_icon">&nbsp;</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="delete_hide">
+                <label>delete</label>
+                <span class="delete_icon">&nbsp;</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="mark_read_hide">
+                <label>mark as read</label>
+                <span class="mark_icon">&nbsp;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a href="javascript:void(0)" class="no_padding_right messages_down_arrow">&nbsp;</a>
+      </div>
+    </div>
+    <div class="reply_message_path">
+      <p class="greeting">Hello,</p>
+      <p>How can I define a message with a string field longer than 512 characters?</p>
+      <p>
+        When defining a field as a String in a Message Definition, I am finding that the resulting type in 
+        Oracle is an nvarchar(255) which is too small for my application needs. According to the Tracking Server documentation, the "element may be any ASCII string." 
+        I see options in Tracking Server for "String64", "String256" and "String512", 
+        so it would seem that "String" would be unbounded or at least larger than 512 characters.
+      </p>
+      <p>Thanks,</p>
+      <ul id="reply_message" class="reply_message">
+        <li>
+          <div class="photo_reply_message">
+            <span class="no_margin_left messages_left_path">
+              <img src="images/avatar-metrofx.png" alt="" />
+            </span>
+          </div>
+          <div class="contents_reply_message">
+            <span class="messages_middle_path">
+              <a href="" class="me">You</a>
+              <span class="read_message">Re: How are you?</span>
+            </span>
+            <span class="messages_right_path">
+              <a href="" class="count_read_message">replied 6 hours ago</a>
+            </span>
+            <p>
+              It appears that *all* string types (String, String64, String256, String512) are being created as nvarchar2(255) in Oracle. (?!) In other words, apparently it's not possible to log a message with a string field longer than 255 characters using the Tracking Server feature loggers.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="photo_reply_message">
+            <span class="no_margin_left messages_left_path">
+              <img src="images/sarah-avatar.png" alt="" />
+            </span>
+          </div>
+          <div class="contents_reply_message">
+            <span class="messages_middle_path">
+              <a href="">Sarah</a>
+              <span class="read_message">Re: How are you?</span>
+            </span>
+            <span class="messages_right_path">
+              <a href="" class="count_read_message">replied 3 minutes ago</a>
+            </span>
+            <p>
+              This has been confirmed as a defect. The Tracking Team is working on releasing the fix to be part of Tracking Server 10 SP1. I'll have to check with the team if they will also release
+            </p>
+          </div>
+        </li>
+      </ul>
+      <div class="replay_path">
+        <div class="photo_reply_message">
+          <span class="reply_text">Reply</span>
+          <form action="/messages/<#= _id #>/reply.json" method="post" class="message-reply-form">
+            <span class="input_replay">
+              <span class="reply_message_photo no_margin_left messages_left_path">
+                <img src="images/avatar-metrofx.png" alt="" />
+                <input name="authenticity_token" type="hidden" value=<%= form_authenticity_token %> />
+              </span>
+              <span class="textarea_reply">
+                <span class="triangle_inbox">&nbsp;</span>
+                <textarea name="content" rows="" cols=""></textarea>
+              </span>
+            </span>
+            <%= submit_tag "", :style => "display: none" %>
+            <a href="javascript:void(0)" class="replay_button">Reply</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </li>
+</script>

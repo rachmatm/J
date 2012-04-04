@@ -172,4 +172,66 @@ module MeAction
       end
     end
   end
+
+  module Message
+
+    class Create < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_set_message params[:receiver], params[:subject], params[:content]
+        finish
+      end
+    end
+
+    class Delete < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_unset_message params[:message_id]
+        finish
+      end
+    end
+
+    class Index < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_get_message
+        finish
+      end
+    end
+
+    class Show < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_get_single_message params[:message_id]
+        finish
+      end
+    end
+
+    class MarkRead < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_set_message_mark_read params[:message_id]
+        finish
+      end
+    end
+
+    module Reply
+
+      class Create < ActionWithTokenAuth
+
+        def start
+          render @current_user.current_user_set_message_reply params[:message_id], params[:content]
+          finish
+        end
+      end
+
+      class Index < ActionWithTokenAuth
+
+        def start
+          render @current_user.current_user_get_message_reply params[:message_id]
+          finish
+        end
+      end
+    end
+  end
 end

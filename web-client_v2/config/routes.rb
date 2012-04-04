@@ -38,6 +38,12 @@ WebClientV2::Application.routes.draw do
     get 'update'
   end
 
+  resources :messages, :only => [:index, :create, :destroy, :reply, :mark_read] do
+    post '/reply' => 'messages#reply'
+    get '/destroy' => 'messages#destroy'
+    get '/mark_read' => 'messages#mark_read'
+  end
+
   post '/notify_forgot_password' => 'authentications#notify_forgot_password', :as => 'notify_forgot_password'
   post '/reset_forgot_password' => 'authentications#reset_forgot_password', :as => 'reset_forgot_password'
 

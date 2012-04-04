@@ -50,6 +50,8 @@ class User
   has_and_belongs_to_many :jot_thumbsup, :class_name => "Jot", :inverse_of => :user_thumbsup
   has_and_belongs_to_many :jot_thumbsdown, :class_name => "Jot", :inverse_of => :user_thumbsdown
   has_and_belongs_to_many :jot_mentioned, :class_name => "Jot", :inverse_of => :user_mentioned
+  has_many :message_sent, :class_name => "Message", :inverse_of => :sender
+  has_many :message_received, :class_name => "Message", :inverse_of => :receiver
   has_many :comments
   has_many :connections
   has_many :nests
@@ -441,6 +443,70 @@ class User
 
   rescue
     JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+
+  def current_user_get_message
+    message = Message.any_of({ :sender_id => self.id }, { :receiver_id => self.id }).reverse
+
+    JsonizeHelper.format :content => message
+  end
+
+  def current_user_set_message(receiver, subject, content)
+    receiver = User.where(:username => receiver).first
+
+    if receiver.present?
+      self.message_sent.create! :receiver => receiver, :subject => subject, :content => content
+      JsonizeHelper.format :notice => "Your message have been sent"
+    else
+      JsonizeHelper.format :failed => true, :error => "The user doesn't exist"
+    end
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message cannot be sent, please try again"
+  end
+
+  def current_user_set_message_mark_read(message_id)
+    message = Message.find(message_id)
+
+    message.update_attributes :read => true
+
+    JsonizeHelper.format :notice => "Your message is marked"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message cannot be found"
+  end
+
+  def current_user_unset_message(message_id)
+    message = Message.find(message_id)
+
+    message.destroy
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message could not be found"
+  end
+
+  def current_user_set_message_reply(message_id, content)
+    message = Message.find(message_id)
+
+    parameters = {:subject => "Re: #{message.subject}",
+                  :from => message.from,
+                  :to => message.to,
+                  :content => content,
+                  :original_message => message}
+
+    message.replies.create! parameters
+
+    JsonizeHelper.format :notice => "You have replied"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+  end
+
+  def current_user_get_message_reply(message_id)
+    messages = Message.find(message_id).replies
+
+    JsonizeHelper.format :content => messages
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Message not found, please try again"
   end
 
   protected

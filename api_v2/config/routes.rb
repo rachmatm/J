@@ -72,19 +72,25 @@ HttpRouter.new do
   # get('/me/tags(.:format)').to(MeAction::Tag::Index)
 
   # Me > Create Messages
-  # post('/me/messages(.:format)').to(MeAction::Message::Create)
+  post('/me/messages(.:format)').to(MeAction::Message::Create)
 
   # Me > Delete Messages
-  # delete('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Delete)
+  delete('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Delete)
 
   # Me > Index Messages
-  # get('/me/messages(.:format)').to(MeAction::Message::Index)
+  get('/me/messages(.:format)').to(MeAction::Message::Index)
 
   # Me > Show Messages
-  # get('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Show)
+  get('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Show)
 
   # Me > Messages > Create Reply
-  # post('/me/messages/(:message_id)/reply(.:format)').to(MeAction::Message::Reply::Create)
+  post('/me/messages/(:message_id)/reply(.:format)').to(MeAction::Message::Reply::Create)
+
+  # Me > Messages > Index Reply
+  get('/me/messages/(:message_id)/reply(.:format)').to(MeAction::Message::Reply::Index)
+
+  # Me > Messages > Mark Read
+  post('/me/messages/(:message_id)/mark_read(.:format)').to(MeAction::Message::MarkRead)
 
   # Me > Jot > Create Thumbsup
   post('/me/jots/(:jot_id)/thumbsup(.:format)').to(MeAction::JotAction::Thumbsup::Create)

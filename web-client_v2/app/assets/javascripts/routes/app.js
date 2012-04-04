@@ -42,7 +42,11 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/account_setting": "accountSetting",
 
-    "!/about": "about"
+    "!/about": "about",
+
+    "!/favorites": "favorites",
+
+    "!/messages": "messages"
   },
 
   render: function(parameters){
@@ -157,5 +161,15 @@ window.AppRouter = Backbone.Router.extend({
   about: function(){
     this.middleView.closeAll();
     this.middleView.openAbout();
+  },
+
+  favorites: function(){
+    this.middleView.closeAll();
+    this.middleView.openFavorites();
+  },
+
+  messages: function(){
+    this.middleView.closeAll();
+    this.middleView.openMessages();
   }
 });

@@ -4665,7 +4665,7 @@ a.connect_cross{
 .delete_hide label,
 .mark_read_hide label {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .comment_hide label,
