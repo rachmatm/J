@@ -83,10 +83,8 @@ window.ListMessagesView = Backbone.View.extend({
   },
 
   expand_message: function(){
-    $('.message_path').click(function(){
-      $(this).siblings('.reply_message_path').toggle();
-      return false;
-    });
+    $(this.el).find('.reply_message_path').toggle();
+    return false;
   },
 
   action_menu_show: function(){
@@ -96,8 +94,11 @@ window.ListMessagesView = Backbone.View.extend({
   },
 
   reply: function(e){
-    var _this = this;
-    console.log(this);
+    $(this.el).find('.reply_message_path').show();
+
+    $(this.el).find('.action_menu_hide').hide();
+
+    $(this.el).find('.textarea-form-reply').focus();
   },
 
   delete: function(e){

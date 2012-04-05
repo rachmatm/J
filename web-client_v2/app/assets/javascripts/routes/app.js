@@ -46,7 +46,7 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/favorites": "favorites",
 
-    "!/messages": "messages"
+    "!/inbox": "messages"
   },
 
   render: function(parameters){

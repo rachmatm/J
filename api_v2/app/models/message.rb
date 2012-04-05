@@ -8,7 +8,7 @@ class Message
   field :content, :type => String
   field :read, :type => Boolean, :default => false
 
-  has_many :replies, :class_name => "Message", :inverse_of => :original_message
+  has_many :replies, :class_name => "Message", :inverse_of => :original_message, :dependent => :delete
   belongs_to :original_message, :class_name => "Message", :inverse_of => :replies
 
   belongs_to :sender, :class_name => "User", :inverse_of => :message_sent
