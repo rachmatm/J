@@ -38,7 +38,8 @@ WebClientV2::Application.routes.draw do
     get 'update'
   end
 
-  resources :messages, :only => [:index, :create, :destroy, :reply, :mark_read] do
+  resources :messages, :only => [:index, :create, :destroy, :reply, :mark_read, :get_reply] do
+    get '/reply' => 'messages#get_reply'
     post '/reply' => 'messages#reply'
     get '/destroy' => 'messages#destroy'
     get '/mark_read' => 'messages#mark_read'

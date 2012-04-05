@@ -18,6 +18,8 @@ window.MiddleMessagesView = Backbone.View.extend({
 
     this.validates();
 
+    console.log(this.messages);
+
     $('.compose_message_form').hide();
     $('.compose_new_message').toggle(function(){
       $(this).addClass('compose_new_message_active');
@@ -26,6 +28,33 @@ window.MiddleMessagesView = Backbone.View.extend({
       $(this).removeClass('compose_new_message_active');
       $('.compose_message_form').hide();
     });
+  },
+
+  events: {
+    'click .link-to-sort-by-date': 'sort_by_date',
+    'click .link-to-sort-by-name': 'sort_by_name'
+  },
+
+  sort_by_date: function(){
+    var _this = this;
+
+    this.messages = new MessageCollection(_.sortBy(_this.messages.toJSON(), function(message_data){
+      return message_data.updated_at;
+    }).reverse());
+
+    console.log(this.messages);
+    this.resetItem();
+  },
+
+  sort_by_name: function(){
+    var _this = this;
+
+    this.messages = new MessageCollection(_.sortBy(_this.messages.toJSON(), function(message_data){
+      return message_data.from;
+    }).reverse());
+
+    console.log(this.messages);
+    this.resetItem();
   },
 
   addItem: function(data){
@@ -39,6 +68,7 @@ window.MiddleMessagesView = Backbone.View.extend({
   resetItem: function(){
     var _this = this;
 
+    $('#main-middle-messages-list').empty();
     this.messages.each(function(data){
       _this.item(data);
     });
@@ -76,7 +106,6 @@ window.MiddleMessagesView = Backbone.View.extend({
               alert(data.error);
             }
             else{
-              $('#main-middle-messages-list').empty();
               _this.messages.fetch();
               _this.messages.add(data.content);
             }

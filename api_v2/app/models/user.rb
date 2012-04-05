@@ -447,7 +447,7 @@ class User
 
 
   def current_user_get_message
-    message = Message.any_of({ :sender_id => self.id }, { :receiver_id => self.id }).reverse
+    message = Message.any_of({ :sender_id => self.id }, { :receiver_id => self.id }).desc(:updated_at)
 
     JsonizeHelper.format :content => message
   end
@@ -489,12 +489,13 @@ class User
     message = Message.find(message_id)
 
     parameters = {:subject => "Re: #{message.subject}",
-                  :from => message.from,
+                  :from => self.username,
                   :to => message.to,
                   :content => content,
                   :original_message => message}
 
     message.replies.create! parameters
+    message.update_attributes :read => false
 
     JsonizeHelper.format :notice => "You have replied"
   rescue
@@ -502,7 +503,7 @@ class User
   end
 
   def current_user_get_message_reply(message_id)
-    messages = Message.find(message_id).replies
+    messages = Message.find(message_id).replies.asc(:created_at)
 
     JsonizeHelper.format :content => messages
   rescue

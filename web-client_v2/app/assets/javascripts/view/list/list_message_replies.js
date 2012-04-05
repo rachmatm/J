@@ -9,7 +9,6 @@ window.ListMessageRepliesView = Backbone.View.extend({
   },
 
   events: {
-    'click .message_path': 'expand_message'
   },
 
   data: {},
@@ -19,9 +18,9 @@ window.ListMessageRepliesView = Backbone.View.extend({
       current_user: this.currentUserModel.data()
     });
 
+    console.log(this.data);
+    console.log(this.model);
     $(this.$el).html(this.template( this.data ));
-
-    this.validates();
 
     $("abbr.timeago").timeago();
 

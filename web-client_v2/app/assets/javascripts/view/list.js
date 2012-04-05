@@ -94,6 +94,7 @@ window.ListView = Backbone.View.extend({
   openMessageReplies: function(reverse){
     var data = this.model.toJSON();
 
+    console.log(this.model);
     this.listMessageRepliesView = new ListMessageRepliesView({
       model: this.model
     });

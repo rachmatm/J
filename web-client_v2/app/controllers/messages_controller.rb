@@ -44,6 +44,17 @@ class MessagesController < ApplicationController
     end
   end
 
+  def get_reply
+    respond_to do |format|
+
+      format.json do
+        render :json => api_connect("/me/messages/#{params[:message_id]}/reply.json", {}, "get")
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
   def reply
     respond_to do |format|
       
