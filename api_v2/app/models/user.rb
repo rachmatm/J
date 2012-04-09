@@ -467,13 +467,14 @@ class User
   end
 
   def current_user_set_message(receiver, subject, content)
-    receiver = User.where(:username => receiver).first
+    user_receiver = User.where(:username => receiver).first
 
-    if receiver.present?
-      self.message_sent.create! :receiver => receiver, :subject => subject, :content => content
+    if user_receiver.present? and receiver != self.username
+      self.message_sent.create! :receiver => user_receiver, :subject => subject, :content => content
       JsonizeHelper.format :notice => "Your message have been sent"
     else
-      JsonizeHelper.format :failed => true, :error => "The user doesn't exist"
+      error_message = receiver == self.username ? "You can't send message to yourself" : "The user doesn't exist"
+      JsonizeHelper.format :failed => true, :error => error_message
     end
 
   rescue
@@ -494,6 +495,8 @@ class User
     message = Message.find(message_id)
 
     message.destroy
+
+    JsonizeHelper.format :notice => "Your message is deleted"
 
   rescue
     JsonizeHelper.format :failed => true, :error => "Your message could not be found"

@@ -4411,6 +4411,7 @@ a.connect_cross{
 .messages_middle_path {
   float: left;
   margin-left: 10px;
+  width: 280px;
 }
 
 .messages_middle_path a{

@@ -18,8 +18,6 @@ window.ListMessageRepliesView = Backbone.View.extend({
       current_user: this.currentUserModel.data()
     });
 
-    console.log(this.data);
-    console.log(this.model);
     $(this.$el).html(this.template( this.data ));
 
     $("abbr.timeago").timeago();

@@ -18,7 +18,8 @@ window.MiddleMessagesView = Backbone.View.extend({
 
     this.validates();
 
-    console.log(this.messages);
+    this.sort_by_date();
+    this.sort_by_name();
 
     $('.compose_message_form').hide();
     $('.compose_new_message').toggle(function(){
@@ -31,30 +32,46 @@ window.MiddleMessagesView = Backbone.View.extend({
   },
 
   events: {
-    'click .link-to-sort-by-date': 'sort_by_date',
-    'click .link-to-sort-by-name': 'sort_by_name'
   },
 
   sort_by_date: function(){
     var _this = this;
 
-    this.messages = new MessageCollection(_.sortBy(_this.messages.toJSON(), function(message_data){
-      return message_data.updated_at;
-    }).reverse());
-
-    console.log(this.messages);
-    this.resetItem();
+    $('.link-to-sort-by-date').toggle(function(){
+      _this.messages.fetch({success: function(collection, response) {
+        _this.messages = new MessageCollection(_.sortBy(response.content, function(message_data){
+          return message_data.updated_at;
+        }).reverse());
+        _this.resetItem();
+      }});
+    }, function(){
+      _this.messages.fetch({success: function(collection, response) {
+        _this.messages = new MessageCollection(_.sortBy(response.content, function(message_data){
+          return message_data.updated_at;
+        }));
+        _this.resetItem();
+      }});
+    });
   },
 
   sort_by_name: function(){
     var _this = this;
 
-    this.messages = new MessageCollection(_.sortBy(_this.messages.toJSON(), function(message_data){
-      return message_data.from;
-    }).reverse());
-
-    console.log(this.messages);
-    this.resetItem();
+    $('.link-to-sort-by-name').toggle(function(){
+      _this.messages.fetch({success: function(collection, response) {
+        _this.messages = new MessageCollection(_.sortBy(response.content, function(message_data){
+          return message_data.from;
+        }).reverse());
+        _this.resetItem();
+      }});
+    }, function(){
+      _this.messages.fetch({success: function(collection, response) {
+        _this.messages = new MessageCollection(_.sortBy(response.content, function(message_data){
+          return message_data.from;
+        }));
+        _this.resetItem();
+      }});
+    });
   },
 
   addItem: function(data){
@@ -107,7 +124,9 @@ window.MiddleMessagesView = Backbone.View.extend({
             }
             else{
               _this.messages.fetch();
-              _this.messages.add(data.content);
+              _this.resetItem();
+              $('.compose_new_message').trigger('click');
+              $('#message-form .to_form, #message-form .subject_form, .compose_message_form textarea').val('')
             }
           }
         });

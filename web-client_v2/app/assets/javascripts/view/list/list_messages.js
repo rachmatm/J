@@ -4,13 +4,17 @@ window.ListMessagesView = Backbone.View.extend({
 
   initialize: function(){
     this.currentUserModel = new CurrentUserModel;
+
     this.middleView = new MiddleView;
     this.middleView.setElement('#main-middle');
+
     this.messageReplies = new MessageRepliesCollection({id: this.model.toJSON()._id});
     this.messageReplies.reset();
     this.messageReplies.bind('add', this.addItem, this);
     this.messageReplies.bind('all', this.renderItem, this);
     this.messageReplies.bind('reset', this.resetItem, this);
+
+    this.model.bind('destroy', this.remove, this)
   },
 
   events: {
@@ -34,8 +38,6 @@ window.ListMessagesView = Backbone.View.extend({
 
     this.messageReplies.fetch();
 
-    this.resetItem();
-
     this.validates(this.el);
 
     $("abbr.timeago").timeago();
@@ -54,6 +56,9 @@ window.ListMessagesView = Backbone.View.extend({
 
     $(formEl).find('#message-reply-form').validate({
       rules: {
+        'content': {
+          required: true
+        }
       },
 
       errorPlacement: function(){},
@@ -110,7 +115,13 @@ window.ListMessagesView = Backbone.View.extend({
         _this.error.call(_this, jqXHR, textStatus, errorThrown);
       },
       success: function(data, textStatus, jqXHR){
-        $(_this.el).remove();
+        if(data.failed === true){
+          alert(data.error);
+        }
+        else{
+          $(_this.el).remove();
+          _this.model.change();
+        }
       }
     });
   },
@@ -132,7 +143,7 @@ window.ListMessagesView = Backbone.View.extend({
   },
 
   addItem: function(data){
-    this.item(data, true)
+    this.item(data, true);
   },
 
   renderItem: function(){

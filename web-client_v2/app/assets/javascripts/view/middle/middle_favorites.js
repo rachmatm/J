@@ -29,7 +29,6 @@ window.MiddleFavoritesView = Backbone.View.extend({
   resetItem: function(){
     var _this = this;
 
-    console.log(this.favorites);
     this.favorites.each(function(data){
       _this.item(data);
     });
