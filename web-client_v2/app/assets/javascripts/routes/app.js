@@ -99,8 +99,6 @@ window.AppRouter = Backbone.Router.extend({
   search: function(){
     this.magicboxView.openSearch();
     this.middleView.openWelcome();
-    
-    return false;
   },
 
   signup: function(){
@@ -137,6 +135,7 @@ window.AppRouter = Backbone.Router.extend({
   },
 
   nest: function(){
+    this.magicboxView.openSearch();
     this.middleView.closeAll();
     this.middleView.openNest();
   },
@@ -144,13 +143,11 @@ window.AppRouter = Backbone.Router.extend({
   forgotPassword: function(){
     this.middleView.closeAll();
     this.middleView.openForgotPassword();
-    return false;
   },
 
   changePassword: function(token){
     this.middleView.closeAll();
     this.middleView.openChangePassword(token);
-    return false;
   },
 
   accountSetting: function(id){

@@ -4,11 +4,11 @@ window.ListView = Backbone.View.extend({
     this.holderView = new HolderView;
   },
 
-  createHolder: function(id, reverse, table){
+  createHolder: function(id, reverse, table, className){
     this.holderView.setElement(this.el);
     this.holderView.render({
       id: id,
-      className: 'list-view'
+      className: className || 'list-view'
     }, reverse, table);
 
     return this.holderView.holder_el;
@@ -42,7 +42,7 @@ window.ListView = Backbone.View.extend({
       model: this.model
     });
 
-    this.listConnectionView.setElement(this.createHolder('list-connection-' + data._id, reverse, true));
+    this.listConnectionView.setElement(this.createHolder('list-connection-' + data._id, reverse, 'tr'));
     this.listConnectionView.render();
   },
 
@@ -57,10 +57,21 @@ window.ListView = Backbone.View.extend({
     this.listNestView.render();
   },
 
+
+  openListTag: function(reverse){
+    var data = this.model;
+
+    this.listTagView= new ListTagView({
+      model: this.model
+    });
+
+    this.listTagView.setElement(this.createHolder('list-tag-' + data.tag, reverse, 'li', 'link-to-add-to-nest'));
+    this.listTagView.render();
+  },
+  
   openFavorites: function(reverse){
     var data = this.model.toJSON();
 
-    console.log(this.model.toJSON());
     this.listFavoritesView = new ListFavoritesView({
       model: this.model
     });
@@ -94,7 +105,6 @@ window.ListView = Backbone.View.extend({
   openMessageReplies: function(reverse){
     var data = this.model.toJSON();
 
-    console.log(this.model);
     this.listMessageRepliesView = new ListMessageRepliesView({
       model: this.model
     });

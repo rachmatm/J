@@ -22,10 +22,7 @@ window.MagicboxView = Backbone.View.extend({
       el: $('#magicbox-login')
     });
 
-    this.magicboxSearchView = new MagicboxSearchView({
-      el: $('#magicbox-search'),
-      elNav: $('#magicbox-navigation-search')
-    });
+    this.magicboxSearchView = new MagicboxSearchView;
 
     this.magicboxJotView = new MagicboxJotView({
       el: $('#magicbox-jot')
@@ -50,6 +47,7 @@ window.MagicboxView = Backbone.View.extend({
 
   openSearch: function(){
     this.closeAllTab();
+    this.magicboxSearchView.setElement('#magicbox-search');
     this.magicboxSearchView.open();
   },
 

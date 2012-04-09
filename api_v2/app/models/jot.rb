@@ -6,7 +6,7 @@ class Jot
 
   PROTECTED_FIELDS = []
 
-  PUBLIC_FIELD = [:title]
+  PUBLIC_FIELD = [:title, :detail]
 
   NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS
 
@@ -19,6 +19,7 @@ class Jot
   attr_accessor :user_thumbups_count
 
   field :title, :type => String
+  field :detail, :type => String, :default => ""
 
   validates_presence_of :title
   validates_length_of :title, :maximum => 140
@@ -38,20 +39,7 @@ class Jot
   scope :find_by_user_tags, ->(user) {any_of({"tag_ids" => {"$in" => user.tags.collect{|tag| tag.id}}}, {'user_id' => user.id})}
 
   after_create :current_jot_set_crosspost
-
-  def current_jot_set_mention_users
-    self.save
-
-    Twitter::Extractor.extract_mentioned_screen_names(self.title).each do |username|
-      user = User.where(:username => /#{username}/i).first
-
-      if user.present?
-        self.user_mentioned.push user
-      end
-    end
-
-    self.reload
-  end
+  after_save :current_jot_set_tags, :current_jot_set_mention_users
 
   protected
 
@@ -94,5 +82,35 @@ class Jot
       client.update jot.title
     end
     t.join
+  end
+
+  def current_jot_set_tags
+    assingned_tags = []
+    
+    Twitter::Extractor.extract_hashtags(self.title).uniq.each do |tag|
+
+      assingned_tags << data_tag = Tag.find_or_create_by({:name => tag.downcase})
+      
+      self.tags.push data_tag
+      self.user.tags.push data_tag
+    end
+
+    self.reload
+    
+    assingned_tags.each do | assingned_tag |
+      assingned_tag.tag_similiarities.concat assingned_tags.reject{|t| t == assingned_tag}
+    end
+  end
+
+  def current_jot_set_mention_users
+    Twitter::Extractor.extract_mentioned_screen_names(self.title).each do |username|
+      user = User.where(:username => /#{username}/i).first
+
+      if user.present?
+        self.user_mentioned.push user
+      end
+    end
+
+    self.reload
   end
 end

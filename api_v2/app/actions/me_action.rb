@@ -171,6 +171,36 @@ module MeAction
         finish
       end
     end
+
+    module ItemAction
+
+      class Create < ActionWithTokenAuth
+
+        def start
+          render @current_user.set_nest_item params
+          finish
+        end
+      end
+
+      class Index < ActionWithTokenAuth
+
+        def start
+          render Nest.get_item params[:nest_id]
+          finish
+        end
+      end
+    end
+  end
+
+  module ClipAction
+
+    class Create < ActionWithTokenAuth
+
+      def start
+        render @current_user.set_nest_item params
+        finish
+      end
+    end
   end
 
   module Message

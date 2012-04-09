@@ -43,7 +43,7 @@
     </div>
 
     <div class="magicbox-content-tab-item" id="magicbox-jot">
-      <form method="post" id="jots-form" action="/jots" accept-charset="UTF-8" novalidate="novalidate"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="INuKFJyrknpPaoxOpo5a5pR63VyYdyHSFjnHMLAIrXI=" name="authenticity_token"></div>
+      <%= form_tag jots_path(:format => 'json'), :id => 'jots-form' do %>
         <div class="jot_search search jot-tab-content clearfix">
           <input type="text" placeholder="Tags, places, users, search from them here!" name="jot[title]" id="jot-form-title-field" autocomplete="off" class="valid">
           <input type="submit" value="" name="commit">
@@ -94,7 +94,8 @@
                 <span class="add_more_text">Add more content</span>
               </div>
               <div class="more_content_bottom">
-                <textarea rows="" cols=""></textarea>
+                <%= text_area_tag 'jot[detail]', nil, :id => 'jot-write-more-field'  %>
+
                 <span class="more_content_count jot_count">512</span>
               </div>
               <div class="clear"></div>
@@ -110,8 +111,8 @@
 
                 <div>
                   <div class="submit_upload_media">
-                    <input type="text">
-                    <input type="submit" value="Clip">
+                    <%= session_field_tag %>
+                    <input type="file" name="clip" id="jot-clip-field">
                   </div>
                   <div class="submit_upload_media">
                     <img class="avatar_loading" src="/assets/loading-avatar.png" alt="">
@@ -241,7 +242,7 @@
           </div>
           <input type="submit" class="jot_green_bg" value="Jot">
         </div>
-      </form>
+      <% end %>
     </div>
 
     <div class="middle-content magicbox-content-tab-item hidden" id="magicbox-login">
@@ -316,19 +317,7 @@
           <span class="acc_text">Go to account setting</span>
         </a>
       </div>
-    </div>
-   
-
-
-
-
-
-
-
-
-
-
-    
+    </div> 
 
     <div id="magicbox-setting" class="account_setting magicbox-content-tab-item clearfix hidden">
       <div id="magicbox-setting-content"></div>
@@ -344,6 +333,67 @@
         </a>
       </div>
     </div>
+
+    <div id="magicbox-search-options" class="account_setting magicbox-content-tab-item clearfix hidden">
+      <div class="search_box_from_nest">
+        <div id="search-result-nest-holder">
+
+        </div>
+        <div class="save_tags_popup" style="display: none;">
+          <div class="save_button_width want_delete_white">
+            <a class="top_blue_popup" href="">Movies &gt; BoxOffice &gt; CommingSoon</a>
+            <p>Save this search as:</p>
+            <input type="text" class="rename_nest" value="CommingSoonMovie2011">
+            <p>Under Category:</p>
+            <input type="text" class="under_category rename_nest" value="Bands">
+            <span class="ok_no_button">
+              <a href="" class="cancel_tab">Cancel</a>
+              <a class="but_save_popup" href="">Save</a>
+            </span>
+          </div>
+        </div>
+        <div class="you_can_delete_this save_tags_popup" style="display: none;">
+          <div class="save_button_width want_delete_white">
+            <a class="top_blue_popup" href="">Movies &gt; BoxOffice &gt; CommingSoon</a>
+            <p>Save this search as:</p>
+            <input type="text" class="rename_nest" value="CommingSoonMovie2011">
+            <p>Under Category:</p>
+            <div class="under_category_dd">
+              <ul class="under_cate_top">
+                <li>
+                  <span class="under_dd_content">Music</span>
+                  <span class="under_dd_arrow">&nbsp;</span>
+                </li>
+              </ul>
+              <ul class="under_cate_content" style="display: none;">
+                <li>
+                  <span class="under_category_content">
+                    <ul>
+                      <li>
+                        <a href="">Music</a>
+                      </li>
+                      <li>
+                        <a href="">Movies</a>
+                      </li>
+                      <li>
+                        <a class="add_new_category" href="">add new category</a>
+                      </li>
+                    </ul>
+                  </span>
+                  <span class="under_dd_arrow_active"></span>
+                </li>
+              </ul>
+            </div>
+            <span class="ok_no_button">
+              <a href="" class="cancel_tab">Cancel</a>
+              <a class="but_save_popup" href="">Save</a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
 
   </div>
 

@@ -7,14 +7,26 @@ window.HolderView = Backbone.View.extend({
     'className': 'holder-view'
   },
 
-  render: function(variables, reverse, table){
+  render: function(variables, reverse, type){
 
     this.default_variables = $.extend({}, this.default_variables, variables);
 
-    if(table && reverse){
+    if(type == 'ul' && reverse){
+      this.holder_el = $('<ul id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></ul>').prependTo(this.el);
+    }
+    else if(type == 'ul'){
+     this.holder_el = $('<ul id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></ul>').appendTo(this.el);
+    }
+    else if(type == 'li' && reverse){
+      this.holder_el = $('<li id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></li>').prependTo(this.el);
+    }
+    else if(type == 'li'){
+     this.holder_el = $('<li id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></li>').appendTo(this.el);
+    }
+    else if(type == 'tr' && reverse){
       this.holder_el = $('<tr id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></tr>').prependTo(this.el);
     }
-    else if(table){
+    else if(type == 'tr'){
      this.holder_el = $('<tr id="'+ this.default_variables.id +'" class="'+ this.default_variables.className +'"></tr>').appendTo(this.el);
     }
     else if(reverse){

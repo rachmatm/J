@@ -31,9 +31,16 @@ class Tag
 
   has_and_belongs_to_many :users
   has_and_belongs_to_many :jots
+  has_and_belongs_to_many :tag_similiarities, :class_name => 'Tag'
+  has_and_belongs_to_many :nest_items
+
 
   before_create :lowerize_name
   before_save :set_tag_metadata
+
+  def set_similiarity_tags
+    
+  end
 
   protected
 

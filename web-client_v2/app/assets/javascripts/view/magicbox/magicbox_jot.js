@@ -22,12 +22,13 @@ window.MagicboxJotView = Backbone.View.extend({
 
     this.connections = new ConnectionCollection;
     this.setButtonAnimation();
+    this.setClipField();
   },
 
   validates: function(){
     var _this = this;
 
-    $('#jots-form').validate({
+    this.validates = $('#jots-form').validate({
       rules: {
         'jot[title]': {
           required: true
@@ -141,7 +142,20 @@ window.MagicboxJotView = Backbone.View.extend({
   },
 
   jotBarWriteMore: function(){
-    $('#jot-write-more-panel').toggleClass('hidden');
+    $('#jot-write-more-panel').toggleClass( function(index, current_class_name){
+      
+      if(/hidden/.test(current_class_name)){
+        $('#jot-write-more-field').rules("add", {
+          required: true,
+          maxlength: 512
+        });
+      }
+      else{
+        $('#jot-write-more-field').rules("remove");
+      }
+      
+      return 'hidden';
+    });
   },
 
   jotBarClip: function(){
@@ -169,6 +183,21 @@ window.MagicboxJotView = Backbone.View.extend({
 
     buttons.bind('click', function(){
       $(this).toggleClass('jot_click jot_click_active');
+    });
+  },
+
+  setClipField: function(){
+    $('#jot-clip-field').setUploadify({
+      auto: true,
+      multi: true,
+      onComplete: function(event, queueID, fileObj, response, data) {
+
+        var obj_response = JSON.parse(response);
+   
+        if(obj_response.failed === true){
+          alert(obj_response.error)
+        }
+      }
     });
   }
 })
