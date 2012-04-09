@@ -20,6 +20,8 @@ class Jot
 
   field :title, :type => String
   field :detail, :type => String, :default => ""
+  field :facebook_id, :type => String
+  field :twitter_id, :type => String
 
   validates_presence_of :title
   validates_length_of :title, :maximum => 140
@@ -66,20 +68,37 @@ class Jot
   end
 
   def current_jot_set_crosspost_facebook(conn, jot)
+
     t = Thread.new do
-      fc = FacebookConnect.new
-      fc.user_id = conn.provider_user_id
-      fc.token = conn.provider_user_token
-      fc.post_wall :message => jot.title
+      begin
+        fc = FacebookConnect.new conn.provider_user_id, conn.provider_user_token
+        result = fc.publish('wall', {:message => jot.title})
+
+        unless result['error'].present?
+          current_jot = Jot.find self.id
+          current_jot.update_attribute 'facebook_id', result['id']
+        else
+          conn.destroy
+        end
+      rescue
+        conn.destroy
+      end
     end
     t.join
   end
 
   def current_jot_set_crosspost_twitter(conn, jot)
-    t = Thread.new do
-      client = Twitter::Client.new :oauth_token => conn.provider_user_token, :oauth_token_secret => conn.provider_user_secret
 
-      client.update jot.title
+    t = Thread.new do      
+      begin
+        client = Twitter::Client.new :oauth_token => conn.provider_user_token, :oauth_token_secret => conn.provider_user_secret
+        result = client.update jot.title
+
+        current_jot = Jot.find self.id
+        current_jot.update_attribute 'twitter_id', result['id']
+      rescue
+        conn.destroy
+      end
     end
     t.join
   end

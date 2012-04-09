@@ -197,7 +197,7 @@ module MeAction
     class Create < ActionWithTokenAuth
 
       def start
-        render @current_user.set_nest_item params
+        render @current_user.set_clip params
         finish
       end
     end

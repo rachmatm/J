@@ -1,0 +1,15 @@
+<script type="text/template" id="list-uploaded-clip-template">
+  <div class="image_upload_path">
+    <!-- img class="attach_image" src="/assets/img-up.png" alt=" -->
+    <span class="left">
+      <span class="img_tittle"><#= title #></span>
+      <!-- a class="img_tittle" href="javascript:void(0)">pretty.jpg</a -->
+      <!-- input type="text" class="image_upload_input" style="display: none;" -->
+      <!-- br class="clear">
+      <span class="img_resolution">original size 1068 x 1600</span -->
+    </span>
+    <a class="close_img_path link-to-delete-uploaded-clip" href="javascript:void(0)">x</a>
+  </div>
+
+  <input type="hidden" name="jot[clips][<#= _id#>]" value="<#= _id#>">
+</script>

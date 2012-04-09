@@ -123,7 +123,7 @@
       <!-- IF HAS COMMENT -->
       <div class="comment">
         <span class="comment-icon">&nbsp;</span>
-        <div class="comment_line">
+        <!-- div class="comment_line">
           <div class="left">
             <ul>
               <li class="left"><a href="#">16 comments</a></li>
@@ -140,12 +140,14 @@
             </ul>
           </div>
           <div class="clear"></div>
-        </div>
-        <div id="scrollbar1" class="comment-content">
-          <div class="scrollbar" style="height: 255px;"><div class="track" style="height: 255px;"><div class="thumb" style="top: 0px; height: 80.9776px;"><div class="end"></div></div></div></div>
+        </div -->
+        <div class="comment-content">
+          <!-- div id="scrollbar1" class="comment-content" -->
+          <!-- div class="scrollbar" style="height: 255px;"><div class="track" style="height: 255px;"><div class="thumb" style="top: 0px; height: 80.9776px;"><div class="end"></div></div></div></div -->
           <div class="viewport clearfix">
             <div class="overview" style="top: 0px;">
-              <ul>
+              <ul id="list-comment-holder-<#= _id #>">
+                <!-- 
                 <li class="people_comments">
                   <div class="left">
                     <img alt="" src="/assets/abdu-avatar.png">
@@ -223,7 +225,7 @@
                   </div>
                   <div class="clear"></div>
                 </li>
-
+                -->
               </ul>
             </div>
 
@@ -239,17 +241,21 @@
 
         <div  class="overview_comment">
           <div class="photo_reply_message">
-            <span class="reply_text">Reply</span>
-            <span class="input_replay clarfix">
-              <span class="reply_message_photo no_margin_left messages_left_path">
-                <img alt="" src="/assets/avatar-metrofx.png">
+            <form action="/jots//comments.json" method="post" id="jot-comment-form-<#= _id #>">
+              <span class="reply_text">Reply</span>
+              <span class="input_replay clarfix">
+                <span class="reply_message_photo no_margin_left messages_left_path">
+                  <# if(current_user.avatar){ #>
+                  <img alt="<#= current_user.avatar.username #>" src="<#= current_user.avatar.thumb_small.url #>">
+                  <# } #>
+                </span>
+                <span class="textarea_reply widefive">
+                  <span class="triangle_inbox">&nbsp;</span>
+                  <textarea cols="" rows="" name="comment[message]" class="widefive"></textarea>
+                </span>
               </span>
-              <span class="textarea_reply widefive">
-                <span class="triangle_inbox">&nbsp;</span>
-                <textarea cols="" rows="" class="widefive"></textarea>
-              </span>
-            </span>
-            <a class="replay_button" href="">Reply</a>
+              <a class="replay_button" id="jot-comment-form-<#= _id #>-submit" href="javascript:void(0)">Reply</a>
+            </form>
           </div>
 
         </div>

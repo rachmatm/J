@@ -122,9 +122,6 @@ HttpRouter.new do
   # Tag > Index
   # get('/tags(.:format)').to(MeAction::Tag::Index)
 
-  # Me > Jot > Create Comment
-  post('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Create)
-
   # Me > Create Connections
   post('/me/connections(.:format)').to(MeAction::ConnectionAction::Create)
 
@@ -139,6 +136,9 @@ HttpRouter.new do
 
   # Me > Jot > Index Comment
   get('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Index)
+
+  # Me > Jot > Create Comment
+  post('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Create)
 
   # Me > Index Nest
   get('/me/nests(.:format)').to(MeAction::NestAction::Index)
@@ -160,7 +160,9 @@ HttpRouter.new do
 
   # Me > Create Clip
   post('/me/clips(.:format)').to(MeAction::ClipAction::Create)
-  
+
+  # Me > Delete Clip
+  delete('/me/clips/(:clip_id)(.:format)').to(MeAction::ClipAction::Destroy)
 
   # Admin > Auth > New
   get('/lord/login(.:format)').to(AdminAction::Auth::New).name(:admin_auth_new)

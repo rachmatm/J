@@ -2,20 +2,66 @@ class FacebookConnect
 
   attr_accessor :user_id, :token
 
-  def initialize(options = {})
-    @options = options
-    @options[:grap_url] ||= "https://graph.facebook.com"
-    @options[:path] ||= "/me/feed"
+  def initialize(user_id, token, api_url = 'https://graph.facebook.com')
+    @user_id = user_id
+    @token = token
+    @api_url = api_url
   end
 
-  def post_wall(parameters = {})
+  def publish(type, parameters = {})
 
-    request = Typhoeus::Request.new(File.join(@options[:grap_url], @options[:path]),
+    case type
+    when 'wall'
+      path = '/me/feed'
+    when 'videos'
+      path = '/me/videos'
+    when 'photos'
+      path = '/me/photos'
+    else
+      path = ''
+    end
+
+    request = Typhoeus::Request.new(File.join(@api_url, path),
       :method        => :post,
-      :params        => parameters.merge({:access_token => self.token}))
+      :params        => parameters.merge({:access_token => @token}))
     # we can see from this that the first argument is the url. the second is a set of options.
     # the options are all optional. The default for :method is :get. Timeout is measured in milliseconds.
     # cache_timeout is measured in seconds.
+
+    request_response = ActiveSupport::JSON.decode(get_data(request))
+
+    case type
+    when 'videos'
+      show(request_response['id'])
+    when 'photos'
+      show(request_response['post_id'])
+    else
+      request_response
+    end
+    
+  end
+
+  def show(obj_id)
+
+    request = Typhoeus::Request.new(File.join(@api_url, obj_id),
+      :method        => :get,
+      :params        => parameters.merge({:access_token => @token}))
+
+
+    request_response = ActiveSupport::JSON.decode(get_data(request))
+  end
+
+  def test(url, params)
+    request = Typhoeus::Request.new(url,
+      :method        => :get,
+      :params        => params.merge({:access_token => @token}))
+
+    return get_data(request)
+  end
+
+  protected
+
+  def get_data(request)
 
     # Run the request via Hydra.
     hydra = Typhoeus::Hydra.new
@@ -24,7 +70,7 @@ class FacebookConnect
 
     # the response object will be set after the request is run
     response = request.response
-
+    
     if response.success?
       Cramp.logger.info "hell yeah"
     elsif response.timed_out?

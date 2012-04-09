@@ -187,9 +187,17 @@ window.MagicboxJotView = Backbone.View.extend({
   },
 
   setClipField: function(){
+    this.currentUserModel = new CurrentUserModel;
+
+    this.uploadedClips = new UploadedClipCollection;
+    this.uploadedClips.bind('add', this.addListUploadedClip, this);
+
+    var _this = this;
+
     $('#jot-clip-field').setUploadify({
       auto: true,
       multi: true,
+      script: '/clips.json',
       onComplete: function(event, queueID, fileObj, response, data) {
 
         var obj_response = JSON.parse(response);
@@ -197,7 +205,22 @@ window.MagicboxJotView = Backbone.View.extend({
         if(obj_response.failed === true){
           alert(obj_response.error)
         }
+        else{
+          _this.uploadedClips.add(obj_response.content);
+        }
       }
+    }, {token: this.currentUserModel.token()});
+  },
+
+  addListUploadedClip: function(data){
+    this.listUploadedClip(data, true)
+  },
+
+  listUploadedClip: function(data, reverse){
+    this.listView = new ListView({
+      model: data
     });
+    this.listView.setElement('#list-uploaded-clip-holder')
+    this.listView.openUploadedClip(reverse);
   }
 })
