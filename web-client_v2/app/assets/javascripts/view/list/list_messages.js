@@ -145,7 +145,7 @@ window.ListMessagesView = Backbone.View.extend({
     $(_this.el).find('#reply-message-list-' + _this.data._id).html('');
     $(_this.el).find('a.count_read_message_new > span').html(_this.messageReplies.length);
     this.messageReplies.each(function(reply_data){
-      _this.resetItem();
+      _this.item(reply_data);
     });
   },
 
