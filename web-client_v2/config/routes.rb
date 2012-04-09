@@ -59,5 +59,7 @@ WebClientV2::Application.routes.draw do
   end
 
 
-  resources :clips, :only => [:create]
+  resources :clips, :only => [:create] do
+    get 'destroy'
+  end
 end

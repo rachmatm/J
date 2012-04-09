@@ -31,7 +31,7 @@ window.ListView = Backbone.View.extend({
       model: this.model
     });
     
-    this.listCommentView.setElement(this.createHolder('list-comment-' + data._id, reverse));
+    this.listCommentView.setElement(this.createHolder('list-comment-' + data._id, reverse, 'li'));
     this.listCommentView.render();
   },
 
@@ -111,5 +111,16 @@ window.ListView = Backbone.View.extend({
 
     this.listMessageRepliesView.setElement(this.createHolder('list-message-replies' + data._id, reverse));
     this.listMessageRepliesView.render();
+  },
+
+  openUploadedClip: function(reverse){
+    var data = this.model.toJSON();
+
+    this.listUploadedClipView = new ListUploadedClipView({
+      model: this.model
+    });
+
+    this.listUploadedClipView.setElement(this.createHolder('list-uploaded-clip' + data._id, reverse));
+    this.listUploadedClipView.render();    
   }
 });

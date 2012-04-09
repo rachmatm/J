@@ -1,12 +1,12 @@
-$.fn.setUploadify = function(options){
+$.fn.setUploadify = function(options, uploadify_script_data){
 
-  return build(this, options);
+  return build(this, options, uploadify_script_data);
 
-  function build(file, uploadifyConfig){
+  function build(file, uploadifyConfig, uploadify_script_data){
     if (file.length == 0) return;
 
     // Create an empty object to store our custom script data
-    var uploadify_script_data = {};
+    var uploadify_script_data = uploadify_script_data || {};
 
     // Fetch the file control and the form
     var form = file.parents('form');
@@ -29,8 +29,6 @@ $.fn.setUploadify = function(options){
     }
 
     uploadify_script_data['swfUpload'] = true;
-    
-    log(uploadify_script_data);
 
     var lastResponse = null;
 

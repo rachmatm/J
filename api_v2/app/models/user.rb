@@ -55,6 +55,7 @@ class User
   has_many :comments
   has_many :connections
   has_many :nests
+  has_many :clips
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true, :allow_blank => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
@@ -522,6 +523,14 @@ class User
     JsonizeHelper.format :content => messages
   rescue
     JsonizeHelper.format :failed => true, :error => "Message not found, please try again"
+  end
+
+  def set_clip(parameters)
+    parameters.keep_if {|key, value| Clip::UPDATEABLE_FIELDS.include? key }
+
+    data = self.clips.new parameters
+    data.save
+    JsonizeHelper.format :content => data
   end
 
   protected
