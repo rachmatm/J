@@ -201,6 +201,12 @@ module MeAction
         finish
       end
     end
+
+    class Destroy < ActionWithTokenAuth
+
+      def start
+      end
+    end
   end
 
   module Message
