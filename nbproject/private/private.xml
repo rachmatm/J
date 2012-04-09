@@ -10,33 +10,4 @@
             <line>42</line>
         </file>
     </editor-bookmarks>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/template/_main_jotpost.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/stylesheets/style.css</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/stylesheets/byawax.css</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/stylesheets/patch.css</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/layouts/application3.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/template/_main_about.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/abouts/show.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/javascripts/view/about.js</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/javascripts/view/v2/registration.js</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/javascripts/view/v2/about.js</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/registrations/new.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/javascripts/view/v2/jot.js</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/assets/javascripts/view/v2/home.js</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/jots/show.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/jots/new.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/jots/index.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/shared/magicbox/_jot.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/shared/magicbox/_profile.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/shared/_profile.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/profiles/show.backup.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/profiles/show.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/profiles/edit.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/jotposts/show.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/shared/_sidebar_private.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/app/views/shared/_sidebar.html.erb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client/config/initializers/jotky.rb</file>
-        <file>file:/Users/digitmedia/Sites/jotky-beta-2/web-client_v2/config/initializers/jotky.rb</file>
-    </open-files>
 </project-private>
