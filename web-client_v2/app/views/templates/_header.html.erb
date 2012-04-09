@@ -12,10 +12,21 @@
       Hot Stream
     </a>
 
+  <# if(_.isEmpty(current_user)){ #>
+
+    <a class="help" href="">
+      <span>&nbsp;</span>
+      Help
+    </a>
+
+  <# }else{ #>
+
     <a class="inbox" href="#!/inbox">
       <span>&nbsp;</span>
       Inbox
     </a>
+
+  <# } #>
 
     <div class="clear"></div>
   </div>
