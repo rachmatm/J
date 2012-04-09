@@ -1,0 +1,35 @@
+<script type="text/template" id="search-result-nest-template">
+<%= form_tag nest_items_path, :id => 'search-result-nest-form' do %>
+  <div class="search_box_nest" style="display: block;">
+    <div class="breadcrumb_search">
+      <ul>
+        <li>
+          <a class="save_button_tags link-to-save-search-tags" href="javascript:void(0)">&nbsp;</a>
+        </li>
+      </ul>
+    </div>
+    <div class="search_results">
+      <div class="search_resultsContent" id="list-search-result-tags">
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <input type="hidden" name="nest_item[name]" value="" id="nest-item-field-2">
+  <input type="hidden" name="nest_item[nest_id]" value="<#= _id #>" id="nest-item-field-2">
+  <div class="hidden">
+    <div class="save_tags_popup" id="search-result-nest-save-popup">
+      <div class="save_button_width want_delete_white">
+        <a class="top_blue_popup" id="search-result-nest-caption" href="javascript:void(0);"></a>
+        <p>Save this search as:</p>
+        <input type="text" class="rename_nest" id="nest-item-field-1" name="name" value="">
+        <p>Under Category: <strong><#= name #></strong></p>
+        <span class="ok_no_button">
+          <a href="javascript:void(0)" class="cancel_tab colorbox-close">Cancel</a>
+          <a class="but_save_popup" id="search-result-nest-submit" href="javascript:void(0)">Save</a>
+        </span>
+      </div>
+    </div>
+  </div>
+<% end %>
+</script>
