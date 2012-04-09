@@ -112,12 +112,6 @@ class User
     jot_data = self.jots.new parameters
     jot_data.save
 
-    jot_data.current_jot_set_mention_users
-
-    jot_data.tags.concat current_user_subcribe_tags(parameters[:title])
-      
-    jot_data.reload
-
     if jot_data.errors.any?
       return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot_data.errors.to_a
     else
@@ -428,6 +422,26 @@ class User
       JsonizeHelper.format :content => data
     end
 
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+  def set_nest_item(parameters)
+    
+    parameters.keep_if {|key, value| NestItem::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.find parameters[:nest_id]
+    data_item = data.nest_items.new :name => parameters[:name]
+
+    data_item.tag_ids.concat parameters[:tags].flatten.uniq if parameters[:tags].present?
+
+    data_item.save
+
+    if data_item.errors.any?
+       JsonizeHelper.format :failed => true, :error => data_item.errors.to_a
+    else
+      JsonizeHelper.format :content => data_item
+    end
   rescue
     JsonizeHelper.format :failed => true, :error => "Nest was not found"
   end

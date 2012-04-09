@@ -65,7 +65,8 @@ window.MiddleNestTemplate = Backbone.View.extend({
   },
 
   addItem: function(data){
-    this.item(data, true)
+
+    this.item(data, true);
   },
 
   renderItem: function(){

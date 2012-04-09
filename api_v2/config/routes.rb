@@ -143,6 +143,16 @@ HttpRouter.new do
   # Me > Delete Nest
   delete('/me/(:nest_id)/nests(.:format)').to(MeAction::NestAction::Destroy)
 
+  # Me > Nest > Create Item
+  post('/me/nests/(:nest_id)/item(.:format)').to(MeAction::NestAction::ItemAction::Create)
+
+  # Me > Nest > Index Item
+  get('/me/nests/(:nest_id)/item(.:format)').to(MeAction::NestAction::ItemAction::Index)
+
+  # Me > Create Clip
+  post('/me/clips(.:format)').to(MeAction::ClipAction::Create)
+  
+
   # Admin > Auth > New
   get('/lord/login(.:format)').to(AdminAction::Auth::New).name(:admin_auth_new)
 

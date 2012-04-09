@@ -368,3 +368,18 @@ position:static;}
 
 form input.error{
 background:#FFB6C1;}
+
+.list-tag-item{
+cursor: pointer;}
+
+.list-tags{
+margin-bottom:10px;}
+
+.list-tags li{
+float:left;
+margin: 5px 6px;
+cursor: pointer;}
+
+
+.save_tags_popup{
+position: static;}

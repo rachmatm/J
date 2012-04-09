@@ -35,7 +35,11 @@ WebClientV2::Application.routes.draw do
 
   resources :nests do
     get 'update'
+
+    resources :nest_items, :only => [:index]
   end
+
+  resources :nest_items, :only => [:create]
 
   post '/notify_forgot_password' => 'authentications#notify_forgot_password', :as => 'notify_forgot_password'
   post '/reset_forgot_password' => 'authentications#reset_forgot_password', :as => 'reset_forgot_password'
@@ -43,4 +47,6 @@ WebClientV2::Application.routes.draw do
   resource :connections, :only => [] do
     get 'remove/:id' => 'connections#remove', :as => 'remove'
   end
+
+  resources :clips, :only => [:create]
 end

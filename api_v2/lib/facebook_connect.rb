@@ -5,11 +5,12 @@ class FacebookConnect
   def initialize(options = {})
     @options = options
     @options[:grap_url] ||= "https://graph.facebook.com"
+    @options[:path] ||= "/me/feed"
   end
 
   def post_wall(parameters = {})
 
-    request = Typhoeus::Request.new(File.join(@options[:grap_url], "/#{@user_id}/feed"),
+    request = Typhoeus::Request.new(File.join(@options[:grap_url], @options[:path]),
       :method        => :post,
       :params        => parameters.merge({:access_token => self.token}))
     # we can see from this that the first argument is the url. the second is a set of options.
@@ -33,5 +34,7 @@ class FacebookConnect
     else
       Cramp.logger.info "HTTP request failed: " + response.code.to_s
     end
+
+    return response.body
   end
 end
