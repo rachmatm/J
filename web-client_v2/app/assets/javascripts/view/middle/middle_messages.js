@@ -125,8 +125,8 @@ window.MiddleMessagesView = Backbone.View.extend({
             else{
               _this.messages.fetch();
               _this.resetItem();
-              $('.compose_new_message').trigger('click');
               $('#message-form .to_form, #message-form .subject_form, .compose_message_form textarea').val('')
+              $('.compose_new_message').trigger('click');
             }
           }
         });

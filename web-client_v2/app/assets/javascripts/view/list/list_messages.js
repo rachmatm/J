@@ -18,7 +18,7 @@ window.ListMessagesView = Backbone.View.extend({
   },
 
   events: {
-    'click .message_path': 'expand_message',
+    'click .messages_middle_path': 'expand_message',
     'click .messages_down_arrow': 'action_menu_show',
     'click .reply_hide': 'reply',
     'click .delete_hide': 'delete',

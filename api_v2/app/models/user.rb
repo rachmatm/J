@@ -512,7 +512,7 @@ class User
                   :original_message => message}
 
     message.replies.create! parameters
-    message.update_attributes :read => false
+    message.update_attributes :updated_at => Time.now, :read => false
 
     JsonizeHelper.format :notice => "You have replied"
   rescue
