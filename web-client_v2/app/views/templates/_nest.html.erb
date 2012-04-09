@@ -1,0 +1,87 @@
+<script type="text/template" id="nest-template">
+  <div class="nest_mode_path middle_content clearfix">
+    <div class="hot_stuff_text_icon">
+      <span class="nest_mode_icon">&nbsp;</span>
+      <span class="nest_mode_text">Nest</span>
+      <span class="clear"></span>
+    </div>
+    <div class="nest_manager_path">
+      <div class="nest_manager_head">
+        <ul>
+          <li class="nest_group_text">
+            <span class="nest_li_text">Group</span>
+            <span class="nest_separator">&nbsp;</span>
+          </li>
+          <li class="nest_title_text">
+            <span class="nest_li_text">Title</span>
+            <span class="nest_separator">&nbsp;</span>
+          </li>
+          <li class="nest_title_text">
+            <span class="nest_li_text">Search</span>
+          </li>
+        </ul>
+      </div>
+
+      <div id="nest-list"></div>
+
+      <div class="add_group">
+        <a href="javascript:void(0)" class="link-to-add-group">+ Add Group</a>
+      </div>
+
+    </div>
+
+    <div class="hidden">
+      <div class="add_group_popup" id="add-group-popup">
+        <%= form_tag nests_path, :id => 'nest-group-form' do %>
+          <div class="want_delete_white">
+            <p>Add new group</p>
+            <%= text_field_tag 'nest[name]', nil, :class => 'rename_nest' %>
+            <span class="ok_no_button">
+              <a href="javascript:void(0)" class="cancel_tab colorbox-close">Cancel</a>
+              <a class="empty_nest_click but_save_popup add-group-popup-submit" href="javascript:void(0)">Save</a>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="nest_empty_group" style="display: none;">
+      <div class="nest_movies_path">
+        <div class="movies_path_left">
+          <div class="movies_path_top">Movies</div>
+          <div class="movies_path_middle">
+            <span class="nest_group_middle_icon on_off">&nbsp;</span>
+            <span class="nest_group_middle_notactive">Nest OFF</span>
+            <span class="nest_group_middle_active" style="display: none;">Nest ON</span>
+          </div>
+          <div class="movies_path_bottom">
+            <ul>
+              <li class="renames">
+                <a class="rename_idle" href="">Aa</a>
+              </li>
+              <li>
+                <a class="delete" href="">
+                  <span class="">&nbsp;</span>
+                </a>
+              </li>
+              <li class="no_border_right">
+                <a class="magnifier" href="">
+                  <span class="">&nbsp;</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="empty_nest_bg movies_path_right">
+          <a href="">
+            <span class="empty_nest_info">your nest is empty, start searching for contents</span>
+            <span class="white_big_magnifier">&nbsp;</span>
+          </a>
+        </div>
+      </div>
+      <div class="add_group_bottom">
+        <a href="">+ Add Group</a>
+      </div>
+    </div>
+  </div>
+</script>

@@ -1,22 +1,47 @@
 window.MagicboxSearchView = Backbone.View.extend({
-  
-  default_options: {
-    elNav: '',
-    el: ''
+
+  initialize: function(){
+    this.elContent = $('#magicbox-search');
+    this.elNav = $('#magicbox-navigation-search');
   },
 
-  initialize: function(options){
-    this.options = $.extend({}, this.default_options, options);
+  validates: function(){
+    var _this = this;
+    var type = 'normal';
+    
+    $('#magic-box-search-form').validate({
+      rules: {
+        'keyword': {
+          required: true
+        }
+      },
+
+      errorPlacement: function(){},
+
+      submitHandler: function(form){
+        _this.searches.fetch_by_type(type, {
+          keyword: $('#magic-box-search-field').val()
+        });
+
+        return false;
+      }
+    });
   },
 
   open: function(){
-    $(this.options.elNav).find('.img_1').removeClass('img_1_not_active');
-    $(this.options.elNav).find('.search_text').removeClass('search_text_not_active');
-    $(this.options.el).removeClass('hidden');
+    $(this.elNav).find('.img_1').removeClass('img_1_not_active');
+    $(this.elNav).find('.search_text').removeClass('search_text_not_active');
+    $(this.elContent).removeClass('hidden');
   },
 
   close: function(){
-    $(this.options.elNav).find('.img_1').addClass('img_1_not_active');
-    $(this.options.elNav).find('.search_text').addClass('search_text_not_active');
+    $(this.elNav).find('.img_1').addClass('img_1_not_active');
+    $(this.elNav).find('.search_text').addClass('search_text_not_active');
+  },
+
+  reset: function(){
+  },
+
+  renderItem: function(data, reverse){
   }
-})
+});

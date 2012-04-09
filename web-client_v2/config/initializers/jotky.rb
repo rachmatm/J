@@ -8,3 +8,8 @@ JOTKY_BASE_URL = "http://localhost:3000/"
 #JOTKY_SECRET = "4e5b828d69f327789e"
 #JOTKY_BASE_URL = "http://localhost:3000/"
 
+# Rachmat
+#JOTKY_ID ="4f7bbfef8480270590000003"
+#JOTKY_SECRET = "c432aa971432851bba"
+#JOTKY_BASE_URL = "http://localhost:3000/"
+

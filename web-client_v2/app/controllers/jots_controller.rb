@@ -4,7 +4,14 @@ class JotsController < ApplicationController
     respond_to do |format|
 
       format.json do
-        render :json => api_connect('/me/jots.json', params[:jot], "post")
+        if params[:clip].present? and params[:swfUpload].present?
+          uploader = ClipUploader.new
+          uploader.store! params[:clip]
+
+          render :json => api_connect('/me/clips.json', {:file => File.open(uploader.path) }, "post")
+        else
+          render :json => api_connect('/me/jots.json', params[:jot], "post")
+        end
       end
 
       format.all { respond_not_found }
@@ -16,6 +23,17 @@ class JotsController < ApplicationController
 
       format.json do
         render :json => api_connect('/me/jots.json', params[:jot], "get")
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
+  def index_favorites
+    respond_to do |format|
+
+      format.json do
+        render :json => api_connect("/me/jots/favorites.json", {:limit => params[:limit]}, "get")
       end
 
       format.all { respond_not_found }

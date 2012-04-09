@@ -26,6 +26,9 @@ HttpRouter.new do
   # User > Show
   # get('/users/(:id)(.:format)').to(UserAction::Show)
 
+  # Search > Index
+  get('/search(.:format)').to(SearchAction::Index)
+
   # Me > Show
   get('/me(.:format)').to(MeAction::Show)
 
@@ -69,19 +72,25 @@ HttpRouter.new do
   # get('/me/tags(.:format)').to(MeAction::Tag::Index)
 
   # Me > Create Messages
-  # post('/me/messages(.:format)').to(MeAction::Message::Create)
+  post('/me/messages(.:format)').to(MeAction::Message::Create)
 
   # Me > Delete Messages
-  # delete('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Delete)
+  delete('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Delete)
 
   # Me > Index Messages
-  # get('/me/messages(.:format)').to(MeAction::Message::Index)
+  get('/me/messages(.:format)').to(MeAction::Message::Index)
 
   # Me > Show Messages
-  # get('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Show)
+  get('/me/messages/(:message_id)(.:format)').to(MeAction::Message::Show)
 
   # Me > Messages > Create Reply
-  # post('/me/messages/(:message_id)/reply(.:format)').to(MeAction::Message::Reply::Create)
+  post('/me/messages/(:message_id)/reply(.:format)').to(MeAction::Message::Reply::Create)
+
+  # Me > Messages > Index Reply
+  get('/me/messages/(:message_id)/reply(.:format)').to(MeAction::Message::Reply::Index)
+
+  # Me > Messages > Mark Read
+  post('/me/messages/(:message_id)/mark_read(.:format)').to(MeAction::Message::MarkRead)
 
   # Me > Jot > Create Thumbsup
   post('/me/jots/(:jot_id)/thumbsup(.:format)').to(MeAction::JotAction::Thumbsup::Create)
@@ -97,7 +106,10 @@ HttpRouter.new do
 
   # Me > Jot > Index Thumbsdown
   # get('/me/jots/thumbsdown(.:format)').to(MeAction::Thumbsdown::Index)
-  
+
+  # Me > Jot > Index Favorite
+  get('/me/jots/favorites(.:format)').to(MeAction::JotAction::Favorite::Index)
+
   # Me > Jot > Create Favorite
   post('/me/jots/(:jot_id)/favorites(.:format)').to(MeAction::JotAction::Favorite::Create)
 
@@ -110,18 +122,47 @@ HttpRouter.new do
   # Tag > Index
   # get('/tags(.:format)').to(MeAction::Tag::Index)
 
-  # Me > Jot > Create Comment
-  post('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Create)
-
   # Me > Create Connections
   post('/me/connections(.:format)').to(MeAction::ConnectionAction::Create)
+
+  # Me > Index Connections
+  get('/me/connections(.:format)').to(MeAction::ConnectionAction::Index)
+
+  # Me > Update Connections
+  put('/me/(:connection_id)/connections(.:format)').to(MeAction::ConnectionAction::Update)
   
   # Me > Delete Connections
-  delete('/me/:id/connections(.:format)').to(MeAction::ConnectionAction::Destroy)
-
+  delete('/me/(:connection_id)/connections(.:format)').to(MeAction::ConnectionAction::Destroy)
 
   # Me > Jot > Index Comment
   get('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Index)
+
+  # Me > Jot > Create Comment
+  post('/me/jots/(:jot_id)/comments(.:format)').to(MeAction::JotAction::CommentAction::Create)
+
+  # Me > Index Nest
+  get('/me/nests(.:format)').to(MeAction::NestAction::Index)
+
+  # Me > Create Nest
+  post('/me/nests(.:format)').to(MeAction::NestAction::Create)
+
+  # Me > Update Nest
+  put('/me/(:nest_id)/nests(.:format)').to(MeAction::NestAction::Update)
+
+  # Me > Delete Nest
+  delete('/me/(:nest_id)/nests(.:format)').to(MeAction::NestAction::Destroy)
+
+  # Me > Nest > Create Item
+  post('/me/nests/(:nest_id)/item(.:format)').to(MeAction::NestAction::ItemAction::Create)
+
+  # Me > Nest > Index Item
+  get('/me/nests/(:nest_id)/item(.:format)').to(MeAction::NestAction::ItemAction::Index)
+
+  # Me > Create Clip
+  post('/me/clips(.:format)').to(MeAction::ClipAction::Create)
+
+  # Me > Delete Clip
+  delete('/me/clips/(:clip_id)(.:format)').to(MeAction::ClipAction::Destroy)
 
   # Admin > Auth > New
   get('/lord/login(.:format)').to(AdminAction::Auth::New).name(:admin_auth_new)

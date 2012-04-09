@@ -16,7 +16,7 @@ class User
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
-  RELATION_PUBLIC = [:connections]
+  RELATION_PUBLIC = []
 
   RELATION_PUBLIC_DETAIL = []
 
@@ -50,10 +50,14 @@ class User
   has_and_belongs_to_many :jot_thumbsup, :class_name => "Jot", :inverse_of => :user_thumbsup
   has_and_belongs_to_many :jot_thumbsdown, :class_name => "Jot", :inverse_of => :user_thumbsdown
   has_and_belongs_to_many :jot_mentioned, :class_name => "Jot", :inverse_of => :user_mentioned
+  has_many :message_sent, :class_name => "Message", :inverse_of => :sender
+  has_many :message_received, :class_name => "Message", :inverse_of => :receiver
   has_many :comments
   has_many :connections
+  has_many :nests
+  has_many :clips
 
-  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true
+  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true, :allow_blank => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
   validates_format_of :username, :with => /^[A-Za-z0-9.\d_]+$/, :message => "can only be alphanumeric, dot and number with no spaces"
   validates_presence_of :realname, :username, :email
@@ -86,6 +90,7 @@ class User
   end
 
   def get_my_attributes
+
     JsonizeHelper.format({:content => self}, {
         :except => NON_PUBLIC_FIELDS,
         :include => RELATION_PUBLIC
@@ -109,12 +114,6 @@ class User
     
     jot_data = self.jots.new parameters
     jot_data.save
-
-    jot_data.current_jot_set_mention_users
-
-    jot_data.tags.concat current_user_subcribe_tags(parameters[:title])
-      
-    jot_data.reload
 
     if jot_data.errors.any?
       return JsonizeHelper.format :failed => true, :error => "Jot was not made", :errors => jot_data.errors.to_a
@@ -163,14 +162,33 @@ class User
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
 
+  def current_user_get_favorite_jot(limit)
+    jot = self.jot_favorites
+    jot = jot.limit(limit.to_i) if limit.present?
+
+    JsonizeHelper.format(
+      {:content => jot},
+      {:except => Jot::NON_PUBLIC_FIELDS, :include => Jot::RELATION_PUBLIC}
+    )
+  rescue
+    return JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
 
   def current_user_set_favorite_jot(jot_id)
     jot = Jot.find(jot_id)
-   
+
     unless jot.user_favorites.include? self
       jot.user_favorites.push self
+
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_favorites', tag.meta_favorites + 1
+      end
     else
       jot.user_favorites.delete self
+
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_favorites', tag.meta_favorites - 1
+      end
     end
 
     jot.reload
@@ -186,12 +204,22 @@ class User
   def current_user_set_thumbs_up_jot(jot_id)
     jot = Jot.find(jot_id)
 
-    jot.user_thumbsup.delete self
+    unless jot.user_thumbsup.include? self
+      jot.user_thumbsup.push self
 
-    jot.user_thumbsup.push self
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbups', tag.meta_thumbups + 1
+      end
+    end
 
-    jot.user_thumbsdown.delete self
+    if jot.user_thumbsdown.include? self
+      jot.user_thumbsdown.delete self
 
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbdowns', tag.meta_thumbdowns - 1
+      end
+    end
+    
     jot.reload
 
     JsonizeHelper.format(
@@ -206,13 +234,23 @@ class User
   end
 
   def current_user_set_thumbs_down_jot(jot_id)
-    jot = Jot.find(jot_id)
+    jot = Jot.find(jot_id)  
 
-    jot.user_thumbsdown.delete self
+    unless  jot.user_thumbsdown.include? self
+      jot.user_thumbsdown.push self
+      
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbdowns', tag.meta_thumbdowns + 1
+      end
+    end
 
-    jot.user_thumbsdown.push self
+    if jot.user_thumbsup.include? self
+      jot.user_thumbsup.delete self
 
-    jot.user_thumbsup.delete self
+      jot.tags.each do |tag|
+        tag.update_attribute 'meta_thumbups', tag.meta_thumbups - 1
+      end
+    end
 
     jot.reload
 
@@ -264,23 +302,23 @@ class User
   def current_user_set_connections(parameters)
     parameters.keep_if {|key, value| Connection::UPDATEABLE_FIELDS.include? key }
 
-    if parameters[:connection_name] == 'twitter'
+    if parameters[:provider] == 'twitter'
       begin
-        client = Twitter::Client.new :oauth_token => parameters[:connection_token], :oauth_token_secret => parameters[:connection_secret]
+        client = Twitter::Client.new :oauth_token => parameters[:provider_user_token], :oauth_token_secret => parameters[:provider_user_secret]
         data = client.verify_credentials
 
         parameters.merge!({
-            :connection_user_id => data['id'],
-            :connection_user_name => data['name'],
-            :connection_token => parameters[:connection_token],
-            :connection_secret => parameters[:connection_secret]
+            :provider_user_id => data['id'],
+            :provider_user_name => data['screen_name'] || data['id'],
+            :provider_user_token => parameters[:provider_user_token],
+            :provider_user_secret => parameters[:provider_user_secret]
           })
       rescue
         return JsonizeHelper.format(:error => "aw hell no, can\'t connect to twitter", :failed => true)
       end
-    elsif parameters[:connection_name] == 'facebook'
+    elsif parameters[:provider] == 'facebook'
 
-      send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{parameters[:connection_token]}"
+      send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{parameters[:provider_user_token]}"
 
       # Run the request via Hydra.
       hydra = Typhoeus::Hydra.new
@@ -293,9 +331,9 @@ class User
         data = ActiveSupport::JSON.decode(response.body)
 
         parameters.merge!({
-            :connection_user_id => data['id'],
-            :connection_user_name => data['name'],
-            :connection_token => parameters[:connection_token]
+            :provider_user_id => data['id'],
+            :provider_user_name => data['username'] || data['id'],
+            :provider_user_token => parameters[:provider_user_token]
           })
       else
         return JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
@@ -303,16 +341,21 @@ class User
 
     end
 
-    data = self.connections.where({:connection_name => parameters[:connection_name]}).first
+    conn = self.connections.where({:provider => parameters[:provider], :provider_user_id => parameters[:provider_user_id]}).first
 
-    data = self.connections.new parameters
-    data.save
-    data.reload
-
-    if data.errors.any?
-      return JsonizeHelper.format :failed => true, :error => "Connections was not made", :errors => data.errors.to_a
+    if conn.present?
+      conn.update_attributes parameters
     else
-      return JsonizeHelper.format({:notice => 'Data Connected', :content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+      conn = self.connections.new parameters
+      conn.save
+    end
+
+    #data.reload
+
+    if conn.errors.any?
+      return JsonizeHelper.format :failed => true, :error => "Connections was not made", :errors => conn.errors.to_a
+    else
+      return JsonizeHelper.format({:notice => 'Data Connected', :content => conn}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
     end
   end
 
@@ -321,6 +364,176 @@ class User
     JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
   rescue
     JsonizeHelper.format :failed => true, :error => "Connection was not found"
+  end
+
+  def current_user_connections(parameters)
+    data = self.connections.order_by_default
+    
+    if parameters[:provider].present? and parameters[:allowed].present?
+      data = data.find_by_provider(parameters[:provider]).find_allowed
+    elsif parameters[:provider].present?
+      data = data.find_by_provider(parameters[:provider])
+    end
+
+    JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+  end
+
+  def current_user_reset_connections(id, parameters)
+    parameters.keep_if {|key, value| Connection::UPDATEABLE_FIELDS.include? key }
+
+    data = Connection.find id
+
+    data.update_attributes parameters
+    data.reload
+    JsonizeHelper.format({:content => data}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Connection was not found"
+  end
+
+  def set_nest(parameters)
+    parameters.keep_if {|key, value| Nest::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.new parameters
+
+    if data.save
+      return JsonizeHelper.format({:notice => "Nest Successfully Made", :content => data}, {
+          :except => Nest::NON_PUBLIC_FIELDS,
+          :include => Nest::RELATION_PUBLIC
+        })
+    else
+      return JsonizeHelper.format :failed => true, :error => "Nest was not made", :errors => data.errors.to_a
+    end
+  end
+
+  def get_nest(parameters)
+    data = self.nests.order_by_default
+
+    return JsonizeHelper.format({:content => data}, {
+        :except => Nest::NON_PUBLIC_FIELDS,
+        :include => Nest::RELATION_PUBLIC
+      })
+  end
+
+  def unset_nest(nest_id)
+    data = self.nests.find(nest_id).destroy
+
+    return JsonizeHelper.format :notice => "Nest Successfully Deleted"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+  def reset_nest(nest_id, parameters)
+    parameters.keep_if {|key, value| Nest::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.find nest_id
+
+    data.update_attributes parameters
+
+    if data.errors.any?
+      JsonizeHelper.format :failed => true, :error => "Nest was not made", :errors => data.errors.to_a
+    else
+      data.reload
+      JsonizeHelper.format :content => data
+    end
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+
+  def set_nest_item(parameters)
+    
+    parameters.keep_if {|key, value| NestItem::UPDATEABLE_FIELDS.include? key }
+
+    data = self.nests.find parameters[:nest_id]
+    data_item = data.nest_items.new :name => parameters[:name]
+
+    data_item.tag_ids.concat parameters[:tags].flatten.uniq if parameters[:tags].present?
+
+    data_item.save
+
+    if data_item.errors.any?
+       JsonizeHelper.format :failed => true, :error => data_item.errors.to_a
+    else
+      JsonizeHelper.format :content => data_item
+    end
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+  def current_user_get_message
+    message = Message.any_of({ :sender_id => self.id }, { :receiver_id => self.id }).desc(:updated_at)
+
+    JsonizeHelper.format :content => message
+  end
+
+  def current_user_set_message(receiver, subject, content)
+    user_receiver = User.where(:username => receiver).first
+
+    if user_receiver.present? and receiver != self.username
+      self.message_sent.create! :receiver => user_receiver, :subject => subject, :content => content
+      JsonizeHelper.format :notice => "Your message have been sent"
+    else
+      error_message = receiver == self.username ? "You can't send message to yourself" : "The user doesn't exist"
+      JsonizeHelper.format :failed => true, :error => error_message
+    end
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message cannot be sent, please try again"
+  end
+
+  def current_user_set_message_mark_read(message_id)
+    message = Message.find(message_id)
+
+    message.update_attributes :read => true
+
+    JsonizeHelper.format :notice => "Your message is marked"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message cannot be found"
+  end
+
+  def current_user_unset_message(message_id)
+    message = Message.find(message_id)
+
+    message.destroy
+
+    JsonizeHelper.format :notice => "Your message is deleted"
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message could not be found"
+  end
+
+  def current_user_set_message_reply(message_id, content)
+    message = Message.find(message_id)
+
+    parameters = {:subject => "Re: #{message.subject}",
+                  :from => self.username,
+                  :to => message.to,
+                  :content => content,
+                  :original_message => message}
+
+    message.replies.create! parameters
+    message.update_attributes :updated_at => Time.now, :read => false
+
+    JsonizeHelper.format :notice => "You have replied"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+  end
+
+  def current_user_get_message_reply(message_id)
+    messages = Message.find(message_id).replies.asc(:created_at)
+
+    JsonizeHelper.format :content => messages
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Message not found, please try again"
+  end
+
+  def set_clip(parameters)
+    parameters.keep_if {|key, value| Clip::UPDATEABLE_FIELDS.include? key }
+
+    data = self.clips.new parameters
+    data.save
+    JsonizeHelper.format :content => data
   end
 
   protected

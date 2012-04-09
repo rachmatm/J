@@ -100,3 +100,15 @@ gem 'typhoeus'
 # A Ruby wrapper for the Twitter REST and Search APIs
 # https://github.com/jnunemaker/twitter
 gem 'twitter'
+
+# A streaming JSON parsing and encoding library for Ruby (C bindings to yajl)
+# https://github.com/brianmario/yajl-ruby
+gem 'yajl-ruby'
+
+# Fiber aware EventMachine clients and convenience classes
+# https://github.com/igrigorik/em-synchrony
+gem 'em-synchrony'
+
+# Asynchronous HTTP Client (EventMachine + Ruby)
+# https://github.com/igrigorik/em-http-request
+gem 'em-http-request'

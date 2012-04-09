@@ -1312,17 +1312,6 @@ a.twitter{
   line-height: 23px;
   padding: 0 15px;
 }
-.choice_text:hover {
-color:#cccccc;
-background: #414141; /* Old browsers */
-background: -moz-linear-gradient(top, #414141 0%, #0c0c0c 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#414141), color-stop(100%,#0c0c0c)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #414141 0%,#0c0c0c 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #414141 0%,#0c0c0c 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #414141 0%,#0c0c0c 100%); /* IE10+ */
-background: linear-gradient(top, #414141 0%,#0c0c0c 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#414141', endColorstr='#0c0c0c',GradientType=0 ); /* IE6-9 */
-}
 
 .active_choiceText {
   background: none repeat scroll 0 0 #e0982b;
@@ -1342,18 +1331,7 @@ background: -ms-linear-gradient(top, #f1b031 0%,#d08125 100%); /* IE10+ */
 background: linear-gradient(top, #f1b031 0%,#d08125 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b031', endColorstr='#d08125',GradientType=0 );
 }
-.active_choiceTexts:hover {
- color: #333333;
-  text-shadow:0 1px 0 #f9cc2e;
-background: #ffd40d; /* Old browsers */
-background: -moz-linear-gradient(top, #ffd40d 0%, #ee8f29 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffd40d), color-stop(100%,#ee8f29)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* IE10+ */
-background: linear-gradient(top, #ffd40d 0%,#ee8f29 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd40d', endColorstr='#ee8f29',GradientType=0 );
-}
+
 .not_active {
   -moz-border-radius: 0 4px 4px 0;
   -webkit-border-radius: 0 4px 4px 0;
@@ -1367,7 +1345,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd40d', end
   padding: 0 7px;
   width: 10px;
 }
-.not_active:hover { background: url("/assets/plusblack_hov.png") no-repeat scroll 6px 0px #171717; }
+
 .icon_notActive {
   background: url("/assets/sprite.png") no-repeat scroll -46px -210px #2A2A2A;
   cursor: pointer;
@@ -4412,7 +4390,7 @@ a.connect_cross{
   float: right;
 }
 
-.date_user span {
+.date_user a, .date_user span {
   color: #2ba4ab;
   font-size: 11px;
   margin-right:5px;
@@ -4433,6 +4411,7 @@ a.connect_cross{
 .messages_middle_path {
   float: left;
   margin-left: 10px;
+  width: 280px;
 }
 
 .messages_middle_path a{
@@ -4469,7 +4448,7 @@ a.connect_cross{
   padding-right: 5px;
 }
 
-.count_read_message_new{
+.count_read_message_new, .count_read_message_new span{
   color: #666666;
   float: left;
   font-size: 11px;
@@ -4567,6 +4546,7 @@ a.connect_cross{
   float: left;
   font-size: 12px;
   padding: 0 0 0 10px;
+  width: 100%;
 }
 
 .replay_path {
@@ -4665,7 +4645,7 @@ a.connect_cross{
 .delete_hide label,
 .mark_read_hide label {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .comment_hide label,
@@ -5512,53 +5492,6 @@ background: url("/assets/sprite.png") no-repeat scroll  -270px -550px transparen
 .nexticon2 { float:left;}
 
 /* END OF HOT STUFF
-----------------------------------------------------------------------------------------------------*/
-
-/* COLORBOX CSS
-----------------------------------------------------------------------------------------------------*/
-
-/*
-    ColorBox Core Style:
-    The following CSS is consistent between example themes and should not be altered.
-*/
-#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
-#cboxOverlay{position:fixed; width:100%; height:100%;}
-#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
-#cboxContent{position:relative;}
-#cboxLoadedContent{overflow:auto;}
-#cboxTitle{margin:0;}
-#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%;}
-#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
-.cboxPhoto{float:left; margin:auto; border:0; display:block;}
-.cboxIframe{width:100%; height:100%; display:block; border:0;}
-
-/*
-    User Style:
-    Change the following styles to modify the appearance of ColorBox.  They are
-    ordered & tabbed in a way that represents the nesting of the generated HTML.
-*/
-#cboxOverlay{background:#000;}
-#colorbox{}
-    #cboxContent{margin-top:20px;}
-        #cboxError{padding:50px; border:1px solid #ccc;}
-        #cboxLoadedContent{border:5px solid #000; background:#fff;}
-        #cboxTitle{position:absolute; top:-20px; left:0; color:#ccc;}
-        #cboxCurrent{position:absolute; top:-20px; right:0px; color:#ccc;}
-        #cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}
-        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(/assets/controls.png) no-repeat top left; width:28px; height:65px; text-indent:-9999px;}
-        #cboxPrevious.hover{background-position:bottom left;}
-        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(/assets/controls.png) no-repeat top right; width:28px; height:65px; text-indent:-9999px;}
-        #cboxNext.hover{background-position:bottom right;}
-        #cboxLoadingOverlay{background:#000;}
-        #cboxLoadingGraphic{background:url(/assets/loading.gif) no-repeat center center;}
-        #cboxClose{position:absolute; top:5px; right:5px; display:block; background:url(/assets/controls.png) no-repeat top center; width:38px; height:19px; text-indent:-9999px;}
-        #cboxClose.hover{background-position:bottom center;}
-
-#cboxCurrent {
-  display: none !important;
-}
-
-/* END OF COLORBOX CSS
 ----------------------------------------------------------------------------------------------------*/
 
 /* JOT MODE

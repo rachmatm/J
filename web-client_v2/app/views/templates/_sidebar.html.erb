@@ -3,7 +3,7 @@
     <div class="portlet_tosca">
       <a href="" class="img_left"></a>
       <span class="bg_1Text">My Nest</span>
-      <span class="img_right"></span>
+      <span class="img_right link-to-nest"></span>
     </div>
     <div class="portlet_dark">
       <span class="count_nest">Empty</span>
@@ -55,6 +55,9 @@
     </div>
     <div class="clear"></div>
   </div>
+
+  <# if(_.isEmpty(current_user)){ #>
+
   <div class="favorites">
     <div class="portlet_favorites">
       <span class="star"></span>
@@ -66,4 +69,20 @@
     <div class="portlet_favBottom"></div>
     <div class="clear"></div>
   </div>
+
+  <# }else{ #>
+
+  <div class="favorites_logged">
+    <div class="portlet_favorites_logged_first">
+      <span class="star_logged">&nbsp;</span>
+      <span class="fav_text_logged">Favorites</span>
+    </div>
+    <div id="main-sidebar-favorites">
+    </div>
+    <div class="portlet_favBottom_last">
+      <a href="#!/favorites">see all faved</a>
+    </div>
+  </div>
+
+  <# } #>
 </script>

@@ -41,7 +41,7 @@ window.CurrentUserModel = Backbone.Model.extend({
     $.cookie("jotky_token", token, {
       expires : 10,
       path    : '/',
-      domain  : DOMAIN,
+      domain  : window.location.hostname,
       secure  : false
     });
   },

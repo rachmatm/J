@@ -29,12 +29,24 @@ window.AppRouter = Backbone.Router.extend({
     "!/setting": "setting",
 
     "!/jots/:id": "jotDetail",
+    
+    "!/profile/public": "profilePublic",
+
+    "!/nest": "nest",
+
+    "!/jots/:id": "jotDetail",
 
     "!/forgot_password": "forgotPassword",
 
     "!/change_password/*token": "changePassword",
 
-    "!/account_setting": "accountSetting"
+    "!/account_setting": "accountSetting",
+
+    "!/about": "about",
+
+    "!/favorites": "favorites",
+
+    "!/inbox": "messages"
   },
 
   render: function(parameters){
@@ -44,6 +56,8 @@ window.AppRouter = Backbone.Router.extend({
   },
 
   drawMainLayout: function(current_user, current_user_token){
+    this.current_user = current_user;
+
     this.headerView.setElement('#header-holder');
     this.headerView.render({
       current_user: current_user
@@ -85,8 +99,6 @@ window.AppRouter = Backbone.Router.extend({
   search: function(){
     this.magicboxView.openSearch();
     this.middleView.openWelcome();
-    
-    return false;
   },
 
   signup: function(){
@@ -116,18 +128,45 @@ window.AppRouter = Backbone.Router.extend({
     this.magicboxView.openJotDetail(id);
   },
 
+  profilePublic: function(){
+    this.magicboxView.openSearch();
+    this.middleView.closeAll();
+    this.middleView.openProfile();
+  },
+
+  nest: function(){
+    this.magicboxView.openSearch();
+    this.middleView.closeAll();
+    this.middleView.openNest();
+  },
+
   forgotPassword: function(){
+    this.middleView.closeAll();
     this.middleView.openForgotPassword();
-    return false;
   },
 
   changePassword: function(token){
+    this.middleView.closeAll();
     this.middleView.openChangePassword(token);
-    return false;
   },
 
   accountSetting: function(id){
     this.middleView.closeAll();
     this.middleView.openAccountSetting(id);
+  },
+
+  about: function(){
+    this.middleView.closeAll();
+    this.middleView.openAbout();
+  },
+
+  favorites: function(){
+    this.middleView.closeAll();
+    this.middleView.openFavorites();
+  },
+
+  messages: function(){
+    this.middleView.closeAll();
+    this.middleView.openMessages();
   }
 });

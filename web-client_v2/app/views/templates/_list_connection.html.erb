@@ -1,0 +1,23 @@
+<script type="text/template" id="list-connection-template">
+
+  <td class="border_bottom_table td_tittle">
+    <# if(provider == 'facebook'){ #>
+    <a href="javascript:void(0)" class="no_margin_left no_margin_right FB">&nbsp;</a>
+    <# }else if(provider == 'twitter'){ #>
+    <a href="javascript:void(0)" class="no_margin_left twitter"></a>
+    <# } #>
+    <span class="name_cross_post"><#= provider_user_name #></span>
+    <a href="javascript:void(0)" class="unlink link-to-delete-conn">(Unlink)</a>
+  </td>
+  <td class="border_bottom_table td_radio">
+    <input type="radio" checked="allow" value="allow" name="connection[<#= _id #>][permission]" <# if(permission == 'allow'){ #> checked="checked" <# } #> >
+  </td>
+  <td class="border_bottom_table td_radio">
+    <input type="radio" value="deny" name="connection[<#= _id #>][permission]" <# if(permission == 'deny'){ #> checked="checked" <# } #> >
+  </td>
+  <td class="border_bottom_table td_radio">
+    <input type="radio" value="always" name="connection[<#= _id #>][permission]" <# if(permission == 'always'){ #> checked="checked" <# } #> >
+  </td>
+  <td class="border_bottom_table">&nbsp;</td>
+
+</script>

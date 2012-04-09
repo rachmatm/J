@@ -17,6 +17,12 @@ class Tag
   RELATION_PUBLIC_DETAIL = []
 
   field :name, :type => String
+  field :meta_weight, :type => Integer, :default => 0
+  field :meta_thumbups, :type => Integer, :default => 0
+  field :meta_thumbdowns, :type => Integer, :default => 0
+  field :meta_comments, :type => Integer, :default => 0
+  field :meta_subscriptions, :type => Integer, :default => 0
+  field :meta_favorites, :type => Integer, :default => 0
 
   key :name
 
@@ -25,12 +31,25 @@ class Tag
 
   has_and_belongs_to_many :users
   has_and_belongs_to_many :jots
+  has_and_belongs_to_many :tag_similiarities, :class_name => 'Tag'
+  has_and_belongs_to_many :nest_items
+
 
   before_create :lowerize_name
+  before_save :set_tag_metadata
+
+  def set_similiarity_tags
+    
+  end
 
   protected
 
   def lowerize_name
     self.name = self.name.downcase
+  end
+
+  def set_tag_metadata
+    self.meta_subscriptions = self.user_ids.uniq.count
+    self.meta_weight = self.jot_ids.count
   end
 end

@@ -42,3 +42,13 @@ gem 'omniauth-facebook'
 # OmniAuth strategy for Twitter
 # https://github.com/arunagw/omniauth-twitter
 gem 'omniauth-twitter'
+
+# Rails 3 gem for uploadify
+# https://github.com/mateomurphy/uploadify_rails3
+gem "uploadify_rails3"
+
+# Classier solution for file uploads for Rails, Sinatra and other Ruby web frameworks
+# https://github.com/jnicklas/carrierwave
+gem "carrierwave"
+gem "rmagick", "2.13.1"
+gem 'carrierwave-meta'
