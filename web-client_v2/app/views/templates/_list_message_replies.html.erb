@@ -1,0 +1,29 @@
+<script type="text/template" id="list-message-replies-template">
+  <li>
+    <div class="photo_reply_message">
+      <span class="no_margin_left messages_left_path">
+        <img src="images/avatar-metrofx.png" alt="" />
+      </span>
+    </div>
+    <div class="contents_reply_message">
+      <span class="messages_middle_path">
+        <# if (current_user.username == from){ #>
+
+        <a href="" class="me">You</a>
+
+        <# } else { #>
+
+        <a href=""><#= from #></a>
+
+        <# } #>
+        <span class="read_message"><#= subject #></span>
+      </span>
+      <span class="messages_right_path">
+        <span class="count_read_message"><abbr class="timeago" title="<#= created_at #>"></abbr></span>
+      </span>
+      <p>
+        <#= content #>
+      </p>
+    </div>
+  </li>
+</script>>

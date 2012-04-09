@@ -27,6 +27,17 @@ class JotsController < ApplicationController
     end
   end
 
+  def index_favorites
+    respond_to do |format|
+
+      format.json do
+        render :json => api_connect("/me/jots/favorites.json", {:limit => params[:limit]}, "get")
+      end
+
+      format.all { respond_not_found }
+    end
+  end
+
   def favorite
     respond_to do |format|
 

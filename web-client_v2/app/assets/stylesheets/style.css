@@ -4390,7 +4390,7 @@ a.connect_cross{
   float: right;
 }
 
-.date_user span {
+.date_user a, .date_user span {
   color: #2ba4ab;
   font-size: 11px;
   margin-right:5px;
@@ -4447,7 +4447,7 @@ a.connect_cross{
   padding-right: 5px;
 }
 
-.count_read_message_new{
+.count_read_message_new, .count_read_message_new span{
   color: #666666;
   float: left;
   font-size: 11px;
@@ -4545,6 +4545,7 @@ a.connect_cross{
   float: left;
   font-size: 12px;
   padding: 0 0 0 10px;
+  width: 100%;
 }
 
 .replay_path {
@@ -4643,7 +4644,7 @@ a.connect_cross{
 .delete_hide label,
 .mark_read_hide label {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .comment_hide label,

@@ -50,11 +50,13 @@ class User
   has_and_belongs_to_many :jot_thumbsup, :class_name => "Jot", :inverse_of => :user_thumbsup
   has_and_belongs_to_many :jot_thumbsdown, :class_name => "Jot", :inverse_of => :user_thumbsdown
   has_and_belongs_to_many :jot_mentioned, :class_name => "Jot", :inverse_of => :user_mentioned
+  has_many :message_sent, :class_name => "Message", :inverse_of => :sender
+  has_many :message_received, :class_name => "Message", :inverse_of => :receiver
   has_many :comments
   has_many :connections
   has_many :nests
 
-  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true
+  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true, :allow_blank => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
   validates_format_of :username, :with => /^[A-Za-z0-9.\d_]+$/, :message => "can only be alphanumeric, dot and number with no spaces"
   validates_presence_of :realname, :username, :email
@@ -159,10 +161,21 @@ class User
     JsonizeHelper.format :failed => true, :error => 'Jot not found'
   end
 
+  def current_user_get_favorite_jot(limit)
+    jot = self.jot_favorites
+    jot = jot.limit(limit.to_i) if limit.present?
+
+    JsonizeHelper.format(
+      {:content => jot},
+      {:except => Jot::NON_PUBLIC_FIELDS, :include => Jot::RELATION_PUBLIC}
+    )
+  rescue
+    return JsonizeHelper.format :failed => true, :error => "Jot was not found"
+  end
 
   def current_user_set_favorite_jot(jot_id)
     jot = Jot.find(jot_id)
-   
+
     unless jot.user_favorites.include? self
       jot.user_favorites.push self
 
@@ -426,6 +439,7 @@ class User
     JsonizeHelper.format :failed => true, :error => "Nest was not found"
   end
 
+
   def set_nest_item(parameters)
     
     parameters.keep_if {|key, value| NestItem::UPDATEABLE_FIELDS.include? key }
@@ -444,6 +458,70 @@ class User
     end
   rescue
     JsonizeHelper.format :failed => true, :error => "Nest was not found"
+  end
+
+  def current_user_get_message
+    message = Message.any_of({ :sender_id => self.id }, { :receiver_id => self.id }).desc(:updated_at)
+
+    JsonizeHelper.format :content => message
+  end
+
+  def current_user_set_message(receiver, subject, content)
+    receiver = User.where(:username => receiver).first
+
+    if receiver.present?
+      self.message_sent.create! :receiver => receiver, :subject => subject, :content => content
+      JsonizeHelper.format :notice => "Your message have been sent"
+    else
+      JsonizeHelper.format :failed => true, :error => "The user doesn't exist"
+    end
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message cannot be sent, please try again"
+  end
+
+  def current_user_set_message_mark_read(message_id)
+    message = Message.find(message_id)
+
+    message.update_attributes :read => true
+
+    JsonizeHelper.format :notice => "Your message is marked"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message cannot be found"
+  end
+
+  def current_user_unset_message(message_id)
+    message = Message.find(message_id)
+
+    message.destroy
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Your message could not be found"
+  end
+
+  def current_user_set_message_reply(message_id, content)
+    message = Message.find(message_id)
+
+    parameters = {:subject => "Re: #{message.subject}",
+                  :from => self.username,
+                  :to => message.to,
+                  :content => content,
+                  :original_message => message}
+
+    message.replies.create! parameters
+    message.update_attributes :read => false
+
+    JsonizeHelper.format :notice => "You have replied"
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Something went wrong, please try again"
+  end
+
+  def current_user_get_message_reply(message_id)
+    messages = Message.find(message_id).replies.asc(:created_at)
+
+    JsonizeHelper.format :content => messages
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Message not found, please try again"
   end
 
   protected

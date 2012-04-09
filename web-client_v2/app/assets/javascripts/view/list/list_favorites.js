@@ -1,6 +1,6 @@
-window.ListJotView = Backbone.View.extend({
-  
-  template: _.template($('#list-jot-template').html()),
+window.ListFavoritesView = Backbone.View.extend({
+
+  template: _.template($('#list-favorites-template').html()),
 
   initialize: function(){
     this.currentUserModel = new CurrentUserModel;
@@ -10,8 +10,6 @@ window.ListJotView = Backbone.View.extend({
   },
 
   events: {
-    'click .link-to-thumbsup': 'thumbsup',
-    'click .link-to-thumbsdown': 'thumbsdown',
     'click .link-to-fav': 'favorite',
     'click .link-to-detail': 'detail'
   },
@@ -26,34 +24,6 @@ window.ListJotView = Backbone.View.extend({
     $(this.el).html(this.template( this.data ));
 
     $("abbr.timeago").timeago();
-  },
-
-  thumbsup: function(){
-    var _this = this;
-    
-    $.ajax({
-      url: '/jots/'+ this.data._id + '/thumbsup.json',
-      error: function(jqXHR, textStatus, errorThrown){
-        _this.error.call(_this, jqXHR, textStatus, errorThrown);
-      },
-      success: function(data, textStatus, jqXHR){
-        _this.success.call(_this, data, textStatus, jqXHR)
-      }
-    });
-  },
-
-  thumbsdown: function(){
-    var _this = this;
-
-    $.ajax({
-      url: '/jots/'+ this.data._id + '/thumbsdown.json',
-      error: function(jqXHR, textStatus, errorThrown){
-        _this.error.call(_this, jqXHR, textStatus, errorThrown);
-      },
-      success: function(data, textStatus, jqXHR){
-        _this.success.call(_this, data, textStatus, jqXHR)
-      }
-    });
   },
 
   favorite: function(){

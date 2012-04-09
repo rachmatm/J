@@ -1,0 +1,54 @@
+<script type="text/template" id="messages-template">
+  <div class="inbox_message middle_content">
+    <div class="inbox_text_icon">
+      <span class="inbox_icon">&nbsp;</span>
+      <span class="inbox_text">Inbox</span>
+    </div>
+    <div class="compose_new_message">
+      <a href="javascript:void(0)">
+        <span>&nbsp;</span>
+        Write a new message
+      </a>
+    </div>
+    <div class="compose_message_form">
+      <form action="/messages" method="post" id="message-form">
+        <div>
+          <div class="to">
+            <span class="to_text">to :</span>
+            <input name="message[receiver]" type="text" />
+            <div class="clear"></div>
+          </div>
+          <div class="subject">
+            <span class="to_text">subject :</span>
+            <input name="message[subject]" type="text" />
+            <div class="clear"></div>
+          </div>
+          <div class="compose_textarea input_replay">
+            <span class="compose_message_propic reply_message_photo messages_left_path">
+              <img src="images/avatar-metrofx.png" alt="" />
+            </span>
+            <span class="textarea_reply">
+              <span class="triangle_inbox">&nbsp;</span>
+              <textarea name="message[content]" class="compose_message_textarea" rows="" cols=""></textarea>
+            </span>
+          </div>
+          <input type="submit" value="Reply" class="replay_button" />
+        </div>
+      </form>
+      <div class="clear"></div>
+    </div>
+    <div class="messages_inbox">
+      <ul>
+        <li class="no_padding_bottom no_padding_top">
+          <span class="date_user">
+            <a href="javascript:void(0)" class="link-to-sort-by-date">Date</a>
+            <span>.</span>
+            <a href="javascript:void(0)" class="link-to-sort-by-name">User</a>
+          </span>
+        </li>
+        <div id="main-middle-messages-list"></div>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+</script>

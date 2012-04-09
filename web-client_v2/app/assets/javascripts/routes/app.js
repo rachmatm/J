@@ -40,7 +40,13 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/change_password/*token": "changePassword",
 
-    "!/account_setting": "accountSetting"
+    "!/account_setting": "accountSetting",
+
+    "!/about": "about",
+
+    "!/favorites": "favorites",
+
+    "!/inbox": "messages"
   },
 
   render: function(parameters){
@@ -135,15 +141,32 @@ window.AppRouter = Backbone.Router.extend({
   },
 
   forgotPassword: function(){
+    this.middleView.closeAll();
     this.middleView.openForgotPassword();
   },
 
   changePassword: function(token){
+    this.middleView.closeAll();
     this.middleView.openChangePassword(token);
   },
 
   accountSetting: function(id){
     this.middleView.closeAll();
     this.middleView.openAccountSetting(id);
+  },
+
+  about: function(){
+    this.middleView.closeAll();
+    this.middleView.openAbout();
+  },
+
+  favorites: function(){
+    this.middleView.closeAll();
+    this.middleView.openFavorites();
+  },
+
+  messages: function(){
+    this.middleView.closeAll();
+    this.middleView.openMessages();
   }
 });

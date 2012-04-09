@@ -1,0 +1,84 @@
+<script type="text/template" id="list-messages-template">
+  <li>
+    <div class="message_path">
+      <span class="messages_left_path">
+        <img src="images/abdu-avatar.png" alt="" />
+      </span>
+      <span class="messages_middle_path">
+        <# if (current_user.username == from){ #>
+
+          <a href="javascript:void(0)"><#= to #></a>
+
+        <# } else { #>
+
+          <a href="javascript:void(0)"><#= from #></a>
+
+        <# } #>
+
+        <# if (read == false) { #>
+
+          <span class="new_message"><#= subject #></span>
+
+        <# } else { #>
+
+          <span class="read_message"><#= subject #></span>
+
+        <# } #>
+      </span>
+      <div class="messages_right_path">
+        <a href="" class="count_read_message_new"><span>0</span> Messages</a>
+        <span>.</span>
+        <span class="count_read_message"><abbr class="timeago" title="<#= updated_at #>"></abbr></span>
+        <div class="action_menu_hide">
+          <ul>
+            <li>
+              <a href="javascript:void(0)" class="reply_hide">
+                <label>reply</label>
+                <span class="reply_icon">&nbsp;</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="delete_hide">
+                <label>delete</label>
+                <span class="delete_icon">&nbsp;</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="mark_read_hide">
+                <label>mark as read</label>
+                <span class="mark_icon">&nbsp;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a href="javascript:void(0)" class="no_padding_right messages_down_arrow">&nbsp;</a>
+      </div>
+    </div>
+    <div class="reply_message_path">
+      <p>
+        <#= content #>
+      </p>
+      <ul id="reply-message-list-<#= _id #>" class="reply_message">
+      </ul>
+      <div class="replay_path">
+        <div class="photo_reply_message">
+          <span class="reply_text">Reply</span>
+          <form action="/messages/<#= _id #>/reply.json" method="post" id="message-reply-form">
+            <span class="input_replay">
+              <span class="reply_message_photo no_margin_left messages_left_path">
+                <img src="images/avatar-metrofx.png" alt="" />
+                <input name="authenticity_token" type="hidden" value=<%= form_authenticity_token %> />
+              </span>
+              <span class="textarea_reply">
+                <span class="triangle_inbox">&nbsp;</span>
+                <textarea class="textarea-form-reply" name="content" rows="" cols=""></textarea>
+              </span>
+            </span>
+            <%= submit_tag "", :style => "display: none" %>
+            <a href="javascript:void(0)" class="replay_button">Reply</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </li>
+</script>
