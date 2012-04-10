@@ -14,21 +14,19 @@ window.SearchCollection = Backbone.Collection.extend({
 
     var _this = this;
 
-    if(type == 'nest'){
 
-      this.fetch({
-        data: $.extend({type: _this.type}, data),
-        error: function(jqXHR, textStatus, errorThrown){
-          alert(textStatus);
-        },
-        success: function(data, textStatus, jqXHR){
-          if(data.failed === true){
-            alert(data.error);
-          }
+    this.fetch({
+      data: $.extend({type: _this.type}, data),
+      error: function(jqXHR, textStatus, errorThrown){
+        alert(textStatus);
+      },
+      success: function(data, textStatus, jqXHR){
+        if(data.failed === true){
+          alert(data.error);
         }
-      });
-      
-    }
+      }
+    });
+
   }
 })
 
