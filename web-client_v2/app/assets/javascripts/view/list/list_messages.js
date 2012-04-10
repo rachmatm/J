@@ -21,7 +21,7 @@ window.ListMessagesView = Backbone.View.extend({
     'click .messages_middle_path': 'expand_message',
     'click .messages_down_arrow': 'action_menu_show',
     'click .reply_hide': 'reply',
-    'click .delete_hide': 'delete',
+    'click .delete_hide': 'destroy',
     'click .mark_read_hide': 'mark_read'
   },
 
@@ -106,7 +106,7 @@ window.ListMessagesView = Backbone.View.extend({
     $(this.el).find('.textarea-form-reply').focus();
   },
 
-  delete: function(e){
+  destroy: function(e){
     var _this = this;
 
     $.ajax({
