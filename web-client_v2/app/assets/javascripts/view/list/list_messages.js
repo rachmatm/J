@@ -120,7 +120,6 @@ window.ListMessagesView = Backbone.View.extend({
         }
         else{
           $(_this.el).remove();
-          _this.model.change();
         }
       }
     });

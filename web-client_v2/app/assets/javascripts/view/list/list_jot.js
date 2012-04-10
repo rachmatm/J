@@ -16,14 +16,15 @@ window.ListJotView = Backbone.View.extend({
     this.comments.bind('add', this.addComment, this);
     this.comments.bind('all', this.renderComment, this);
     this.comments.bind('reset', this.resetComment, this);
-    
+
   },
 
   events: {
     'click .link-to-thumbsup': 'thumbsup',
     'click .link-to-thumbsdown': 'thumbsdown',
     'click .link-to-fav': 'favorite',
-    'click .link-to-detail': 'detail'
+    'click .link-to-detail': 'detail',
+    'click .link-to-delete': 'delete'
   },
 
   data: {},
@@ -95,6 +96,25 @@ window.ListJotView = Backbone.View.extend({
 
   detail: function(){
     this.middleView.openJotDetail(this.data)
+  },
+
+  delete: function(){
+    var _this = this;
+
+    $.ajax({
+      url: "/jots/" + this.data._id + '/destroy.json',
+      error: function(jqXHR, textStatus, errorThrown){
+        _this.error.call(_this, jqXHR, textStatus, errorThrown);
+      },
+      success: function(data, textStatus, jqXHR){
+        if(data.failed === true){
+          alert(data.error);
+        }
+        else{
+          $(_this.el).remove();
+        }
+      }
+    });
   },
 
   addComment: function(data){

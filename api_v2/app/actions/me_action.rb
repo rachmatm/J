@@ -23,6 +23,14 @@ module MeAction
       end
     end
 
+    class Delete < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_unset_jot params[:id], @current_user.id
+        finish
+      end
+    end
+
     class Index < ActionWithTokenAuth
 
       def start
