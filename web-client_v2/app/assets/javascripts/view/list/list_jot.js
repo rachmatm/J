@@ -7,7 +7,17 @@ window.ListJotView = Backbone.View.extend({
     this.middleView = new MiddleView;
     this.middleView.setElement('#main-middle');
     this.sidebarView = new SidebarView;
+  },
 
+  events: {
+    'click .link-to-thumbsup': 'thumbsup',
+    'click .link-to-thumbsdown': 'thumbsdown',
+    'click .link-to-fav': 'favorite'
+  },
+
+  data: {},
+
+  render: function(){
     this.data = $.extend( this.model.toJSON(), {
       current_user: this.currentUserModel.data()
     });
@@ -16,19 +26,7 @@ window.ListJotView = Backbone.View.extend({
     this.comments.bind('add', this.addComment, this);
     this.comments.bind('all', this.renderComment, this);
     this.comments.bind('reset', this.resetComment, this);
-    
-  },
 
-  events: {
-    'click .link-to-thumbsup': 'thumbsup',
-    'click .link-to-thumbsdown': 'thumbsdown',
-    'click .link-to-fav': 'favorite',
-    'click .link-to-detail': 'detail'
-  },
-
-  data: {},
-
-  render: function(){
     $(this.el).html(this.template( this.data ));
     $("abbr.timeago").timeago();
 
@@ -91,10 +89,6 @@ window.ListJotView = Backbone.View.extend({
       this.model.set(data.content);
       this.render();
     }
-  },
-
-  detail: function(){
-    this.middleView.openJotDetail(this.data)
   },
 
   addComment: function(data){
