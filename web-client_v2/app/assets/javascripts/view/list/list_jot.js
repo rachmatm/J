@@ -105,7 +105,7 @@ window.ListJotView = Backbone.View.extend({
           alert(data.error);
         }
         else{
-          $(_this.el).remove();
+          _this.el.remove();
         }
       }
     });
