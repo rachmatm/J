@@ -13,7 +13,7 @@ window.ListJotView = Backbone.View.extend({
     'click .link-to-thumbsup': 'thumbsup',
     'click .link-to-thumbsdown': 'thumbsdown',
     'click .link-to-fav': 'favorite',
-    'click .link-to-delete': 'delete'
+    'click .link-to-destroy': 'destroy'
   },
 
   data: {},
@@ -92,7 +92,7 @@ window.ListJotView = Backbone.View.extend({
     }
   },
 
-  delete: function(){
+  destroy: function(){
     var _this = this;
 
     $.ajax({
