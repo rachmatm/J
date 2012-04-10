@@ -24,7 +24,7 @@ window.MagicboxSearchView = Backbone.View.extend({
       errorPlacement: function(){},
 
       submitHandler: function(form){
-        _this.searches.fetch_by_type(type, {
+        _this.searches.fetch_by_type('nest', {
           keyword: $('#magic-box-search-field').val()
         });
 
