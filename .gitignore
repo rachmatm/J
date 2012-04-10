@@ -13,3 +13,6 @@
 api/log/development.log
 
 nbproject
+api_v2/files/
+web-client_v2/files
+web-client_v2/config/initializers/jotky.rb

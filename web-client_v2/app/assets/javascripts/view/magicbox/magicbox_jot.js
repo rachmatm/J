@@ -5,6 +5,8 @@ window.MagicboxJotView = Backbone.View.extend({
     el: ''
   },
 
+  jot_title_maxlength: 140,
+
   initialize: function(options){
     this.options = $.extend({}, this.default_options, options);
 
@@ -23,6 +25,7 @@ window.MagicboxJotView = Backbone.View.extend({
     this.connections = new ConnectionCollection;
     this.setButtonAnimation();
     this.setClipField();
+    this.setJotTagField();
   },
 
   validates: function(){
@@ -31,7 +34,8 @@ window.MagicboxJotView = Backbone.View.extend({
     this.validates = $('#jots-form').validate({
       rules: {
         'jot[title]': {
-          required: true
+          required: true,
+          maxlength: _this.jot_title_maxlength
         }
       },
 
@@ -54,6 +58,13 @@ window.MagicboxJotView = Backbone.View.extend({
 
         return false;
       }
+    });
+
+    var current_length_holder = $('#jot-input-text-length');
+    current_length_holder.text(_this.jot_title_maxlength);
+    
+    $('#jot-form-title-field').bind('keyup', function(){
+      current_length_holder.text(_this.jot_title_maxlength - this.value.length);
     });
   },
 
@@ -138,52 +149,119 @@ window.MagicboxJotView = Backbone.View.extend({
 
     'click #jot-bar-location': 'jotBarLocation',
 
-    'click #jot-bar-tag': 'jotBarTag'
+    'click #jot-bar-tag': 'jotBarTag',
+
+    'click #link-to-open-all-more-input': 'jotAllTag'
   },
 
-  jotBarWriteMore: function(){
-    $('#jot-write-more-panel').toggleClass( function(index, current_class_name){
-      
-      if(/hidden/.test(current_class_name)){
-        $('#jot-write-more-field').rules("add", {
-          required: true,
-          maxlength: 512
-        });
-      }
-      else{
-        $('#jot-write-more-field').rules("remove");
-      }
-      
-      return 'hidden';
-    });
-  },
+  jot_more_maxlength: 512,
 
-  jotBarClip: function(){
-    $('#jot-clip-panel').toggleClass('hidden');
-  },
-
-  jotBarLocation: function(){
-    $('#jot-location-panel').toggleClass('hidden');
-  },
-
-  jotBarTag: function(){
-    $('#jot-tag-more').toggleClass('hidden');
-  },
-
-  setButtonAnimation: function(){
-    var buttons = $(this.el).find('.jot-bar-button');
-
-    buttons.hover(
-      function(){
-        $(this).addClass('jot_hover');
-      },
-      function(){
-        $(this).removeClass('jot_hover');
+  jotBarWriteMore: function(e, force){
+    var _this = this;
+    
+    if(force == 'show'){
+      $('#jot-write-more-panel').removeClass('hidden');
+      $('#jot-write-more-field').rules("add", {
+        required: true,
+        maxlength: _this.jot_more_maxlength
       });
 
-    buttons.bind('click', function(){
-      $(this).toggleClass('jot_click jot_click_active');
-    });
+      var current_length_holder = $('#jot-input-more-text-length');
+      current_length_holder.text(this.jot_more_maxlength);
+      
+      $('#jot-write-more-field').bind('keyup', function(){
+        current_length_holder.text(_this.jot_more_maxlength - this.value.length);
+      });
+    }
+    else if(force == 'hide'){
+      $('#jot-write-more-panel').addClass('hidden');
+      $('#jot-write-more-field').rules("remove");
+    }
+    else{
+      $('#jot-write-more-panel').toggleClass( function(index, current_class_name){
+
+        if(/hidden/.test(current_class_name)){
+          $('#jot-write-more-field').rules("add", {
+            required: true,
+            maxlength: 512
+          });
+        }
+        else{
+          $('#jot-write-more-field').rules("remove");
+        }
+
+        return 'hidden';
+      });
+    }
+  },
+
+  jotBarClip: function(e, force){
+
+    if(force == 'show'){
+      $('#jot-clip-panel').removeClass('hidden');
+    }
+    else if(force == 'hide'){
+      $('#jot-clip-panel').addClass('hidden');
+    }
+    else{
+      $('#jot-clip-panel').toggleClass('hidden');
+    }
+  },
+
+  jotBarLocation: function(e, force){
+    
+    if(force == 'show'){
+      $('#jot-location-panel').removeClass('hidden');
+    }
+    else if(force == 'hide'){
+      $('#jot-location-panel').addClass('hidden');
+    }
+    else{
+      $('#jot-location-panel').toggleClass('hidden');
+    }
+  },
+
+  jotBarTag: function(e, force){
+    
+    if(force == 'show'){
+      $('#jot-tag-more').removeClass('hidden');
+    }
+    else if(force == 'hide'){
+      $('#jot-tag-more').addClass('hidden');
+    }
+    else{
+      $('#jot-tag-more').toggleClass('hidden');
+    }
+  },
+
+  setButtonAnimation: function(e, force){
+    var buttons = $(this.el).find('.jot-bar-button');
+
+    if(force == 'show'){
+      buttons.each(function(){
+        $(this).addClass('jot_click jot_click_active');
+      });
+    }
+    else if(force == 'hide'){
+      buttons.each(function(){
+        $(this).removeClass('jot_click jot_click_active');
+      });
+    }
+    else{
+      buttons.hover(
+        function(){
+          $(this).addClass('jot_hover');
+        },
+        function(){
+          $(this).removeClass('jot_hover');
+        });
+
+      buttons.bind('click', function(){
+        $(this).toggleClass('jot_click jot_click_active');
+      });
+    }
+
+    
   },
 
   setClipField: function(){
@@ -209,18 +287,93 @@ window.MagicboxJotView = Backbone.View.extend({
           _this.uploadedClips.add(obj_response.content);
         }
       }
-    }, {token: this.currentUserModel.token()});
+    }, {
+      token: this.currentUserModel.token()
+    });
   },
 
   addListUploadedClip: function(data){
-    this.listUploadedClip(data, true)
+    this.listUploadedClip(data, true);
   },
 
   listUploadedClip: function(data, reverse){
     this.listView = new ListView({
       model: data
     });
-    this.listView.setElement('#list-uploaded-clip-holder')
+
+    this.listView.setElement('#list-uploaded-clip-holder');
     this.listView.openUploadedClip(reverse);
+  },
+
+  jot_all_tag_is_open: null,
+
+  jotAllTag: function(e){
+
+    if(this.jot_all_tag_is_open){
+      this.jotBarWriteMore(e, 'hide');
+      this.jotBarClip(e, 'hide');
+      this.jotBarLocation(e, 'hide');
+      this.jotBarTag(e, 'hide');
+      this.setButtonAnimation(e, 'hide');
+
+      $('#link-to-open-all-more-input').removeClass('jot_up_arrow');
+
+      this.jot_all_tag_is_open = null;
+    }
+    else{
+      this.jotBarWriteMore(e, 'show');
+      this.jotBarClip(e, 'show');
+      this.jotBarLocation(e, 'show');
+      this.jotBarTag(e, 'show');
+      this.setButtonAnimation(e, 'show');
+
+      $('#link-to-open-all-more-input').addClass('jot_up_arrow');
+
+      this.jot_all_tag_is_open = 1;
+    }
+  },
+  setJotTagField: function(e){
+    var _this = this;
+
+    $('#jot-form-title-field').on('propertychange input paste', function(event){
+
+      if (($(this)).val().match(/#\w+/)){
+
+        _this.jotBarTag(e, 'show');
+        $('#jot-bar-tag').addClass('jot_click_active jot_click');
+
+      } else {
+
+        _this.jotBarTag(e, 'hide');
+        $('#jot-bar-tag').removeClass('jot_click_active jot_click');
+
+      }
+
+      var text_array = new Array();
+
+      _.each($(this).val().match(/#\w+\s*/gi), function(data){
+        text_array.push(data.slice(1, data.length));
+      });
+
+      _this.resetListJotTag(text_array);
+    });
+  },
+
+  resetListJotTag: function(data){
+    var _this = this;
+
+    $('#list-jot-tag-holder').html('');
+    _.each(data, function(jot_tag) {
+      _this.listJotTag({ name: jot_tag }, false);
+    });
+  },
+
+  listJotTag: function(data, reverse){
+    this.listView = new ListView({
+      model: data
+    });
+
+    this.listView.setElement('#list-jot-tag-holder');
+    this.listView.openJotTag(reverse);
   }
 })
