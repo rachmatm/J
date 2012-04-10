@@ -83,11 +83,22 @@
     <%= render 'templates/list_uploaded_clip' %>
     <%= render 'templates/list_jot_tag' %>
 
+    <%= javascript_include_tag 'http://maps.googleapis.com/maps/api/js?key=AIzaSyCDXMdW-aW51QmKOFTrCLuXXXLoSOSKz4c&sensor=true' %>
     <%= javascript_include_tag 'application' %>
 
     <% if flash[:error].present? %>
       <script type="text/javascript">alert("<%= flash[:error] %>");</script>
     <% end %>
+     <div id="map_canvas" style="width:100%; height:100%"></div>
+     <script>
+       var myOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
 
+     </script>
   </body>
 </html>

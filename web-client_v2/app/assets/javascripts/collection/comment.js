@@ -16,4 +16,4 @@ window.CommentCollection = Backbone.Collection.extend({
     this.query = response.query;
     return response.content;
   }
-})
+});

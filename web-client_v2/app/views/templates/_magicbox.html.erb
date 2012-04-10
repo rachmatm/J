@@ -80,7 +80,7 @@
           </div>
           <div class="jot_button_right">
             <span class="jot_count" id="jot-input-text-length">140</span>
-            <a href="" class="jot_down_arrow">&nbsp;</a>
+            <a href="javascript:void(0)" class="jot_down_arrow" id="link-to-open-all-more-input">&nbsp;</a>
           </div>
         </div>
 
@@ -95,7 +95,7 @@
               <div class="more_content_bottom">
                 <%= text_area_tag 'jot[detail]', nil, :id => 'jot-write-more-field'  %>
 
-                <span class="more_content_count jot_count">512</span>
+                <span class="more_content_count jot_count" id="jot-input-more-text-length">512</span>
               </div>
               <div class="clear"></div>
             </div>
@@ -139,7 +139,7 @@
                       <li>
                         <a class="map_location" href="">
                           <span class="left">
-                            <img alt="" src="images/first-map.png">
+                            <img alt="" src="/assets/first-map.png">
                           </span>
                           <span class="place">
                             <span>&nbsp;</span>
@@ -151,7 +151,7 @@
                       <li>
                         <a class="map_location" href="">
                           <span class="left">
-                            <img alt="" src="images/second-map.png">
+                            <img alt="" src="/assets/second-map.png">
                           </span>
                           <span class="place">
                             <span>Jakarta,</span>
@@ -169,7 +169,7 @@
               </div>
               <div class="up_media_loc">
                 <div class="loc_style own_jot">
-                  <a class="own_location" href=""><img alt="" src="images/own-location.png"></a>
+                  <a class="own_location" href=""><img alt="" src="/assets/own-location.png"></a>
                   <span class="location_info">
                     <a class="tittle_location" href="">Party's Groove</a>
                     <input type="text" class="no_margin_left image_upload_input" style="display: none;">
@@ -356,10 +356,6 @@
           </div>
         </div>
       </div>
-
     </div>
-
-
   </div>
-
 </script>
