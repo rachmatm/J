@@ -236,6 +236,8 @@ window.MagicboxJotView = Backbone.View.extend({
 
         if (($(this)).val().match(/#\w+/)){
 
+          $('#jot-tag-more').removeClass('hidden');
+
           var text_array = new Array();
 
           _.each($(this).val().match(/#\w+\s*/gi), function(data){
