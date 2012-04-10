@@ -122,5 +122,16 @@ window.ListView = Backbone.View.extend({
 
     this.listUploadedClipView.setElement(this.createHolder('list-uploaded-clip' + data._id, reverse));
     this.listUploadedClipView.render();    
+  },
+
+  openJotTag: function(reverse){
+    var data = this.model;
+
+    this.listJotTagView = new ListJotTagView({
+      model: this.model
+    });
+
+    this.listJotTagView.setElement(this.createHolder('list-jot-tag' + data._id, reverse));
+    this.listJotTagView.render();
   }
 });
