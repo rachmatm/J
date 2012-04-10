@@ -51,12 +51,7 @@ window.CurrentUserModel = Backbone.Model.extend({
   },
 
   unsetToken: function(){
-    $.cookie("jotky_token", null, {
-      path    : '/',
-      domain  : window.location.hostname,
-      secure  : false,
-      raw: true
-    });
+    $.cookie("jotky_token", null);
   },
 
   setProfile: function(token, with_login){
