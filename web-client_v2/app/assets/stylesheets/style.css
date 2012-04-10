@@ -4130,7 +4130,10 @@ a.connect_cross{
 
 .what_jotky_tittle,
 .about_jotky_body {
-  float: left;
+  float: left; 
+}
+.main-middle-item {
+font-family:"Helvetica Nue","HelveticaNeueLT23UltLtExRg",Arial,sans serif;
 }
 
 /* END OF ABOUT JOTKY
