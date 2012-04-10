@@ -252,7 +252,7 @@
 .jot_icon span.jot_text{
   color: #91d3d8;
   float: left;
-  font-family: "UniSansBold",Arial,sans serif;
+  font-family: "UniSansSemiBoldRegular",Arial,sans serif;
   font-size: 18px;
   left: 25px;
   position: relative;
@@ -373,7 +373,7 @@ span.img_2{
 
 .main-text p{
   float: left;
-  font-family: "HelveticaNeueLT45LightRegular","HelveticaCE55RomanRegular",Arial,sans serif;
+  font-family: "Helvetica Nue","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 18px;
   line-height: 30px;
   width: 385px;
@@ -1794,17 +1794,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b031', end
 }
 
 .more {
-  color: #1C9DA5;
-  float: right;
-  font-family: "HelveticaNeue",Arial,sans serif;
-  font-size: 11px;
-  font-weight: bold;
-  margin-bottom: 10px;
+    color: #a8d4d8;
+    float: right;
+    font-family: "HelveticaNeue",Arial,sans serif;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
+.more:hover { color:#1C9DA5;text-decoration:none}
 
-.more:hover {
-  text-shadow: -1px -1px #CCCCCC;
-}
 
 .attach {
   border-bottom: 1px solid #DEDEDE;
@@ -4608,7 +4606,7 @@ a.connect_cross{
 }
 
 .replay_button:hover {
-  background: #2bd5e0;
+  background: #2bd5e0; text-decoration:none;
 }
 
 .action_menu_hide {

@@ -31,6 +31,16 @@
 }
 
 @font-face {
+  font-family: 'UniSansBold';
+  src: url('/assets/uni-sans-semibold-webfont.eot');
+  src: local('?'), url('/assets/uni-sans-semibold-webfont.woff') format('woff'), url('/assets/uni-sans-semibold-webfont.ttf') format('truetype'), url('/assets/uni-sans-semibold-webfont.svg#UniSansSemiBoldRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+@font-face {
   font-family: 'HelveticaNeueLT55RomanRegular';
   src:  url('/assets/helvetica_lt_55_roman-webfont.eot');
   src:  url('/assets/helvetica_lt_55_roman-webfont.eot?#iefix') format('embedded-opentype'),
@@ -59,6 +69,12 @@
        url('/assets/helvetica_neue_ce_55_roman-webfont.woff') format('woff'),
        url('/assets/fonts/helvetica_neue_ce_55_roman-webfont.ttf') format('truetype'),
        url('/assets/helvetica_neue_ce_55_roman-webfont.svg#HelveticaCE55RomanRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Helvetica Nue';
+  src: url('/assets/Helvetica Neue CE 35 Thin.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
