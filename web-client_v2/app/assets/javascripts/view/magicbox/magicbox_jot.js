@@ -230,9 +230,6 @@ window.MagicboxJotView = Backbone.View.extend({
     var _this = this;
 
     $('#jot-form-title-field').on('propertychange input paste', function(event){
-      if ($(this).data('oldVal') != $(this).val()){
-
-        $(this).data('oldVal', $(this).val());
 
         if (($(this)).val().match(/#\w+/)){
 
@@ -247,7 +244,6 @@ window.MagicboxJotView = Backbone.View.extend({
           _this.resetListJotTag(text_array);
 
         }
-      }
     });
   },
 
