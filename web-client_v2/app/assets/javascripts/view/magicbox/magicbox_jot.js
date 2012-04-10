@@ -234,6 +234,12 @@ window.MagicboxJotView = Backbone.View.extend({
       if (($(this)).val().match(/#\w+/)){
 
         $('#jot-tag-more').removeClass('hidden');
+        $('#jot-bar-tag').addClass('jot_click_active jot_click');
+
+      } else {
+
+        $('#jot-tag-more').addClass('hidden');
+        $('#jot-bar-tag').removeClass('jot_click_active jot_click');
 
       }
 
