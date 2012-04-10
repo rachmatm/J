@@ -1,5 +1,4 @@
 <script type="text/template" id="magicbox-template">
-
   <div class="top_button clearfix" id="main-magicbox-navigation">
     <a id="magicbox-navigation-search" href="#!/search" class="search_icon">
       <span class="img_1 main-magicbox-navigation-link-icon-1"></span>
@@ -44,7 +43,7 @@
 
     <div class="magicbox-content-tab-item" id="magicbox-jot">
       <%= form_tag jots_path(:format => 'json'), :id => 'jots-form', :multipart => false do %>
-        <div class="jot_search search jot-tab-content clearfix">
+        <div class="jot_search search jots jot-tab-content clearfix">
           <input type="text" placeholder="Tags, places, users, search from them here!" name="jot[title]" id="jot-form-title-field" autocomplete="off" class="valid">
           <input type="submit" value="" name="commit">
         </div>

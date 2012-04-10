@@ -1561,7 +1561,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b031', end
 }
 
 .cross{
-  background: url("/assets/sprite.png") no-repeat scroll -97px -184px transparent;
+  background: url("/assets/sprite.png") no-repeat scroll -104px -184px transparent;
   cursor: pointer;
   display: inline-block;
   height: 16px;
@@ -1571,7 +1571,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b031', end
 }
 
 .cross:hover {
-  background: url("/assets/sprite.png") no-repeat scroll -97px -248px transparent;
+  background: url("/assets/sprite.png") no-repeat scroll -104px -248px transparent;
   cursor: pointer;
   display: inline-block;
   height: 16px;

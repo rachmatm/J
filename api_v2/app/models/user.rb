@@ -125,6 +125,20 @@ class User
     end
   end
 
+  def current_user_unset_jot(jot_id, user_id)
+    jot = Jot.find(jot_id)
+
+    if jot.user_id == user_id
+      jot.destroy
+      JsonizeHelper.format :notice => "Jot is deleted"
+    else
+      JsonizeHelper.format :failed => true, :error => "You are not authorized to delete this jot"
+    end
+
+  rescue
+    JsonizeHelper.format :failed => true, :error => "Jot doesn't exist"
+  end
+
   def current_user_subcribe_tags(string)
     data = Twitter::Extractor.extract_hashtags(string)
     

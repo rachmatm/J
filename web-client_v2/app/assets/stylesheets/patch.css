@@ -380,6 +380,10 @@ float:left;
 margin: 5px 6px;
 cursor: pointer;}
 
-
 .save_tags_popup{
 position: static;}
+
+body .header_fav {
+background: url("/assets/sprite.png") no-repeat scroll -318px -267px transparent;
+margin-right: 10px;
+padding-right:0;}

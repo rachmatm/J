@@ -12,6 +12,7 @@ WebClientV2::Application.routes.draw do
     get 'favorite'
     get 'thumbsup'
     get 'thumbsdown'
+    get 'destroy'
 
     resources :comments, :only => [:create, :index]
   end

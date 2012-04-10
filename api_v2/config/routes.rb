@@ -39,7 +39,7 @@ HttpRouter.new do
   post('/me/jots(.:format)').to(MeAction::JotAction::Create)
 
   # Me > Delete Jot
-  # delete('/me/jots/(:id).(.:format)').to(MeAction::JotAction::Delete)
+  delete('/me/jots/(:id)(.:format)').to(MeAction::JotAction::Delete)
 
   # Me > Show Jot
   # get('/me/jots/(:jot_id)(.:format)').to(MeAction::JotAction::Show)

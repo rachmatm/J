@@ -12,7 +12,7 @@
         <# } #>
 
         <ul class="jot_post_header">
-          <li><a href="javascript:void(0);"><abbr class="timeago link-to-detail" title="<#= created_at #>"></abbr></a></li>
+          <li><a href="javascript:void(0);"><abbr class="timeago" title="<#= created_at #>"></abbr></a></li>
           <li><a href="javascript:void(0);">
               <span class="header_thumbup link-to-thumbsup"></span>
               <span class="thumbsup-counter"><#= user_thumbsup_ids.length #></span>
@@ -25,8 +25,19 @@
             </a>
           </li>
           <li class="stretch">.</li>
-          <li><a href="javascript:void(0);"><span class="header_rejot"></span>Text</a></li>
+
+          <# if(user_id != current_user._id){ #>
+          <li><a href="javascript:void(0);"><span class="header_rejot"></span></a></li>
+          <# } #>
+
           <li class="lastli"><a href="javascript:void(0);" class="link-to-fav"><span class="header_fav <# if(in_array(current_user._id, user_favorite_ids)){ #>header_fav_active<# } #>"></span></a></li>
+
+          <# if( current_user._id == user_id ){ #>
+
+          <a href="javascript:void(0)" class="link-to-destroy cross"></a>
+
+          <# } #>
+
         </ul>
       </div>
       <div class="down-sign"></div>
@@ -146,93 +157,8 @@
           <!-- div class="scrollbar" style="height: 255px;"><div class="track" style="height: 255px;"><div class="thumb" style="top: 0px; height: 80.9776px;"><div class="end"></div></div></div></div -->
           <div class="viewport clearfix">
             <div class="overview" style="top: 0px;">
-              <ul id="list-comment-holder-<#= _id #>">
-                <!-- 
-                <li class="people_comments">
-                  <div class="left">
-                    <img alt="" src="/assets/abdu-avatar.png">
-                  </div>
-                  <div class="content-text">
-                    <span class="name">Me</span><span class="right time">3 hour ago</span>
-                    <div class="clear"></div>
-                    <p>man, please re-up the link. seems it was deleted :( </p>
-                  </div>
-                  <div class="clear"></div>
-                </li>
-                <li class="people_comments">
-                  <div class="left">
-                    <img alt="" src="/assets/avatar-metrofx.png">
-                  </div>
-                  <div class="content-text">
-                    <span class="name_blue">Metrofx</span><span class="right time">2 hour ago</span>
-                    <div class="clear"></div>
-                    <p><a class="mail" href="#">@Abduzeedo </a>re-uploaded, enjoy! :)</p>
-                  </div>
-                  <div class="clear"></div>
-                </li>
-                <li class="people_comments">
-                  <div class="left">
-                    <img alt="" src="/assets/avata-calichan.png">
-                  </div>
-                  <div class="content-text">
-                    <span class="name_blue">Calichan2</span><span class="right time">45 minutes ago</span>
-                    <div class="clear"></div>
-                    <p><a class="mail" href="#">@MetroFx </a>Sweet, this is just what i needed, thanks!	</p>
-                  </div>
-                  <div class="clear"></div>
-                </li>
-                <li class="people_comments">
-                  <div class="left">
-                    <img alt="avatar" src="/assets/avatar-metrofx.png">
-                  </div>
-                  <div class="content-text">
-                    <span class="name_blue">Metrofx</span><span class="right time">14 minutes ago</span>
-                    <div class="clear"></div>
-                    <p><a class="mail" href="#">@calichan2 </a>u welcome! :)</p>
-                  </div>
-                  <div class="clear"></div>
-                </li>
-                <li class="people_comments">
-                  <div class="left">
-                    <img alt="avatar" src="/assets/avatar-metrofx.png">
-                  </div>
-                  <div class="content-text">
-                    <span class="name_blue">Metrofx</span><span class="right time">14 minutes ago</span>
-                    <div class="clear"></div>
-                    <p><a class="mail" href="#">@calichan2 </a>u welcome! :)</p>
-                  </div>
-                  <div class="clear"></div>
-                </li>
-                <li class="people_comments">
-                  <div class="left">
-                    <img alt="avatar" src="/assets/abdu-avatar.png">
-                  </div>
-                  <div class="content-text">
-                    <span class="name_blue">Abduzeedo</span><span class="right time">5 seconds ago</span>
-                    <div class="clear"></div>
-                    <p>it works! thanks! :D </p>
-                  </div>
-                  <div class="clear"></div>
-                </li>
-                <li class="people_comments">
-                  <div class="left">
-                    <img alt="" src="/assets/avata-calichan.png">
-                  </div>
-                  <div class="content-text">
-                    <span class="name_blue">Calichan2</span><span class="right time">45 minutes ago</span>
-                    <div class="clear"></div>
-                    <p><a class="mail" href="#">@MetroFx </a>Sweet, this is just what i needed, thanks!	</p>
-                  </div>
-                  <div class="clear"></div>
-                </li>
-                -->
-              </ul>
+              <ul id="list-comment-holder-<#= _id #>"></ul>
             </div>
-
-
-
-
-
           </div>
 
         </div>
@@ -241,7 +167,7 @@
 
         <div  class="overview_comment">
           <div class="photo_reply_message">
-            <form action="/jots//comments.json" method="post" id="jot-comment-form-<#= _id #>">
+            <form action="/jots/<#= _id #>/comments.json" method="post" id="jot-comment-form-<#= _id #>">
               <span class="reply_text">Reply</span>
               <span class="input_replay clarfix">
                 <span class="reply_message_photo no_margin_left messages_left_path">
