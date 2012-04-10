@@ -25,6 +25,7 @@ window.MagicboxJotView = Backbone.View.extend({
     this.connections = new ConnectionCollection;
     this.setButtonAnimation();
     this.setClipField();
+    this.setJotTagField();
   },
 
   validates: function(){
@@ -292,14 +293,15 @@ window.MagicboxJotView = Backbone.View.extend({
   },
 
   addListUploadedClip: function(data){
-    this.listUploadedClip(data, true)
+    this.listUploadedClip(data, true);
   },
 
   listUploadedClip: function(data, reverse){
     this.listView = new ListView({
       model: data
     });
-    this.listView.setElement('#list-uploaded-clip-holder')
+
+    this.listView.setElement('#list-uploaded-clip-holder');
     this.listView.openUploadedClip(reverse);
   },
 
@@ -329,5 +331,43 @@ window.MagicboxJotView = Backbone.View.extend({
 
       this.jot_all_tag_is_open = 1;
     }
+  },
+  setJotTagField: function(){
+    var _this = this;
+
+    $('#jot-form-title-field').on('propertychange input paste', function(event){
+
+        if (($(this)).val().match(/#\w+/)){
+
+          $('#jot-tag-more').removeClass('hidden');
+
+          var text_array = new Array();
+
+          _.each($(this).val().match(/#\w+\s*/gi), function(data){
+            text_array.push(data.slice(1, data.length));
+          });
+
+          _this.resetListJotTag(text_array);
+
+        }
+    });
+  },
+
+  resetListJotTag: function(data){
+    var _this = this;
+
+    $('#list-jot-tag-holder').html('');
+    _.each(data, function(jot_tag) {
+      _this.listJotTag({ name: jot_tag }, false);
+    });
+  },
+
+  listJotTag: function(data, reverse){
+    this.listView = new ListView({
+      model: data
+    });
+
+    this.listView.setElement('#list-jot-tag-holder');
+    this.listView.openJotTag(reverse);
   }
 })
