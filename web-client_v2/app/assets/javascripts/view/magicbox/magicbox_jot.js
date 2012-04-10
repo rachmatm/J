@@ -7,6 +7,12 @@ window.MagicboxJotView = Backbone.View.extend({
 
   jot_title_maxlength: 140,
 
+  jot_more_maxlength: 512,
+
+  current_length_holder: $('#jot-input-text-length'),
+
+  current_more_length_holder: $('#jot-input-more-text-length'),
+
   initialize: function(options){
     this.options = $.extend({}, this.default_options, options);
 
@@ -26,6 +32,13 @@ window.MagicboxJotView = Backbone.View.extend({
     this.setButtonAnimation();
     this.setClipField();
     this.setJotTagField();
+
+    this.needResetAfterSubmit();
+  },
+
+  needResetAfterSubmit: function(){
+    $(this.current_length_holder).text(this.jot_title_maxlength);
+    $(this.current_more_length_holder).text(this.jot_more_maxlength);
   },
 
   validates: function(){
@@ -53,18 +66,30 @@ window.MagicboxJotView = Backbone.View.extend({
             else{
               _this.jots.add(data.content);
             }
+
+            $(form).find('input').removeAttr('disabled');
+            $(form).resetForm();
+
+            _this.jotBarWriteMore({}, 'hide');
+            //_this.jotBarClip({}, 'hide');
+            //_this.jotBarLocation({}, 'hide');
+            _this.jotBarTag({}, 'hide');
+            _this.setButtonAnimation({}, 'hide');
+            _this.needResetAfterSubmit();
+          },
+          beforeSend: function(jqXHR, settings){
+            $(form).find('input').attr({
+              disabled: 'disabled'
+            });
           }
         });
 
         return false;
       }
     });
-
-    var current_length_holder = $('#jot-input-text-length');
-    current_length_holder.text(_this.jot_title_maxlength);
     
     $('#jot-form-title-field').bind('keyup', function(){
-      current_length_holder.text(_this.jot_title_maxlength - this.value.length);
+      $(this.current_length_holder).text(_this.jot_title_maxlength - this.value.length);
     });
   },
 
@@ -154,8 +179,6 @@ window.MagicboxJotView = Backbone.View.extend({
     'click #link-to-open-all-more-input': 'jotAllTag'
   },
 
-  jot_more_maxlength: 512,
-
   jotBarWriteMore: function(e, force){
     var _this = this;
     
@@ -165,12 +188,9 @@ window.MagicboxJotView = Backbone.View.extend({
         required: true,
         maxlength: _this.jot_more_maxlength
       });
-
-      var current_length_holder = $('#jot-input-more-text-length');
-      current_length_holder.text(this.jot_more_maxlength);
       
       $('#jot-write-more-field').bind('keyup', function(){
-        current_length_holder.text(_this.jot_more_maxlength - this.value.length);
+        $(_this.current_more_length_holder).text(_this.jot_more_maxlength - this.value.length);
       });
     }
     else if(force == 'hide'){
@@ -222,15 +242,24 @@ window.MagicboxJotView = Backbone.View.extend({
   },
 
   jotBarTag: function(e, force){
-    
+    var _this = this;
     if(force == 'show'){
+      _this.resetListJotTag([]);
       $('#jot-tag-more').removeClass('hidden');
     }
     else if(force == 'hide'){
       $('#jot-tag-more').addClass('hidden');
     }
     else{
-      $('#jot-tag-more').toggleClass('hidden');
+
+      $('#jot-tag-more').toggleClass(function(index, current_class_name){
+
+        if(/hidden/.test(current_class_name)){
+          _this.resetListJotTag([]);
+        }
+
+        return 'hidden';
+      })
     }
   },
 
@@ -311,8 +340,8 @@ window.MagicboxJotView = Backbone.View.extend({
 
     if(this.jot_all_tag_is_open){
       this.jotBarWriteMore(e, 'hide');
-      this.jotBarClip(e, 'hide');
-      this.jotBarLocation(e, 'hide');
+      //this.jotBarClip(e, 'hide');
+      //this.jotBarLocation(e, 'hide');
       this.jotBarTag(e, 'hide');
       this.setButtonAnimation(e, 'hide');
 
@@ -322,8 +351,8 @@ window.MagicboxJotView = Backbone.View.extend({
     }
     else{
       this.jotBarWriteMore(e, 'show');
-      this.jotBarClip(e, 'show');
-      this.jotBarLocation(e, 'show');
+      //this.jotBarClip(e, 'show');
+      //this.jotBarLocation(e, 'show');
       this.jotBarTag(e, 'show');
       this.setButtonAnimation(e, 'show');
 
@@ -335,7 +364,7 @@ window.MagicboxJotView = Backbone.View.extend({
   setJotTagField: function(e){
     var _this = this;
 
-    $('#jot-form-title-field').on('propertychange input paste', function(event){
+    $('#jot-form-title-field').on('propertychange input paste reset', function(event){
 
       if (($(this)).val().match(/#\w+/)){
 
@@ -364,7 +393,9 @@ window.MagicboxJotView = Backbone.View.extend({
 
     $('#list-jot-tag-holder').html('');
     _.each(data, function(jot_tag) {
-      _this.listJotTag({ name: jot_tag }, false);
+      _this.listJotTag({
+        name: jot_tag
+      }, false);
     });
   },
 
