@@ -337,19 +337,19 @@ window.MagicboxJotView = Backbone.View.extend({
 
     $('#jot-form-title-field').on('propertychange input paste', function(event){
 
-        if (($(this)).val().match(/#\w+/)){
+      if (($(this)).val().match(/#\w+/)){
 
-          $('#jot-tag-more').removeClass('hidden');
+        $('#jot-tag-more').removeClass('hidden');
 
-          var text_array = new Array();
+      }
 
-          _.each($(this).val().match(/#\w+\s*/gi), function(data){
-            text_array.push(data.slice(1, data.length));
-          });
+      var text_array = new Array();
 
-          _this.resetListJotTag(text_array);
+      _.each($(this).val().match(/#\w+\s*/gi), function(data){
+        text_array.push(data.slice(1, data.length));
+      });
 
-        }
+      _this.resetListJotTag(text_array);
     });
   },
 
