@@ -8,7 +8,7 @@ class Search
     when 'user'
       get_similar_users keyword
     when 'tags'
-      get_similar_tags
+      get_similar_tags keyword
     else
       get_similar_jots keyword
     end
@@ -48,18 +48,28 @@ class Search
 
 
 
-  protected
+  #protected
 
-  def get_similar_users(keyword)
+  def self.get_similar_users(keyword)
     user = Twitter::Extractor.extract_mentioned_screen_names(keyword)
 
-    User.where(:username => /#{ user.last }/i)
+    content = User.where(:username => /#{ user.last }/i)
+
+    JsonizeHelper.format :content => content
   end
 
-  def get_similar_jot_of_user_with_tags(keyword)
+  def self.get_similar_tags(keyword)
+    tags = Twitter::Extractor.extract_mentioned_screen_names(keyword)
+    tags_array = tags.each { |tag| /#{ tag }/i}
+
+    content = User.where(:tag_ids.in => tags_array)
+
+    JsonizeHelper.format :content => content
+  end
+
+  def self.get_similar_jot_of_user_with_tags(keyword)
     extracted_user = Twitter::Extractor.extract_mentioned_screen_names(keyword).last
     extracted_tags = Twitter::Extractor.extract_hashtags(keyword)
-
     extracted_tags_regex = extracted_tags.map { |tag| /#{tag}/i }
 
     user = User.where(:username => extracted_user).first
@@ -69,10 +79,10 @@ class Search
     JsonizeHelper.format :content => content
   end
 
-  def get_similar_jots(keyword)
+  def self.get_similar_jots(keyword)
     text_array = keyword.split(/,\s|\s,|\s/).map { |text| /#{ text }/i }
 
-    content = Jot.where(:title => text_array)
+    content = Jot.where(:title.all => text_array)
 
     JsonizeHelper.format :content => content
   end
