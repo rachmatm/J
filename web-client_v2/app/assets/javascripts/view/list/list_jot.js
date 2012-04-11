@@ -13,7 +13,8 @@ window.ListJotView = Backbone.View.extend({
     'click .link-to-thumbsup': 'thumbsup',
     'click .link-to-thumbsdown': 'thumbsdown',
     'click .link-to-fav': 'favorite',
-    'click .link-to-destroy': 'destroy'
+    'click .link-to-destroy': 'destroy',
+    'click .link-to-show-comment-all': 'showCommentAll'
   },
 
   data: {},
@@ -32,7 +33,9 @@ window.ListJotView = Backbone.View.extend({
     $("abbr.timeago").timeago();
 
     this.commentValidates();
-    this.comments.fetch();
+    this.comments.more({
+      timestamp: 'now'
+    });
   },
 
   thumbsup: function(){
@@ -72,6 +75,7 @@ window.ListJotView = Backbone.View.extend({
         _this.error.call(_this, jqXHR, textStatus, errorThrown);
       },
       success: function(data, textStatus, jqXHR){
+        console.log( _this.sidebarView.sidebarFavorites.fetch() );
         _this.success.call(_this, data, textStatus, jqXHR);
       }
     });
@@ -87,7 +91,6 @@ window.ListJotView = Backbone.View.extend({
     }
     else{
       this.sidebarView.sidebarFavorites.fetch();
-      alert(data);
       this.model.set(data.content);
       this.render();
     }
@@ -113,16 +116,20 @@ window.ListJotView = Backbone.View.extend({
   },
 
   addComment: function(data){
-    this.comment(data, true)
+    this.comment(data, true);
   },
 
   renderComment: function(){
-    
+    $('#jot-'+ this.data._id +'-comment-counter').text(this.comments.query.total);
   },
 
   resetComment: function(){
     var _this = this;
 
+    if(this.listView && this.listView.el){
+      $(this.listView.el).children().remove();
+    }
+    
     this.comments.each(function(data){
       _this.comment(data);
     });
@@ -135,6 +142,8 @@ window.ListJotView = Backbone.View.extend({
     this.listView.setElement('#list-comment-holder-'+ this.data._id)
     this.listView.openComment(reverse);
   },
+
+  comment_validates_passed: 1,
 
   commentValidates: function(){
     this.commentFormEl = $('#jot-comment-form-' + this.data._id);
@@ -150,17 +159,33 @@ window.ListJotView = Backbone.View.extend({
       errorPlacement: function(){},
 
       submitHandler: function(form){
+        if(!_this.comment_validates_passed){
+          return false;
+        }
+
         $(form).ajaxSubmit({
           error: function(jqXHR, textStatus, errorThrown){
             alert(textStatus);
           },
           success: function(data, textStatus, jqXHR){
+            
             if(data.failed === true){
               alert(data.error);
             }
             else{
-              _this.comments.add(data.content);
+              _this.comments.addWithQuery(data.content, data.query);
             }
+
+            $(form).find('input').removeAttr('disabled');
+            $(form).resetForm();
+            _this.comment_validates_passed = 1;
+          },
+          beforeSend: function(jqXHR, settings){
+            $(form).find('input').attr({
+              disabled: 'disabled'
+            });
+
+            _this.comment_validates_passed = null;
           }
         });
 
@@ -171,5 +196,22 @@ window.ListJotView = Backbone.View.extend({
     $('#jot-comment-form-' + this.data._id + '-submit').bind('click', function(){
       $(_this.commentFormEl).trigger('submit');
     }); 
+  },
+
+  show_comment_all_active: null,
+
+  showCommentAll: function(){
+    if(this.show_comment_all_active){
+      $('.link-to-show-comment-all').text('View all')
+      this.comments.more({
+        timestamp: 'now'
+      });
+      this.show_comment_all_active = null;
+    }
+    else{
+      $('.link-to-show-comment-all').text('View top 5')
+      this.comments.fetch();
+      this.show_comment_all_active = 1;
+    }
   }
 });

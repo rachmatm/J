@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
 
       format.json do
-        render :json => api_connect("/me/jots/#{params[:jot_id]}/comments.json", {}, "get")
+        render :json => api_connect("/me/jots/#{params[:jot_id]}/comments.json", params[:comment], "get")
       end
 
       format.all { respond_not_found }
