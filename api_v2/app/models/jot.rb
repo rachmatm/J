@@ -43,6 +43,23 @@ class Jot
   after_create :current_jot_set_crosspost
   after_save :current_jot_set_tags, :current_jot_set_mention_users
 
+  def self.get_comments(jot_id, options = {})
+    jot = self.find jot_id
+
+    if options[:timestamp] == 'now' or not options[:timestamp].present?
+      params_timestamp = Time.now();
+    elsif options[:timestamp].present?
+      params_timestamp = Time.iso8601(options[:timestamp])
+    end
+
+    data = jot.comments.before_the_time(params_timestamp, options[:per_page]).order_by_default
+    data_total = jot.comments.length
+
+    JsonizeHelper.format({:content => data, :query => {:total => data_total}}, {:except => Comment::NON_PUBLIC_FIELDS, :include => Comment::RELATION_PUBLIC})
+  rescue
+    JsonizeHelper.format :failed => true, :error => 'Jot not found'
+  end
+
   protected
 
   def current_jot_set_crosspost
