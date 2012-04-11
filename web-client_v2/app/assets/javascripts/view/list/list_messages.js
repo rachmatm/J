@@ -102,6 +102,7 @@ window.ListMessagesView = Backbone.View.extend({
     $(this.el).find('.reply_message_path').show();
 
     $(this.el).find('.action_menu_hide').hide();
+    $(this.el).find('.messages_down_arrow').removeClass('messages_up_arrow');
 
     $(this.el).find('.textarea-form-reply').focus();
   },

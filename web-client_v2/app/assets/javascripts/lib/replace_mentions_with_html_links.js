@@ -6,7 +6,6 @@ function replaceMentionsWithHtmlLinks(text, mentions) {
     var regexp = new RegExp(data + '\\b', 'gi');
     var sliced_name = data.slice(1, data.length);
 
-    console.log(regexp);
     if (in_array(sliced_name, _.pluck(mentions, 'username'))) {
       var user = _.find(mentions, function(hash) {
         return hash.username == sliced_name;
