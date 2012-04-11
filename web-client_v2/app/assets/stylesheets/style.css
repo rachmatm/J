@@ -2052,7 +2052,7 @@ background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
 .time {
   color: #999999;
   font-size: 10px;
-  margin-right: 0px;
+  margin-right: 25px;
 }
 
 .people_comments p , .content-text p {
@@ -2077,6 +2077,7 @@ background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
     margin-top: -2px;
     padding-left: 10px;
     width: 548px;
+	position:relative;
 }
 
 .searchResult_content {
@@ -4572,11 +4573,14 @@ font-family:"Helvetica Nue","HelveticaNeueLT23UltLtExRg",Arial,sans serif;
 
 .reply_text {
   color: #333333;
-  float: left;
-  font-size: 11px;
-  width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    width: 100%;
+	font-family: "HelveticaNeue",Arial,sans serif;
 }
-
+.link-to-destroy-comment { position:absolute;right: -10px;
+    top: -8px;}
 .input_replay {
   float: left;
   margin-top: 10px;
