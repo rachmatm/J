@@ -297,15 +297,12 @@ class User
 
     parameters.keep_if {|key, value| Comment::UPDATEABLE_FIELDS.include? key }
 
-    data = self.comments.new parameters
-
-    if data.save
-      
-      data.jot = Jot.find(jot_id)
-      data.save
-      data.reload
-
-      JsonizeHelper.format({:content => data}, {:except => Comment::NON_PUBLIC_FIELDS, :include => Comment::RELATION_PUBLIC})
+    data = Jot.find(jot_id)
+    data_comment = data.comments.new parameters
+    data_comment.user = self
+    
+    if data_comment.save
+      JsonizeHelper.format({:content => data_comment, :query => {:total => data.comments.length}}, {:except => Comment::NON_PUBLIC_FIELDS, :include => Comment::RELATION_PUBLIC})
     else
       JsonizeHelper.format :failed => true, :error => "Comment was not made", :errors => data.errors.to_a
     end

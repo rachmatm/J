@@ -103,7 +103,7 @@ module MeAction
       class Index < ActionWithTokenAuth
 
         def start
-          render Comment.get_comments params[:jot_id]
+          render Jot.get_comments params[:jot_id], params
           finish
         end
       end
