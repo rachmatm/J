@@ -60,7 +60,7 @@
       <div class="post bordertop_post">
         <span class="post-icon" >&nbsp;</span>
         <p>
-          <#= replaceMentionsWithHtmlLinks(replaceURLWithHTMLLinks( detail.replace(new RegExp('\r?\n', 'g'), '<br />'), '_blank' ), mentions) #>
+          <#= replaceURLWithHTMLLinks( detail.replace(new RegExp('\r?\n', 'g'), '<br />'), '_blank' ) #>
         </p>
       </div>
 
