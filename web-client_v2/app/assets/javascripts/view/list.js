@@ -1,5 +1,5 @@
 window.ListView = Backbone.View.extend({
-  
+
   initialize: function(){
     this.holderView = new HolderView;
   },

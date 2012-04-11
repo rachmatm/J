@@ -1805,6 +1805,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b031', end
   width: 570px;
 }
 
+.post a {
+  color: #2BA4AB;
+}
+
 .more {
     color: #a8d4d8;
     float: right;

@@ -51,7 +51,7 @@
 
       <!-- TITLE JOT -->
       <div class="jot-title-heading padzero padbot_ten clearfix">
-        <h2><#= replaceURLWithHTMLLinks(title, '_blank') #></h2>
+        <h2><#= replaceMentionsWithHtmlLinks(replaceURLWithHTMLLinks(title, '_blank'), mentions) #></h2>
       </div>
 
 

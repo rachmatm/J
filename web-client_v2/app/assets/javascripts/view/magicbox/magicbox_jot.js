@@ -394,11 +394,12 @@ window.MagicboxJotView = Backbone.View.extend({
       var text_hash = {};
 
       _.each($(this).val().match(/#\w+/gi), function(data){
-        text_hash[data] = 0
+        text_hash[data] = 0;
       });
 
-      for (key in text_hash)
+      for (key in text_hash) {
         text_array.push(key.slice(1, key.length));
+      }
 
       _this.resetListJotTag(text_array);
     });
