@@ -21,10 +21,7 @@ HttpRouter.new do
   post('/authentications/twitter(.:format)').to(AuthenticationAction::Twitter::Create)
 
   # User > Index
-  # get('/users(.:format)').to(UserAction::Index)
-
-  # User > Show
-  # get('/users/(:id)(.:format)').to(UserAction::Show)
+  get('/users(.:format)').to(MeAction::UserAction::Index)
 
   # Search > Index
   get('/search(.:format)').to(SearchAction::Index)

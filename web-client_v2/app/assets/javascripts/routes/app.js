@@ -170,9 +170,9 @@ window.AppRouter = Backbone.Router.extend({
     this.middleView.openMessages();
   },
 
-  userDetail: function(){
+  userDetail: function(id){
     this.magicboxView.openSearch();
     this.middleView.closeAll();
-    this.middleView.openProfile();
+    this.middleView.openUser(id);
   }
 });
