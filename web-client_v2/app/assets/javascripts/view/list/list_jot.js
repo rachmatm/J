@@ -2,6 +2,8 @@ window.ListJotView = Backbone.View.extend({
   
   template: _.template($('#list-jot-template').html()),
 
+  templatePromptConfirmation: _.template($('#prompt-confirmation-template').html()),
+
   initialize: function(){
     this.currentUserModel = new CurrentUserModel;
     this.middleView = new MiddleView;
@@ -23,8 +25,6 @@ window.ListJotView = Backbone.View.extend({
     this.data = $.extend( this.model.toJSON(), {
       current_user: this.currentUserModel.data()
     });
-
-    log(this.data)
 
     this.comments = new CommentCollection(this.data._id);
     this.comments.bind('add', this.addComment, this);
@@ -101,20 +101,34 @@ window.ListJotView = Backbone.View.extend({
   destroy: function(){
     var _this = this;
 
-    $.ajax({
-      url: "/jots/" + this.data._id + '/destroy.json',
-      error: function(jqXHR, textStatus, errorThrown){
-        _this.error.call(_this, jqXHR, textStatus, errorThrown);
-      },
-      success: function(data, textStatus, jqXHR){
-        if(data.failed === true){
-          alert(data.error);
+    var template = $(_this.templatePromptConfirmation());
+
+    template.find('.link-to-confirm-ok').bind('click', function(){
+      $.ajax({
+        url: "/jots/" + _this.data._id + '/destroy.json',
+        error: function(jqXHR, textStatus, errorThrown){
+          _this.error.call(_this, jqXHR, textStatus, errorThrown);
+        },
+        success: function(data, textStatus, jqXHR){
+          if(data.failed === true){
+            alert(data.error);
+          }
+          else{
+            _this.remove();
+          }
         }
-        else{
-          _this.remove();
-        }
-      }
+      });
+
+      $.colorbox.close();
     });
+
+    template.find('.link-to-confirm-no').bind('click', function(){
+      $.colorbox.close();
+    });
+
+    $.colorbox({
+      html: template
+    })
   },
 
   addComment: function(data){

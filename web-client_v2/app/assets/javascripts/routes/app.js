@@ -34,8 +34,6 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/nest": "nest",
 
-    "!/jots/:id": "jotDetail",
-
     "!/forgot_password": "forgotPassword",
 
     "!/change_password/*token": "changePassword",
@@ -46,7 +44,9 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/favorites": "favorites",
 
-    "!/inbox": "messages"
+    "!/inbox": "messages",
+
+     "!/users/:id": "userDetail"
   },
 
   render: function(parameters){
@@ -168,5 +168,11 @@ window.AppRouter = Backbone.Router.extend({
   messages: function(){
     this.middleView.closeAll();
     this.middleView.openMessages();
+  },
+
+  userDetail: function(id){
+    this.magicboxView.openSearch();
+    this.middleView.closeAll();
+    this.middleView.openUser(id);
   }
 });

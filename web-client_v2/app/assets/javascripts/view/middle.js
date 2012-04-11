@@ -22,6 +22,7 @@ window.MiddleView = Backbone.View.extend({
     this.middleForgotPasswordView = new MiddleForgotPasswordView;
     this.middleChangePasswordView = new MiddleChangePasswordView;
     this.middleAboutView = new MiddleAboutView;
+    this.middleUserView = new MiddleUserView;
   },
 
   createHolder: function(id){
@@ -142,5 +143,15 @@ window.MiddleView = Backbone.View.extend({
     this.middleMessagesView.remove();
     this.middleMessagesView.setElement(this.createHolder('main-middle-messages'));
     this.middleMessagesView.render(data);
+  },
+
+  openUser: function(id){
+    this.closeAll();
+    this.middleUserView.remove();
+    this.middleUserView.setElement(this.createHolder('main-middle-profile'));
+    this.middleUserView.render({
+      data: {user: { id: id}
+      }
+    });
   }
 });
