@@ -9,11 +9,11 @@ window.MagicboxJotView = Backbone.View.extend({
 
   jot_more_maxlength: 512,
 
-  current_length_holder: $('#jot-input-text-length'),
-
-  current_more_length_holder: $('#jot-input-more-text-length'),
-
   initialize: function(options){
+    this.current_length_holder = $('#jot-input-text-length');
+
+    this.current_more_length_holder = $('#jot-input-more-text-length');
+
     this.options = $.extend({}, this.default_options, options);
 
     this.jots = new JotCollection;
@@ -89,7 +89,7 @@ window.MagicboxJotView = Backbone.View.extend({
     });
     
     $('#jot-form-title-field').bind('keyup', function(){
-      $(this.current_length_holder).text(_this.jot_title_maxlength - this.value.length);
+      $(_this.current_length_holder).text(_this.jot_title_maxlength - this.value.length);
     });
   },
 
@@ -204,6 +204,10 @@ window.MagicboxJotView = Backbone.View.extend({
           $('#jot-write-more-field').rules("add", {
             required: true,
             maxlength: 512
+          });
+
+          $('#jot-write-more-field').bind('keyup', function(){
+            $(_this.current_more_length_holder).text(_this.jot_more_maxlength - this.value.length);
           });
         }
         else{
