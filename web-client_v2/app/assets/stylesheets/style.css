@@ -1991,6 +1991,7 @@ background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
 .comment-content ul li {
   float: left;
   width: 100%;
+  padding:10px 0 10px 10px;
 }
 
 .comment-icon {
@@ -2011,14 +2012,11 @@ background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
 }
 
 .comment ul li a {
-  color: #2BA4AB;
-  font-weight:bold;
+   color: #A8D4D8;
+   font-weight: bold;
 }
 
-.comment ul li a:hover {
-
-  text-decoration:underline
-}
+.comment ul li a:hover { color:#1C9DA5;text-decoration:none}
 
 .people_comments {
   padding: 10px 0 10px 10px;
@@ -2037,6 +2035,7 @@ background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
   margin-right: 5px !important;
   margin-left: 7px;
 }
+.comment ul li:hover {background: #e7f7f7}
 
 .comment ul li.people_comments:hover {
   background: #e7f7f7
@@ -2044,16 +2043,24 @@ background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
 
 .name {
   color: #3C3232;
-  float: left;
-  font-family: "HelveticaNeue",Arial,sans serif;
-  font-size: 12px;
-  font-weight: bold;
+    float: left;
+    font-family: "HelveticaNeue",Arial,sans serif;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .time {
   color: #999999;
   font-size: 10px;
-  margin-right: 40px;
+  margin-right: 0px;
+}
+
+.people_comments p , .content-text p {
+     font-weight: normal;
+    line-height: 18px;
+    margin-right: 0;
+    margin-top: 5px;
+    text-align: justify;
 }
 
 .coment-content p {
@@ -2067,9 +2074,9 @@ background: url("/assets/min_hover.png") no-repeat scroll 6px 0px #2A2A2A;
 
 .content-text {
   float: left;
-  margin-top: -2px;
-  padding-left: 10px;
-  width: 548px;
+    margin-top: -2px;
+    padding-left: 10px;
+    width: 548px;
 }
 
 .searchResult_content {
