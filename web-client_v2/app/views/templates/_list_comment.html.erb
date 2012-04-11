@@ -7,6 +7,7 @@
       <# } #>
     </div>
     <div class="content-text">
+      <a class="link-to-destroy-comment cross" href="javascript:void(0)" title="remove"></a>
       <span class="name"><#= user.username #></span>
       <div class="right time">
         <abbr class="timeago" title="<#= created_at #>"><#= created_at #></abbr>
@@ -29,6 +30,7 @@
         <a style="display: none;" href="" class="comment_down_arrow">&nbsp;</a>
       </div>
       <div class="clear"></div>
+      
       <p><#= message #></p>
     </div>
   </div>

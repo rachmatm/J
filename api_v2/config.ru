@@ -13,7 +13,7 @@ if Server::Application.env == 'development'
 end
 
 # Rack Up
-use Rack::Session::Cookie, :key => 'my_jotky_api', :path => '/lord', :domain => 'localhost', :expire_after => 2592000, :secret => 'my_secret'
+use Rack::Session::Cookie, :key => 'my_jotky_api', :path => '/lord', :domain => 'deimos.jotky.com', :expire_after => 2592000, :secret => 'my_secret'
 
 run Server::Application.routes
 

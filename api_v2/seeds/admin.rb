@@ -1,3 +1,4 @@
+ENV['RACK_ENV'] = 'production'
 require './application'
 
 Admin.where(:username => 'Lord').destroy_all

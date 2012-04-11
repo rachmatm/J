@@ -29,7 +29,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'UniSansBold';
   src: url('/assets/uni-sans-semibold-webfont.eot');
@@ -37,9 +36,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
-
-
 @font-face {
   font-family: 'HelveticaNeueLT55RomanRegular';
   src:  url('/assets/helvetica_lt_55_roman-webfont.eot');
@@ -72,6 +68,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Helvetica Nue';
   src: url('/assets/Helvetica Neue CE 35 Thin.ttf') format('truetype');
