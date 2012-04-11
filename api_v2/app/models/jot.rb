@@ -124,19 +124,18 @@ class Jot
 
   def current_jot_set_tags
     assingned_tags = []
-    
-    Twitter::Extractor.extract_hashtags(self.title).uniq.each do |tag|
 
+    Twitter::Extractor.extract_hashtags(self.title).uniq.each do |tag|
       assingned_tags << data_tag = Tag.find_or_create_by({:name => tag.downcase})
       
       self.tags.push data_tag
       self.user.tags.push data_tag
     end
-
-    self.reload
     
+    self.reload
+
     assingned_tags.each do | assingned_tag |
-      assingned_tag.tag_similiarities.concat assingned_tags.reject{|t| t == assingned_tag}
+      assingned_tag.tag_similiarity_ids.concat assingned_tags.reject{|t| t == assingned_tag}.collect{|t| t.id}
     end
   end
 
