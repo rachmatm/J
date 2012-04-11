@@ -301,7 +301,7 @@ span.img_2{
   text-align: center;
   text-decoration: none;
   width: 170px;
-  text-decoration:none; text-shadow:0 1px 0 #e2e1e1;
+  text-decoration:none; text-shadow:0 1px 0 #e2e1e1; position:relative;
 }
 .sign_up:hover { text-decoration:none}
 .login_content {
@@ -318,7 +318,7 @@ span.img_2{
 }
 
 .search input[type=text] {
-
+	border:none;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius:  5px;
@@ -327,7 +327,7 @@ span.img_2{
   float: left;
   font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 17px;
-  height: 31px;
+  height: 35px;
   line-height: 31px;
   padding-left: 5px;
   width: 515px;
