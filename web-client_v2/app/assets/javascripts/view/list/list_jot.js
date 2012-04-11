@@ -87,6 +87,7 @@ window.ListJotView = Backbone.View.extend({
     }
     else{
       this.sidebarView.sidebarFavorites.fetch();
+      alert(data);
       this.model.set(data.content);
       this.render();
     }
