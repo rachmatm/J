@@ -9,8 +9,6 @@ window.ListJotView = Backbone.View.extend({
     this.middleView = new MiddleView;
     this.middleView.setElement('#main-middle');
     this.sidebarView = new SidebarView;
-
-    log(this.currentUserModel.data());
   },
 
   events: {
