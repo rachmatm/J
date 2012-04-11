@@ -278,4 +278,14 @@ module MeAction
       end
     end
   end
+
+  module UserAction
+    class Index < ActionWithAppAuth
+
+      def start
+        render User.get :id => params[:id]
+        finish
+      end
+    end
+  end
 end

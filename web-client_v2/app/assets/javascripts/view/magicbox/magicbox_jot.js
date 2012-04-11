@@ -1,7 +1,7 @@
 window.MagicboxJotView = Backbone.View.extend({
 
   default_options: {
-    elNav: '',
+  
     el: ''
   },
 
@@ -13,7 +13,7 @@ window.MagicboxJotView = Backbone.View.extend({
     this.current_length_holder = $('#jot-input-text-length');
 
     this.current_more_length_holder = $('#jot-input-more-text-length');
-
+ 	this.elNav = $('#magicbox-navigation-jot');
     this.options = $.extend({}, this.default_options, options);
 
     this.jots = new JotCollection;
@@ -94,6 +94,10 @@ window.MagicboxJotView = Backbone.View.extend({
   },
 
   open: function(){
+	   $(this.elNav).find('.img_1').removeClass('img_1_not_active');
+    $(this.elNav).find('.jot_text').removeClass('jot_text_not_active');
+	
+	
     $(this.options.el).removeClass('hidden');
     this.middleView.openJot();
 
@@ -101,7 +105,11 @@ window.MagicboxJotView = Backbone.View.extend({
       timestamp: 'now'
     });
   },
-
+ close: function(){
+	$(this.elNav).find('.img_1').addClass('img_1_not_active');
+    $(this.elNav).find('.jot_text').addClass('jot_text_not_active');
+  },
+  
   item: function(jots, reverse){
     this.listView = new ListView({
       model: jots
