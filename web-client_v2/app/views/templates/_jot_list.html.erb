@@ -4,7 +4,9 @@
 
     <div class="people_post">
       <div class="header_post_jot">
-        <img alt="" src="/assets/avatar.png">
+        <# if(user.avatar){ #>
+        <img alt="<#= user.username #>" src="<#= user.avatar.thumb_small.url #>">
+        <# } #>
         <span><#= user.username #></span>
 
         <# if(in_array(current_user._id, user_mentioned_ids)){ #>
@@ -49,7 +51,7 @@
 
       <!-- TITLE JOT -->
       <div class="jot-title-heading padzero padbot_ten clearfix">
-        <h2><#= title #></h2>
+        <h2><#= replaceURLWithHTMLLinks(title, '_blank') #></h2>
       </div>
 
 
@@ -58,7 +60,7 @@
       <div class="post bordertop_post">
         <span class="post-icon" >&nbsp;</span>
         <p>
-          <#= detail #>
+          <#= replaceURLWithHTMLLinks( detail.replace(new RegExp('\r?\n', 'g'), '<br />'), '_blank' ) #>
         </p>
       </div>
 

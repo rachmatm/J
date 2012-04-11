@@ -1,5 +1,5 @@
 --- 
-chdir: /home/vortex/jotky-beta-2/api_v2
+chdir: /home/vortex/jotky-beta-2/web-client_v2
 environment: production
 timeout: 30
 log: log/thin.log
@@ -10,5 +10,5 @@ require: []
 
 wait: 30
 servers: 3
-socket: /usr/local/thin/api/thin.sock
+socket: /usr/local/thin/thin.sock
 daemonize: true
