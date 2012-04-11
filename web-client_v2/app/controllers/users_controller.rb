@@ -11,11 +11,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def disfollowed_user
+  def disfollowed_jot
     respond_to do |format|
 
       format.json do
-        render :json => api_connect('/me/disfollowed_user.json', {:disfollowed_user_id => params[:user_id]}, "post")
+        render :json => api_connect('/me/disfollowed_user.json', {:disfollowed_jot_id => params[:user_id]}, "post")
       end
 
       format.all { respond_not_found }

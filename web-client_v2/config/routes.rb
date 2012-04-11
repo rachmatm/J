@@ -65,6 +65,6 @@ WebClientV2::Application.routes.draw do
   end
 
   resources :users, :only => [:index] do
-    get 'disfollowed_user'
+    get 'disfollowed_jot'
   end
 end

@@ -40,18 +40,6 @@ window.ListJotView = Backbone.View.extend({
     this.comments.more({
       timestamp: 'now'
     });
-
-    this.bindUnfollowAction();
-  },
-
-  bindUnfollowAction: function(){
-    var _this = this;
-    
-    $(window).bind('unfollowjot', function(e, jot_user_ids){
-      if(in_array(_this.data.user_id, jot_user_ids)){
-        _this.remove()
-      }
-    })
   },
 
   thumbsup: function(){
@@ -140,12 +128,12 @@ window.ListJotView = Backbone.View.extend({
     }
     else{
       var template = $(_this.templatePromptConfirmation({
-        message: 'This will hide '+ this.data.user.username +' jot forever, are you sure?'
+        message: 'This will hide this jot forever, are you sure?'
         }));
 
       template.find('.link-to-confirm-ok').bind('click', function(){
         $.ajax({
-          url: "/users/"+ _this.data.user._id +"/disfollowed_user.json",
+          url: "/users/"+ _this.data._id +"/disfollowed_jot.json",
           error: function(jqXHR, textStatus, errorThrown){
             _this.error.call(_this, jqXHR, textStatus, errorThrown);
           },
@@ -155,7 +143,7 @@ window.ListJotView = Backbone.View.extend({
             }
             else{
               _this.currentUserModel.setData(data.content);
-              $(window).trigger('unfollowjot', [data.content.disfollowed_user_ids])
+              _this.remove();
             }
           }
         });

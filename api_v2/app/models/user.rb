@@ -56,7 +56,7 @@ class User
   has_many :connections
   has_many :nests
   has_many :clips
-  has_and_belongs_to_many :disfollowed_users, :class_name => "User"
+  has_and_belongs_to_many :disfollowed_jots, :class_name => "Jot"
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true, :allow_blank => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
@@ -163,7 +163,7 @@ class User
       params_timestamp = Time.iso8601(parameters[:timestamp])
     end
    
-    data = Jot.before_the_time(params_timestamp, parameters[:per_page]).disclude_these_user(self.disfollowed_user_ids).order_by_default
+    data = Jot.before_the_time(params_timestamp, parameters[:per_page]).disclude_these_jots(self.disfollowed_jot_ids).order_by_default
 
     JsonizeHelper.format({
         :content => data
@@ -548,8 +548,8 @@ class User
     JsonizeHelper.format :content => data
   end
 
-  def current_user_set_disfollowed_user(parameters)
-    self.disfollowed_users.push User.find(parameters[:disfollowed_user_id])
+  def current_user_set_disfollowed_jot(parameters)
+    self.disfollowed_jots.push Jot.find(parameters[:disfollowed_jot_id])
     self.reload
 
     JsonizeHelper.format({:content => self}, {
@@ -557,7 +557,7 @@ class User
         :include => RELATION_PUBLIC
       })
   rescue
-    JsonizeHelper.format :failed => true, :error => "User not found, please try again"
+    JsonizeHelper.format :failed => true, :error => "Jot not found, please try again"
   end
 
   protected

@@ -293,7 +293,7 @@ module MeAction
     class Create < ActionWithTokenAuth
 
       def start
-        render @current_user.current_user_set_disfollowed_user params
+        render @current_user.current_user_set_disfollowed_jot params
         finish
       end
     end
