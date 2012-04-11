@@ -51,7 +51,7 @@
 
       <!-- TITLE JOT -->
       <div class="jot-title-heading padzero padbot_ten clearfix">
-        <h2><#= title #></h2>
+        <h2><#= replaceURLWithHTMLLinks(title) #></h2>
       </div>
 
 
@@ -60,7 +60,7 @@
       <div class="post bordertop_post">
         <span class="post-icon" >&nbsp;</span>
         <p>
-          <#= detail.replace(new RegExp('\r?\n', 'g'), '<br />') #>
+          <#= replaceURLWithHTMLLinks( detail.replace(new RegExp('\r?\n', 'g'), '<br />') ) #>
         </p>
       </div>
 
