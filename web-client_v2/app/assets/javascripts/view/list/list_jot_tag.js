@@ -12,7 +12,7 @@ window.ListJotTagView = Backbone.View.extend({
   },
 
   remove_tag: function(){
-    var tag_remove_regex = new RegExp('(.*)#' + this.data.name + '(.*)', 'i');
+    var tag_remove_regex = new RegExp('(.*)#' + this.data.name + '(.*)', 'gi');
     var new_string = $('#jot-form-title-field').val().replace(tag_remove_regex, '$1$2');
 
     $('#jot-form-title-field').val(new_string);
