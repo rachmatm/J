@@ -5839,9 +5839,10 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
 }
 
 .jot_middle_tags {
-  background: url("/assets/jot-middle-tags.png") repeat-x scroll 0 0 transparent;
-  height: 40px;
-  padding: 0 20px;
+  background: none repeat scroll 0 0 #B2B2B2;
+    border-bottom: 1px solid #8A8A8A;
+    min-height: 40px;
+    padding: 5px 10px 10px;
 }
 
 .jot_middle_tags li{
