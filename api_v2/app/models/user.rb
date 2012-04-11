@@ -163,7 +163,7 @@ class User
       params_timestamp = Time.iso8601(parameters[:timestamp])
     end
    
-    data = Jot.before_the_time(params_timestamp, parameters[:per_page]).disclude_these_user(self.disfollowed_users).order_by_default
+    data = Jot.before_the_time(params_timestamp, parameters[:per_page]).disclude_these_user(self.disfollowed_user_ids).order_by_default
 
     JsonizeHelper.format({
         :content => data

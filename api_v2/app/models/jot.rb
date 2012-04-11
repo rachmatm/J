@@ -40,7 +40,7 @@ class Jot
   scope :order_by_default, order_by([[:updated_at, :desc]])
   scope :before_the_time, ->(timestamp, per_page) { where(:updated_at.lt => timestamp).limit(per_page.to_i)}
   scope :find_by_user_tags, ->(user) {any_of({"tag_ids" => {"$in" => user.tags.collect{|tag| tag.id}}}, {'user_id' => user.id})}
-  scope :disclude_these_user, ->(users) { not_in(user_id: users)}
+  scope :disclude_these_user, ->(users) { not_in(user_id: users.to_a) }
 
   after_create :current_jot_set_crosspost
   after_save :current_jot_set_tags, :current_jot_set_mention_users

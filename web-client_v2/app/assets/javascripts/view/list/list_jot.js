@@ -40,6 +40,18 @@ window.ListJotView = Backbone.View.extend({
     this.comments.more({
       timestamp: 'now'
     });
+
+    this.bindUnfollowAction();
+  },
+
+  bindUnfollowAction: function(){
+    var _this = this;
+    
+    $(window).bind('unfollowjot', function(e, jot_user_ids){
+      if(in_array(_this.data.user_id, jot_user_ids)){
+        _this.remove()
+      }
+    })
   },
 
   thumbsup: function(){
@@ -79,7 +91,6 @@ window.ListJotView = Backbone.View.extend({
         _this.error.call(_this, jqXHR, textStatus, errorThrown);
       },
       success: function(data, textStatus, jqXHR){
-        console.log( _this.sidebarView.sidebarFavorites.fetch() );
         _this.success.call(_this, data, textStatus, jqXHR);
       }
     });
@@ -144,6 +155,7 @@ window.ListJotView = Backbone.View.extend({
             }
             else{
               _this.currentUserModel.setData(data.content);
+              $(window).trigger('unfollowjot', [data.content.disfollowed_user_ids])
             }
           }
         });
