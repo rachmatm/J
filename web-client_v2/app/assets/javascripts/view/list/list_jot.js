@@ -75,6 +75,7 @@ window.ListJotView = Backbone.View.extend({
         _this.error.call(_this, jqXHR, textStatus, errorThrown);
       },
       success: function(data, textStatus, jqXHR){
+        console.log( _this.sidebarView.sidebarFavorites.fetch() );
         _this.success.call(_this, data, textStatus, jqXHR);
       }
     });
@@ -89,7 +90,6 @@ window.ListJotView = Backbone.View.extend({
       alert(data.error);
     }
     else{
-      this.sidebarView.sidebarFavorites.fetch();
       this.model.set(data.content);
       this.render();
     }
