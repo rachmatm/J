@@ -166,6 +166,7 @@ window.AppRouter = Backbone.Router.extend({
   },
 
   messages: function(){
+    this.magicboxView.openSearch();
     this.middleView.closeAll();
     this.middleView.openMessages();
   },
