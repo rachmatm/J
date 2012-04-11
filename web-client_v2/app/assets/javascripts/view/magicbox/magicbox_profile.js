@@ -26,12 +26,6 @@ window.MagicboxProfileView = Backbone.View.extend({
 
     $('#magicbox-profile-content').html(this.template(data.toJSON()));
 
-    $('.show-hide-edit-panel-display').bind('click', function(){
-      $(this).addClass('hidden').
-      parent().
-      children('.show-hide-edit-panel-input').removeClass('hidden');
-    });
-
 
     $('#profile-form-username').validate({
       rules: {
