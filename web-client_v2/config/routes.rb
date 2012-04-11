@@ -64,5 +64,7 @@ WebClientV2::Application.routes.draw do
     get 'destroy'
   end
 
-  resources :users, :only => [:index]
+  resources :users, :only => [:index] do
+    get 'disfollowed_user'
+  end
 end

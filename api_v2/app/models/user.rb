@@ -56,6 +56,7 @@ class User
   has_many :connections
   has_many :nests
   has_many :clips
+  has_and_belongs_to_many :disfollowed_users, :class_name => "User"
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_nil => true, :allow_blank => true
   validates_format_of :email, :with => /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
@@ -162,7 +163,7 @@ class User
       params_timestamp = Time.iso8601(parameters[:timestamp])
     end
    
-    data = Jot.before_the_time(params_timestamp, parameters[:per_page]).order_by_default
+    data = Jot.before_the_time(params_timestamp, parameters[:per_page]).disclude_these_user(self.disfollowed_users).order_by_default
 
     JsonizeHelper.format({
         :content => data
@@ -464,7 +465,7 @@ class User
     data_item.save
 
     if data_item.errors.any?
-       JsonizeHelper.format :failed => true, :error => data_item.errors.to_a
+      JsonizeHelper.format :failed => true, :error => data_item.errors.to_a
     else
       JsonizeHelper.format :content => data_item
     end
@@ -518,10 +519,10 @@ class User
     message = Message.find(message_id)
 
     parameters = {:subject => "Re: #{message.subject}",
-                  :from => self.username,
-                  :to => message.to,
-                  :content => content,
-                  :original_message => message}
+      :from => self.username,
+      :to => message.to,
+      :content => content,
+      :original_message => message}
 
     message.replies.create! parameters
     message.update_attributes :updated_at => Time.now, :read => false
@@ -545,6 +546,18 @@ class User
     data = self.clips.new parameters
     data.save
     JsonizeHelper.format :content => data
+  end
+
+  def current_user_set_disfollowed_user(parameters)
+    self.disfollowed_users.push User.find(parameters[:disfollowed_user_id])
+    self.reload
+
+    JsonizeHelper.format({:content => self}, {
+        :except => NON_PUBLIC_FIELDS,
+        :include => RELATION_PUBLIC
+      })
+  rescue
+    JsonizeHelper.format :failed => true, :error => "User not found, please try again"
   end
 
   protected

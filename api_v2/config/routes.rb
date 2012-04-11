@@ -152,6 +152,9 @@ HttpRouter.new do
   # Me > Nest > Create Item
   post('/me/nests/(:nest_id)/item(.:format)').to(MeAction::NestAction::ItemAction::Create)
 
+  # Me > Create Disfollowed User
+  post('/me/disfollowed_user(.:format)').to(MeAction::DisfollowedAction::Create)
+
   # Me > Nest > Index Item
   get('/me/nests/(:nest_id)/item(.:format)').to(MeAction::NestAction::ItemAction::Index)
 

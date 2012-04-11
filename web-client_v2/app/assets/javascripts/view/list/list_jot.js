@@ -9,6 +9,8 @@ window.ListJotView = Backbone.View.extend({
     this.middleView = new MiddleView;
     this.middleView.setElement('#main-middle');
     this.sidebarView = new SidebarView;
+
+    log(this.currentUserModel.data());
   },
 
   events: {
@@ -101,26 +103,54 @@ window.ListJotView = Backbone.View.extend({
   destroy: function(){
     var _this = this;
 
-    var template = $(_this.templatePromptConfirmation());
+    if(this.data.current_user._id == this.data.user_id){
+      var template = $(_this.templatePromptConfirmation({
+        message: 'Do you want to delete this?'
+      }));
 
-    template.find('.link-to-confirm-ok').bind('click', function(){
-      $.ajax({
-        url: "/jots/" + _this.data._id + '/destroy.json',
-        error: function(jqXHR, textStatus, errorThrown){
-          _this.error.call(_this, jqXHR, textStatus, errorThrown);
-        },
-        success: function(data, textStatus, jqXHR){
-          if(data.failed === true){
-            alert(data.error);
+      template.find('.link-to-confirm-ok').bind('click', function(){
+        $.ajax({
+          url: "/jots/" + _this.data._id + '/destroy.json',
+          error: function(jqXHR, textStatus, errorThrown){
+            _this.error.call(_this, jqXHR, textStatus, errorThrown);
+          },
+          success: function(data, textStatus, jqXHR){
+            if(data.failed === true){
+              alert(data.error);
+            }
+            else{
+              _this.remove();
+            }
           }
-          else{
-            _this.remove();
-          }
-        }
+        });
+
+        $.colorbox.close();
       });
+    }
+    else{
+      var template = $(_this.templatePromptConfirmation({
+        message: 'This will hide '+ this.data.user.username +' jot forever, are you sure?'
+        }));
 
-      $.colorbox.close();
-    });
+      template.find('.link-to-confirm-ok').bind('click', function(){
+        $.ajax({
+          url: "/users/"+ _this.data.user._id +"/disfollowed_user.json",
+          error: function(jqXHR, textStatus, errorThrown){
+            _this.error.call(_this, jqXHR, textStatus, errorThrown);
+          },
+          success: function(data, textStatus, jqXHR){
+            if(data.failed === true){
+              alert(data.error);
+            }
+            else{
+              _this.currentUserModel.setData(data.content);
+            }
+          }
+        });
+
+        $.colorbox.close();
+      });
+    }
 
     template.find('.link-to-confirm-no').bind('click', function(){
       $.colorbox.close();
