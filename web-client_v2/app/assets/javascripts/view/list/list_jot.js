@@ -24,6 +24,8 @@ window.ListJotView = Backbone.View.extend({
       current_user: this.currentUserModel.data()
     });
 
+    log(this.data)
+
     this.comments = new CommentCollection(this.data._id);
     this.comments.bind('add', this.addComment, this);
     this.comments.bind('all', this.renderComment, this);
