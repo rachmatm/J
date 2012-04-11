@@ -1,15 +1,15 @@
 development:
-  host: localhost
-  database: jotky_beta_13_development
+  host: 10.66.32.130
+  database: jotky_beta_development
 
 test:
-  host: localhost
-  database: jotky_beta_13_test
+  host: 10.66.32.130
+  database: jotky_beta_test
 
 # set these environment variables on your prod server
 production:
-  host: localhost
-  database: jotky_beta_13_production
+  host: 10.66.32.130
+  database: jotky_beta_production
 
 #  host: <%= ENV['MONGOID_HOST'] %>
 #  port: <%= ENV['MONGOID_PORT'] %>

@@ -1,0 +1,14 @@
+--- 
+chdir: /home/vortex/jotky-beta-2/web-client_v2
+environment: production
+timeout: 30
+log: log/thin.log
+pid: tmp/pids/thin.pid
+max_conns: 1024
+max_persistent_conns: 512
+require: []
+
+wait: 30
+servers: 3
+socket: /usr/local/thin/thin.sock
+daemonize: true
