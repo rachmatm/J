@@ -119,40 +119,40 @@
         </div>
         <div class="comment-content">
           <div class="comment-content">
-          
-          <div class="viewport clearfix">
-            <div class="overview" style="top: 0px;">
-              <ul id="list-comment-holder-<#= _id #>"></ul>
+
+            <div class="viewport clearfix">
+              <div class="overview" style="top: 0px;">
+                <ul id="list-comment-holder-<#= _id #>"></ul>
+              </div>
             </div>
+
+          </div>
+          <div class="clear"></div>
+
+
+          <div  class="overview_comment">
+            <div class="photo_reply_message">
+              <form action="/jots/<#= _id #>/comments.json" method="post" id="jot-comment-form-<#= _id #>">
+                <span class="reply_text">Reply</span>
+                <span class="input_replay clarfix">
+                  <span class="reply_message_photo no_margin_left messages_left_path">
+                    <# if(current_user.avatar){ #>
+                    <img alt="<#= current_user.avatar.username #>" src="<#= current_user.avatar.thumb_small.url #>">
+                    <# } #>
+                  </span>
+                  <span class="textarea_reply widefive">
+                    <span class="triangle_inbox">&nbsp;</span>
+                    <textarea cols="" rows="" name="comment[message]" class="widefive"></textarea>
+                  </span>
+                </span>
+                <a class="replay_button" id="jot-comment-form-<#= _id #>-submit" href="javascript:void(0)">Reply</a>
+              </form>
+            </div>
+
           </div>
 
-        </div>
-        <div class="clear"></div>
-
-
-        <div  class="overview_comment">
-          <div class="photo_reply_message">
-            <form action="/jots/<#= _id #>/comments.json" method="post" id="jot-comment-form-<#= _id #>">
-              <span class="reply_text">Reply</span>
-              <span class="input_replay clarfix">
-                <span class="reply_message_photo no_margin_left messages_left_path">
-                  <# if(current_user.avatar){ #>
-                  <img alt="<#= current_user.avatar.username #>" src="<#= current_user.avatar.thumb_small.url #>">
-                  <# } #>
-                </span>
-                <span class="textarea_reply widefive">
-                  <span class="triangle_inbox">&nbsp;</span>
-                  <textarea cols="" rows="" name="comment[message]" class="widefive"></textarea>
-                </span>
-              </span>
-              <a class="replay_button" id="jot-comment-form-<#= _id #>-submit" href="javascript:void(0)">Reply</a>
-            </form>
-          </div>
 
         </div>
-
-
       </div>
     </div>
-  </div>
 </script>

@@ -19,3 +19,5 @@ web-client_v2/config/initializers/jotky.rb
 web-client_v2/public/assets/
 api_v2/tmp/
 api_v2/log/
+api_v2/config/mongoid.sample.yml
+api_v2/config.ru
