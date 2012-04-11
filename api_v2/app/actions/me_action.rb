@@ -288,4 +288,14 @@ module MeAction
       end
     end
   end
+
+  module DisfollowedAction
+    class Create < ActionWithTokenAuth
+
+      def start
+        render @current_user.current_user_set_disfollowed_jot params
+        finish
+      end
+    end
+  end
 end

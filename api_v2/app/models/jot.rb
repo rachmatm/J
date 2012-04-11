@@ -40,6 +40,7 @@ class Jot
   scope :order_by_default, order_by([[:updated_at, :desc]])
   scope :before_the_time, ->(timestamp, per_page) { where(:updated_at.lt => timestamp).limit(per_page.to_i)}
   scope :find_by_user_tags, ->(user) {any_of({"tag_ids" => {"$in" => user.tags.collect{|tag| tag.id}}}, {'user_id' => user.id})}
+  scope :disclude_these_jots, ->(jots) { not_in(_id: jots) }
 
   after_create :current_jot_set_crosspost
   after_save :current_jot_set_tags, :current_jot_set_mention_users
@@ -123,19 +124,18 @@ class Jot
 
   def current_jot_set_tags
     assingned_tags = []
-    
-    Twitter::Extractor.extract_hashtags(self.title).uniq.each do |tag|
 
+    Twitter::Extractor.extract_hashtags(self.title).uniq.each do |tag|
       assingned_tags << data_tag = Tag.find_or_create_by({:name => tag.downcase})
       
       self.tags.push data_tag
       self.user.tags.push data_tag
     end
-
-    self.reload
     
+    self.reload
+
     assingned_tags.each do | assingned_tag |
-      assingned_tag.tag_similiarities.concat assingned_tags.reject{|t| t == assingned_tag}
+      assingned_tag.tag_similiarity_ids.concat assingned_tags.reject{|t| t == assingned_tag}.collect{|t| t.id}
     end
   end
 
