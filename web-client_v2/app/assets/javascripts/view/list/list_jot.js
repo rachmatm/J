@@ -201,7 +201,7 @@ window.ListJotView = Backbone.View.extend({
 
   showCommentAll: function(){
     if(this.show_comment_all_active){
-      $('.link-to-show-comment-all').text('View top 5')
+      $('.link-to-show-comment-all').text('View all')
       this.comments.more({
         timestamp: 'now'
       });
