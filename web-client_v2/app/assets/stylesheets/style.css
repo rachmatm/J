@@ -311,7 +311,7 @@ span.img_2{
   -webkit-border-radius: 5px;
   border-radius:  5px;
   background: none repeat scroll 0 0 #FFFFFF;
-  color: #CCCCCC;
+  color: #000000; /* placeholder #CCCCCC */
   float: left;
   font-family: "HelveticaNeue","HelveticaCE55RomanRegular",Arial,sans serif;
   font-size: 17px;
@@ -321,7 +321,7 @@ span.img_2{
   width: 515px;
 
 }
-
+.search input[type=text].active { color:#000000}
 .search input[type=submit] {
  /* background: url("/assets/sprite.png") no-repeat scroll -344px -1px transparent;*/
   background:url("/assets/search_btn.png") no-repeat scroll 0 0 transparent;
@@ -4130,7 +4130,10 @@ a.connect_cross{
 
 .what_jotky_tittle,
 .about_jotky_body {
-  float: left;
+  float: left; 
+}
+.main-middle-item {
+font-family:"Helvetica Nue","HelveticaNeueLT23UltLtExRg",Arial,sans serif;
 }
 
 .main-middle-item {

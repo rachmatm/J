@@ -1,8 +1,0 @@
->> Writing PID to tmp/pids/thin.2.pid
->> Using rack adapter
-MONGODB [WARNING] Please note that logging negatively impacts client-side performance. You should set your logging level no lower than :info in production.
-MONGODB admin['$cmd'].find({:ismaster=>1}).limit(-1)
->> Thin web server (v1.3.1 codename Triple Espresso)
->> Maximum connections set to 1024
->> Listening on /usr/local/thin/api/thin.2.sock, CTRL+C to stop
->> Exiting!

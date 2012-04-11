@@ -53,7 +53,7 @@ class Search
   def self.get_similar_users(keyword)
     user = Twitter::Extractor.extract_mentioned_screen_names(keyword)
 
-    content = User.where(:username => /#{ user.last }/i)
+    content = User.where(:username.all => /#{ user.last }/i)
 
     JsonizeHelper.format :content => content
   end

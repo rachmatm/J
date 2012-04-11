@@ -1,3 +1,0 @@
-JOTKY_ID ="4f8428adbb490631cb000002"
-JOTKY_SECRET = "71812c5ecf19cadc76"
-JOTKY_BASE_URL = "http://localhost:3000/"

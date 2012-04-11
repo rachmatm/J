@@ -33,7 +33,7 @@
   <div class="magicbox-content-tab" id="magicbox-content-tab">
 
     <div class="magicbox-content-tab-item hidden" id="magicbox-search">
-      <%= form_tag searches_path, :id => 'magic-box-search-form', :method => :get do  %>
+      <%= form_tag searches_path(:format => 'json'), :id => 'magic-box-search-form', :method => :get do  %>
         <div class="search jot-search-content clearfix">
           <%= text_field_tag :keyword, nil, :placeholder => "Search everything", :id => 'magic-box-search-field' %>
           <%= submit_tag '', :id => 'gray_search'  %>

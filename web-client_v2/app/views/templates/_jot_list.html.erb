@@ -64,35 +64,12 @@
 
       <# } #>
 
-      <!-- ATTACHMENT LIST -->
-      <div class="attach pad_ten">
-        <span class="attach-icon">&nbsp;</span>
-        <div class="jot_asset_left left">
-          <img alt="video" src="/assets/video.jpg">
-        </div>
-        <div id="video-detail" class="right">
-
-          <span class="multimedia padzero">&nbsp;</span>
-          <p class="video-title padzero">This is Dummie Video (live)</p>
-          <div class="clear"></div>
-          <p class="video-detail">A <strong>Jazz </strong>Evening of Fourplay <br>(Bob James, Lee Ritenour, </p>
-          <a class="link" href="#">http://youtube.com/watch?wjfi2i</a>
-          <div class="clear"></div>
-          <p class="uploaded">uploaded via youtube</p>
-          <a class="more" href="#">2 More attachment</a>
-        </div>
-      </div>
-
-
-
-
-
 
       <# if(tags.length > 0){ #>
       <div class="tag-incognito">
         <span class="hot_jot_incognito_icon">&nbsp;</span>
 
-        <div class="button_tag">
+        <div class="button_tag cleafix">
           <ul>
             <# _.each(tags, function(tag){ #>
             <li>
@@ -102,13 +79,7 @@
 
 
             <# }) #>
-
-            <li>
-              <span class="choice_text active_choiceTexts">Dummie</span>
-              <span class="activeSearch"></span>
-            </li>
           </ul>
-          <div class="clear"></div>
         </div>
       </div>
       <# } #>
@@ -134,27 +105,19 @@
       <!-- IF HAS COMMENT -->
       <div class="comment">
         <span class="comment-icon">&nbsp;</span>
-        <!-- div class="comment_line">
+        <div class="comment_line">
           <div class="left">
             <ul>
-              <li class="left"><a href="#">16 comments</a></li>
+              <li class="left"><a href="javascript:void(0)"><span id="jot-<#= _id #>-comment-counter">0</span> comments</a></li>
               <li class="left">.</li>
-              <li class="left"><a href="#">View all</a></li>
-            </ul>
-          </div>
-          <div class="right">
-            <ul>
-
-              <li class="left"><a href="#">Newest</a></li>
-              <li class="left">.</li>
-              <li class="no_margin_right left"><a href="">oldest</a></li>
+              <li class="left"><a href="javascript:void(0)" class="link-to-show-comment-all">View all</a></li>
             </ul>
           </div>
           <div class="clear"></div>
-        </div -->
+        </div>
         <div class="comment-content">
-          <!-- div id="scrollbar1" class="comment-content" -->
-          <!-- div class="scrollbar" style="height: 255px;"><div class="track" style="height: 255px;"><div class="thumb" style="top: 0px; height: 80.9776px;"><div class="end"></div></div></div></div -->
+          <div class="comment-content">
+          
           <div class="viewport clearfix">
             <div class="overview" style="top: 0px;">
               <ul id="list-comment-holder-<#= _id #>"></ul>
