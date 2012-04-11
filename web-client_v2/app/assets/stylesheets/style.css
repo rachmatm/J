@@ -197,9 +197,11 @@
   position: relative;
   top: 5px;
 }
+.search_icon span.search_text_not_active { color: #8D8E8E;}
 
-.search_text_not_active{
-  color: #8D8E8E !important;
+
+.search_icon span.search_text_active, .search_icon span.search_text:hover,.search_icon span.search_text_not_active:hover{
+  color: #FFFFFF;
 }
 
 .search_icon span.img_2{
@@ -227,8 +229,8 @@
 
 .jot_icon span.img_1{
 
- background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;
-
+/* background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;*/
+ background: url("/assets/sprite.png") no-repeat scroll -449px -273px transparent;
   border: medium none;
   float: left;
   height: 18px;
@@ -237,7 +239,17 @@
   top: 10px;
   width: 16px;
 }
+.jot_icon span.img_1_not_active{
 
+ background: url("/assets/sprite.png") no-repeat scroll -182px -27px transparent;
+  border: medium none;
+  float: left;
+  height: 18px;
+  left: 10px;
+  position: relative;
+  top: 10px;
+  width: 16px;
+}
 .jot_icon span.img_1_active{
   background: url("/assets/sprite.png") no-repeat scroll -449px -272px transparent;
   border: medium none;
@@ -250,7 +262,7 @@
 }
 
 .jot_icon span.jot_text{
-  color: #91d3d8;
+  color: #fff;
   float: left;
   font-family: "UniSansSemiBoldRegular",Arial,sans serif;
   font-size: 18px;
@@ -258,8 +270,8 @@
   position: relative;
   top: 6px;text-shadow:1px 0px 1px #16797F;
 }
-
-.jot_icon span.jot_text_active{
+.jot_icon span.jot_text_not_active { color: #91D4D8;}
+.jot_icon span.jot_text_active, .jot_icon span.jot_text:hover,.jot_icon span.jot_text_not_active:hover{
   color: #FFFFFF;
 }
 
@@ -1791,6 +1803,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b031', end
   margin: 10px 0;
   text-align: justify;
   width: 570px;
+}
+
+.post a {
+  color: #2BA4AB;
 }
 
 .more {

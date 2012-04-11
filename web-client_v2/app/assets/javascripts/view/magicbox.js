@@ -37,6 +37,7 @@ window.MagicboxView = Backbone.View.extend({
     this.elTabItem.addClass('hidden');
     this.magicboxLoginView.close();
     this.magicboxSearchView.close();
+	this.magicboxJotView.close();
   },
 
   openLogin: function(){

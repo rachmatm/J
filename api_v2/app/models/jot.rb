@@ -20,6 +20,7 @@ class Jot
 
   field :title, :type => String
   field :detail, :type => String, :default => ""
+  field :mentions, :type => Array, :default => []
   field :facebook_id, :type => String
   field :twitter_id, :type => String
 
@@ -144,6 +145,7 @@ class Jot
       user = User.where(:username => /#{username}/i).first
 
       if user.present?
+        self.push(:mentions, {:username => user.username, :user_id => user.id})
         self.user_mentioned.push user
       end
     end
