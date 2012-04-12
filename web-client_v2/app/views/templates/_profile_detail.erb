@@ -8,21 +8,60 @@
           </a>
         </div>
         <div class="info_public_profile">
-          <span class="pp_nickname"><#= username #></span>
-          <span class="pp_realname"><#= realname #></span>
+          <div class="show-hide-edit-panel">
+            <div class="show-hide-edit-panel-display">
+              <span class="pp_nickname"><#= username #></span>
+            </div>
+            <div class="show-hide-edit-panel-input hidden">
+              <%= form_tag profiles_path(:format => 'json'), :method => 'put', :id => 'profile-form-username' do  %>
+                <input type="text" name="profile[username]" value="<#= username #>">
+              <% end %>
+            </div>
+          </div>
+          <div class="show-hide-edit-panel">
+            <div class="show-hide-edit-panel-display">
+              <span class="pp_realname"><#= realname #></span>
+            </div>
+            <div class="show-hide-edit-panel-input hidden">
+              <br/>
+              <%= form_tag profiles_path(:format => 'json'), :method => 'put', :id => 'profile-form-realname' do  %>
+                <input type="text" name="profile[realname]" value="<#= realname #>">
+              <% end %>
+            </div>
+          </div>
         </div>
         <div class="pp_right_badge">
           <span class="no_margin_right big_badge">0</span>
         </div>
       </div>
       <div class="pp_header_middle">
-        <p><#= bio #></p>
-        <a href="<#= url #>"><#= url #></a>
+        <div class="show-hide-edit-panel">
+          <div class="show-hide-edit-panel-display">
+            <p><#= bio #></p>
+          </div>
+          <div class="show-hide-edit-panel-input hidden">
+            <br/>
+            <%= form_tag profiles_path(:format => 'json'), :method => 'put', :id => 'profile-form-bio' do  %>
+              <input type="text" name="profile[bio]" value="<#= bio #>">
+            <% end %>
+          </div>
+        </div>
+        <div class="show-hide-edit-panel">
+          <div class="show-hide-edit-panel-display">
+            <a href="<#= url #>"><#= url #></a>
+          </div>
+          <div class="show-hide-edit-panel-input hidden">
+            <br/>
+            <%= form_tag profiles_path(:format => 'json'), :method => 'put', :id => 'profile-form-url' do  %>
+              <input type="text" name="profile[url]" value="<#= url #>">
+            <% end %>
+          </div>
+        </div>
       </div>
       <div class="pp_send_message">
-        <a href="">
+        <a href="javascript:void(0)">
           <span class="pp_inbox_icon">&nbsp;</span>
-          Send Message
+          Edit your public profile
         </a>
       </div>
     </div>

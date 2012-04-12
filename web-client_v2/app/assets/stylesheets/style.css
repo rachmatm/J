@@ -6965,6 +6965,10 @@ box-shadow:         0 5px 2px rgba(50, 50, 50, 0.30);
   width: 600px;
 }
 
+.header_public_profile .show-hide-edit-panel-input input {
+  background-color: #E7F7F7;
+}
+
 .pp_header_top {
   overflow: hidden;
 }
