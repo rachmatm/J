@@ -40,6 +40,96 @@ window.MiddleProfileView = Backbone.View.extend({
     var _this = this;
 
     $(this.el).html(this.template(data.toJSON()));
+
+    $('.pp_send_message').toggle(function(){
+      $('.show-hide-edit-panel-input').removeClass('hidden');
+      _this.hideAllField();
+    }, function(){
+      $('.show-hide-edit-panel-input').addClass('hidden');
+      _this.showAllField();
+    });
+
+    $('#profile-form-username').validate({
+      rules: {
+        'profile[username]': {
+          required: true,
+          username: true
+        }
+      },
+      submitHandler: function(form){
+
+        $(form).ajaxSubmit({
+          error: function(jqXHR, textStatus, errorThrown){
+            _this.submitError.call(jqXHR, textStatus, errorThrown);
+          },
+          success: function(xhrData, textStatus, jqXHR){
+            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
+          }
+        });
+        return false;
+      }
+    });
+
+    $('#profile-form-realname').validate({
+      rules: {
+        'profile[realname]': {
+          required: true
+        }
+      },
+      submitHandler: function(form){
+
+        $(form).ajaxSubmit({
+          error: function(jqXHR, textStatus, errorThrown){
+            _this.submitError.call(jqXHR, textStatus, errorThrown);
+          },
+          success: function(xhrData, textStatus, jqXHR){
+            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
+          }
+        });
+        return false;
+      }
+    });
+
+    $('#profile-form-bio').validate({
+      rules: {
+        'profile[bio]': {
+          required: true
+        }
+      },
+      submitHandler: function(form){
+
+        $(form).ajaxSubmit({
+          error: function(jqXHR, textStatus, errorThrown){
+            _this.submitError.call(jqXHR, textStatus, errorThrown);
+          },
+          success: function(xhrData, textStatus, jqXHR){
+            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
+          }
+        });
+        return false;
+      }
+    });
+
+    $('#profile-form-url').validate({
+      rules: {
+        'profile[url]': {
+          required: true,
+          url: true
+        }
+      },
+      submitHandler: function(form){
+
+        $(form).ajaxSubmit({
+          error: function(jqXHR, textStatus, errorThrown){
+            _this.submitError.call(jqXHR, textStatus, errorThrown);
+          },
+          success: function(xhrData, textStatus, jqXHR){
+            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
+          }
+        });
+        return false;
+      }
+    });
   },
 
   events: {
@@ -53,95 +143,6 @@ window.MiddleProfileView = Backbone.View.extend({
     
     $.colorbox({html: template, });
 
-//    $('.pp_send_message').toggle(function(){
-//      $('.show-hide-edit-panel-input').removeClass('hidden');
-//      _this.hideAllField();
-//    }, function(){
-//      $('.show-hide-edit-panel-input').addClass('hidden');
-//      _this.showAllField();
-//    });
-//
-//    $('#profile-form-username').validate({
-//      rules: {
-//        'profile[username]': {
-//          required: true,
-//          username: true
-//        }
-//      },
-//      submitHandler: function(form){
-//
-//        $(form).ajaxSubmit({
-//          error: function(jqXHR, textStatus, errorThrown){
-//            _this.submitError.call(jqXHR, textStatus, errorThrown);
-//          },
-//          success: function(xhrData, textStatus, jqXHR){
-//            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
-//          }
-//        });
-//        return false;
-//      }
-//    });
-//
-//    $('#profile-form-realname').validate({
-//      rules: {
-//        'profile[realname]': {
-//          required: true
-//        }
-//      },
-//      submitHandler: function(form){
-//
-//        $(form).ajaxSubmit({
-//          error: function(jqXHR, textStatus, errorThrown){
-//            _this.submitError.call(jqXHR, textStatus, errorThrown);
-//          },
-//          success: function(xhrData, textStatus, jqXHR){
-//            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
-//          }
-//        });
-//        return false;
-//      }
-//    });
-//
-//    $('#profile-form-bio').validate({
-//      rules: {
-//        'profile[bio]': {
-//          required: true
-//        }
-//      },
-//      submitHandler: function(form){
-//
-//        $(form).ajaxSubmit({
-//          error: function(jqXHR, textStatus, errorThrown){
-//            _this.submitError.call(jqXHR, textStatus, errorThrown);
-//          },
-//          success: function(xhrData, textStatus, jqXHR){
-//            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
-//          }
-//        });
-//        return false;
-//      }
-//    });
-//
-//    $('#profile-form-url').validate({
-//      rules: {
-//        'profile[url]': {
-//          required: true,
-//          url: true
-//        }
-//      },
-//      submitHandler: function(form){
-//
-//        $(form).ajaxSubmit({
-//          error: function(jqXHR, textStatus, errorThrown){
-//            _this.submitError.call(jqXHR, textStatus, errorThrown);
-//          },
-//          success: function(xhrData, textStatus, jqXHR){
-//            _this.submitSuccess.call(_this, xhrData, textStatus, jqXHR, data);
-//          }
-//        });
-//        return false;
-//      }
-//    });
 
   },
 
