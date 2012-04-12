@@ -387,3 +387,13 @@ body .header_fav {
 background: url("/assets/sprite.png") no-repeat scroll -318px -267px transparent;
 margin-right: 10px;
 padding-right:0;}
+
+.prompt-form-avatar .want_delete_white{
+width:450px;}
+
+.prompt-form-avatar .file-upload-row{
+min-height:36px;
+margin-bottom:10px;}
+
+#profile-form-avatar .uploadifyQueueItem .fileName{
+color:#000;}

@@ -5,21 +5,12 @@ window.MiddleProfileView = Backbone.View.extend({
   templateUploadBox: _.template($('#prompt-form-avatar-template').html()),
 
   initialize: function(){
-    this.profiles = new ProfileCollection;
-    this.profiles.bind('reset', this.setData, this);
-    this.profiles.bind('change', this.setTemplate, this);
+    this.currentUserModel = new CurrentUserModel;
   },
 
   render: function(){
-    this.profiles.fetch();
-  },
-
-  setData: function(){
-    var _this = this;
-    
-    this.profiles.each(function(data){
-      _this.setTemplate(data);
-    });
+    this.setTemplate(this.currentUserModel.data());
+    this.setAvatarUpload();
   },
 
   showAllField: function(){
@@ -36,10 +27,44 @@ window.MiddleProfileView = Backbone.View.extend({
     $('.pp_header_middle a').addClass('hidden');
   },
 
+  setAvatarUpload: function(){
+    var templateUploadBox = this.templateUploadBox( data );
+
+    $('.link-to-edit-avatar').colorbox({
+      html: templateUploadBox,
+      onComplete: function(){
+
+        $('#profile-avatar-field').
+        not('.uploadifylizer').
+        addClass('uploadifylizer').
+        setUploadify({
+          auto: true,
+          onSelectOnce: function(event,data){
+            $.colorbox.resize();
+          },
+          onComplete: function(event, queueID, fileObj, response, data){
+            var obj_response = JSON.parse(response);
+
+            if(obj_response.failed === true){
+              alert(obj_response.error)
+            }
+            else{
+              _this.currentUserModel.setData(obj_response.content);
+              _this.render();
+              $.colorbox.close();
+            }
+          }
+        }, {
+          token: _this.currentUserModel.token()
+        });
+      }
+    });
+  },
+
   setTemplate: function(data){
     var _this = this;
 
-    $(this.el).html(this.template(data.toJSON()));
+    $(this.el).html(this.template( data ));
 
     $('.pp_send_message').toggle(function(){
       $('.show-hide-edit-panel-input').removeClass('hidden');
@@ -130,23 +155,6 @@ window.MiddleProfileView = Backbone.View.extend({
         return false;
       }
     });
-  },
-
-  events: {
-    'click .link-to-edit-avatar': 'editAvatar'
-  },
-
-  editAvatar: function(){
-    var template = $(this.templateUploadBox());
-
-    template.find('input[type=file]').setUploadify();
-
-    $.colorbox({
-      html: template,
-      onOpen: function(){
-      }
-    });
-
   },
 
   submitError: function(jqXHR, textStatus, errorThrown){

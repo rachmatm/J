@@ -1,12 +1,14 @@
 <script type="text/template" id="prompt-form-avatar-template">
-  <div class="want_delete_popup">
-    <%= form_tag profiles_path, :method => 'put', :id => 'profile-form-avatar' do %>
+  <div class="want_delete_popup prompt-form-avatar">
+    <%= form_tag profiles_path(:format => 'json'), :method => 'put', :id => 'profile-form-avatar' do %>
       <div class="want_delete_white">
-        <p><%= file_field_tag "profile[avatar]", :id => 'profile-avatar-field-xx' %></p>
-        <span class="ok_no_button">
-          <%= submit_tag 'Save', :class => 'but_ok_up' %>
-          <%= button_tag 'Cancel', :class => 'no_button colorbox-close' %>
-        </span>
+        <div class="file-upload-row"><%= file_field_tag "avatar", :id => 'profile-avatar-field' %></div>
+
+        <div class="clearfix">
+          <span class="ok_no_button">
+            <a class="no_button colorbox-close" href="javascript:void(0)">Cancel</a>
+          </span>
+        </div>
       </div>
     <% end %>
   </div>

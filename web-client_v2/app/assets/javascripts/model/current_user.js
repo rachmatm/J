@@ -1,9 +1,5 @@
 window.CurrentUserModel = Backbone.Model.extend({
 
-  initialize: function(){
-    
-  },
-
   setAuth: function(){
     var _this = this;
 

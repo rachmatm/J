@@ -10,15 +10,20 @@ $.fn.setUploadify = function(options, uploadify_script_data){
 
     // Fetch the file control and the form
     var form = file.parents('form');
-
+    
     if(form){
       jQuery.each(form.serializeArray(), function(i, field) {
         if (field.name == 'authenticity_token') {
           // need to preserve those plus signs
           uploadify_script_data[field.name] = encodeURI(field.value).replace(/\+/g, '%2B');
         }
+        else{
+          uploadify_script_data[field.name] = field.value;
+        }
       });
     }
+
+    
     
     // Fetch the session info from the meta tags, if it exists
     var session_token = jQuery('meta[name=session-token]').attr('content');
@@ -31,7 +36,7 @@ $.fn.setUploadify = function(options, uploadify_script_data){
     uploadify_script_data['swfUpload'] = true;
 
     var lastResponse = null;
-
+ 
     var defaultConfig = {
       multi: false,
       queueSizeLimit: 10,
