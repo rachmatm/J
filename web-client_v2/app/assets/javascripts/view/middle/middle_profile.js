@@ -141,8 +141,12 @@ window.MiddleProfileView = Backbone.View.extend({
 
     
     
-    $.colorbox({html: template, });
-
+    $.colorbox({
+      html: template,
+      onOpen: function(){
+        
+      }
+    });
 
   },
 
@@ -162,7 +166,7 @@ window.MiddleProfileView = Backbone.View.extend({
       else{
         model.set($.extend(xhrData.content, {
           i: Date.now()
-          }));
+        }));
       }
     }
   }
