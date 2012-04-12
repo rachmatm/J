@@ -49,12 +49,11 @@ window.MiddleProfileView = Backbone.View.extend({
   editAvatar: function(){
     var template = $(this.templateUploadBox());
 
-    
-    
+    template.find('input[type=file]').setUploadify();
+
     $.colorbox({
       html: template,
       onOpen: function(){
-        
       }
     });
 
