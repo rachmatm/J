@@ -1,6 +1,8 @@
 window.MiddleProfileView = Backbone.View.extend({
 
   template: _.template($('#profile-detail-template').html()),
+  
+  templateUploadBox: _.template($('#prompt-form-template').html()),
 
   initialize: function(){
     this.profiles = new ProfileCollection;
@@ -21,5 +23,16 @@ window.MiddleProfileView = Backbone.View.extend({
 
   setTemplate: function(data){
     $(this.el).html(this.template(data.toJSON()));
+  },
+
+  events: {
+    'click .link-to-edit-avatar': 'editAvatar'
+  },
+
+  editAvatar: function(){
+    var template = $(this.templateUploadBox());
+
+
+    $.colorbox({html: template});
   }
 });
