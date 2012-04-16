@@ -11,22 +11,24 @@
       <span class="img_2 main-magicbox-navigation-link-icon-2"></span>
     </a>
 
-    <# if(_.isEmpty(current_user)){ #>
-
-    <a id="magicbox-navigation-login" href="#!/login" class="sign_up">
-      Sign up or Login
-    </a>
-
-    <# }else{ #>
-
+    <# if(CURRENT_USER.auth){ #>
     <div id="magicbox-navigation-logged-in" class="right">
       <a class="new_update_notactive r-notification-tab" href="#!/notification" id="magicbox-navigation-logged-in-notification">
         <span class="update_icon"></span>
         <span class="update_text">24 New Updates</span>
       </a>
-      <a id="magicbox-navigation-logged-in-user-panel" class="sign_up" href="#!/profile"></a>
+      <a class="sign_up" href="#!/profile">
+        <# if(data.avatar){ #>
+        <img class="template-avatar-small" alt="default" src="<#= data.avatar.thumb_small.url #>">
+        <# } #>
+        <span class="nickname_logged template-username"><#= data.username #></span>
+        <span class="user_little_badge template-badge">0</span>
+      </a>
     </div>
-
+    <# }else{ #>
+    <a id="magicbox-navigation-login" href="#!/login" class="sign_up">
+      Sign up or Login
+    </a>
     <# } #>
   </div>
 
@@ -114,7 +116,7 @@
                     <input type="text" name="clip" id="jot-clip-field">
                   </div>
                   <div class="image_upload_path_style"  id="list-uploaded-clip-holder">
-                    
+
                   </div>
                 </div>
               </div>
@@ -217,7 +219,7 @@
             <div class="box_signin">
               <h2>Login to start experience jotky</h2>
 
-              <form method="post" id="login-form" action="/authentications" accept-charset="UTF-8" novalidate="novalidate"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="INuKFJyrknpPaoxOpo5a5pR63VyYdyHSFjnHMLAIrXI=" name="authenticity_token"></div>
+              <%= form_tag authentications_path, :id => 'login-form' do %>
                 <div class="form_login">
 
                   <div class="username clearfix">
@@ -244,7 +246,8 @@
                   </div>
                   <div class="clear"></div>
                 </div>
-              </form>          </div>
+              <% end %>
+            </div>
             <div class="box_signinBottom">
               <div class="login_with">
                 <p>or login with?</p>

@@ -33,7 +33,8 @@ window.CommentCollection = Backbone.Collection.extend({
         comment:{
           timestamp: parameters.timestamp,
           per_page: limit
-        }
+        },
+        token: CURRENT_USER.token
       }
     });
   },

@@ -1,6 +1,6 @@
 <script type="text/template" id="header-template">
   <div class="left_header grid_6">
-    <a class="main_logo" href="landing_page.html">Jotky</a>
+    <a class="main_logo" href="/">Jotky</a>
   </div>
   <div class="middle_header grid_7">
     <a class="home" href="">
@@ -12,48 +12,33 @@
       Hot Stream
     </a>
 
-  <# if(_.isEmpty(current_user)){ #>
-
-    <a class="help" href="">
-      <span>&nbsp;</span>
-      Help
-    </a>
-
-  <# }else{ #>
-
+    <# if(auth){ #>
     <a class="inbox" href="#!/inbox">
       <span>&nbsp;</span>
       Inbox
     </a>
-
-  <# } #>
-
+    <# }else{ #>
+    <a class="help" href="">
+      <span>&nbsp;</span>
+      Help
+    </a>
+    <# } #>
     <div class="clear"></div>
   </div>
 
-  <# if(_.isEmpty(current_user)){ #>
-
-  <div id="top-navigation-login-holder" class="right_header grid_3">
-    <a class="sign_in" href="#!/login">
-      <span>&nbsp;</span>
-      Sign In
-    </a>
-  </div>
-
-  <# }else{ #>
-
+  <# if(auth){ #>
   <div id="top-navigation-logout-holder" class="right_header grid_3">
     <a class="sign_in" href="#!/signout">
       <span>&nbsp;</span>
       Sign Out
     </a>
   </div>
-
+  <# }else{ #>
+  <div id="top-navigation-login-holder" class="right_header grid_3">
+    <a class="sign_in" href="#!/login">
+      <span>&nbsp;</span>
+      Sign In
+    </a>
+  </div>
   <# } #>
-
-
-
-
-
-  
 </script>

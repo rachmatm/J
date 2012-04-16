@@ -22,17 +22,24 @@ window.ListJotView = Backbone.View.extend({
   data: {},
 
   render: function(){
+    this.renderJot();
+    this.initComment();
+  },
+
+  renderJot: function(){
     this.data = $.extend( this.model.toJSON(), {
       current_user: this.currentUserModel.data()
     });
 
+    $(this.el).html(this.template( this.data ));
+    $("abbr.timeago").timeago();
+  },
+
+  initComment: function(){
     this.comments = new CommentCollection(this.data._id);
     this.comments.bind('add', this.addComment, this);
     this.comments.bind('all', this.renderComment, this);
     this.comments.bind('reset', this.resetComment, this);
-
-    $(this.el).html(this.template( this.data ));
-    $("abbr.timeago").timeago();
 
     this.commentValidates();
     this.comments.more({
@@ -93,7 +100,7 @@ window.ListJotView = Backbone.View.extend({
     else{
       this.sidebarView.sidebarFavorites.fetch();
       this.model.set(data.content);
-      this.render();
+      this.renderJot();
     }
   },
 
@@ -127,7 +134,7 @@ window.ListJotView = Backbone.View.extend({
     else{
       var template = $(_this.templatePromptConfirmation({
         message: 'This will hide this jot forever, are you sure?'
-        }));
+      }));
 
       template.find('.link-to-confirm-ok').bind('click', function(){
         $.ajax({

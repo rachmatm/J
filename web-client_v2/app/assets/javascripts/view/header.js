@@ -2,13 +2,8 @@ window.HeaderView = Backbone.View.extend({
 
   template: _.template($('#header-template').html()),
 
-  default_vars: {
-    current_user: ''
-  },
-
-  render: function(vars){
-    $(this.el).html(this.template( $.extend(this.default_vars, vars) ));
-
+  render: function(){
+    $(this.el).html(this.template(CURRENT_USER));
     return this;
   }
 });

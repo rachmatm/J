@@ -1,32 +1,18 @@
 window.MagicboxView = Backbone.View.extend({
 
   template: _.template($('#magicbox-template').html()),
-  
-  userBarTemplate: _.template($('#user-bar-template').html()),
 
-  default_vars: {
-    current_user: ''
-  },
-
-  render: function(vars){
-    var _vars = $.extend({}, this.default_vars, vars);
-
-    $(this.el).html(this.template( _vars ));
-
-    $('#magicbox-navigation-logged-in-user-panel').html(this.userBarTemplate( _vars ));
+  render: function(){
+    $(this.el).html(this.template( CURRENT_USER ));
 
     this.elTabItem = $('.magicbox-content-tab-item');
 
-    this.magicboxLoginView = new MagicboxLoginView({
-      elNav: $('#magicbox-navigation-login'),
-      el: $('#magicbox-login')
-    });
+    this.magicboxLoginView = new MagicboxLoginView;
 
     this.magicboxSearchView = new MagicboxSearchView;
 
-    this.magicboxJotView = new MagicboxJotView({
-      el: $('#magicbox-jot')
-    });
+    this.magicboxJotView = new MagicboxJotView;
+    this.magicboxJotView.setElement('#magicbox-jot');
 
     this.magicboxProfileView = new MagicboxProfileView;
 

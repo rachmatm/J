@@ -5,6 +5,3 @@
 //= require_tree ./lib
 //= require_tree ./config
 //= require_tree ./model
-//= require_tree ./collection
-//= require_tree ./view
-//= require_tree ./routes

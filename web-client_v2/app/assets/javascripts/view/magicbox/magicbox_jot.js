@@ -1,20 +1,13 @@
 window.MagicboxJotView = Backbone.View.extend({
 
-  default_options: {
-  
-    el: ''
-  },
-
   jot_title_maxlength: 140,
 
   jot_more_maxlength: 512,
 
-  initialize: function(options){
+  initialize: function(){
+    this.elNav = $('#magicbox-navigation-jot');
     this.current_length_holder = $('#jot-input-text-length');
-
     this.current_more_length_holder = $('#jot-input-more-text-length');
- 	this.elNav = $('#magicbox-navigation-jot');
-    this.options = $.extend({}, this.default_options, options);
 
     this.jots = new JotCollection;
     this.jots.bind('add', this.addItem, this);
@@ -56,31 +49,26 @@ window.MagicboxJotView = Backbone.View.extend({
 
       submitHandler: function(form){
         $(form).ajaxSubmit({
+          beforeSend: function(jqXHR, settings){
+            $(form).trigger('xhr:submit:before:two', [form]);
+          },
           error: function(jqXHR, textStatus, errorThrown){
-            alert(textStatus);
+            $(form).trigger('xhr:submit:error', [form, textStatus]);
           },
           success: function(data, textStatus, jqXHR){
-            if(data.failed === true){
-              alert(data.error);
-            }
-            else{
-              _this.jots.add(data.content);
-            }
+            $(form).trigger('xhr:submit:success:two', [form, $('#alert-message-holder'), data]);
 
-            $(form).find('input').removeAttr('disabled');
-            $(form).resetForm();
+            if(!data.failed === true){
+              $(form).resetForm();
 
-            _this.jotBarWriteMore({}, 'hide');
-            //_this.jotBarClip({}, 'hide');
-            //_this.jotBarLocation({}, 'hide');
-            _this.jotBarTag({}, 'hide');
-            _this.setButtonAnimation({}, 'hide');
-            _this.needResetAfterSubmit();
-          },
-          beforeSend: function(jqXHR, settings){
-            $(form).find('input').attr({
-              disabled: 'disabled'
-            });
+              _this.jotBarWriteMore({}, 'hide');
+              //_this.jotBarClip({}, 'hide');
+              //_this.jotBarLocation({}, 'hide');
+              _this.jotBarTag({}, 'hide');
+              _this.setButtonAnimation({}, 'hide');
+              _this.needResetAfterSubmit();
+               _this.jots.add(data.content); 
+            }
           }
         });
 
@@ -91,22 +79,25 @@ window.MagicboxJotView = Backbone.View.extend({
     $('#jot-form-title-field').bind('keyup', function(){
       $(_this.current_length_holder).text(_this.jot_title_maxlength - this.value.length);
     });
+
+
+    $('#formated-field-jot-input').formatted_field();
   },
 
   open: function(){
-	   $(this.elNav).find('.img_1').removeClass('img_1_not_active');
+    $(this.elNav).find('.img_1').removeClass('img_1_not_active');
     $(this.elNav).find('.jot_text').removeClass('jot_text_not_active');
 	
 	
-    $(this.options.el).removeClass('hidden');
+    $(this.el).removeClass('hidden');
     this.middleView.openJot();
 
     this.jots.more({
       timestamp: 'now'
     });
   },
- close: function(){
-	$(this.elNav).find('.img_1').addClass('img_1_not_active');
+  close: function(){
+    $(this.elNav).find('.img_1').addClass('img_1_not_active');
     $(this.elNav).find('.jot_text').addClass('jot_text_not_active');
   },
   
@@ -189,7 +180,6 @@ window.MagicboxJotView = Backbone.View.extend({
 
   jotBarWriteMore: function(e, force){
     var _this = this;
-    
     if(force == 'show'){
       $('#jot-write-more-panel').removeClass('hidden');
       $('#jot-write-more-field').rules("add", {

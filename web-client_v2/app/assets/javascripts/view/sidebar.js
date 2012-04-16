@@ -9,14 +9,10 @@ window.SidebarView = Backbone.View.extend({
     this.sidebarFavorites.bind('reset', this.resetFavoriteItem, this);
   },
 
-  default_vars: {
-    current_user: ''
-  },
-
   render: function(vars){
     this.sidebarFavorites.fetch();
 
-    $(this.el).html(this.template( $.extend(this.default_vars, vars) ));
+    $(this.el).html(this.template(CURRENT_USER));
 
     return this;
   },

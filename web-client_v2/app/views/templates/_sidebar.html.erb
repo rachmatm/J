@@ -56,21 +56,7 @@
     <div class="clear"></div>
   </div>
 
-  <# if(_.isEmpty(current_user)){ #>
-
-  <div class="favorites">
-    <div class="portlet_favorites">
-      <span class="star"></span>
-      <span class="fav_text">Favorites</span>
-    </div>
-    <div class="portlet_favValue">
-      <span class="text">you haven't faved any jots yet</span>
-    </div>
-    <div class="portlet_favBottom"></div>
-    <div class="clear"></div>
-  </div>
-
-  <# }else{ #>
+  <# if(auth){ #>
 
   <div class="favorites_logged">
     <div class="portlet_favorites_logged_first">

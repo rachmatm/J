@@ -28,6 +28,7 @@ window.MiddleProfileView = Backbone.View.extend({
   },
 
   setAvatarUpload: function(){
+    var _this = this;
     var templateUploadBox = this.templateUploadBox( data );
 
     $('.link-to-edit-avatar').colorbox({

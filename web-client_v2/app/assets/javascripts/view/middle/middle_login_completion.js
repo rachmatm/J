@@ -1,4 +1,5 @@
 window.MiddleLoginCompletionView = Backbone.View.extend({
+
   template: _.template($('#login-completion-template').html()),
 
   initialize: function(){
@@ -7,10 +8,10 @@ window.MiddleLoginCompletionView = Backbone.View.extend({
     this.holderAlertView = new HolderView;
   },
 
-  render: function(data){
+  render: function(){
     var _this = this;
 
-    $(this.el).html(this.template(data));
+    $(this.el).html(this.template( CURRENT_USER ));
 
     this.recaptchaView.setElement('#signup-recaptcha-holder');
     this.recaptchaView.render();
@@ -73,22 +74,11 @@ window.MiddleLoginCompletionView = Backbone.View.extend({
       submitHandler: function(form){
         $(form).ajaxSubmit({
           error: function(jqXHR, textStatus, errorThrown){
-            alert(textStatus);
+            $(form).trigger('xhr:submit:error', [form, textStatus]);
           },
           success: function(data, textStatus, jqXHR){
             if(data.failed === true){
-              _this.alertView.remove();
-
-              _this.holderAlertView.setElement(_this.elAlert);
-              _this.holderAlertView.render({
-                className: 'holder-view-alert'
-              });
-
-              _this.alertView.setElement(_this.holderAlertView.holder_el);
-              _this.alertView.render({
-                error: data.error,
-                errors: data.errors
-              });
+              $(form).trigger('xhr:submit:success:false', [form, $('#alert-message-holder'), data]);
 
               if(window.Recaptcha == 'undefined'){
                 alert('Recaptcha is undefined');
@@ -99,11 +89,12 @@ window.MiddleLoginCompletionView = Backbone.View.extend({
 
             }
             else{
-              _this.alertView.remove();
-              Recaptcha.reload();
-
-              $(window).trigger('jotky_login', data.content.token);
+              $(form).trigger('xhr:submit:success:true', [form]);
+              $(window).trigger('auth:login', [data.content, data.token]);
             }
+          },
+          beforeSend: function(jqXHR, settings){
+            $(form).trigger('xhr:submit:before', [form]);
           }
         });
 

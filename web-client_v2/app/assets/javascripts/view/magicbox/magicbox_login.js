@@ -1,18 +1,9 @@
 window.MagicboxLoginView = Backbone.View.extend({
 
-  default_options: {
-    elNav: '',
-    el: ''
-  },
-
   initialize: function(options){
-    this.options = $.extend({}, this.default_options, options);
-    this.alertView = new AlertView;
-    this.holderAlertView = new HolderView;
-
+    this.elNav = $('#magicbox-navigation-login');
+    this.el = $('#magicbox-login');
     this.validates();
-
-    this.elAlert = $('#alert-message-holder');
   },
 
   validates: function(){
@@ -31,31 +22,19 @@ window.MagicboxLoginView = Backbone.View.extend({
       errorPlacement: function(){},
 
       submitHandler: function(form){
-
+        
         $(form).ajaxSubmit({
+          beforeSend: function(jqXHR, settings){
+            $(form).trigger('xhr:submit:before', [form]);
+          },
           error: function(jqXHR, textStatus, errorThrown){
-            alert(textStatus);
+            $(form).trigger('xhr:submit:error', [form, textStatus]);
           },
           success: function(data, textStatus, jqXHR){
-            if(data.failed === true){
-              _this.alertView.remove();
-
-              _this.holderAlertView.setElement(_this.elAlert);
-              _this.holderAlertView.render({
-                className: 'holder-view-alert'
-              });
-
-              _this.alertView.setElement(_this.holderAlertView.holder_el);
-              _this.alertView.render({
-                error: data.error,
-                errors: data.errors
-              });
-
-            }
-            else{
-              _this.alertView.remove();
-
-              $(window).trigger('jotky_login', data.content.token);
+            $(form).trigger('xhr:submit:success', [form, $('#alert-message-holder'), data]);
+            
+            if(!data.failed === true){
+              $(window).trigger('auth:login', [data.content, data.token]);
             }
           }
         });
@@ -64,11 +43,11 @@ window.MagicboxLoginView = Backbone.View.extend({
   },
 
   open: function(){
-    $(this.options.elNav).addClass('login');
-    $(this.options.el).removeClass('hidden');
+    $(this.elNav).addClass('login');
+    $(this.el).removeClass('hidden');
   },
 
   close: function(){
-    $(this.options.elNav).removeClass('login');
+    $(this.elNav).removeClass('login');
   }
 })

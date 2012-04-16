@@ -4,7 +4,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  PRIVATE_FIELDS = [:password_salt, :password_hash, :token]
+  PRIVATE_FIELDS = [:password_salt, :password_hash]
 
   PROTECTED_FIELDS = []
 
@@ -12,11 +12,11 @@ class User
     :setting_privacy_jot, :setting_privacy_location, :setting_privacy_kudos, :setting_auto_shorten_url,
     :setting_auto_complete, :connection_facebook_user_id, :connection_facebook_user_name]
 
-  NON_PUBLIC_FIELDS = PRIVATE_FIELDS + PROTECTED_FIELDS 
+  NON_PUBLIC_FIELDS = PRIVATE_FIELDS
 
   UPDATEABLE_FIELDS = PROTECTED_FIELDS + PUBLIC_FIELD
 
-  RELATION_PUBLIC = []
+  RELATION_PUBLIC = [:connections]
 
   RELATION_PUBLIC_DETAIL = []
 
@@ -73,17 +73,18 @@ class User
   validates_inclusion_of :setting_auto_complete, :in => ["always", "ask", "never"], :allow_nil => true
 
   before_save :set_secure_password
-  
 
   def self.get(parameters = {})
     parameters = parameters.to_hash rescue {}
     
     if parameters[:id].present?
       data = self.find parameters[:id]
+    else
+      data = self.all
     end
 
     JsonizeHelper.format({:content => data}, {
-        :except => NON_PUBLIC_FIELDS,
+        :except => NON_PUBLIC_FIELDS + Connection::NON_PUBLIC_FIELDS,
         :include => RELATION_PUBLIC
       })
   rescue
@@ -314,59 +315,33 @@ class User
   def current_user_set_connections(parameters)
     parameters.keep_if {|key, value| Connection::UPDATEABLE_FIELDS.include? key }
 
-    if parameters[:provider] == 'twitter'
-      begin
-        client = Twitter::Client.new :oauth_token => parameters[:provider_user_token], :oauth_token_secret => parameters[:provider_user_secret]
-        data = client.verify_credentials
+    conn = nil;
 
-        parameters.merge!({
-            :provider_user_id => data['id'],
-            :provider_user_name => data['screen_name'] || data['id'],
-            :provider_user_token => parameters[:provider_user_token],
-            :provider_user_secret => parameters[:provider_user_secret]
-          })
-      rescue
-        return JsonizeHelper.format(:error => "aw hell no, can\'t connect to twitter", :failed => true)
+    if parameters[:provider] == 'twitter'
+
+      Connection.auth_twitter parameters[:provider_user_token], parameters[:provider_user_secret] do |success, data|
+        
+        if success === true
+          conn = self.set_conn_by_twitter(data['id'], parameters[:provider_user_token], parameters[:provider_user_secret], data['screen_name'])
+        else
+          return JsonizeHelper.format(:error => "aw hell no, can\'t connect to twitter", :failed => true)
+        end
       end
     elsif parameters[:provider] == 'facebook'
 
-      send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{parameters[:provider_user_token]}"
+      Connection.auth_facebook parameters[:provider_user_token] do |success, data|
 
-      # Run the request via Hydra.
-      hydra = Typhoeus::Hydra.new
-      hydra.queue(send_request)
-      hydra.run
-
-      response = send_request.response
-
-      if response.success?
-        data = ActiveSupport::JSON.decode(response.body)
-
-        parameters.merge!({
-            :provider_user_id => data['id'],
-            :provider_user_name => data['username'] || data['id'],
-            :provider_user_token => parameters[:provider_user_token]
-          })
-      else
-        return JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
+        if success === true
+          conn = self.set_conn_by_facebook(data['id'], parameters[:provider_user_token], data['username'])
+        else
+          return JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
+        end
       end
-
     end
 
-    conn = self.connections.where({:provider => parameters[:provider], :provider_user_id => parameters[:provider_user_id]}).first
-
-    if conn.present?
-      conn.update_attributes parameters
-    else
-      conn = self.connections.new parameters
-      conn.save
-    end
-
-    #data.reload
-
-    if conn.errors.any?
+    if conn.present? and conn.errors.any?
       return JsonizeHelper.format :failed => true, :error => "Connections was not made", :errors => conn.errors.to_a
-    else
+    elsif not conn.nil? or not conn.errors.any?
       return JsonizeHelper.format({:notice => 'Data Connected', :content => conn}, {:except => Connection::NON_PUBLIC_FIELDS, :include => Connection::RELATION_PUBLIC})
     end
   end
@@ -558,6 +533,29 @@ class User
       })
   rescue
     JsonizeHelper.format :failed => true, :error => "Jot not found, please try again"
+  end
+
+  def set_conn_by_facebook(fb_userid, fb_user_token, fb_username = nil)
+    data = self.connections.new :provider => Connection::FACEBOOK_FLAG, :provider_user_id => fb_userid,  :provider_user_name => fb_username || fb_userid,
+      :provider_user_token => fb_user_token
+    data.save
+  end
+
+  def set_conn_by_twitter(tw_userid, tw_user_token, tw_user_secret, tw_username = nil)
+    data = self.connections.new :provider => Connection::TWITTER_FLAG, :provider_user_id => tw_userid, :provider_user_name => tw_username || tw_userid,
+      :provider_user_token => tw_user_token,
+      :provider_user_secret => tw_user_secret
+    data.save
+  end
+
+  def self.find_by_twitter_conn(tw_user_id)
+    conn = Connection.where(:provider => Connection::TWITTER_FLAG, :provider_user_id => tw_user_id).first
+    conn.user if conn.present?
+  end
+
+  def self.find_by_facebook_conn(fb_user_id)
+    conn = Connection.where(:provider => Connection::FACEBOOK_FLAG, :provider_user_id => fb_user_id).first
+    conn.user if conn.present?
   end
 
   protected

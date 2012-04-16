@@ -16,6 +16,10 @@ class Connection
 
   RELATION_PUBLIC_DETAIL = []
 
+  FACEBOOK_FLAG = 'facebook'
+
+  TWITTER_FLAG = 'twitter'
+
   field :provider, :type => String
   field :provider_user_id, :type => String
   field :provider_user_name, :type => String
@@ -32,4 +36,28 @@ class Connection
   scope :order_by_default, order_by([[:update_at, :desc]])
   scope :find_by_provider, ->(provider){where(:provider => provider)}
   scope :find_allowed, where(:permission => 'allow')
+
+  def self.auth_facebook(secret_token, &block)
+    send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{secret_token}"
+
+    # Run the request via Hydra.
+    hydra = Typhoeus::Hydra.new
+    hydra.queue(send_request)
+    hydra.run
+
+    response = send_request.response
+
+    yield response.success?, ActiveSupport::JSON.decode(response.body)
+  rescue
+    yield false, {}
+  end
+
+  def self.auth_twitter(token, secret)
+    client = Twitter::Client.new :oauth_token => token, :oauth_token_secret => secret
+    data = client.verify_credentials
+
+    yield true, data
+  rescue
+    yield false, {}
+  end
 end

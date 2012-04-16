@@ -59,13 +59,11 @@ window.MiddleView = Backbone.View.extend({
     this.middleJotView.render();
   },
 
-  openLoginCompletion: function(data){
+  openLoginCompletion: function(){
     this.closeAll();
     this.middleLoginCompletionView.remove();
     this.middleLoginCompletionView.setElement(this.createHolder('main-middle-login-completion'));
-    this.middleLoginCompletionView.render({
-      current_user: data.current_user
-    });
+    this.middleLoginCompletionView.render();
   },
 
   openJotDetail: function(data){
@@ -128,7 +126,7 @@ window.MiddleView = Backbone.View.extend({
     this.closeAll();
     this.middleAboutView.remove();
     this.middleAboutView.setElement(this.createHolder('main-middle-about'));
-    this.middleAboutView.render(data);
+    this.middleAboutView.render();
   },
 
   openFavorites: function(){

@@ -34,10 +34,13 @@ class Authentication
     data = self.where(:username => username).first
 
     if data.present? and
-      EncryptStringHelper.encrypt_string(password, data.password_salt)[:hash] == data.password_hash
+        EncryptStringHelper.encrypt_string(password, data.password_salt)[:hash] == data.password_hash
 
       data.update_attribute :token, ActiveSupport::SecureRandom.hex(9)
-      JsonizeHelper.format({:content => {:token => data.token}});
+      
+      data_user = User.find data.id
+
+      JsonizeHelper.format({:content => data_user, :token => data.token}, {:except => User::NON_PUBLIC_FIELDS, :include => User::RELATION_PUBLIC})
     else
       JsonizeHelper.format(:error => "Invalid Username or Password", :failed => true)
     end
@@ -77,52 +80,50 @@ class Authentication
   end
 
   def self.set_by_facebook(secret_token)
+    Connection.auth_facebook secret_token do |success, data|
 
-    send_request = Typhoeus::Request.new "https://graph.facebook.com/me?access_token=#{secret_token}"
-   
-    # Run the request via Hydra.
-    hydra = Typhoeus::Hydra.new
-    hydra.queue(send_request)
-    hydra.run
+      if success === true
+        
+        user = User.find_by_facebook_conn(data['id'])
 
-    response = send_request.response
+        unless user.present?
+          auth = self.create
+          user = User.find auth.id
+          user.set_conn_by_facebook(data['id'], secret_token, data['username'])
+        end
 
-    if response.success?
-      data = ActiveSupport::JSON.decode(response.body)
-   
-      user = self.where(:facebook_id => data['id']).first
+        user.update_attribute :token, ActiveSupport::SecureRandom.hex(9)
 
-      unless user.present?
-        user = self.new(:facebook_id => data['id']) unless user.present?
-        user.save
+        return JsonizeHelper.format({:content => user, :token => user.token},
+          {:except => User::NON_PUBLIC_FIELDS, :include => User::RELATION_PUBLIC})
+      else
+        return JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
       end
-
-      user.update_attribute :token, ActiveSupport::SecureRandom.hex(9)
-      JsonizeHelper.format({:content => user},{:except => NON_PUBLIC_FIELDS, :include => RELATION_PUBLIC})
-    else
-      JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
     end
-  rescue
-    JsonizeHelper.format(:error => "aw hell no, can\'t connect to facebook", :failed => true)
   end
 
 
   def self.set_by_twitter(token, secret)
-    client = Twitter::Client.new :oauth_token => token, :oauth_token_secret => secret
+    Connection.auth_twitter token, secret do |success, data|
 
-    data = client.verify_credentials
-    
-    user = self.where(:twitter_id => data['id']).first
+      if success === true
+        user = User.find_by_twitter_conn(data['id'])
+  
+        unless user.present?
+          auth = self.create
+          user = User.find auth.id
+          user.set_conn_by_twitter(data['id'], token, secret, data['screen_name'])
+        end
 
-    unless user.present?
-      user = self.new(:twitter_id => data['id'])
-      user.save
+        user.update_attribute :token, ActiveSupport::SecureRandom.hex(9)
+
+        return JsonizeHelper.format({:content => user, :token => user.token},
+          {:except => User::NON_PUBLIC_FIELDS, :include => User::RELATION_PUBLIC})
+      else
+        return JsonizeHelper.format(:error => "aw hell no, can\'t connect to twitter", :failed => true)
+      end
+
     end
-
-    user.update_attribute :token, ActiveSupport::SecureRandom.hex(9)
-    JsonizeHelper.format({:content => user},{:except => NON_PUBLIC_FIELDS, :include => RELATION_PUBLIC})
-  rescue
-    JsonizeHelper.format(:error => "aw hell no, can\'t connect to twitter", :failed => true)
   end
 
   protected

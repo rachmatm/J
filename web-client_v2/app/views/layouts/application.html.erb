@@ -19,8 +19,8 @@
   <![endif]-->
   </head>
   <body>
+    <div id="main-loader"></div>
     <div class="wraper container_16 clearfix">
-
       <div class="header clearfix" id="header-holder"></div>
 
       <div class="container">
@@ -44,7 +44,6 @@
     </div>
 
     <div class="footer clearfix" id="footer-holder"></div>
-    <div id="process-stat" class="hidden">Loading ...</div>
 
     <%= render 'templates/alert' %>
     <%= render 'templates/header'  %>
@@ -63,7 +62,6 @@
     <%= render 'templates/change_password' %>
     <%= render 'templates/about'  %>
     <%= render 'templates/list_comment' %>
-    <%= render 'templates/user_bar' %>
     <%= render 'templates/magicbox_profile' %>
     <%= render 'templates/magicbox_setting' %>
     <%= render 'templates/list_connection' %>
@@ -84,10 +82,8 @@
     <%= render 'templates/list_jot_tag' %>
     <%= render 'templates/prompt_confirmation' %>
     <%= render 'templates/prompt_form_avatar' %>
+    <%= render 'templates/prompt_info' %>
     <%= javascript_include_tag 'application' %>
-
-    <% if flash[:error].present? %>
-      <script type="text/javascript">alert("<%= flash[:error] %>");</script>
-    <% end %>
+    <%= javascript_include_tag 'init/app' %>
   </body>
 </html>

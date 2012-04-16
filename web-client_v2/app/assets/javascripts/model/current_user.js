@@ -67,18 +67,13 @@ window.CurrentUserModel = Backbone.Model.extend({
       error: function(jqXHR, textStatus, errorThrown){
         alert(textStatus);
       },
-      beforeSend: function(jqXHR, settings){
-        $('#process-stat').removeClass('hidden');
-      },
       success: function(data, textStatus, jqXHR){
         if(data.failed === true){
           alert(data.error)
         }
         else{
 
-          $('#process-stat').addClass('hidden');
           
-
           _this.setData(data.content);
           _this.setToken(token);
 

@@ -366,8 +366,8 @@ cursor:pointer;}
 .rename_popup, .delete_popup, .add_group_popup{
 position:static;}
 
-form input.error{
-background:#FFB6C1;}
+form input.error, form textarea.error{
+background:#FFB6C1 !important;}
 
 .list-tag-item{
 cursor: pointer;}
@@ -397,3 +397,76 @@ margin-bottom:10px;}
 
 #profile-form-avatar .uploadifyQueueItem .fileName{
 color:#000;}
+
+#main-loader{
+background: url("/assets/ajax-loader.gif") no-repeat scroll center center #1D9199;
+color: #FFFFFF;
+height: 0px;
+text-align: center;}
+
+.search textarea{
+background: none repeat scroll 0 0 #FFFFFF;
+border: 0 none;
+border-radius: 5px 5px 5px 5px;
+box-shadow: 0 0 5px #858888 inset;
+padding: 10px;
+width: 500px !important;
+resize:none;
+height: auto;
+overflow: hidden;}
+
+.formated-field{
+position:relative;
+float:left;
+/*font-family: "HelveticaNeue, HelveticaCE55RomanRegular,Arial,sans serif"*/;}
+
+.formated-field-view{
+background:#fff;
+position:absolute;
+top:0;
+left:0;
+z-index:10;
+border-radius: 5px 5px 5px 5px;
+box-shadow: 0 0 5px #858888 inset;}
+
+
+.formated-field-input{
+position:absolute;
+top:0;
+left:0;
+padding: 10px;
+background: transparent !important;
+z-index:20;
+opacity:0.3;}
+
+.ff-crosspost{
+background: none repeat scroll 0 0 #EEEEEE;}
+
+.search .formated-field *{
+font-family: "HelveticaNeue", "HelveticaCE55RomanRegular",Arial,sans serif;
+font-size: 17px;}
+
+.search .formated-field-view{}
+
+.search .formated-field-input{
+  
+}
+
+.jot_buttons_path ul{
+width: 490px;}
+
+.formated-field-view-inner{
+padding:10px;}
+
+.formated-field-view-item{
+  color: white;
+  background-color: gray;
+}
+
+.before-submit-button{
+background: url("/assets/ajax-loader-2.gif") no-repeat scroll center center transparent !important;
+border: medium none !important;
+cursor: default !important;}
+
+form  input[disabled=disabled], form  textarea[disabled=disabled]{
+background-color: #eee !important}

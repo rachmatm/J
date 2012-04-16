@@ -52,9 +52,13 @@ class Registration
     if data.errors.present?
       
       JsonizeHelper.format :errors => data.errors.to_a.uniq, :failed => true, :error => "Registration doesn't succeed, please try again."
+      
     elsif data.update_attributes :token => ActiveSupport::SecureRandom.hex(9)
 
-      JsonizeHelper.format({:content => {:token => data.token}});
+      data_user = User.find data.id
+
+      JsonizeHelper.format({:content => data_user, :token => data.token}, {:except => User::NON_PUBLIC_FIELDS, :include => User::RELATION_PUBLIC})
+
     else
       JsonizeHelper.format :failed => true, :error => 'Data Provider Error'
     end

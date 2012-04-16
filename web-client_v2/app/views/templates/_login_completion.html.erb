@@ -7,7 +7,7 @@
       <p class="line_two">Jotky Account</p>
     </div>
     <%= form_tag registrations_path(:format => :json), :id => 'signup-form' do -%>
-      <input type="hidden" name="registration[user_id]" value="<#= current_user._id #>">
+      <input type="hidden" name="registration[user_id]" value="<#= data._id #>">
       <table class="box_registration">
         <tbody>
           <tr class="reg_username">

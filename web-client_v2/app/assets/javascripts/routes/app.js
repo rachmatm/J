@@ -6,7 +6,6 @@ window.AppRouter = Backbone.Router.extend({
     this.footerView = new FooterView;
     this.magicboxView = new MagicboxView;
     this.footerView = new FooterView;
-    
     this.middleView = new MiddleView;
     this.middleView.setElement('#main-middle');
   },
@@ -46,134 +45,184 @@ window.AppRouter = Backbone.Router.extend({
 
     "!/inbox": "messages",
 
-     "!/users/:id": "userDetail"
+    "!/users/:id": "userDetail",
+
+    "!/registrations/completion": "registrationCompletion"
   },
 
-  render: function(parameters){
-    parameters = parameters || {}
-    
-    this.drawMainLayout(parameters.current_user, parameters.current_user_token);
-  },
-
-  drawMainLayout: function(current_user, current_user_token){
-    this.current_user = current_user;
-
+  render: function(){
     this.headerView.setElement('#header-holder');
-    this.headerView.render({
-      current_user: current_user
-    });
+    this.headerView.render();
 
     this.sidebarView.setElement('#sidebar-holder');
-    this.sidebarView.render({
-      current_user: current_user
-    });
+    this.sidebarView.render();
 
     this.footerView.setElement('#footer-holder');
     this.footerView.render();
-
-    if(current_user.username || _.isEmpty(current_user)){
-      this.magicboxView.setElement('#magicbox-holder');
-      this.magicboxView.render({
-        current_user: current_user
-      });
-    }
-    else{
-      $(this.magicboxView.el).children().remove();
-      this.middleView.openLoginCompletion({
-        current_user: current_user
-      });
-    }
   },
 
   login: function(){
+    if(this.hook()){return;};
+    this.render();
+
+    this.initMagicbox();
     this.magicboxView.openLogin();
     this.middleView.openWelcome();
-    return false;
   },
 
   jot: function(){
+    if(this.hook()){return;};
+    this.render();
+
+    this.initMagicbox();
     this.magicboxView.openJot();
-    return false;
   },
 
   search: function(){
+    if(this.hook()){return;};
+    this.render();
+
+    this.initMagicbox();
     this.magicboxView.openSearch();
     this.middleView.openWelcome();
   },
 
   signup: function(){
+    if(this.hook()){return;};
+    this.render();
+    this.initMagicbox();
+    this.magicboxView.openLogin();
+    
     this.middleView.openSignup();
-    return false;
   },
 
   signout: function(){
-    $(window).trigger('jotky_logout', this.token);
-    return false;
+    this.render();
+    $(window).trigger('auth:logout');
   },
 
-  profile: function(){ 
+  profile: function(){
+    if(this.hook()){return;};
+    this.render();
     this.middleView.closeAll();
+    
+    this.initMagicbox();
     this.magicboxView.openProfile();
-    return false;
   },
 
   setting: function(){
+    if(this.hook()){return;};
+    this.render();
     this.middleView.closeAll();
+
+    this.initMagicbox();
     this.magicboxView.openSetting();
-    return false;
   },
 
   jotDetail: function(id){
+    if(this.hook()){return;};
+    this.render();
     this.middleView.closeAll();
+
+    this.initMagicbox();
     this.magicboxView.openJotDetail(id);
   },
 
   profilePublic: function(){
+    if(this.hook()){return;};
+    this.render();
+
+    this.initMagicbox();
     this.magicboxView.openSearch();
     this.middleView.closeAll();
     this.middleView.openProfile();
   },
 
   nest: function(){
+    if(this.hook()){return;};
+    this.render();
+
+    this.initMagicbox();
     this.magicboxView.openSearch();
     this.middleView.closeAll();
     this.middleView.openNest();
   },
 
   forgotPassword: function(){
+    if(this.hook()){return;};
+    this.render();
     this.middleView.closeAll();
     this.middleView.openForgotPassword();
   },
 
   changePassword: function(token){
+    if(this.hook()){return;};
+    this.render();
     this.middleView.closeAll();
     this.middleView.openChangePassword(token);
   },
 
   accountSetting: function(id){
+    if(this.hook()){return;};
+    this.render();
     this.middleView.closeAll();
     this.middleView.openAccountSetting(id);
   },
 
   about: function(){
+    if(this.hook()){return;};
+    this.render();
+    this.initMagicbox();
+    this.magicboxView.openSearch();
     this.middleView.closeAll();
     this.middleView.openAbout();
   },
 
   favorites: function(){
+    if(this.hook()){return;};
+    this.render();
     this.middleView.closeAll();
     this.middleView.openFavorites();
   },
 
   messages: function(){
+    if(this.hook()){return;};
+    this.render();
+
+    this.initMagicbox();
     this.magicboxView.openSearch();
+
     this.middleView.closeAll();
     this.middleView.openMessages();
   },
 
   userDetail: function(id){
+    if(this.hook()){return;};
+    this.render();
+    
+    this.initMagicbox();
     this.magicboxView.openSearch();
+
     this.middleView.closeAll();
     this.middleView.openUser(id);
+  },
+
+  registrationCompletion: function(){
+    this.middleView.openLoginCompletion();
+  },
+
+  hook: function(){
+    if(CURRENT_USER.auth && CURRENT_USER.token && CURRENT_USER.data && !CURRENT_USER.data.username){
+      location.href = '#!/registrations/completion';
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  initMagicbox: function(){
+    this.magicboxView.setElement('#magicbox-holder');
+    this.magicboxView.render();
   }
 });

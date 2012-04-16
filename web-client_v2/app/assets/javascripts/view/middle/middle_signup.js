@@ -4,21 +4,15 @@ window.MiddleSignupView = Backbone.View.extend({
 
   initialize: function(){
     this.recaptchaView = new RecaptchaView;
-    this.alertView = new AlertView;
-    this.holderAlertView = new HolderView;
   },
 
   render: function(){
     var _this = this;
 
     $(this.el).html(this.template());
-
     this.recaptchaView.setElement('#signup-recaptcha-holder');
     this.recaptchaView.render();
-
     this.validates();
-
-    this.elAlert = $('#main-middle-signup-alert');
   },
   
   validates: function(){
@@ -77,37 +71,25 @@ window.MiddleSignupView = Backbone.View.extend({
 
       submitHandler: function(form){
         $(form).ajaxSubmit({
+          beforeSend: function(jqXHR, settings){
+            $(form).trigger('xhr:submit:before', [form]);
+          },
           error: function(jqXHR, textStatus, errorThrown){
-            alert(textStatus);
+            $(form).trigger('xhr:submit:error', [form, textStatus]);
           },
           success: function(data, textStatus, jqXHR){
+            $(form).trigger('xhr:submit:success', [form, $('#main-middle-signup-alert'), data]);
+            
             if(data.failed === true){
-              _this.alertView.remove();
-
-              _this.holderAlertView.setElement(_this.elAlert);
-              _this.holderAlertView.render({
-                className: 'holder-view-alert'
-              });
-
-              _this.alertView.setElement(_this.holderAlertView.holder_el);
-              _this.alertView.render({
-                error: data.error,
-                errors: data.errors
-              });
-
               if(window.Recaptcha == 'undefined'){
                 alert('Recaptcha is undefined');
               }
               else{
                 Recaptcha.reload();
               }
-
             }
             else{
-              _this.alertView.remove();
-              Recaptcha.reload();
-
-              $(window).trigger('jotky_login', data.content.token);
+              $(window).trigger('auth:login', [data.content, data.token]);
             }
           }
         });

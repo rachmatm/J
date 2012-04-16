@@ -24,6 +24,7 @@ class Jot
   field :facebook_id, :type => String
   field :twitter_id, :type => String
 
+
   validates_presence_of :title
   validates_length_of :title, :maximum => 140
 
@@ -35,6 +36,8 @@ class Jot
   has_and_belongs_to_many :rejots, :class_name => "Jot"
   has_and_belongs_to_many :user_mentioned, :class_name => "User", :inverse_of => :jot_mentioned
   has_many :comments
+  has_and_belongs_to_many :connections
+
 
   scope :page, ->(page, per_page) { skip(per_page.to_i * (page.to_i - 1)).limit(per_page.to_i)}
   scope :order_by_default, order_by([[:updated_at, :desc]])
@@ -42,7 +45,7 @@ class Jot
   scope :find_by_user_tags, ->(user) {any_of({"tag_ids" => {"$in" => user.tags.collect{|tag| tag.id}}}, {'user_id' => user.id})}
   scope :disclude_these_jots, ->(jots) { not_in(_id: jots) }
 
-  after_create :current_jot_set_crosspost
+  #after_create :current_jot_set_crosspost
   after_save :current_jot_set_tags, :current_jot_set_mention_users
 
   def self.get_comments(jot_id, options = {})

@@ -37,19 +37,17 @@ class AuthenticationsController < ApplicationController
   def facebook
     
     oauth = request.env['omniauth.auth']
-    data = api_connect('/authentications/facebook.json', {:secret_token => oauth.credentials.token}, "post")
+    @data = api_connect('/authentications/facebook.json', {:secret_token => oauth.credentials.token}, "post")
 
-    cookies[:jotky_token] = data['content']['token']
-    redirect_to root_path
+    render :layout => 'application_omniaut_callback'
   end
 
   def twitter
     
     oauth = request.env['omniauth.auth']
-    data = api_connect('/authentications/twitter.json', {:twitter_token => oauth.credentials.token, :twitter_secret => oauth.credentials.secret}, "post")
-    
-    cookies[:jotky_token] = data['content']['token']
-    redirect_to root_path
+    @data = api_connect('/authentications/twitter.json', {:twitter_token => oauth.credentials.token, :twitter_secret => oauth.credentials.secret}, "post")
+
+    render :layout => 'application_omniaut_callback'
   end
 
   def facebook_connection
@@ -70,5 +68,9 @@ class AuthenticationsController < ApplicationController
 
     flash[:error] = @data['error']
     redirect_to '/#!/setting'
+  end
+
+  def failure
+    render :layout => 'application_omniaut_failure'
   end
 end
